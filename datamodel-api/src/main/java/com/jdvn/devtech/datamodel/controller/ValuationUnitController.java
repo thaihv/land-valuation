@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/ValuationUnits/v1")
-@Tag(name = "Valuation Unit", description = "Value Unit Management APIs")
+@Tag(name = "Valuation Unit", description = "Valuation Technical Object Unit Management APIs")
 public class ValuationUnitController {
 
 	@Autowired
