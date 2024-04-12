@@ -1,0 +1,46 @@
+package com.jdvn.devtech.datamodel.schema.source;
+
+import org.hibernate.annotations.Comment;
+
+import com.jdvn.devtech.datamodel.schema.DomainObject;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "archive", schema = "source", indexes = {
+		@Index(name = "archive_on_rowidentifier", columnList = "rowidentifier") })
+@Comment("Represents an archive where collections of physical documents may be kept such as a filing cabinet, library or storage unit.")
+public class Archive extends DomainObject<Long> {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Comment("Identifier for the archive.")
+	@Column(name = "id")
+	private Long id;
+
+	@Column(length = 250, nullable = false)
+	@Comment("Description of the archive and it's location.")
+	private String name;
+    
+	@Override
+	public String print() {
+		return name;
+	}
+	
+
+}

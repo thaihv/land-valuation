@@ -36,39 +36,88 @@ public class Source {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(length = 200, nullable = false)
-	@Comment("Display name of the source.")
-	private String name;
+	@Column(length = 20, nullable = false)
+	@Comment("Reference number or identifier assigned to the document by the land valuation assessor.")
+	private String assess_nr;
+
+	@Column(length = 255)
+	@Comment("Reference number or identifier assigned to the document by an external agency.")
+	private String reference_nr;
 
 	@Column(length = 4000)
 	@Comment("Content of the source.")
 	private String content;
 
 	@Column
+	@Comment("Archive identifier for the source.")
+	private Long archive_id;
+
+	@Column
+	@Comment("Identifier of the source to a digital document in document table.")
+	private Long document_id;
+
+	@Column(length = 64)
+	@Comment("Identifier of the source in an external document management system, if any.")
+	private String ext_archive_id;
+
+	@Column(length = 255)
+	@Comment("The name of the party that created the document.")
+	private String owner_name;
+
+	@Column(length = 255)
+	@Comment("The document version.")
+	private String version;
+
+	@Column
+	@Comment("The date the document was signed by all parties.")
+	private Date signing_date;
+
+	@Column
 	@Comment("The acceptance date of source.")
 	private Date acceptance;
-	
+
 	@Column
 	@Comment("The recordation date of source.")
 	private Date recordation;
-	
+
 	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
 	@Comment("The submission date of source.")
 	private LocalDateTime submission = LocalDateTime.now();
-	
+
 	@Column
 	@Comment("The expiration date of source.")
 	private Date expiration;
-    	
-	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the valuation unit as active (a) or inactive (i).")
-	private char status;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JoinColumn(name = "type_code", foreignKey = @ForeignKey(name = "source_code_fkey"))
-    @Comment("Refer to identifying of a source type.")
-    private SourceType source_type;
+	@Column(length = 255)
+	@Comment("Description of the source.")
+	private String description;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JoinColumn(name = "type_code", foreignKey = @ForeignKey(name = "source_type_fkey"))
+	@Comment("Refer to identifying of a source type.")
+	private SourceType source_type;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JoinColumn(name = "present_format", foreignKey = @ForeignKey(name = "source_presentation_form_format_fkey"))
+	@Comment("The type of the representation of the content of the source.")
+	private PresentationFormType presentationFormType;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JoinColumn(name = "availability_status_code", foreignKey = @ForeignKey(name = "availability_status_type_fkey"))
+	@Comment("The code describing the availability status of the document.")
+	private AvailabilityStatusType availability_status_type;
+	
+	@Column(length = 20)
+	@Comment("The security classification for this Source. Only users with the security classification (or a higher classification) "
+			+ "will be able to view the record. If null, the record is considered unrestricted.")
+	private String classification_code;
+	
+	@Column(length = 20)
+	@Comment("The redact classification for this Source. Only users with the redact classification (or a higher classification) "
+			+ "will be able to view the record with un-redacted fields. If null, the record is considered unrestricted and "
+			+ "no redaction to the record will occur unless bulk redaction classifications have been set for fields of the record.")
+	private String redact_code;
 }
