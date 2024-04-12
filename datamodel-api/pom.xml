@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jdvn.devtech</groupId>
-	<artifactId>valuation_model</artifactId>
+	<artifactId>datamodel-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>valuation_model</name>
-	<description>Create physical valuation data model using Postgres and JPA</description>
+	<name>datamodel-api</name>
+	<description>Create physical valuation data model and flat APIs using Postgres and JPA</description>
 	<properties>
 		<java.version>17</java.version>
 		<hibernate-search.version>5.11.12.Final</hibernate-search.version>
