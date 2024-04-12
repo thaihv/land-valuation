@@ -37,7 +37,14 @@ public class ValuationUnitController {
 	@Autowired
 	private ValuationUnitRepository valuationUnitRepository;
 	
-
+	@Operation(
+			summary = "Retrieve all valuation unit values", 
+			description = "Get all valuation unit objects. The response is a collection of valuation unit objects.", 
+			tags = {"Valuation Objects", "Get" })
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnit.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })	
 	@GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Iterable<ValuationUnit> getAllValuationUnitTypes() {

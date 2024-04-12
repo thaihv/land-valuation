@@ -16,8 +16,8 @@ public class OpenAPIConfig {
 
 
     Contact contact = new Contact();
-    contact.setEmail("thaihv@gmail.com");
-    contact.setName("Hoang Vinh Thai");
+    contact.setEmail("thaihv@uitgis.com");
+    contact.setName("thaihv");
     contact.setUrl("https://www.tamky.xyz");
 
     License mitLicense = new License().name("JungdoUIT License").url("https://www.tamky.xyz/");

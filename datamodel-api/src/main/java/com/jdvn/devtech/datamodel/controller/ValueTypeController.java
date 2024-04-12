@@ -31,13 +31,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ValueTypeController {
 	@Autowired
 	private ValueTypeRepository valueTypeRepository;
-	
+
+	@Operation(
+			summary = "Retrieve all value type values", 
+			description = "Get all value type objects. The response is a collection of value type objects.", 
+			tags = {"Code Lists", "Get" })
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Iterable<ValueType> getAllValueTypes() {
 		return valueTypeRepository.findAll();
 	}
-
 	@Operation(
 			summary = "Retrieve a value type by code", 
 			description = "Get a value type object by specifying its code. The response is a value type object with code, display value, description and status.", 
