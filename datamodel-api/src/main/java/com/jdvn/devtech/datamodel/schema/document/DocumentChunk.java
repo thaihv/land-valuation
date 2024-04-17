@@ -51,15 +51,15 @@ public class DocumentChunk{
 	@Column
 	@Comment("Staring position of the byte in the destination document.")
 	private int start_position;
-	
-	@Column
-	@Comment("Size of the chunk in bytes.")
-	private int size;
-		
+
 	@Column(nullable = false)
 	@Comment("The content of the chunk.")
 	private byte[] body = new byte[1024];
 	
+	@Column
+	@Comment("Size of the chunk in bytes.")
+	private int size;
+
 	@Column(length = 50)
 	@Comment("Checksum of the chunk, calculated using MD5.")
 	private String md5;

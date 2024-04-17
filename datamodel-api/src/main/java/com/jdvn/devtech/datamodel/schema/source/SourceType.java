@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "source_type", schema = "source")
+@Table(name = "source_type", schema = "source", uniqueConstraints = { @UniqueConstraint(name = "source_type_display_value_key", columnNames = { "display_value" }) })
 @Comment("Code list of source types include in valuation process")
 public class SourceType {
 
@@ -30,7 +31,7 @@ public class SourceType {
 	@Comment("The code for the source type.")
 	private String code;
 
-	@Column(length = 1000, nullable = false, unique=true)
+	@Column(length = 1000, nullable = false)
 	@Comment("Displayed value of the source type.")
 	private String display_value;
 

@@ -21,8 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "archive", schema = "source", indexes = {
-		@Index(name = "archive_on_rowidentifier", columnList = "rowidentifier") })
+@Table(name = "archive", schema = "source", indexes = {@Index(name = "archive_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Represents an archive where collections of physical documents may be kept such as a filing cabinet, library or storage unit.")
 public class Archive extends DomainObject<Long> {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +33,7 @@ public class Archive extends DomainObject<Long> {
 	private Long id;
 
 	@Column(length = 250, nullable = false)
-	@Comment("Description of the archive and it's location.")
+	@Comment("Description of the archive and its location.")
 	private String name;
     
 	@Override

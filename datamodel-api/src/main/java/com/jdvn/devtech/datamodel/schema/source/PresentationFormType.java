@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "presentation_form_type", schema = "source")
+@Table(name = "presentation_form_type", schema = "source", uniqueConstraints = { @UniqueConstraint(name = "presentation_form_type_display_value_key", columnNames = { "display_value" })})
 @Comment("Code list indicates the original format of the document when presented to the valuation process (e.g. Hardcopy, digital, image, video, etc)")
 public class PresentationFormType {
 
@@ -25,8 +26,7 @@ public class PresentationFormType {
 	@Comment("The code for the presentation form type.")
 	private String code;
 
-	/* Demo for more an unique column beside primary key */	
-	@Column(length = 500, nullable = false, unique=true)
+	@Column(length = 500, nullable = false)
 	@Comment("Displayed value of the presentation form type.")
 	private String display_value;
 

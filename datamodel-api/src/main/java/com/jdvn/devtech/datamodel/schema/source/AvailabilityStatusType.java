@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "availability_status_type", schema = "source")
+@Table(name = "availability_status_type", schema = "source", uniqueConstraints = { @UniqueConstraint(name = "availability_status_type_display_value_key", columnNames = { "display_value" })})
 @Comment("Code list indicates if a document is available, archived, destroyed or incomplete")
 public class AvailabilityStatusType {
 
@@ -30,7 +31,7 @@ public class AvailabilityStatusType {
 	@Comment("The code for the availability status type.")
 	private String code;
 
-	@Column(length = 500, nullable = false, unique=true)
+	@Column(length = 500, nullable = false)
 	@Comment("Displayed value of the availability status type.")
 	private String display_value;
 
