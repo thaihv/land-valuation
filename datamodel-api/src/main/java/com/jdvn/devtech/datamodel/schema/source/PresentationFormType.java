@@ -35,6 +35,6 @@ public class PresentationFormType {
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status of the presentation form type as active (a) or inactive (i).")
+	@Comment("Status in active of the presentation form type as current (c) or noncurrent (x).")
 	private char status;
 }

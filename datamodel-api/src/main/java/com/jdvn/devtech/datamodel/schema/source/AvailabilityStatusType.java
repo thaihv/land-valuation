@@ -40,7 +40,7 @@ public class AvailabilityStatusType {
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the availability status type as active (a) or inactive (i).")
+	@Comment("Status in active of the availability status type as current (c) or noncurrent (x).")
 	private char status;
 	
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "availability_status_type")

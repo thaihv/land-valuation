@@ -27,14 +27,14 @@ COMMENT ON COLUMN source.source_type.description
     IS 'Description of the source type.';
 	
 COMMENT ON COLUMN source.source_type.status
-    IS 'Status in active of the source type as active (a) or inactive (i).';	
+    IS 'Status in active of the source type as current (c) or noncurrent (x).';	
 
 -- Table: source.availability_status_type
 CREATE TABLE IF NOT EXISTS source.availability_status_type
 (
     code character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(1000) COLLATE pg_catalog."default",
-    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+	display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
     CONSTRAINT availability_status_type_pkey PRIMARY KEY (code),
     CONSTRAINT availability_status_type_display_value_key UNIQUE (display_value)
@@ -56,14 +56,14 @@ COMMENT ON COLUMN source.availability_status_type.display_value
     IS 'Displayed value of the availability status type.';
 
 COMMENT ON COLUMN source.availability_status_type.status
-    IS 'Status in active of the availability status type as active (a) or inactive (i).';
+    IS 'Status in active of the availability status type as current (c) or noncurrent (x).';
 
 -- Table: source.presentation_form_type
 CREATE TABLE IF NOT EXISTS source.presentation_form_type
 (
     code character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(1000) COLLATE pg_catalog."default",
-    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+	display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
     CONSTRAINT presentation_form_type_pkey PRIMARY KEY (code),
     CONSTRAINT presentation_form_type_display_value_key UNIQUE (display_value)
@@ -85,7 +85,7 @@ COMMENT ON COLUMN source.presentation_form_type.display_value
     IS 'Displayed value of the presentation form type.';
 
 COMMENT ON COLUMN source.presentation_form_type.status
-    IS 'Status of the presentation form type as active (a) or inactive (i).';
+    IS 'Status in active of the presentation form type as current (c) or noncurrent (x).';
        
 -- Table: source.source
 -- + SEQUENCE: source.source_id_seq
@@ -262,3 +262,5 @@ CREATE INDEX IF NOT EXISTS archive_on_rowidentifier
     ON source.archive USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;	
+	
+	

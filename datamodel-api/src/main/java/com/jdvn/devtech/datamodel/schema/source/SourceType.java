@@ -40,7 +40,7 @@ public class SourceType {
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the source type as active (a) or inactive (i).")
+	@Comment("Status in active of the source type as current (c) or noncurrent (x).")
 	private char status;
 	
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "source_type")
