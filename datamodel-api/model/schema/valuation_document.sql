@@ -120,8 +120,8 @@ CREATE TABLE IF NOT EXISTS document.document_historic
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS document.document_historic
     OWNER to postgres;
--- Index: document_historic_index_on_rowidentifier
-CREATE INDEX IF NOT EXISTS document_historic_index_on_rowidentifier
+-- Index: document_historic_on_rowidentifier
+CREATE INDEX IF NOT EXISTS document_historic_on_rowidentifier
     ON document.document_historic USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
