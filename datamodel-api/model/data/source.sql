@@ -68,4 +68,12 @@ INSERT INTO source.spatial_source_type (code, display_value, status, description
 INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('topoMap', 'Topographical Map', 'c', '');
 INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('video', 'Video', 'c', '');
 
+-- Table: source.archive
+INSERT INTO source.archive (name) VALUES ('Lao Land Information Land Registration Online');
+
 -- Table: source.source
+INSERT INTO source.source (present_format, assess_nr, reference_nr, archive_id, acceptance, recordation, submission, expiration, ext_archive_id, availability_status_code, type_code, content, owner_name, version, description, signing_date, classification_code, redact_code) VALUES ('mapDigital', '120220-008000006', NULL, '1', NULL, NULL, '2011-06-29', NULL, NULL, 'available', 'cadastralMap', 'Lao Land Information Land Registration Online', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO source.source (present_format, assess_nr, reference_nr, archive_id, acceptance, recordation, submission, expiration, ext_archive_id, availability_status_code, type_code, content, owner_name, version, description, signing_date, classification_code, redact_code) VALUES (NULL, '140220-000000001', NULL, NULL, NULL, '2014-02-20', '2014-02-20', NULL, 'd3ac733d-3679-4351-89ef-35151f2745a5', 'available', 'agreement', NULL, NULL, NULL, NULL, NULL,NULL, NULL);
+INSERT INTO source.source (present_format, assess_nr, reference_nr, archive_id, acceptance, recordation, submission, expiration, ext_archive_id, availability_status_code, type_code, content, owner_name, version, description, signing_date, classification_code, redact_code) VALUES (NULL, '150407-000000001', NULL, NULL, NULL, '2015-04-01', '2015-04-07', NULL, 'b6f24c42-1c88-4d5b-bffd-7a94487ae6a1', 'available', 'title', NULL, NULL, NULL, NULL, NULL,NULL, NULL);
+
+
