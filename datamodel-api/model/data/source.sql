@@ -57,3 +57,15 @@ INSERT INTO source.source_type (code, display_value, status, description) VALUES
 INSERT INTO source.source_type (code, display_value, status, description) VALUES ('objection', 'Objection  Document', 'x', '');
 INSERT INTO source.source_type (code, display_value, status, description) VALUES ('waiver', 'Waiver', 'c', '');
 INSERT INTO source.source_type (code, display_value, status, description) VALUES ('notaryStatement', 'Notary Statement', 'x', '');
+
+-- Table: source.spatial_source_type
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('cadastralSurvey', 'Cadastral Survey', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('fieldSketch', 'Field Sketch', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('gnssSurvey', 'GNSS (GPS) Survey', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('orthoPhoto', 'Orthophoto', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('relativeMeasurement', 'Relative Measurements', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('surveyData', 'Survey Data (Coordinates)', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('topoMap', 'Topographical Map', 'c', '');
+INSERT INTO source.spatial_source_type (code, display_value, status, description) VALUES ('video', 'Video', 'c', '');
+
+-- Table: source.source

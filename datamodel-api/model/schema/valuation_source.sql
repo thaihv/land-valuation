@@ -123,6 +123,11 @@ CREATE TABLE IF NOT EXISTS source.source
     availability_status_code character varying(20) COLLATE pg_catalog."default",
     classification_code character varying(20) COLLATE pg_catalog."default",
     redact_code character varying(20) COLLATE pg_catalog."default",    
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,	
+	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+	change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT source_pkey PRIMARY KEY (id),
     CONSTRAINT availability_status_type_fkey FOREIGN KEY (availability_status_code)
         REFERENCES source.availability_status_type (code) MATCH SIMPLE
@@ -202,7 +207,26 @@ COMMENT ON COLUMN source.source.classification_code
 
 COMMENT ON COLUMN source.source.redact_code
     IS 'The redact classification for this Source. Only users with the redact classification (or a higher classification) will be able to view the record with un-redacted fields. If null, the record is considered unrestricted and no redaction to the record will occur unless bulk redaction classifications have been set for fields of the record.';
+COMMENT ON COLUMN source.source.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
 
+COMMENT ON COLUMN source.source.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN source.source.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN source.source.change_user
+    IS 'The user id of the last person to modify the row.';
+	
+COMMENT ON COLUMN source.source.change_time
+    IS 'The date and time the row was last modified.';
+-- Index: source_on_rowidentifier
+CREATE INDEX IF NOT EXISTS source_on_rowidentifier
+    ON source.source USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+	
 -- Table: source.archive
 -- + SEQUENCE: source.archive_id_seq
 CREATE SEQUENCE IF NOT EXISTS source.archive_id_seq
@@ -263,4 +287,149 @@ CREATE INDEX IF NOT EXISTS archive_on_rowidentifier
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;	
 	
+-- Table: source.spatial_source_type
+CREATE TABLE IF NOT EXISTS source.spatial_source_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    display_value character varying(1000) COLLATE pg_catalog."default" NOT NULL,
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT spatial_source_type_pkey PRIMARY KEY (code),
+    CONSTRAINT spatial_source_type_display_value_key UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS source.spatial_source_type
+    OWNER to postgres;
+
+COMMENT ON TABLE source.spatial_source_type
+    IS 'Code list of spatial source types included in valuation process';
+
+COMMENT ON COLUMN source.spatial_source_type.code
+    IS 'The code for the spatial source type.';
+
+COMMENT ON COLUMN source.spatial_source_type.description
+    IS 'Description of the spatial source type.';
+
+COMMENT ON COLUMN source.spatial_source_type.display_value
+    IS 'Displayed value of the spatial source type.';
+
+COMMENT ON COLUMN source.spatial_source_type.status
+    IS 'Status of the spatial source type as current (c) or noncurrent (x).';	
+-- Table: source.spatial_source
+
+-- DROP TABLE IF EXISTS source.spatial_source;
+
+CREATE TABLE IF NOT EXISTS source.spatial_source
+(
+    id bigint NOT NULL,
+    procedure character varying(255) COLLATE pg_catalog."default",
+    type_code character varying(20) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,	
+	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+	change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),		
+    CONSTRAINT spatial_source_pkey PRIMARY KEY (id),
+    CONSTRAINT spatial_source_id_fkey FOREIGN KEY (id)
+        REFERENCES source.source (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT spatial_source_type_fkey FOREIGN KEY (type_code)
+        REFERENCES source.spatial_source_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS source.spatial_source
+    OWNER to postgres;
+
+COMMENT ON TABLE source.spatial_source
+    IS 'A spatial source may be the final (sometimes formal) documents, or all documents related to a survey in valuation process.';
+
+COMMENT ON COLUMN source.spatial_source.id
+    IS 'Spatial source identifier.';
+
+COMMENT ON COLUMN source.spatial_source.procedure
+    IS 'Procedures, steps or method adopted.';
+
+COMMENT ON COLUMN source.spatial_source.type_code
+    IS 'Refer to identifying of a source type.';
+
+COMMENT ON COLUMN source.spatial_source.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN source.spatial_source.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
 	
+COMMENT ON COLUMN source.spatial_source.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN source.spatial_source.change_user
+    IS 'The user id of the last person to modify the row.';
+	
+COMMENT ON COLUMN source.spatial_source.change_time
+    IS 'The date and time the row was last modified.';
+-- Index: spatial_source_on_rowidentifier
+CREATE INDEX IF NOT EXISTS spatial_source_on_rowidentifier
+    ON source.spatial_source USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;	
+	
+-- Table: source.power_of_attorney
+CREATE TABLE IF NOT EXISTS source.power_of_attorney
+(
+    id bigint NOT NULL,
+    attorney_name character varying(500) COLLATE pg_catalog."default",
+    person_name character varying(500) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,	
+	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+	change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),	
+    CONSTRAINT power_of_attorney_pkey PRIMARY KEY (id),
+    CONSTRAINT power_of_attorney_id_fkey FOREIGN KEY (id)
+        REFERENCES source.source (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS source.power_of_attorney
+    OWNER to postgres;
+
+COMMENT ON TABLE source.power_of_attorney
+    IS 'Captures details for power of attorney documents.';
+
+COMMENT ON COLUMN source.power_of_attorney.id
+    IS 'Identifier for the power of attorney record. Matches the source identifier for the power of attorney record.';
+
+COMMENT ON COLUMN source.power_of_attorney.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN source.power_of_attorney.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN source.power_of_attorney.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN source.power_of_attorney.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN source.power_of_attorney.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN source.power_of_attorney.attorney_name
+    IS 'The name of the person that will act on behalf of the grantor as their attorney.';
+
+COMMENT ON COLUMN source.power_of_attorney.person_name
+    IS 'The name of the person that is granting the power of attorney (a.k.a. grantor).';
+-- Index: power_of_attorney_on_rowidentifier
+CREATE INDEX IF NOT EXISTS power_of_attorney_on_rowidentifier
+    ON source.power_of_attorney USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;	

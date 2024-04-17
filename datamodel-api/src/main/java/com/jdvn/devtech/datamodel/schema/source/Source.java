@@ -6,6 +6,7 @@ import java.util.Date;
 import org.hibernate.annotations.Comment;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.jdvn.devtech.datamodel.schema.DomainObject;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,8 +16,11 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,9 +32,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "source", schema = "source")
+@Table(name = "source", schema = "source", indexes = {
+		@Index(name = "source_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("List of the sources in valuation process.")
-public class Source {
+public class Source extends DomainObject<Long>{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -120,4 +126,17 @@ public class Source {
 			+ "will be able to view the record with un-redacted fields. If null, the record is considered unrestricted and "
 			+ "no redaction to the record will occur unless bulk redaction classifications have been set for fields of the record.")
 	private String redact_code;
+
+    @OneToOne(mappedBy = "source", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private SpatialSource spatial_source;
+    
+    @OneToOne(mappedBy = "source", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private PowerAttorney power_attorney;
+    
+	@Override
+	public String print() {
+		return assess_nr;
+	}
 }
