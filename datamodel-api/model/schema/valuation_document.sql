@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS document.document
     id bigint NOT NULL DEFAULT nextval('document.document_id_seq'::regclass),
 	unique_number character varying(20) COLLATE pg_catalog."default" NOT NULL,
 	extension character varying(5) COLLATE pg_catalog."default" NOT NULL,
-	mime_type character varying(255) COLLATE pg_catalog."default" NOT NULL,
+	mime_type character varying(255) COLLATE pg_catalog."default",
 	body bytea NOT NULL,
 	description character varying(500) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),

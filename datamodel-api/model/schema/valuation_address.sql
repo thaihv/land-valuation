@@ -61,7 +61,19 @@ CREATE INDEX IF NOT EXISTS address_on_rowidentifier
     ON address.address USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
-	
+-- Trigger: __track_changes
+CREATE OR REPLACE TRIGGER __track_changes
+    BEFORE INSERT OR UPDATE 
+    ON address.address
+    FOR EACH ROW
+    EXECUTE FUNCTION public.f_for_trg_track_changes();
+-- Trigger: __track_history
+CREATE OR REPLACE TRIGGER __track_history
+    AFTER DELETE OR UPDATE 
+    ON address.address
+    FOR EACH ROW
+    EXECUTE FUNCTION public.f_for_trg_track_history();
+    
 -- Table: address.address_historic
 CREATE TABLE IF NOT EXISTS address.address_historic
 (
