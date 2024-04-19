@@ -7,7 +7,7 @@ SET client_min_messages = warning;
 
 CREATE SCHEMA preparation;
 ALTER SCHEMA preparation OWNER TO postgres;
-COMMENT ON SCHEMA preparation IS 'Information model for preparation stage of property valuation system.';
+COMMENT ON SCHEMA preparation IS 'Information model for preparation stage of property valuation system.It is used for collecting and maintaining property data as is, property ownership, location, size, use, physical characteristics, sales prices, rents, costs, and operating expenses';
 
 CREATE SCHEMA valuation;
 ALTER SCHEMA valuation OWNER TO postgres;
