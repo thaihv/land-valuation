@@ -137,14 +137,14 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_unit_category
 	name character varying(500) COLLATE pg_catalog."default" NOT NULL,
 	description character varying(1000) COLLATE pg_catalog."default",
     status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
-	vunit_id bigint NOT NULL,
+	vunit_type_id bigint NOT NULL,
 	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT public.uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
 	change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
     CONSTRAINT valuation_unit_category_pkey PRIMARY KEY (id),
-	CONSTRAINT valuation_unit_category_vunit_id_fkey FOREIGN KEY (vunit_id)
+	CONSTRAINT valuation_unit_category_vunit_id_fkey FOREIGN KEY (vunit_type_id)
         REFERENCES preparation.valuation_unit_type (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE RESTRICT
@@ -166,8 +166,8 @@ COMMENT ON COLUMN preparation.valuation_unit_category.description
 COMMENT ON COLUMN preparation.valuation_unit_category.status
     IS 'Status in active of the category as active (a) or inactive (i).';
 
-COMMENT ON COLUMN preparation.valuation_unit_category.vunit_id
-    IS 'Refer to identifying of a valuation unit.';
+COMMENT ON COLUMN preparation.valuation_unit_category.vunit_type_id
+    IS 'Refer to identifying of a valuation unit type.';
 	
 COMMENT ON COLUMN preparation.valuation_unit_category.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_unit_category_historic
     name character varying(500),
     description character varying(1000),
     status character(1),
-	vunit_id bigint NOT NULL,
+	vunit_type_id bigint NOT NULL,
     rowidentifier character varying(40),
     rowversion integer,
     change_action character(1),

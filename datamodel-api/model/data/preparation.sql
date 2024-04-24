@@ -11,14 +11,14 @@ INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('
 INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Parcel & Building','Represents a combination of valuation units on parcel and building','i');
 
 -- Table: preparation.valuation_unit_category
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Agricultural Land','Land used for Agriculture Purposes ','a', 1);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Forest Land','Land used for Forestry Purposes','a', 1);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Building Land','Land is used for Development Purposes as Building or Living','a', 1);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Single Family House','House for Individuals or Households','a', 2);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Residential Condominium','Apartment for Residential Living','a', 3);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Commercial Condominium','Apartment for Commercial Buildings','a', 3);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Parking Space','A Space Part of Building for Parking','i', 3);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Garage','Area included to Building for Parking','i', 3);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Agricultural Land','Land used for Agriculture Purposes ','a', 1);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Forest Land','Land used for Forestry Purposes','a', 1);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Building Land','Land is used for Development Purposes as Building or Living','a', 1);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Single Family House','House for Individuals or Households','a', 2);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Residential Condominium','Apartment for Residential Living','a', 3);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Commercial Condominium','Apartment for Commercial Buildings','a', 3);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Parking Space','A Space Part of Building for Parking','i', 3);
+INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Garage','Area included to Building for Parking','i', 3);
 
 -- Table: preparation.valuation_parameter
 INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('ID','String','Property label from Cadastre.',true,true,true);

@@ -5,32 +5,32 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
-CREATE SCHEMA preparation;
-ALTER SCHEMA preparation OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS preparation
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA preparation IS 'Information model for preparation stage of property valuation system.It is used for collecting and maintaining property data as is, property ownership, location, size, use, physical characteristics, sales prices, rents, costs, and operating expenses';
 
-CREATE SCHEMA valuation;
-ALTER SCHEMA valuation OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS valuation
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA valuation IS 'Property valuation information model as LADM extension.';
 
-CREATE SCHEMA source;
-ALTER SCHEMA source OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS source
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA source IS 'Represents metadata about documents provided to support land valuation.';
 
-CREATE SCHEMA document;
-ALTER SCHEMA document OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS document
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA document IS 'Used by property valuation system to store electronic copies of documentation provided in support of land valuation related dealings.';
 
-CREATE SCHEMA system;
-ALTER SCHEMA system OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS system
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA system IS 'Contains system configuration for property valuation system.';
 
-CREATE SCHEMA address;
-ALTER SCHEMA address OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS address
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA address IS 'Capturing postal and physical addresses of valuation properties.';
 
-CREATE SCHEMA application;
-ALTER SCHEMA application OWNER TO postgres;
+CREATE SCHEMA IF NOT EXISTS application
+AUTHORIZATION postgres;
 COMMENT ON SCHEMA application IS 'Contains information of business process data for property valuation system.';
 
 
