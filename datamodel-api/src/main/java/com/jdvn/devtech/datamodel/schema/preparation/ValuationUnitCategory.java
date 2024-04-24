@@ -32,7 +32,7 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "valuation_unit_category", schema = "preparation", indexes = {@Index(name = "valuation_unit_category_on_rowidentifier", columnList = "rowidentifier")})
-@Comment("List of the valuation unit types")
+@Comment("List of the valuation unit categories")
 @SuppressWarnings({ "serial" })
 public class ValuationUnitCategory extends DomainObject<Long> {
 	@Id
@@ -40,22 +40,22 @@ public class ValuationUnitCategory extends DomainObject<Long> {
 	private long id;
 
 	@Column(length = 500, nullable = false)
-	@Comment("Display name of the type.")
+	@Comment("Display name of the category.")
 	private String name;
 
 	@Column(length = 1000)
-	@Comment("Description of the type.")
+	@Comment("Description of the category.")
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'a'")
-	@Comment("Status in active of the type as active (a) or inactive (i).")
+	@Comment("Status in active of the category as active (a) or inactive (i).")
 	private char status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "vunit_id", foreignKey = @ForeignKey(name = "valuation_unit_category_vunit_id_fkey"))
-    @Comment("Refer to identifying of a valuation unit.")
-    private ValuationUnit valuation_unit;
+    @JoinColumn(name = "vunit_id", foreignKey = @ForeignKey(name = "valuation_unit_type_category_vunit_id_fkey"))
+    @Comment("Refer to identifying of a valuation unit type.")
+    private ValuationUnitType valuation_unit_type;
 
     /* Control many-to-many relationship between category and parameter, 
      * vunit_categoties is a variable in ValuationParameter  */

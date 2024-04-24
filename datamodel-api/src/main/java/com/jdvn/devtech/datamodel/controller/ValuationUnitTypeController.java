@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdvn.devtech.datamodel.repository.ValuationUnitRepository;
-import com.jdvn.devtech.datamodel.schema.preparation.ValuationUnit;
+import com.jdvn.devtech.datamodel.repository.ValuationUnitTypeRepository;
+import com.jdvn.devtech.datamodel.schema.preparation.ValuationUnitType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,48 +30,48 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/ValuationUnits/v1")
-@Tag(name = "Valuation Unit", description = "Valuation Technical Object Unit Management APIs")
-public class ValuationUnitController {
+@RequestMapping("/ValuationUnitTypes/v1")
+@Tag(name = "Valuation Unit Type", description = "Valuation Technical Object Unit Type Management APIs")
+public class ValuationUnitTypeController {
 
 	@Autowired
-	private ValuationUnitRepository valuationUnitRepository;
+	private ValuationUnitTypeRepository valuationUnitRepository;
 	
 	@Operation(
-			summary = "Retrieve all valuation unit values", 
-			description = "Get all valuation unit objects. The response is a collection of valuation unit objects.", 
+			summary = "Retrieve all valuation unit type values", 
+			description = "Get all valuation unit type objects. The response is a collection of valuation unit type objects.", 
 			tags = {"Valuation Objects", "Get" })
 	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnit.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })	
 	@GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Iterable<ValuationUnit> getAllValuationUnitTypes() {
+	public Iterable<ValuationUnitType> getAllValuationUnitTypes() {
 		return valuationUnitRepository.findAll();
 	}
 	@Operation(
 			summary = "Retrieve a valuation unit by id", 
-			description = "Get a valuation unit object by specifying its id. The response is a valuation unit object with id, name, description and status and metadata.", 
+			description = "Get a valuation unit type object by specifying its id. The response is a valuation unit type object with id, name, description and status and metadata.", 
 			tags = {"Valuation Objects", "Get" })
 	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnit.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@GetMapping("/find/{id}")
-	public Optional<ValuationUnit> findValuationUnitTypeById(@PathVariable Long id) {
+	public Optional<ValuationUnitType> findValuationUnitTypeById(@PathVariable Long id) {
 		return valuationUnitRepository.findById(id);
 	}
 	@Operation(
 			summary = "Retrieve a valuation unit by name", 
-			description = "Get a valuation unit object by specifying its name and pageable from/to. The response is a valuation unit object with id, name, description and status and metadata.", 
+			description = "Get a valuation unit type object by specifying its name and pageable from/to. The response is a valuation unit type object with id, name, description and status and metadata.", 
 			tags = {"Valuation Objects", "Get" })
 	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnit.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })	
 	@GetMapping("/findbyname/{name}")
-	public List<ValuationUnit> findValuationUnitTypeByName(@PathVariable String name, @RequestParam int from, @RequestParam int to) {
+	public List<ValuationUnitType> findValuationUnitTypeByName(@PathVariable String name, @RequestParam int from, @RequestParam int to) {
 		if (to > from) {
 			Pageable pageable = PageRequest.of(from, to, Sort.by("name").descending());
 			return valuationUnitRepository.findAllByName(name, pageable);			
@@ -83,12 +83,12 @@ public class ValuationUnitController {
 
 	}
 	@PostMapping("/update")
-	public ValuationUnit updateValuationUnitType(@RequestBody ValuationUnit valuationUnitType) {
+	public ValuationUnitType updateValuationUnitType(@RequestBody ValuationUnitType valuationUnitType) {
 		return valuationUnitRepository.save(valuationUnitType);
 	}
 
 	@PostMapping("/create")
-	public Iterable<ValuationUnit> createValuationUnitType(@RequestBody ValuationUnit valuationUnitType) {
+	public Iterable<ValuationUnitType> createValuationUnitType(@RequestBody ValuationUnitType valuationUnitType) {
 		valuationUnitRepository.save(valuationUnitType);
 		return valuationUnitRepository.findAll();
 	}

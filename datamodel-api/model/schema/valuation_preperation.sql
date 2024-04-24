@@ -28,9 +28,9 @@ COMMENT ON COLUMN preparation.value_type.description
 COMMENT ON COLUMN preparation.value_type.status
     IS 'Status in active of the value type as active (a) or inactive (i).';
        
--- Table: preparation.valuation_unit
--- + SEQUENCE: preparation.valuation_unit_id_seq
-CREATE SEQUENCE IF NOT EXISTS preparation.valuation_unit_id_seq
+-- Table: preparation.valuation_unit_type
+-- + SEQUENCE: preparation.valuation_unit_type_id_seq
+CREATE SEQUENCE IF NOT EXISTS preparation.valuation_unit_type_id_seq
     INCREMENT 1
     START 1
     MINVALUE 1
@@ -38,13 +38,13 @@ CREATE SEQUENCE IF NOT EXISTS preparation.valuation_unit_id_seq
     CACHE 1
     CYCLE;
 
-ALTER SEQUENCE preparation.valuation_unit_id_seq
+ALTER SEQUENCE preparation.valuation_unit_type_id_seq
     OWNER TO postgres;	
-COMMENT ON SEQUENCE preparation.valuation_unit_id_seq IS 'Sequence number used as the basis for the valuation_unit id field. This sequence is used by the valuation_unit.';	
+COMMENT ON SEQUENCE preparation.valuation_unit_type_id_seq IS 'Sequence number used as the basis for the valuation_unit_type id field. This sequence is used by the valuation_unit_type.';	
 	
-CREATE TABLE IF NOT EXISTS preparation.valuation_unit
+CREATE TABLE IF NOT EXISTS preparation.valuation_unit_type
 (
-    id bigint NOT NULL DEFAULT nextval('preparation.valuation_unit_id_seq'::regclass),
+    id bigint NOT NULL DEFAULT nextval('preparation.valuation_unit_type_id_seq'::regclass),
 	name character varying(500) COLLATE pg_catalog."default" NOT NULL,    
     description character varying(1000) COLLATE pg_catalog."default",    
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,        
@@ -53,57 +53,57 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_unit
 	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
 	change_user character varying(50) COLLATE pg_catalog."default",
 	change_time timestamp without time zone NOT NULL DEFAULT now(),	
-    CONSTRAINT valuation_unit_pkey PRIMARY KEY (id),
-    CONSTRAINT valuation_unit_name_key UNIQUE (name)
+    CONSTRAINT valuation_unit_type_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_unit_type_name_key UNIQUE (name)
 )
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS preparation.valuation_unit
+ALTER TABLE IF EXISTS preparation.valuation_unit_type
     OWNER to postgres;
 
-COMMENT ON TABLE preparation.valuation_unit
-    IS 'List of the valuation units.';
+COMMENT ON TABLE preparation.valuation_unit_type
+    IS 'List of the valuation unit types.';
 
-COMMENT ON COLUMN preparation.valuation_unit.name
-    IS 'Display name of the valuation unit.';
+COMMENT ON COLUMN preparation.valuation_unit_type.name
+    IS 'Display name of the valuation unit type.';
 
-COMMENT ON COLUMN preparation.valuation_unit.description
-    IS 'Description of the valuation unit.';
+COMMENT ON COLUMN preparation.valuation_unit_type.description
+    IS 'Description of the valuation unit type.';
 
-COMMENT ON COLUMN preparation.valuation_unit.status
-    IS 'Status in active of the valuation unit as active (a) or inactive (i).';
+COMMENT ON COLUMN preparation.valuation_unit_type.status
+    IS 'Status in active of the valuation unit type as active (a) or inactive (i).';
 	
-COMMENT ON COLUMN preparation.valuation_unit.rowidentifier
+COMMENT ON COLUMN preparation.valuation_unit_type.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
 	
-COMMENT ON COLUMN preparation.valuation_unit.rowversion
+COMMENT ON COLUMN preparation.valuation_unit_type.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
-COMMENT ON COLUMN preparation.valuation_unit.change_action
+COMMENT ON COLUMN preparation.valuation_unit_type.change_action
     IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
 
-COMMENT ON COLUMN preparation.valuation_unit.change_user
+COMMENT ON COLUMN preparation.valuation_unit_type.change_user
     IS 'The user id of the last person to modify the row.';
 	
-COMMENT ON COLUMN preparation.valuation_unit.change_time
+COMMENT ON COLUMN preparation.valuation_unit_type.change_time
     IS 'The date and time the row was last modified.';
--- + Index: valuation_unit_on_rowidentifier
-CREATE INDEX IF NOT EXISTS valuation_unit_on_rowidentifier
-    ON preparation.valuation_unit USING btree
+-- + Index: valuation_unit_type_on_rowidentifier
+CREATE INDEX IF NOT EXISTS valuation_unit_type_on_rowidentifier
+    ON preparation.valuation_unit_type USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;    
 -- + Version: valuation_unit_historic
 CREATE OR REPLACE TRIGGER __track_changes
     BEFORE INSERT OR UPDATE 
-    ON preparation.valuation_unit
+    ON preparation.valuation_unit_type
     FOR EACH ROW
     EXECUTE FUNCTION public.f_for_trg_track_changes();
 CREATE OR REPLACE TRIGGER __track_history
     AFTER DELETE OR UPDATE 
-    ON preparation.valuation_unit
+    ON preparation.valuation_unit_type
     FOR EACH ROW
     EXECUTE FUNCTION public.f_for_trg_track_history();	
-CREATE TABLE IF NOT EXISTS preparation.valuation_unit_historic
+CREATE TABLE IF NOT EXISTS preparation.valuation_unit_type_historic
 (
     id bigint,
     name character varying(500),
@@ -116,8 +116,8 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_unit_historic
     change_time timestamp without time zone,
     change_time_valid_until timestamp without time zone DEFAULT now() NOT NULL
 );	
-COMMENT ON TABLE preparation.valuation_unit_historic
-    IS 'Version table for valuation unit.';	
+COMMENT ON TABLE preparation.valuation_unit_type_historic
+    IS 'Version table for valuation_unit_type.';	
 -- Table: preparation.valuation_unit_category
 -- + SEQUENCE: preparation.valuation_unit_category_id_seq
 CREATE SEQUENCE IF NOT EXISTS preparation.valuation_unit_category_id_seq
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_unit_category
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
     CONSTRAINT valuation_unit_category_pkey PRIMARY KEY (id),
 	CONSTRAINT valuation_unit_category_vunit_id_fkey FOREIGN KEY (vunit_id)
-        REFERENCES preparation.valuation_unit (id) MATCH SIMPLE
+        REFERENCES preparation.valuation_unit_type (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 )
@@ -155,16 +155,16 @@ ALTER TABLE IF EXISTS preparation.valuation_unit_category
     OWNER to postgres;
 
 COMMENT ON TABLE preparation.valuation_unit_category
-    IS 'List of the valuation unit types';
+    IS 'List of the valuation unit categories';
 
 COMMENT ON COLUMN preparation.valuation_unit_category.name
-    IS 'Display name of the type.';
+    IS 'Display name of the category.';
 
 COMMENT ON COLUMN preparation.valuation_unit_category.description
-    IS 'Description of the type.';
+    IS 'Description of the category.';
 
 COMMENT ON COLUMN preparation.valuation_unit_category.status
-    IS 'Status in active of the type as active (a) or inactive (i).';
+    IS 'Status in active of the category as active (a) or inactive (i).';
 
 COMMENT ON COLUMN preparation.valuation_unit_category.vunit_id
     IS 'Refer to identifying of a valuation unit.';

@@ -4,11 +4,11 @@ INSERT INTO preparation.value_type(code, display_value, description, status) VAL
 INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('COM','Compensation Value','This value is for compensating upon revocation of land use rights or land consolidation','a');
 INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('ISUR','Insurance Value','This value is for operating of insurance assessment', 'i');
 
--- Table: preparation.valuation_unit
-INSERT INTO preparation.valuation_unit(name, description, status) VALUES ('Parcel','Represents land on which a specific building or set of buildings is located','a');
-INSERT INTO preparation.valuation_unit(name, description, status) VALUES ('Building','Represents individual construction structure on the land parcel','a');
-INSERT INTO preparation.valuation_unit(name, description, status) VALUES ('Building Unit','Represents individual building units (e.g., apartments, stores, factory units) inside individual buildings, or even parts of a unit, e.g., store-front as required', 'a');
-INSERT INTO preparation.valuation_unit(name, description, status) VALUES ('Parcel & Building','Represents a combination of valuation units on parcel and building','i');
+-- Table: preparation.valuation_unit_type
+INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Parcel','Represents land on which a specific building or set of buildings is located','a');
+INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Building','Represents individual construction structure on the land parcel','a');
+INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Building Unit','Represents individual building units (e.g., apartments, stores, factory units) inside individual buildings, or even parts of a unit, e.g., store-front as required', 'a');
+INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Parcel & Building','Represents a combination of valuation units on parcel and building','i');
 
 -- Table: preparation.valuation_unit_category
 INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_id) VALUES ('Agricultural Land','Land used for Agriculture Purposes ','a', 1);

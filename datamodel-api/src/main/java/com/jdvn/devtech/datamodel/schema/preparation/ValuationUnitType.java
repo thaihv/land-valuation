@@ -27,10 +27,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "valuation_unit", schema = "preparation", uniqueConstraints = { @UniqueConstraint(name = "valuation_unit_name_key", columnNames = { "name" }) }, indexes = {
-		@Index(name = "valuation_unit_on_rowidentifier", columnList = "rowidentifier") })
-@Comment("List of the valuation units.")
-public class ValuationUnit extends DomainObject<Long> {
+@Table(name = "valuation_unit_type", schema = "preparation", uniqueConstraints = { @UniqueConstraint(name = "valuation_unit_type_name_key", columnNames = { "name" }) }, indexes = {
+		@Index(name = "valuation_unit_type_on_rowidentifier", columnList = "rowidentifier") })
+@Comment("List of the valuation unit types.")
+public class ValuationUnitType extends DomainObject<Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -39,18 +39,18 @@ public class ValuationUnit extends DomainObject<Long> {
 	private Long id;
 
 	@Column(length = 500, nullable = false)
-	@Comment("Display name of the valuation unit.")
+	@Comment("Display name of the valuation unit type.")
 	private String name;
 
 	@Column(length = 1000)
-	@Comment("Description of the valuation unit.")
+	@Comment("Description of the valuation unit type.")
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the valuation unit as active (a) or inactive (i).")
+	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
 	private char status;
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit_type")
     @JsonBackReference
     private Set<ValuationUnitCategory> valuationUnitCategories;
     
