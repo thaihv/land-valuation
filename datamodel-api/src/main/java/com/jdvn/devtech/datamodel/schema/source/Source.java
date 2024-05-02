@@ -56,11 +56,11 @@ public class Source extends DomainObject<Long>{
 
 	@Column
 	@Comment("Archive identifier for the source.")
-	private Long archive_id;
+	private String archive_id;
 
 	@Column
 	@Comment("Identifier of the source to a digital document in document table.")
-	private Long document_id;
+	private String document_id;
 
 	@Column(length = 64)
 	@Comment("Identifier of the source in an external document management system, if any.")
@@ -70,7 +70,7 @@ public class Source extends DomainObject<Long>{
 	@Comment("The name of the party that created the document.")
 	private String owner_name;
 
-	@Column(length = 255)
+	@Column(length = 40)
 	@Comment("The document version.")
 	private String version;
 

@@ -1,16 +1,4 @@
 -- Table: document.document
--- + SEQUENCE: document.document_id_seq
-CREATE SEQUENCE IF NOT EXISTS document.document_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1
-    CYCLE;
-
-ALTER SEQUENCE document.document_id_seq
-    OWNER TO postgres;
-COMMENT ON SEQUENCE document.document_id_seq IS 'Sequence number used as the basis for the document id field. This sequence is used by the document.';
 -- + SEQUENCE: document.document_nr_seq
 CREATE SEQUENCE IF NOT EXISTS document.document_nr_seq
     CYCLE
@@ -28,7 +16,7 @@ COMMENT ON SEQUENCE document.document_nr_seq
 	
 CREATE TABLE IF NOT EXISTS document.document
 (
-    id bigint NOT NULL DEFAULT nextval('document.document_id_seq'::regclass),
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	unique_number character varying(20) COLLATE pg_catalog."default" NOT NULL,
 	extension character varying(5) COLLATE pg_catalog."default" NOT NULL,
 	mime_type character varying(255) COLLATE pg_catalog."default",
@@ -104,7 +92,7 @@ CREATE OR REPLACE TRIGGER __track_history
 -- Table: document.document_historic
 CREATE TABLE IF NOT EXISTS document.document_historic
 (
-	id bigint,
+	id character varying(40) COLLATE pg_catalog."default",
 	unique_number character varying(20) COLLATE pg_catalog."default",
 	extension character varying(5) COLLATE pg_catalog."default",
 	mime_type character varying(255) COLLATE pg_catalog."default",
@@ -143,7 +131,7 @@ COMMENT ON SEQUENCE document.document_chunk_id_seq IS 'Sequence number used as t
 CREATE TABLE IF NOT EXISTS document.document_chunk
 (
     id bigint NOT NULL DEFAULT nextval('document.document_chunk_id_seq'::regclass),
-	document_id bigint,
+	document_id character varying(40) COLLATE pg_catalog."default",
 	claim_id bigint,
 	start_position integer,
     body bytea NOT NULL,

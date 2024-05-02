@@ -107,8 +107,8 @@ CREATE TABLE IF NOT EXISTS source.source
 	assess_nr character varying(20) COLLATE pg_catalog."default" NOT NULL,
 	reference_nr character varying(255) COLLATE pg_catalog."default",
 	content character varying(4000) COLLATE pg_catalog."default",
-	archive_id bigint,
-	document_id bigint,
+	archive_id character varying(40) COLLATE pg_catalog."default",
+	document_id character varying(40) COLLATE pg_catalog."default",
 	ext_archive_id character varying(64) COLLATE pg_catalog."default",
 	owner_name character varying(255) COLLATE pg_catalog."default",
 	version character varying(255) COLLATE pg_catalog."default",
@@ -228,22 +228,9 @@ CREATE INDEX IF NOT EXISTS source_on_rowidentifier
     TABLESPACE pg_default;
 	
 -- Table: source.archive
--- + SEQUENCE: source.archive_id_seq
-CREATE SEQUENCE IF NOT EXISTS source.archive_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 99999999
-    CACHE 1
-    CYCLE;
-
-ALTER SEQUENCE source.archive_id_seq
-    OWNER TO postgres;	
-COMMENT ON SEQUENCE source.archive_id_seq IS 'Sequence number used as the basis for the archive id field. This sequence is used by the archive.';
-
 CREATE TABLE IF NOT EXISTS source.archive
 (
-    id bigint NOT NULL DEFAULT nextval('source.archive_id_seq'::regclass),
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	name character varying(250) COLLATE pg_catalog."default" NOT NULL,
 	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
