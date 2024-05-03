@@ -13,30 +13,30 @@ import com.jdvn.devtech.datamodel.schema.preparation.ValueType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/* 
+ * Create Excel report using org.apache.poi 
+ * To use predefine xls file template using functions from org.jxlsjxls-poi  
+ * */
 public class ValueTypeExcel extends AbstractXlsxView {
-
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		// define excel file name to be exported
+			HttpServletResponse response) throws Exception {		
+		// Define excel file name to be exported
 		response.addHeader("Content-Disposition", "attachment;fileName=ValueTypeData.xlsx");
-
-		// read data provided by controller
+		// Read data provided by controller
 		@SuppressWarnings("unchecked")
 		List<ValueType> valueTypes = (List<ValueType>) model.get("list");
 
-		// create one sheet
+		// Create sheet
 		Sheet sheet = workbook.createSheet("ValueType");
-
-		// create row0 as a header
+		// Create row0 as a header
 		Row row0 = sheet.createRow(0);
 		row0.createCell(0).setCellValue("Code");
 		row0.createCell(1).setCellValue("Short");
 		row0.createCell(2).setCellValue("Description");		
 		row0.createCell(3).setCellValue("Status");
 
-		// create row1 onwards from List<T>
+		// Create rows onwards from List<T>
 		int rowNum = 1;
 		for (ValueType vt : valueTypes) {
 			Row row = sheet.createRow(rowNum++);
