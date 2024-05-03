@@ -56,11 +56,6 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
@@ -100,6 +95,12 @@
 			<artifactId>colt</artifactId>
 			<version>1.2.0</version>
 		</dependency>			
+		<!-- unit-ri 1.0.3 included javax.measure.unit-api 1.0 -->
+		<dependency>
+		    <groupId>tec.units</groupId>
+		    <artifactId>unit-ri</artifactId>
+		    <version>1.0.3</version>
+		</dependency>
 						
 	</dependencies>
 
