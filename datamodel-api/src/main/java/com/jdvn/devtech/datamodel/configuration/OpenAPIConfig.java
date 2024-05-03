@@ -17,10 +17,10 @@ public class OpenAPIConfig {
 
     Contact contact = new Contact();
     contact.setEmail("thaihv@uitgis.com");
-    contact.setName("thaihv");
+    contact.setName("Bobby");
     contact.setUrl("https://www.tamky.xyz");
 
-    License mitLicense = new License().name("JungdoUIT License").url("https://www.tamky.xyz/");
+    License mitLicense = new License().name("Bobby License").url("https://www.tamky.xyz/");
 
     Info info = new Info()
         .title("Property Valuation Management APIs")

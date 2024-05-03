@@ -1,5 +1,6 @@
 package com.jdvn.devtech.datamodel.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jdvn.devtech.datamodel.repository.ValueTypeRepository;
 import com.jdvn.devtech.datamodel.schema.preparation.ValueType;
+import com.jdvn.devtech.datamodel.view.ValueTypeExcel;
+import com.jdvn.devtech.datamodel.view.ValueTypePdf;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -73,4 +77,25 @@ public class ValueTypeController {
 	public void deleteValueType(@PathVariable String code) {
 		valueTypeRepository.deleteById(code);
 	}
+	
+	/*
+	 * APIs to render views beside html or json view
+	 * Pdf and Excel for example. 
+	 * */
+	@GetMapping(path ="/toExcel")
+	public ModelAndView exportToExcel() {
+	    ModelAndView mav = new ModelAndView();
+	    mav.setView(new ValueTypeExcel());
+	    List<ValueType> list= (List<ValueType>) valueTypeRepository.findAll();	    
+	    mav.addObject("list", list);
+	    return mav; 
+	}
+	@GetMapping(path ="/toPdf")
+	public ModelAndView exportToPdf() {
+	    ModelAndView mav = new ModelAndView();
+	    mav.setView(new ValueTypePdf());
+	    List<ValueType> list= (List<ValueType>) valueTypeRepository.findAll();	    
+	    mav.addObject("list", list);
+	    return mav; 
+	}	
 }
