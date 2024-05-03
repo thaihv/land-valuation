@@ -1,4 +1,4 @@
-package com.jdvn.devtech.util.regression;
+package com.jdvn.devtech.util.performance.regression;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

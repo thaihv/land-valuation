@@ -1,4 +1,4 @@
-package com.jdvn.devtech.util;
+package com.jdvn.devtech.util.performance.regression;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
