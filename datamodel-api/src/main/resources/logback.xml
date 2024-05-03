@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </layout>
+    </appender>
+    
+    <appender name="INFO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	        <fileNamePattern>./logs/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+	    </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="ANALYTIC-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	        <fileNamePattern>./logs/analytic-%d{yyyy-MM-dd}.log</fileNamePattern>
+	    </rollingPolicy>
+        <encoder>
+            <pattern>%msg %n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="EXCEPTION-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	        <fileNamePattern>./logs/exception-%d{yyyy-MM-dd}.log</fileNamePattern>
+	    </rollingPolicy>
+        <encoder>
+            <pattern>%msg %n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- additivity=false ensures analytics data only goes to the analytics log -->
+    <logger name="analytic" level="DEBUG" additivity="false">
+        <appender-ref ref="ANALYTIC-FILE"/>
+    </logger>
+    <logger name="exception" level="DEBUG" additivity="false">
+        <appender-ref ref="EXCEPTION-FILE"/>
+    </logger>
+    <logger name="info" level="INFO" additivity="false">
+        <appender-ref ref="INFO-FILE"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="INFO-FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

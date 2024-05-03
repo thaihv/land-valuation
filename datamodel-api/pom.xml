@@ -40,7 +40,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-						
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>						
 		<!-- PostgreSQL Driver -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -82,12 +86,21 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
 		</dependency>	
+		
 		<!-- OpenAPI -->
 		<dependency>
 		    <groupId>org.springdoc</groupId>
 		    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 		    <version>2.2.0</version>
-		</dependency>								
+		</dependency>	
+		
+		<!-- Libraries for High Performance Scientific and Technical Computing -->
+		<dependency>
+			<groupId>colt</groupId>
+			<artifactId>colt</artifactId>
+			<version>1.2.0</version>
+		</dependency>			
+						
 	</dependencies>
 
 	<build>
