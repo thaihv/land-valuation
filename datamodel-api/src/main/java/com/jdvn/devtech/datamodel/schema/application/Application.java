@@ -1,9 +1,11 @@
 package com.jdvn.devtech.datamodel.schema.application;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 
@@ -16,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -67,7 +70,7 @@ public class Application extends DomainObject<String>{
 	
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "action_code", foreignKey = @ForeignKey(name = "application_action_code_fkey"))
+    @JoinColumn(name = "action_code", foreignKey = @ForeignKey(name = "application_action_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodge'::character varying")
 	@Comment("The last action that happended to the application. E.g. lodged, assigned, validated, approved, etc.")
     private ApplicationActionType application_action_type;
     
@@ -77,7 +80,7 @@ public class Application extends DomainObject<String>{
 	
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "status_code", foreignKey = @ForeignKey(name = "application_status_code_fkey"))
+    @JoinColumn(name = "status_code", foreignKey = @ForeignKey(name = "application_status_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodge'::character varying")
 	@Comment("The status of the application.")
     private ApplicationStatusType application_status_type;
     
@@ -104,6 +107,12 @@ public class Application extends DomainObject<String>{
     @Column(length = 100)
     @Comment("The number of the receipt issued as proof of payment. If more than one receipt is issued in the case of part payments, the receipts numbers can be listed in this feild separated by commas.")
     private String receipt_reference;
+    
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "application")
+    @JsonBackReference
+    private Set<Service> services;
+    
     
 	@Override
 	public String print() {
