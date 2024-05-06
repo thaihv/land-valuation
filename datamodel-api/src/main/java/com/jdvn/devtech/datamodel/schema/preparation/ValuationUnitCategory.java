@@ -53,7 +53,7 @@ public class ValuationUnitCategory extends DomainObject<Long> {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "vunit_type_id", foreignKey = @ForeignKey(name = "valuation_unit_type_category_vunit_type_id_fkey"))
+    @JoinColumn(name = "vunit_type_id", foreignKey = @ForeignKey(name = "valuation_unit_category_vunit_type_id_fkey"))
     @Comment("Refer to identifying of a valuation unit type.")
     private ValuationUnitType valuation_unit_type;
 
