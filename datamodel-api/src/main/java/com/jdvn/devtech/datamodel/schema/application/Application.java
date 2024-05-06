@@ -81,6 +81,30 @@ public class Application extends DomainObject<String>{
 	@Comment("The status of the application.")
     private ApplicationStatusType application_status_type;
     
+    @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+    @Comment("The sum of all service fees.")
+    private Double services_fee;
+    
+    @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+    @Comment("The tax applicable based on the services fee.")
+    private Double tax;
+    
+    @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+    @Comment("The sum of the services fee and tax.")
+    private Double total_fee;
+    
+    @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+    @Comment("The amount paid by the applicant. Usually will be the full amount (total_fee), but can be a partial payment if the valuation office accepts partial payments.")
+    private Double total_amount_paid;
+    
+    @Column(columnDefinition = "boolean NOT NULL DEFAULT false")
+    @Comment("Flag to indicate a sufficient amount (or all) of the fee has been paid. Once set, the application can be assigned and worked on.")
+    private Boolean fee_paid;
+    
+    @Column(length = 100)
+    @Comment("The number of the receipt issued as proof of payment. If more than one receipt is issued in the case of part payments, the receipts numbers can be listed in this feild separated by commas.")
+    private String receipt_reference;
+    
 	@Override
 	public String print() {
 		return id;

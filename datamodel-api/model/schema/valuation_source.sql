@@ -103,7 +103,7 @@ COMMENT ON SEQUENCE source.source_id_seq IS 'Sequence number used as the basis f
 	
 CREATE TABLE IF NOT EXISTS source.source
 (
-    id bigint NOT NULL DEFAULT nextval('source.source_id_seq'::regclass),
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	assess_nr character varying(20) COLLATE pg_catalog."default" NOT NULL,
 	reference_nr character varying(255) COLLATE pg_catalog."default",
 	content character varying(4000) COLLATE pg_catalog."default",
@@ -303,7 +303,7 @@ COMMENT ON COLUMN source.spatial_source_type.status
 
 CREATE TABLE IF NOT EXISTS source.spatial_source
 (
-    id bigint NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     procedure character varying(255) COLLATE pg_catalog."default",
     type_code character varying(20) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
@@ -362,7 +362,7 @@ CREATE INDEX IF NOT EXISTS spatial_source_on_rowidentifier
 -- Table: source.power_of_attorney
 CREATE TABLE IF NOT EXISTS source.power_of_attorney
 (
-    id bigint NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     attorney_name character varying(500) COLLATE pg_catalog."default",
     person_name character varying(500) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),

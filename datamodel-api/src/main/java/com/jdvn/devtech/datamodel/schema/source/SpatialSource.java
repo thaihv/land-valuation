@@ -30,13 +30,13 @@ import lombok.Setter;
 @Table(name = "spatial_source", schema = "source", indexes = {
 		@Index(name = "spatial_source_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("A spatial source may be the final (sometimes formal) documents, or all documents related to a survey in valuation process.")
-public class SpatialSource extends DomainObject<Long>{
+public class SpatialSource extends DomainObject<String>{
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Comment("Spatial source identifier.")
-	@Column(name = "id")	
-	private Long id;
+	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
+	private String id;
 
 	@Column(length = 255)
 	@Comment("Procedures, steps or method adopted.")
@@ -55,6 +55,6 @@ public class SpatialSource extends DomainObject<Long>{
 	
 	@Override
 	public String print() {
-		return "Source ID" + Long.toString(id);
+		return "Source ID" + id;
 	}
 }

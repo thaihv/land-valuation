@@ -26,13 +26,13 @@ import lombok.Setter;
 @Table(name = "power_of_attorney", schema = "source", indexes = {
 		@Index(name = "power_of_attorney_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Captures details for power of attorney documents.")
-public class PowerAttorney extends DomainObject<Long>{
+public class PowerAttorney extends DomainObject<String>{
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Comment("Identifier for the power of attorney record. Matches the source identifier for the power of attorney record.")
-	@Column(name = "id")	
-	private Long id;
+	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
+	private String id;
 
 	@Column(length = 500)
 	@Comment("The name of the person that is granting the power of attorney (a.k.a. grantor).")
@@ -49,6 +49,6 @@ public class PowerAttorney extends DomainObject<Long>{
 	
 	@Override
 	public String print() {
-		return "Power of Attorney ID" + Long.toString(id);
+		return "Power of Attorney ID" + id;
 	}
 }
