@@ -116,17 +116,6 @@ public class Source extends DomainObject<Long>{
 	@Comment("The code describing the availability status of the document.")
 	private AvailabilityStatusType availability_status_type;
 	
-	@Column(length = 20)
-	@Comment("The security classification for this Source. Only users with the security classification (or a higher classification) "
-			+ "will be able to view the record. If null, the record is considered unrestricted.")
-	private String classification_code;
-	
-	@Column(length = 20)
-	@Comment("The redact classification for this Source. Only users with the redact classification (or a higher classification) "
-			+ "will be able to view the record with un-redacted fields. If null, the record is considered unrestricted and "
-			+ "no redaction to the record will occur unless bulk redaction classifications have been set for fields of the record.")
-	private String redact_code;
-
     @OneToOne(mappedBy = "source", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private SpatialSource spatial_source;

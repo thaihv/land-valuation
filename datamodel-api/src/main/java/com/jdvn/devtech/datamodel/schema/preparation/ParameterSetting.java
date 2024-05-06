@@ -23,7 +23,7 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "parameter_setting", schema = "preparation")
 @Comment("List of parameter settings in format Key/Value")
-/* Foe demo composed key using IdClass */
+/* For demo composed key using IdClass */
 @IdClass(SetingId.class)
 public class ParameterSetting {  
 	@Id

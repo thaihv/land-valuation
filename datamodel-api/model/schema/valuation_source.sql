@@ -120,9 +120,7 @@ CREATE TABLE IF NOT EXISTS source.source
     description character varying(255) COLLATE pg_catalog."default",
     type_code character varying(20) COLLATE pg_catalog."default",
     present_format character varying(20) COLLATE pg_catalog."default",
-    availability_status_code character varying(20) COLLATE pg_catalog."default",
-    classification_code character varying(20) COLLATE pg_catalog."default",
-    redact_code character varying(20) COLLATE pg_catalog."default",    
+    availability_status_code character varying(20) COLLATE pg_catalog."default", 
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,	
 	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
@@ -202,11 +200,6 @@ COMMENT ON COLUMN source.source.present_format
 COMMENT ON COLUMN source.source.availability_status_code
     IS 'The code describing the availability status of the document.';
 	
-COMMENT ON COLUMN source.source.classification_code
-    IS 'The security classification for this Source. Only users with the security classification (or a higher classification) will be able to view the record. If null, the record is considered unrestricted.';
-
-COMMENT ON COLUMN source.source.redact_code
-    IS 'The redact classification for this Source. Only users with the redact classification (or a higher classification) will be able to view the record with un-redacted fields. If null, the record is considered unrestricted and no redaction to the record will occur unless bulk redaction classifications have been set for fields of the record.';
 COMMENT ON COLUMN source.source.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
 

@@ -25,7 +25,7 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "application_status_type", schema = "application", uniqueConstraints = { @UniqueConstraint(name = "application_status_type_display_value_key", columnNames = { "display_value" })})
 @Comment("Code list of application status types.")
-public class Application_status_type {
+public class ApplicationStatusType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("The code for the application status type.")
@@ -45,5 +45,9 @@ public class Application_status_type {
 	
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "application_status_type")
     @JsonBackReference
-    private Set<Application_action_type> application_action_types;
+    private Set<ApplicationActionType> application_action_types;
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "application_status_type")
+    @JsonBackReference
+    private Set<Application> applications;
 }
