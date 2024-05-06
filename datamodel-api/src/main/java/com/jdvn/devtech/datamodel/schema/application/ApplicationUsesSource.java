@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -20,7 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "application_uses_source", schema = "application")
+@Table(name = "application_uses_source", schema = "application", indexes = {
+		@Index(name = "application_uses_source_on_application_id", columnList = "application_id"), 
+		@Index(name = "application_uses_source_on_source_id", columnList = "source_id"),
+		@Index(name = "application_uses_source_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the application to the sources (documents) submitted with the application.")
 @IdClass(ApplicationSourceId.class)
 public class ApplicationUsesSource extends DomainObject<String> {

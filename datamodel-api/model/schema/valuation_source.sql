@@ -413,3 +413,68 @@ CREATE INDEX IF NOT EXISTS power_of_attorney_on_rowidentifier
     ON source.power_of_attorney USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;	
+	
+-- Table: application.application_uses_source
+CREATE TABLE IF NOT EXISTS application.application_uses_source
+(
+    application_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    source_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,    
+    change_user character varying(50) COLLATE pg_catalog."default",
+	change_time timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT application_uses_source_pkey PRIMARY KEY (application_id, source_id),
+    CONSTRAINT application_uses_source_application_id_fkey FOREIGN KEY (application_id)
+        REFERENCES application.application (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT application_uses_source_source_id_fkey FOREIGN KEY (source_id)
+        REFERENCES source.source (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.application_uses_source
+    OWNER to postgres;
+
+COMMENT ON TABLE application.application_uses_source
+    IS 'Links the application to the sources (documents) submitted with the application.';
+
+COMMENT ON COLUMN application.application_uses_source.application_id
+    IS 'Identifier for the application the record is associated to.';
+
+COMMENT ON COLUMN application.application_uses_source.source_id
+    IS 'Identifier of the source associated to the application.';
+
+COMMENT ON COLUMN application.application_uses_source.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN application.application_uses_source.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+	
+COMMENT ON COLUMN application.application_uses_source.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN application.application_uses_source.change_user
+    IS 'The user id of the last person to modify the row.';
+	
+COMMENT ON COLUMN application.application_uses_source.change_time
+    IS 'The date and time the row was last modified.';
+-- Index: application_uses_source_on_application_id
+CREATE INDEX IF NOT EXISTS application_uses_source_on_application_id
+    ON application.application_uses_source USING btree
+    (application_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: application_uses_source_on_rowidentifier
+CREATE INDEX IF NOT EXISTS application_uses_source_on_rowidentifier
+    ON application.application_uses_source USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: application_uses_source_on_source_id
+CREATE INDEX IF NOT EXISTS application_uses_source_on_source_id
+    ON application.application_uses_source USING btree
+    (source_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;	
