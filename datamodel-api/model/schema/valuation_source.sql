@@ -296,11 +296,29 @@ COMMENT ON COLUMN source.spatial_source_type.display_value
     IS 'Displayed value of the spatial source type.';
 
 COMMENT ON COLUMN source.spatial_source_type.status
-    IS 'Status of the spatial source type as current (c) or noncurrent (x).';	
+    IS 'Status of the spatial source type as current (c) or noncurrent (x).';
+
+-- Table: application.request_type_requires_source_type
+CREATE TABLE IF NOT EXISTS application.request_type_requires_source_type
+(
+    request_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    source_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT request_type_requires_source_type_request_type_code_fkey FOREIGN KEY (request_type_code)
+        REFERENCES application.request_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT request_type_requires_source_type_source_type_code_fkey FOREIGN KEY (source_type_code)
+        REFERENCES source.source_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.request_type_requires_source_type
+    OWNER to postgres;
+	
 -- Table: source.spatial_source
-
--- DROP TABLE IF EXISTS source.spatial_source;
-
 CREATE TABLE IF NOT EXISTS source.spatial_source
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL,

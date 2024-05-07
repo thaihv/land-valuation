@@ -115,7 +115,7 @@ ALTER TABLE IF EXISTS application.application
     OWNER to postgres;
 
 COMMENT ON TABLE application.application
-    IS 'Capture details and manage requests received by the valuation office for a plan.';
+    IS 'Application or Plan, to capture details and manage requests received by the valuation office for a plan.';
 
 COMMENT ON COLUMN application.application.id
     IS 'Identifier for the application.';
@@ -187,5 +187,35 @@ CREATE INDEX IF NOT EXISTS application_on_rowidentifier
     ON application.application USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;	
+
+-- Table: application.request_type
+CREATE TABLE IF NOT EXISTS application.request_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,    
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+	description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT request_type_pkey PRIMARY KEY (code),
+    CONSTRAINT request_type_display_value_key UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.request_type
+    OWNER to postgres;
+
+COMMENT ON TABLE application.request_type
+    IS 'Code list of request types. Request types identify the different types of services provided.';
+
+COMMENT ON COLUMN application.request_type.code
+    IS 'The code for the request type.';
+
+COMMENT ON COLUMN application.request_type.display_value
+    IS 'Displayed value of the application action type.';
 	
+COMMENT ON COLUMN application.request_type.description
+    IS 'Description of the application action type.';	
+
+COMMENT ON COLUMN application.request_type.status
+    IS 'Status in active of the application action type as active (a) or inactive (i).';	
 	

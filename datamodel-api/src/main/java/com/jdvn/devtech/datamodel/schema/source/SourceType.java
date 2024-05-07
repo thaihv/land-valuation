@@ -1,4 +1,6 @@
 package com.jdvn.devtech.datamodel.schema.source;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.Comment;
@@ -6,11 +8,13 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.jdvn.devtech.datamodel.schema.application.RequestType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -46,4 +50,9 @@ public class SourceType {
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "source_type")
     @JsonBackReference
     private Set<Source> sources;
+    
+    /* Control many-to-many relationship between source and request_type, 
+     * source_types is a variable in RequestType  */
+    @ManyToMany(mappedBy = "source_types")
+    private List<RequestType> request_types = new ArrayList<>();
 }

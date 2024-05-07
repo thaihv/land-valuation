@@ -29,7 +29,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "service", schema = "application", indexes = {
 		@Index(name = "service_on_rowidentifier", columnList = "rowidentifier") })
-@Comment("Used to control the type of plan application as mass appraisals or single appraisals.")
+@Comment("Used to control the type of plan application as mass appraisals or single or individual appraisals.")
 public class Service extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -43,20 +43,23 @@ public class Service extends DomainObject<String>{
 	@Comment("Identifier for the application the service is associated with.")
     private Application application;
     
-
-	@Comment("The request type identifying the purpose of the service")
-	private String request_type_code;
-	
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "request_type_code", foreignKey = @ForeignKey(name = "service_request_type_code_fkey"), columnDefinition="character varying(20) NOT NULL")
+	@Comment("The request type identifying the purpose of the service.")
+    private RequestType request_type;
+    
+    @Column(columnDefinition = "integer NOT NULL DEFAULT 0")
 	@Comment("The relative order of the service within the application. Can be used to imply a workflow sequence for application related tasks.")
-	private String service_order;
+	private int service_order;
 	
 	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
 	@Comment("The date the service was lodged on the application. Typically will match the application lodgement_datetime, but may vary if a service is added after the application is lodged.")
 	private Date lodging_datetime;
 	
-	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
-	@Comment("Date when the service is expected to be completed by. Calculated using the service lodging_datetime and the number_days_to_complete for the service request type.")
-	private Date expected_completion_date;
+	@Column(columnDefinition = "integer NOT NULL DEFAULT 10")
+	@Comment("The number of days it should take for the service to be completed.")
+	private int nr_days_to_complete;
     
 	@Comment("Service status code.")
 	private String status_code;
@@ -69,15 +72,15 @@ public class Service extends DomainObject<String>{
 	private String action_notes;
 	
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The fixed fee charged for the service. Obtained from the base_fee value in request_type.")
+    @Comment("The fixed fee charged for the service.")
     private Double base_fee;
     
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application multiplied by the request_type.area_base_fee.")
+    @Comment("The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application.")
     private Double area_fee;
     
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The value fee charged for the service. Calculated from the sum of all values listed for properties on the application multiplied by the request_type.value_base_fee.")
+    @Comment("The value fee charged for the service. Calculated from the sum of all values listed for properties on the application.")
     private Double value_fee;
     
 	@Override

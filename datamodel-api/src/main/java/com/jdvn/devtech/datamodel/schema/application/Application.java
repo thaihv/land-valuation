@@ -32,7 +32,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "application", schema = "application", indexes = {
 		@Index(name = "application_on_rowidentifier", columnList = "rowidentifier") })
-@Comment("Capture details and manage requests received by the valuation office for a plan.")
+@Comment("Application or Plan, to capture details and manage requests received by the valuation office for a plan.")
 public class Application extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -108,11 +108,9 @@ public class Application extends DomainObject<String>{
     @Comment("The number of the receipt issued as proof of payment. If more than one receipt is issued in the case of part payments, the receipts numbers can be listed in this feild separated by commas.")
     private String receipt_reference;
     
-    
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "application")
     @JsonBackReference
     private Set<Service> services;
-    
     
 	@Override
 	public String print() {
