@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdvn.devtech.datamodel.repository.ValuationUnitTypeRepository;
-import com.jdvn.devtech.datamodel.schema.preparation.ValuationUnitType;
+import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

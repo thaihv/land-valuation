@@ -7,6 +7,8 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitType;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,6 +63,6 @@ public class ValuationParameter {
 	
 	/* Control many-to-many relationship between category and parameter */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "categories_parameters_links", schema = "preparation", joinColumns = @JoinColumn(name = "parameter_id"), inverseJoinColumns = @JoinColumn(name = "category_id"), foreignKey = @ForeignKey(name = "categories_parameters_links_parameter_id_fkey"), inverseForeignKey = @ForeignKey(name = "categories_parameters_links_category_id_fkey"))
-	private List<ValuationUnitCategory> vunit_categoties = new ArrayList<>();
+	@JoinTable(name = "types_parameters_links", schema = "preparation", joinColumns = @JoinColumn(name = "parameter_id"), inverseJoinColumns = @JoinColumn(name = "type_id"), foreignKey = @ForeignKey(name = "types_parameters_links_parameter_id_fkey"), inverseForeignKey = @ForeignKey(name = "types_parameters_links_type_id_fkey"))
+	private List<ValuationUnitType> vunit_types = new ArrayList<>();
 }

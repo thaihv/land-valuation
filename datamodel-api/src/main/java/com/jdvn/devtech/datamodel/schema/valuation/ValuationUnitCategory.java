@@ -1,4 +1,4 @@
-package com.jdvn.devtech.datamodel.schema.preparation;
+package com.jdvn.devtech.datamodel.schema.valuation;
 
 import java.util.Set;
 
@@ -27,10 +27,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "valuation_unit_type", schema = "preparation", uniqueConstraints = { @UniqueConstraint(name = "valuation_unit_type_name_key", columnNames = { "name" }) }, indexes = {
-		@Index(name = "valuation_unit_type_on_rowidentifier", columnList = "rowidentifier") })
-@Comment("List of the valuation unit types.")
-public class ValuationUnitType extends DomainObject<Long> {
+@Table(name = "valuation_unit_category", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "valuation_unit_category_name_key", columnNames = { "name" }) }, indexes = {
+		@Index(name = "valuation_unit_category_on_rowidentifier", columnList = "rowidentifier") })
+@Comment("List of the valuation unit categories.")
+public class ValuationUnitCategory extends DomainObject<Long> {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -39,25 +40,23 @@ public class ValuationUnitType extends DomainObject<Long> {
 	private Long id;
 
 	@Column(length = 500, nullable = false)
-	@Comment("Display name of the valuation unit type.")
+	@Comment("Display name of the valuation unit category.")
 	private String name;
 
 	@Column(length = 1000)
-	@Comment("Description of the valuation unit type.")
+	@Comment("Description of the valuation unit category.")
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
+	@Comment("Status in active of the valuation unit category as active (a) or inactive (i).")
 	private char status;
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit_type")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit_category")
     @JsonBackReference
-    private Set<ValuationUnitCategory> valuationUnitCategories;
+    private Set<ValuationUnitType> valuationUnitTypes;
     
 	@Override
 	public String print() {
 		return name;
 	}
-	
-
 }

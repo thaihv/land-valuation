@@ -1,24 +1,24 @@
+-- Table: valuation.valuation_unit_category
+INSERT INTO valuation.valuation_unit_category(name, description, status) VALUES ('Parcel','Represents land on which a specific building or set of buildings is located','a');
+INSERT INTO valuation.valuation_unit_category(name, description, status) VALUES ('Building','Represents individual construction structure on the land parcel','a');
+INSERT INTO valuation.valuation_unit_category(name, description, status) VALUES ('Building Unit','Represents individual building units (e.g., apartments, stores, factory units) inside individual buildings, or even parts of a unit, e.g., store-front as required', 'a');
+INSERT INTO valuation.valuation_unit_category(name, description, status) VALUES ('Parcel & Building','Represents a combination of valuation units on parcel and building','i');
+
+-- Table: valuation.valuation_unit_type
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Agricultural Land','Land used for Agriculture Purposes ','a', 1);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Forest Land','Land used for Forestry Purposes','a', 1);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Building Land','Land is used for Development Purposes as Building or Living','a', 1);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Single Family House','House for Individuals or Households','a', 2);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Residential Condominium','Apartment for Residential Living','a', 3);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Commercial Condominium','Apartment for Commercial Buildings','a', 3);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Parking Space','A Space Part of Building for Parking','i', 3);
+INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Garage','Area included to Building for Parking','i', 3);
+
 -- Table: preparation.value_type
 INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('TAX','Tax Value','This value is for taxing operations','a');
 INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('FIN','Financing Value','This value is for financing of real estate as sale,buy,rent or lease','a');
 INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('COM','Compensation Value','This value is for compensating upon revocation of land use rights or land consolidation','a');
 INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('ISUR','Insurance Value','This value is for operating of insurance assessment', 'i');
-
--- Table: preparation.valuation_unit_type
-INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Parcel','Represents land on which a specific building or set of buildings is located','a');
-INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Building','Represents individual construction structure on the land parcel','a');
-INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Building Unit','Represents individual building units (e.g., apartments, stores, factory units) inside individual buildings, or even parts of a unit, e.g., store-front as required', 'a');
-INSERT INTO preparation.valuation_unit_type(name, description, status) VALUES ('Parcel & Building','Represents a combination of valuation units on parcel and building','i');
-
--- Table: preparation.valuation_unit_category
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Agricultural Land','Land used for Agriculture Purposes ','a', 1);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Forest Land','Land used for Forestry Purposes','a', 1);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Building Land','Land is used for Development Purposes as Building or Living','a', 1);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Single Family House','House for Individuals or Households','a', 2);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Residential Condominium','Apartment for Residential Living','a', 3);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Commercial Condominium','Apartment for Commercial Buildings','a', 3);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Parking Space','A Space Part of Building for Parking','i', 3);
-INSERT INTO preparation.valuation_unit_category(name, description, status, vunit_type_id) VALUES ('Garage','Area included to Building for Parking','i', 3);
 
 -- Table: preparation.valuation_parameter
 INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('ID','String','Property label from Cadastre.',true,true,true);
@@ -61,125 +61,125 @@ INSERT INTO preparation.valuation_parameter(name, type, description, is_active, 
 INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Street Side','Numeric','Indicates distance to street the property standing.',true,true,false);
 INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Closest Street Type ','String','Indicates type of street the property is near by or contermious.',true,true,false);
 
--- Table: preparation.categories_parameters_links
+-- Table: preparation.types_parameters_links
 -- Categoty: Agricultural Land
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,3);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,5);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,6);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,7);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,8);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,9);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,10);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,11);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,12);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,13);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (1,14);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,3);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,5);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,6);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,7);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,8);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,9);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,10);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,11);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,12);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,13);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (1,14);
 -- Categoty: Forest Land
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,6);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,11);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,14);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (2,15);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,6);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,11);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,14);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (2,15);
 -- Categoty: Building Land
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,5);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,6);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,16);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,17);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (3,18);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,5);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,6);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,16);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,17);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (3,18);
 
 -- Categoty: Single Family House
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,6);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,16);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,17);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,18);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,19);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,20);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,21);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,22);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,23);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,24);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,25);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,26);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,27);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,28);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,29);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,30);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,31);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,32);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,33);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,34);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,38);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (4,39);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,6);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,16);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,17);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,18);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,19);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,20);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,21);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,22);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,23);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,24);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,25);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,26);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,27);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,28);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,29);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,30);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,31);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,32);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,33);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,34);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,38);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (4,39);
 -- Categoty: Residential Condominium
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,17);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,20);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,21);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,22);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,23);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,24);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,25);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,26);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,27);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,28);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,29);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,30);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,31);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,32);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,33);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,34);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,38);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (5,39);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,17);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,20);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,21);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,22);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,23);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,24);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,25);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,26);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,27);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,28);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,29);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,30);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,31);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,32);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,33);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,34);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,38);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (5,39);
 -- Categoty: Commercial Condominium
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,17);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,20);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,21);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,22);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,23);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,24);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,25);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,26);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,27);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,28);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,29);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,30);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,31);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,32);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,33);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,34);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,35);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,36);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,37);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,38);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (6,39);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,17);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,20);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,21);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,22);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,23);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,24);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,25);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,26);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,27);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,28);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,29);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,30);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,31);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,32);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,33);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,34);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,35);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,36);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,37);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,38);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (6,39);
 -- Categoty: Parking Space
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (7,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (7,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (7,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (7,6);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (7,36);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (7,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (7,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (7,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (7,6);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (7,36);
 -- Categoty: Garage
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (8,1);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (8,2);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (8,4);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (8,6);
-INSERT INTO preparation.categories_parameters_links(category_id, parameter_id) VALUES (8,36);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (8,1);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (8,2);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (8,4);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (8,6);
+INSERT INTO preparation.types_parameters_links(type_id, parameter_id) VALUES (8,36);
 
 -- Table: preparation.parameter_setting
 INSERT INTO preparation.parameter_setting(id, key, value) VALUES (2,'Min value','0');

@@ -1,4 +1,4 @@
-package com.jdvn.devtech.datamodel.schema.preparation;
+package com.jdvn.devtech.datamodel.schema.valuation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
+import com.jdvn.devtech.datamodel.schema.preparation.ValuationParameter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -31,35 +32,35 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "valuation_unit_category", schema = "preparation", indexes = {@Index(name = "valuation_unit_category_on_rowidentifier", columnList = "rowidentifier")})
-@Comment("List of the valuation unit categories")
+@Table(name = "valuation_unit_type", schema = "valuation", indexes = {@Index(name = "valuation_unit_type_on_rowidentifier", columnList = "rowidentifier")})
+@Comment("List of the valuation unit types")
 @SuppressWarnings({ "serial" })
-public class ValuationUnitCategory extends DomainObject<Long> {
+public class ValuationUnitType extends DomainObject<Long> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(length = 500, nullable = false)
-	@Comment("Display name of the category.")
+	@Comment("Display name of the type.")
 	private String name;
 
 	@Column(length = 1000)
-	@Comment("Description of the category.")
+	@Comment("Description of the type.")
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'a'")
-	@Comment("Status in active of the category as active (a) or inactive (i).")
+	@Comment("Status in active of the type as active (a) or inactive (i).")
 	private char status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "vunit_type_id", foreignKey = @ForeignKey(name = "valuation_unit_category_vunit_type_id_fkey"))
-    @Comment("Refer to identifying of a valuation unit type.")
-    private ValuationUnitType valuation_unit_type;
+    @JoinColumn(name = "vunit_category_id", foreignKey = @ForeignKey(name = "valuation_unit_type_vunit_category_id_fkey"))
+    @Comment("Refer to identifying of a valuation unit category.")
+    private ValuationUnitCategory valuation_unit_category;
 
     /* Control many-to-many relationship between category and parameter, 
      * vunit_categoties is a variable in ValuationParameter  */
-    @ManyToMany(mappedBy = "vunit_categoties")
+    @ManyToMany(mappedBy = "vunit_types")
     private List<ValuationParameter> valuation_parameters = new ArrayList<>();
     
 	@Override

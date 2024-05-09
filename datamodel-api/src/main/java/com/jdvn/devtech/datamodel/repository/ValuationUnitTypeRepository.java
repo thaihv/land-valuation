@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.jdvn.devtech.datamodel.schema.preparation.ValuationUnitType;
+import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitType;
 
 @RepositoryRestResource
 public interface ValuationUnitTypeRepository extends PagingAndSortingRepository<ValuationUnitType, Long>, CrudRepository<ValuationUnitType, Long> {	
