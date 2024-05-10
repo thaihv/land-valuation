@@ -238,3 +238,136 @@ ALTER TABLE IF EXISTS preparation.types_parameters_links
     OWNER to postgres;	
 COMMENT ON TABLE preparation.types_parameters_links
     IS 'Associates a type with one or more parameters';    
+
+-- Table: valuation.valuation_approach
+CREATE TABLE IF NOT EXISTS valuation.valuation_approach
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,    
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT valuation_approach_pkey PRIMARY KEY (code),
+    CONSTRAINT valuation_approach_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_approach
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_approach
+    IS 'Code list that deals with three primary types of valuation methods, namely, sales comparison, income and cost methods dominant in practice.';
+
+COMMENT ON COLUMN valuation.valuation_approach.code
+    IS 'The code for the approach.';
+
+COMMENT ON COLUMN valuation.valuation_approach.display_value
+    IS 'Displayed value of the approach.';
+
+COMMENT ON COLUMN valuation.valuation_approach.description
+    IS 'Description of the approach.';
+    
+COMMENT ON COLUMN valuation.valuation_approach.status
+    IS 'Status in active of the approach as active (a) or inactive (i).';
+    
+-- Table: valuation.valuation_unit_group_type
+CREATE TABLE IF NOT EXISTS valuation.valuation_unit_group_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,    
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+	description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT valuation_unit_group_type_pkey PRIMARY KEY (code),
+    CONSTRAINT valuation_unit_group_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_unit_group_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_unit_group_type
+    IS 'Code list that deals with three group types of valuation model as zone or locality.';
+
+COMMENT ON COLUMN valuation.valuation_unit_group_type.code
+    IS 'The code for the valuation unit group.';
+
+COMMENT ON COLUMN valuation.valuation_unit_group_type.display_value
+    IS 'Displayed value of the valuation unit group.';
+
+COMMENT ON COLUMN valuation.valuation_unit_group_type.description
+    IS 'Description of the valuation unit group.';
+	
+COMMENT ON COLUMN valuation.valuation_unit_group_type.status
+    IS 'Status in active of the valuation unit group as active (a) or inactive (i).';	
+    
+-- Table: valuation.valuation_unit_group
+CREATE TABLE IF NOT EXISTS valuation.valuation_unit_group
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),        
+    name character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    vu_group_type_code character varying(20) COLLATE pg_catalog."default",
+    description character varying(1000) COLLATE pg_catalog."default",
+    reference_point geometry,
+    geom geometry NOT NULL,
+    found_in_vu_group_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),    
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT valuation_unit_group_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_unit_group_vu_group_type_code UNIQUE (vu_group_type_code),
+    CONSTRAINT valuation_unit_group_found_in_vu_group_id_fkey FOREIGN KEY (found_in_vu_group_id)
+        REFERENCES valuation.valuation_unit_group (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_unit_group_vu_group_type_code_fkey FOREIGN KEY (vu_group_type_code)
+        REFERENCES valuation.valuation_unit_group_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_unit_group
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_unit_group
+    IS 'For grouping or zoning valuation units, such as administrative, economic and market zones that indicate similar characteristics or functions
+of valuation units (e.g., commercial, residential and agricultural).';
+
+
+COMMENT ON COLUMN valuation.valuation_unit_group.name
+    IS 'Display name of the valuation unit group.';
+    
+COMMENT ON COLUMN valuation.valuation_unit_group.vu_group_type_code
+    IS 'Type of the valuation unit group as zone or locality.';      
+
+COMMENT ON COLUMN valuation.valuation_unit_group.description
+    IS 'Description of the valuation unit group.';
+    
+COMMENT ON COLUMN valuation.valuation_unit_group.reference_point
+    IS 'Reference point at center of group geometry.';
+
+COMMENT ON COLUMN valuation.valuation_unit_group.geom
+    IS 'Multi polygon as geometry of all valuation units for spatial displaying.';
+    
+COMMENT ON COLUMN valuation.valuation_unit_group.found_in_vu_group_id
+    IS 'Parent group where this valuation group belongs, it could be NULL as no specific parent.';  
+    
+COMMENT ON COLUMN valuation.valuation_unit_group.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation_unit_group.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';   
+
+COMMENT ON COLUMN valuation.valuation_unit_group.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation_unit_group.change_user
+    IS 'The user id of the last person to modify the row.'; 
+    
+COMMENT ON COLUMN valuation.valuation_unit_group.change_time
+    IS 'The date and time the row was last modified.';
+   

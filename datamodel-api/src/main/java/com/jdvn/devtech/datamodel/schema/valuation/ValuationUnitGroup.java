@@ -1,12 +1,20 @@
 package com.jdvn.devtech.datamodel.schema.valuation;
 
 import org.hibernate.annotations.Comment;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,17 +37,31 @@ public class ValuationUnitGroup extends DomainObject<String> {
 	private String id;
 
 	@Column(length = 500, nullable = false)
-	@Comment("Display name of the valuation unit type.")
+	@Comment("Display name of the valuation unit group.")
 	private String name;
 
 	@Column(length = 1000)
-	@Comment("Description of the valuation unit type.")
+	@Comment("Description of the valuation unit group.")
 	private String description;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vu_group_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_group_vu_group_type_code_fkey"))
+    @Comment("Type of the valuation unit group as zone or locality.")
+    private ValuationUnitGroupType vu_group_type;
 
-	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
-	private char status;
+	@Column(columnDefinition = "geometry")
+	@Comment("Reference point at center of group geometry.")
+    private Point  reference_point;
+	
+	@Column(columnDefinition = "geometry NOT NULL")
+	@Comment("Multi polygon as geometry of all valuation units for spatial displaying.")
+    private MultiPolygon  geom;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "found_in_vu_group_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_group_found_in_vu_group_id_fkey"))
+	@Comment("Parent group where this valuation group belongs, it could be NULL as no specific parent.")
+	private ValuationUnitGroup found_in_vu_group;
+	
 	@Override
 	public String print() {
 		return id;

@@ -8,6 +8,7 @@ import com.jdvn.devtech.datamodel.schema.address.Address;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -33,11 +34,11 @@ public class ValuationUnit extends DomainObject<String> {
 	private String id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vu_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "vu_type_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_id_fkey"))
     private ValuationUnitType vu_type;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @JoinColumn(name = "address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_address_id_fkey"))
     private Address address;
         
 	@Column(length = 500, nullable = false)
