@@ -9,7 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
-import com.jdvn.devtech.datamodel.schema.preparation.ValuationParameter;
+import com.jdvn.devtech.datamodel.schema.preparation.TechnicalParameter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -59,9 +59,9 @@ public class ValuationUnitType extends DomainObject<Long> {
     private ValuationUnitCategory valuation_unit_category;
 
     /* Control many-to-many relationship between category and parameter, 
-     * vunit_categoties is a variable in ValuationParameter  */
+     * vunit_categoties is a variable in TechnicalParameter  */
     @ManyToMany(mappedBy = "vunit_types")
-    private List<ValuationParameter> valuation_parameters = new ArrayList<>();
+    private List<TechnicalParameter> valuation_parameters = new ArrayList<>();
     
 	@Override
 	public Long getId() {

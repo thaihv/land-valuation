@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
-import com.jdvn.devtech.datamodel.schema.preparation.ValueType;
+import com.jdvn.devtech.datamodel.schema.valuation.ValueType;
 import com.lowagie.text.Document;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;

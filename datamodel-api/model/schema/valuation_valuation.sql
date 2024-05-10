@@ -1,3 +1,32 @@
+-- Table: valuation.value_type
+CREATE TABLE IF NOT EXISTS valuation.value_type
+(    
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT value_type_pkey PRIMARY KEY (code),
+    CONSTRAINT value_type_display_value_key UNIQUE (display_value)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.value_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.value_type
+    IS 'Code list of value types used for valuation process.';
+
+COMMENT ON COLUMN valuation.value_type.code
+    IS 'The code for the value type.';
+
+COMMENT ON COLUMN valuation.value_type.display_value
+    IS 'Displayed value of the value type.';
+
+COMMENT ON COLUMN valuation.value_type.description
+    IS 'Description of the value type.';
+    
+COMMENT ON COLUMN valuation.value_type.status
+    IS 'Status in active of the value type as active (a) or inactive (i).';
 -- Table: valuation.valuation_unit_category
 -- + SEQUENCE: valuation.valuation_unit_category_id_seq
 CREATE SEQUENCE IF NOT EXISTS valuation.valuation_unit_category_id_seq
@@ -194,7 +223,7 @@ CREATE TABLE IF NOT EXISTS preparation.types_parameters_links
 	parameter_id bigint NOT NULL,
 	CONSTRAINT categories_parameters_links_pkey PRIMARY KEY (type_id, parameter_id),
     CONSTRAINT types_parameters_links_parameter_id_fkey FOREIGN KEY (parameter_id)
-        REFERENCES preparation.valuation_parameter (id) MATCH SIMPLE
+        REFERENCES preparation.tech_parameter (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT types_parameters_links_type_id_fkey FOREIGN KEY (type_id)

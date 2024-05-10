@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
-import com.jdvn.devtech.datamodel.schema.preparation.ValueType;
+import com.jdvn.devtech.datamodel.schema.valuation.ValueType;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

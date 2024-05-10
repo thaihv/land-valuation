@@ -1,4 +1,4 @@
-package com.jdvn.devtech.datamodel.schema.preparation;
+package com.jdvn.devtech.datamodel.schema.valuation;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -16,8 +16,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "value_type", schema = "preparation")
-@Comment("Code list of value types for envaluating")
+@Table(name = "value_type", schema = "valuation")
+@Comment("Code list of value types used for valuation process.")
 public class ValueType {
 
 	@Id

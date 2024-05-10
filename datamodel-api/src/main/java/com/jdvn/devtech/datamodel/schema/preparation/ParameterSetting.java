@@ -40,5 +40,5 @@ public class ParameterSetting {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "parameter_setting_id_fkey"))
     @Comment("Reference to a valuation parameter.")
-    private ValuationParameter valuation_parameter;
+    private TechnicalParameter technical_parameter;
 }

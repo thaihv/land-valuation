@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jdvn.devtech.datamodel.repository.ValueTypeRepository;
-import com.jdvn.devtech.datamodel.schema.preparation.ValueType;
+import com.jdvn.devtech.datamodel.schema.valuation.ValueType;
 import com.jdvn.devtech.datamodel.view.ValueTypeExcel;
 import com.jdvn.devtech.datamodel.view.ValueTypePdf;
 

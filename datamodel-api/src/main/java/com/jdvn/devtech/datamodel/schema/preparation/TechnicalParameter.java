@@ -28,9 +28,9 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "valuation_parameter", schema = "preparation")
+@Table(name = "tech_parameter", schema = "preparation")
 @Comment("List of all technical properties for valuation process")
-public class ValuationParameter {
+public class TechnicalParameter {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

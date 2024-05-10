@@ -14,52 +14,55 @@ INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_categ
 INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Parking Space','A Space Part of Building for Parking','i', 3);
 INSERT INTO valuation.valuation_unit_type(name, description, status, vunit_category_id) VALUES ('Garage','Area included to Building for Parking','i', 3);
 
--- Table: preparation.value_type
-INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('TAX','Tax Value','This value is for taxing operations','a');
-INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('FIN','Financing Value','This value is for financing of real estate as sale,buy,rent or lease','a');
-INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('COM','Compensation Value','This value is for compensating upon revocation of land use rights or land consolidation','a');
-INSERT INTO preparation.value_type(code, display_value, description, status) VALUES ('ISUR','Insurance Value','This value is for operating of insurance assessment', 'i');
+-- Table: valuation.value_type
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('assessedValue','Assessement Value','The value is amount local government identifes the property worth','a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('marketValue','Market Value','This value is refelct for market transaction. It is consumer-driven','a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('appraisedValue','Appraised Value','This value is the amount a professional appraiser identifes the property worth','a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('taxValue','Tax Value','This value is for taxing operations','a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('financeValue','Financing Value','This value is for financing of real estate as sale,buy,rent or lease','a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('compensationValue','Compensation Value','This value is for compensating upon revocation of land use rights or land consolidation','a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('insuranceValue','Insurance Value','This value is for operating of insurance assessment', 'i');
 
--- Table: preparation.valuation_parameter
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('ID','String','Property label from Cadastre.',true,true,true);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Purchase Price','Numeric','Price in purchase in time.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Land Use','String','Indicates how people are using the land.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Location','Geometry','Location of valuation property.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Shape','Geometry','Shape geometry of valuation property.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Land Parcel Area','Numeric','Land boundary area of valuation property.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Height Above Sea Level','Numeric','Measure of vertical distance (height, elevation or altitude) of location in reference to a vertical datum based on a historic mean sea level.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Slope','Numeric','A number that describes both the direction and the steepness compared to the plane',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Orientation','String','Determination of the physical position in direction.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Soil Type','String','Category of soil based on the dominating size of the particles within a soil as sand, clay, silt, peat, chalk and loam.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Land Cover','String','Indicates the physical land type such as forest or open water (usually get from environmental information system).',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Precipitations','Numeric','Average rain water volume falls back per year (usually get from national hydrometeorological Institute).',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Sunny Hours','Numeric','Average sunny time in a day (usually get from national hydrometeorological Institute).',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Improvements','Boolean','Capability to be improvement .',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Wood Mass','Numeric','Estimate of wood massive.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Utility Infrastructure','Enumerated','Utilities in list of cadastre.',true,true,true);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Zone','Geometry','An area or stretch of land having a particular characteristic, purpose, use, or subject to particular restrictions.',true,true,true);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Buildable Area','Numeric','Capability to develop in term of area.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Flats','Numeric','Flat number for a condominium or building.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Building Surface Area','Numeric','Building area of a house is calculated.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Net usable area','Numeric','Reality usable area of a property.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Terrace, Balcony, and Loggia Area','Numeric','Additional spaces area as building parts.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Surface Area of Parking Space','Numeric','Building Area of Parking Space.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Surface Area of Garage','Numeric','Building Area of Garage.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Elevator','Boolean','Whether has elevator or not.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Date of Construction','Date','Date of construction in permit documents.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Date of Last Renovation','Date','Date of last renew or renovation.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Energy Class','String','Register of buildings energy type.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Rooms','Numeric','Room number for a flat or floor.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Bathrooms','Numeric','Bath room number for a flat or house.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Heating Type','String','Register of heating system type.',false,false,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Floor','String','Register of buildings energy certificates.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Floors','String','Floor number of a particular residential property.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Construction Completion','Boolean','Whether in completion of buiding or not.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Commercial Type','String','Type of commerce or business in register.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Structure Type','String','Type of building structure.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Direct Entrance','Boolean','Whether has entrance directly or not.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Street Side','Numeric','Indicates distance to street the property standing.',true,true,false);
-INSERT INTO preparation.valuation_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Closest Street Type ','String','Indicates type of street the property is near by or contermious.',true,true,false);
+-- Table: preparation.tech_parameter
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('ID','String','Property label from Cadastre.',true,true,true);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Purchase Price','Numeric','Price in purchase in time.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Land Use','String','Indicates how people are using the land.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Location','Geometry','Location of preparation property.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Shape','Geometry','Shape geometry of preparation property.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Land Parcel Area','Numeric','Land boundary area of preparation property.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Height Above Sea Level','Numeric','Measure of vertical distance (height, elevation or altitude) of location in reference to a vertical datum based on a historic mean sea level.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Slope','Numeric','A number that describes both the direction and the steepness compared to the plane',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Orientation','String','Determination of the physical position in direction.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Soil Type','String','Category of soil based on the dominating size of the particles within a soil as sand, clay, silt, peat, chalk and loam.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Land Cover','String','Indicates the physical land type such as forest or open water (usually get from environmental information system).',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Precipitations','Numeric','Average rain water volume falls back per year (usually get from national hydrometeorological Institute).',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Sunny Hours','Numeric','Average sunny time in a day (usually get from national hydrometeorological Institute).',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Improvements','Boolean','Capability to be improvement .',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Wood Mass','Numeric','Estimate of wood massive.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Utility Infrastructure','Enumerated','Utilities in list of cadastre.',true,true,true);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Zone','Geometry','An area or stretch of land having a particular characteristic, purpose, use, or subject to particular restrictions.',true,true,true);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Buildable Area','Numeric','Capability to develop in term of area.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Flats','Numeric','Flat number for a condominium or building.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Building Surface Area','Numeric','Building area of a house is calculated.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Net usable area','Numeric','Reality usable area of a property.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Terrace, Balcony, and Loggia Area','Numeric','Additional spaces area as building parts.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Surface Area of Parking Space','Numeric','Building Area of Parking Space.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Surface Area of Garage','Numeric','Building Area of Garage.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Elevator','Boolean','Whether has elevator or not.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Date of Construction','Date','Date of construction in permit documents.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Date of Last Renovation','Date','Date of last renew or renovation.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Energy Class','String','Register of buildings energy type.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Rooms','Numeric','Room number for a flat or floor.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Bathrooms','Numeric','Bath room number for a flat or house.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Heating Type','String','Register of heating system type.',false,false,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Floor','String','Register of buildings energy certificates.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Number of Floors','String','Floor number of a particular residential property.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Construction Completion','Boolean','Whether in completion of buiding or not.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Commercial Type','String','Type of commerce or business in register.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Structure Type','String','Type of building structure.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Direct Entrance','Boolean','Whether has entrance directly or not.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Street Side','Numeric','Indicates distance to street the property standing.',true,true,false);
+INSERT INTO preparation.tech_parameter(name, type, description, is_active, is_mandatory, is_virtual) VALUES ('Closest Street Type ','String','Indicates type of street the property is near by or contermious.',true,true,false);
 
 -- Table: preparation.types_parameters_links
 -- Categoty: Agricultural Land
