@@ -7,9 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitType;
+import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitCategory;
 
 @RepositoryRestResource
-public interface ValuationUnitTypeRepository extends PagingAndSortingRepository<ValuationUnitType, Long>, CrudRepository<ValuationUnitType, Long> {	
-	List<ValuationUnitType> findAllByName(String name, Pageable pageable);
+public interface ValuationUnitCategoryRepository extends PagingAndSortingRepository<ValuationUnitCategory, Long>, CrudRepository<ValuationUnitCategory, Long> {	
+	List<ValuationUnitCategory> findAllByName(String name, Pageable pageable);
 }

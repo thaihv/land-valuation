@@ -6,5 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import com.jdvn.devtech.datamodel.schema.preparation.TechnicalParameter;
 
 @RepositoryRestResource
-public interface ValuationParameterRepository extends CrudRepository<TechnicalParameter, Long> {
+public interface TechnicalParameterRepository extends CrudRepository<TechnicalParameter, Long> {
 }

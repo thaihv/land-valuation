@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/ValueTypes/v1")
+@RequestMapping("/value_types/v1")
 @Tag(name = "Value Type", description = "Value Type Management APIs")
 public class ValueTypeController {
 	@Autowired
