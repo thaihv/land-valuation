@@ -1,5 +1,8 @@
 package com.jdvn.devtech.datamodel.schema.valuation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
@@ -13,6 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -62,6 +66,11 @@ public class ValuationUnitGroup extends DomainObject<String> {
 	@Comment("Parent group where this valuation group belongs, it could be NULL as no specific parent.")
 	private ValuationUnitGroup found_in_vu_group;
 	
+    /* Control many-to-many relationship between valuation unit and valuation unit group, 
+     * vu_groups is a variable in ValuationUnit  */
+    @ManyToMany(mappedBy = "vu_groups")
+    private List<ValuationUnit> valuation_units = new ArrayList<>();
+    
 	@Override
 	public String print() {
 		return id;

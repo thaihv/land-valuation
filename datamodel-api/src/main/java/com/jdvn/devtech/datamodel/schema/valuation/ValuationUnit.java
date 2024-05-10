@@ -1,5 +1,8 @@
 package com.jdvn.devtech.datamodel.schema.valuation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
@@ -11,6 +14,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -53,6 +58,11 @@ public class ValuationUnit extends DomainObject<String> {
 	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
 	private char status;
 
+	/* Control many-to-many relationship between category and parameter */
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "valuation_units_groups_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "vunit_group_id"), foreignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_group_id_fkey"))
+	private List<ValuationUnitGroup> vu_groups = new ArrayList<>();
+	
 	@Override
 	public String print() {
 		return id;
