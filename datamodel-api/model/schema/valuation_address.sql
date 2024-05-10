@@ -1,20 +1,7 @@
 -- Table: address.address
--- + SEQUENCE: address.address_id_seq
-CREATE SEQUENCE IF NOT EXISTS address.address_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1
-    CYCLE;
-
-ALTER SEQUENCE address.address_id_seq
-    OWNER TO postgres;
-COMMENT ON SEQUENCE address.address_id_seq IS 'Sequence number used as the basis for the address id field. This sequence is used by the address.';
-	
 CREATE TABLE IF NOT EXISTS address.address
 (
-    id bigint NOT NULL DEFAULT nextval('address.address_id_seq'::regclass),
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	description character varying(255) COLLATE pg_catalog."default",
     ext_address_id character varying(40) COLLATE pg_catalog."default",
 	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
@@ -77,7 +64,7 @@ CREATE OR REPLACE TRIGGER __track_history
 -- Table: address.address_historic
 CREATE TABLE IF NOT EXISTS address.address_historic
 (
-	id bigint,
+	id character varying(40) COLLATE pg_catalog."default" NOT NULL,
 	description character varying(255) COLLATE pg_catalog."default",
     ext_address_id character varying(40) COLLATE pg_catalog."default",
 	rowidentifier character varying(40) COLLATE pg_catalog."default",

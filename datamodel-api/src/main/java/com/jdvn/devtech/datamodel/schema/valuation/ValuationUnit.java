@@ -3,10 +3,14 @@ package com.jdvn.devtech.datamodel.schema.valuation;
 import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
+import com.jdvn.devtech.datamodel.schema.address.Address;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +32,14 @@ public class ValuationUnit extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vu_type_id", referencedColumnName = "id")
+    private ValuationUnitType vu_type;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+        
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the valuation unit type.")
 	private String name;

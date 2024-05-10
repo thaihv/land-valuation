@@ -23,6 +23,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,6 +64,9 @@ public class ValuationUnitType extends DomainObject<Long> {
     @ManyToMany(mappedBy = "vunit_types")
     private List<TechnicalParameter> valuation_parameters = new ArrayList<>();
     
+	@OneToOne(mappedBy = "vu_type")
+	private ValuationUnit valuation_unit;
+	
 	@Override
 	public Long getId() {
 		return id;
