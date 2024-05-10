@@ -162,5 +162,6 @@ INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'Min value'
 INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'Max value','6.28319'); -- 360 degree
 INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'Unit','Radian');
 INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'X Axis','East');
-INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'-','counter-clockwise');
-INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'+','clockwise');
+INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'Y Axis','North');
+INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'Positive Sign','Counter-clockwise');
+INSERT INTO preparation.parameter_setting(id, key, value) VALUES (82,'Negative Sign','Clockwise');
