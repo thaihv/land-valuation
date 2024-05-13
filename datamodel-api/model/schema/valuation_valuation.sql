@@ -220,10 +220,10 @@ COMMENT ON TABLE valuation.valuation_unit_type_historic
 CREATE TABLE IF NOT EXISTS preparation.types_parameters_links
 (    
     type_id bigint NOT NULL,
-	parameter_id bigint NOT NULL,
-	CONSTRAINT categories_parameters_links_pkey PRIMARY KEY (type_id, parameter_id),
-    CONSTRAINT types_parameters_links_parameter_id_fkey FOREIGN KEY (parameter_id)
-        REFERENCES preparation.tech_parameter (id) MATCH SIMPLE
+	parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+	CONSTRAINT categories_parameters_links_pkey PRIMARY KEY (type_id, parameter_code),
+    CONSTRAINT types_parameters_links_parameter_code_fkey FOREIGN KEY (parameter_code)
+        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT types_parameters_links_type_id_fkey FOREIGN KEY (type_id)

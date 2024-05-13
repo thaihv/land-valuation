@@ -27,9 +27,11 @@ import lombok.Setter;
 @IdClass(SetingId.class)
 public class ParameterSetting {  
 	@Id
-	private Long id;
+	@Column(length = 40, nullable = false)
+	@Comment("The code for the technical parameter.")
+	private String code;
     @Id
-	@Column(length = 100, nullable = false)
+	@Column(length = 40, nullable = false)
 	@Comment("Key name of a parameter setting.")
 	private String key;
 
@@ -38,7 +40,7 @@ public class ParameterSetting {
 	private String value;
 	
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "parameter_setting_id_fkey"))
+    @JoinColumn(name = "code", foreignKey = @ForeignKey(name = "parameter_setting_code_fkey"))
     @Comment("Reference to a valuation parameter.")
     private TechnicalParameter technical_parameter;
 }

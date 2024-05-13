@@ -13,8 +13,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -33,9 +31,9 @@ import lombok.Setter;
 public class TechnicalParameter {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
+	@Comment("The code for the technical parameter.")
+	private String code;
 
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the technical parameter.")
@@ -63,6 +61,6 @@ public class TechnicalParameter {
 	
 	/* Control many-to-many relationship between category and parameter */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "types_parameters_links", schema = "preparation", joinColumns = @JoinColumn(name = "parameter_id"), inverseJoinColumns = @JoinColumn(name = "type_id"), foreignKey = @ForeignKey(name = "types_parameters_links_parameter_id_fkey"), inverseForeignKey = @ForeignKey(name = "types_parameters_links_type_id_fkey"))
+	@JoinTable(name = "types_parameters_links", schema = "preparation", joinColumns = @JoinColumn(name = "parameter_code"), inverseJoinColumns = @JoinColumn(name = "type_id"), foreignKey = @ForeignKey(name = "types_parameters_links_parameter_code_fkey"), inverseForeignKey = @ForeignKey(name = "types_parameters_links_type_id_fkey"))
 	private List<ValuationUnitType> vunit_types = new ArrayList<>();
 }
