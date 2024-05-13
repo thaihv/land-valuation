@@ -16,8 +16,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
@@ -36,10 +34,11 @@ import lombok.Setter;
 @Table(name = "valuation_unit_type", schema = "valuation", indexes = {@Index(name = "valuation_unit_type_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("List of the valuation unit types")
 @SuppressWarnings({ "serial" })
-public class ValuationUnitType extends DomainObject<Long> {
+public class ValuationUnitType extends DomainObject<String> {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
+	@Comment("Code of the valuation unit type.")
+	private String code;
 
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the type.")
@@ -55,7 +54,7 @@ public class ValuationUnitType extends DomainObject<Long> {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "vunit_category_id", foreignKey = @ForeignKey(name = "valuation_unit_type_vunit_category_id_fkey"))
+    @JoinColumn(name = "vunit_category_code", foreignKey = @ForeignKey(name = "valuation_unit_type_vunit_category_code_fkey"))
     @Comment("Refer to identifying of a valuation unit category.")
     private ValuationUnitCategory valuation_unit_category;
 
@@ -66,14 +65,14 @@ public class ValuationUnitType extends DomainObject<Long> {
     
 	@OneToOne(mappedBy = "vu_type")
 	private ValuationUnit valuation_unit;
-	
-	@Override
-	public Long getId() {
-		return id;
-	}
 
 	@Override
-	public String print() {
-		return name;
+	public String getId() {
+		return code;
 	}
+	@Override
+	public String print() {
+		return code;
+	}
+	
 }

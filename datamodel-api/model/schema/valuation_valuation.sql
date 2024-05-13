@@ -27,23 +27,10 @@ COMMENT ON COLUMN valuation.value_type.description
     
 COMMENT ON COLUMN valuation.value_type.status
     IS 'Status in active of the value type as active (a) or inactive (i).';
--- Table: valuation.valuation_unit_category
--- + SEQUENCE: valuation.valuation_unit_category_id_seq
-CREATE SEQUENCE IF NOT EXISTS valuation.valuation_unit_category_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9999
-    CACHE 1
-    CYCLE;
-
-ALTER SEQUENCE valuation.valuation_unit_category_id_seq
-    OWNER TO postgres;	
-COMMENT ON SEQUENCE valuation.valuation_unit_category_id_seq IS 'Sequence number used as the basis for the valuation_unit_category id field. This sequence is used by the valuation_unit_category.';	
-	
+-- Table: valuation.valuation_unit_category	
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_category
 (
-    id bigint NOT NULL DEFAULT nextval('valuation.valuation_unit_category_id_seq'::regclass),
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	name character varying(500) COLLATE pg_catalog."default" NOT NULL,    
     description character varying(1000) COLLATE pg_catalog."default",    
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,        
@@ -52,8 +39,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit_category
 	change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
 	change_user character varying(50) COLLATE pg_catalog."default",
 	change_time timestamp without time zone NOT NULL DEFAULT now(),	
-    CONSTRAINT valuation_unit_category_pkey PRIMARY KEY (id),
-    CONSTRAINT valuation_unit_category_name_key UNIQUE (name)
+    CONSTRAINT valuation_unit_category_pkey PRIMARY KEY (code)
 )
 TABLESPACE pg_default;
 
@@ -104,7 +90,7 @@ CREATE OR REPLACE TRIGGER __track_history
     EXECUTE FUNCTION public.f_for_trg_track_history();	
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_category_historic
 (
-    id bigint,
+    code character varying(40),
     name character varying(500),
     description character varying(1000),
     status character(1),
@@ -119,33 +105,21 @@ COMMENT ON TABLE valuation.valuation_unit_category_historic
     IS 'Version table for valuation_unit_category.';
     
 -- Table: valuation.valuation_unit_type
--- + SEQUENCE: valuation.valuation_unit_type_id_seq
-CREATE SEQUENCE IF NOT EXISTS valuation.valuation_unit_type_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9999
-    CACHE 1
-    CYCLE;
-ALTER SEQUENCE valuation.valuation_unit_type_id_seq
-    OWNER TO postgres;
-COMMENT ON SEQUENCE valuation.valuation_unit_type_id_seq IS 'Sequence number used as the basis for the valuation_unit_type id field.';
-
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_type
 (
-    id bigint NOT NULL DEFAULT nextval('valuation.valuation_unit_type_id_seq'::regclass),
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	name character varying(500) COLLATE pg_catalog."default" NOT NULL,
 	description character varying(1000) COLLATE pg_catalog."default",
     status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
-	vunit_category_id bigint NOT NULL,
+	vunit_category_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
 	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT public.uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
 	change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
-    CONSTRAINT valuation_unit_type_pkey PRIMARY KEY (id),
-    CONSTRAINT valuation_unit_type_vunit_category_id_fkey FOREIGN KEY (vunit_category_id)
-        REFERENCES valuation.valuation_unit_category (id) MATCH SIMPLE
+    CONSTRAINT valuation_unit_type_pkey PRIMARY KEY (code),
+    CONSTRAINT valuation_unit_type_vunit_category_code_fkey FOREIGN KEY (vunit_category_code)
+        REFERENCES valuation.valuation_unit_category (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -166,7 +140,7 @@ COMMENT ON COLUMN valuation.valuation_unit_type.description
 COMMENT ON COLUMN valuation.valuation_unit_type.status
     IS 'Status in active of the type as active (a) or inactive (i).';
 
-COMMENT ON COLUMN valuation.valuation_unit_type.vunit_category_id
+COMMENT ON COLUMN valuation.valuation_unit_type.vunit_category_code
     IS 'Refer to identifying of a valuation unit category.';
 	
 COMMENT ON COLUMN valuation.valuation_unit_type.rowidentifier
@@ -201,11 +175,11 @@ CREATE OR REPLACE TRIGGER __track_history
     EXECUTE FUNCTION public.f_for_trg_track_history();	
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_type_historic
 (
-    id bigint,
+    code character varying(40),
     name character varying(500),
     description character varying(1000),
     status character(1),
-	vunit_category_id bigint NOT NULL,
+	vunit_category_code character varying(40) NOT NULL,
     rowidentifier character varying(40),
     rowversion integer,
     change_action character(1),
@@ -219,15 +193,15 @@ COMMENT ON TABLE valuation.valuation_unit_type_historic
 -- Table: preparation.types_parameters_links
 CREATE TABLE IF NOT EXISTS preparation.types_parameters_links
 (    
-    type_id bigint NOT NULL,
+    type_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
 	parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
-	CONSTRAINT categories_parameters_links_pkey PRIMARY KEY (type_id, parameter_code),
+	CONSTRAINT categories_parameters_links_pkey PRIMARY KEY (type_code, parameter_code),
     CONSTRAINT types_parameters_links_parameter_code_fkey FOREIGN KEY (parameter_code)
         REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT types_parameters_links_type_id_fkey FOREIGN KEY (type_id)
-        REFERENCES valuation.valuation_unit_type (id) MATCH SIMPLE
+    CONSTRAINT types_parameters_links_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES valuation.valuation_unit_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
