@@ -61,6 +61,7 @@ public class ValuationUnitGroup extends DomainObject<String> {
 	@Comment("Multi polygon as geometry of all valuation units for spatial displaying.")
     private MultiPolygon  geom;
 
+    /* Reference to its self as parent-children relationship  */	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "found_in_vu_group_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_group_found_in_vu_group_id_fkey"))
 	@Comment("Parent group where this valuation group belongs, it could be NULL as no specific parent.")
