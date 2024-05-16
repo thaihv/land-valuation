@@ -33,6 +33,7 @@ import lombok.Setter;
 @Comment("Provides information about objects of valuation unit for fundamental recording of land and improvements (buildings), which can only be land, building\r\n"
 		+ "or land and improvements together as land or condominium property.")
 public class ValuationUnit extends DomainObject<String> {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -50,14 +51,6 @@ public class ValuationUnit extends DomainObject<String> {
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the valuation unit type.")
 	private String name;
-
-	@Column(length = 1000)
-	@Comment("Description of the valuation unit type.")
-	private String description;
-
-	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
-	private char status;
 
 	/* Control many-to-many relationship between valuation unit and valuation unit group */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
