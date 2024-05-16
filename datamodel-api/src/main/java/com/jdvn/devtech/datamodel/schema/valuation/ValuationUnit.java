@@ -7,6 +7,7 @@ import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.address.Address;
+import com.jdvn.devtech.datamodel.schema.preparation.TechnicalParameter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -58,11 +59,18 @@ public class ValuationUnit extends DomainObject<String> {
 	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
 	private char status;
 
-	/* Control many-to-many relationship between category and parameter */
+	/* Control many-to-many relationship between valuation unit and valuation unit group */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "valuation_units_groups_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "vunit_group_id"), foreignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_group_id_fkey"))
 	private List<ValuationUnitGroup> vu_groups = new ArrayList<>();
 	
+	
+	/* Control many-to-many relationship between valuation unit and parameter */
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "valuation_units_techparameters_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "paramater_code"), foreignKey = @ForeignKey(name = "valuation_units_techparameters_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_techparameters_links_paramater_code_fkey"))
+	private List<TechnicalParameter> technicalParameter = new ArrayList<>();
+	
+
 	@Override
 	public String print() {
 		return id;

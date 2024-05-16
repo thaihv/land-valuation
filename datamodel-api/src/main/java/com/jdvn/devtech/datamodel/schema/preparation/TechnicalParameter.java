@@ -63,4 +63,6 @@ public class TechnicalParameter {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "types_parameters_links", schema = "preparation", joinColumns = @JoinColumn(name = "parameter_code"), inverseJoinColumns = @JoinColumn(name = "type_code"), foreignKey = @ForeignKey(name = "types_parameters_links_parameter_code_fkey"), inverseForeignKey = @ForeignKey(name = "types_parameters_links_type_code_fkey"))
 	private List<ValuationUnitType> vunit_types = new ArrayList<>();
+	
+	
 }
