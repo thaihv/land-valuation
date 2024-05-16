@@ -433,7 +433,7 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
 -- Table: preparation.parcel
 CREATE TABLE IF NOT EXISTS preparation.parcel
 (
-    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     area double precision,
     curent_land_use character varying(255) COLLATE pg_catalog."default",    
     planed_land_use character varying(255) COLLATE pg_catalog."default",
@@ -496,7 +496,7 @@ COMMENT ON COLUMN preparation.parcel.s_price
 -- Table: preparation.building
 CREATE TABLE IF NOT EXISTS preparation.building
 (
-    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     area double precision,
     volume double precision,
     use_type character varying(255) COLLATE pg_catalog."default",
@@ -607,11 +607,31 @@ COMMENT ON COLUMN preparation.building.use_type
 
 COMMENT ON COLUMN preparation.building.volume
     IS 'Total volume value of the building.';    
+
+-- Table: preparation.parcels_buildings_links
+CREATE TABLE IF NOT EXISTS preparation.parcels_buildings_links
+(
+    parcel_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    building_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT parcels_buildings_links_building_id_fkey FOREIGN KEY (building_id)
+        REFERENCES preparation.building (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT parcels_buildings_links_parcel_id_fkey FOREIGN KEY (parcel_id)
+        REFERENCES preparation.parcel (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.parcels_buildings_links
+    OWNER to postgres;    
     
 -- Table: preparation.building_unit
 CREATE TABLE IF NOT EXISTS preparation.building_unit
 (
-    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	located_number character varying(255) COLLATE pg_catalog."default",
     use_type character varying(255) COLLATE pg_catalog."default",    
     area double precision,
