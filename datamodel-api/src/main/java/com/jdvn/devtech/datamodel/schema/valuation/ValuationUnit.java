@@ -2,22 +2,25 @@ package com.jdvn.devtech.datamodel.schema.valuation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.address.Address;
-import com.jdvn.devtech.datamodel.schema.preparation.TechnicalParameter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,11 +43,11 @@ public class ValuationUnit extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "vu_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_id_fkey"))
     private ValuationUnitType vu_type;
     
-    @OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_address_id_fkey"))
     private Address address;
         
@@ -58,12 +61,11 @@ public class ValuationUnit extends DomainObject<String> {
 	private List<ValuationUnitGroup> vu_groups = new ArrayList<>();
 	
 	
-	/* Control many-to-many relationship between valuation unit and parameter */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "valuation_units_techparameters_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "paramater_code"), foreignKey = @ForeignKey(name = "valuation_units_techparameters_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_techparameters_links_paramater_code_fkey"))
-	private List<TechnicalParameter> technicalParameter = new ArrayList<>();
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit")
+    @JsonBackReference
+    private Set<UnitHasParameterValue> unit_parameters;
 	
-
+	
 	@Override
 	public String print() {
 		return id;

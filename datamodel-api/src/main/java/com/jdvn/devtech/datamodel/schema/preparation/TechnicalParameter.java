@@ -2,11 +2,14 @@ package com.jdvn.devtech.datamodel.schema.preparation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.jdvn.devtech.datamodel.schema.valuation.UnitHasParameterValue;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitType;
 
 import jakarta.persistence.CascadeType;
@@ -17,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -64,5 +68,7 @@ public class TechnicalParameter {
 	@JoinTable(name = "types_parameters_links", schema = "preparation", joinColumns = @JoinColumn(name = "parameter_code"), inverseJoinColumns = @JoinColumn(name = "type_code"), foreignKey = @ForeignKey(name = "types_parameters_links_parameter_code_fkey"), inverseForeignKey = @ForeignKey(name = "types_parameters_links_type_code_fkey"))
 	private List<ValuationUnitType> vunit_types = new ArrayList<>();
 	
-	
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "technical_parameter")
+    @JsonBackReference
+    private Set<UnitHasParameterValue> unit_parameters;
 }
