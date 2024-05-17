@@ -363,7 +363,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit
         REFERENCES address.address (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT valuation_unit_vu_type_id_fkey FOREIGN KEY (vu_type_code)
+    CONSTRAINT valuation_unit_vu_type_code_fkey FOREIGN KEY (vu_type_code)
         REFERENCES valuation.valuation_unit_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

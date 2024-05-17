@@ -44,7 +44,7 @@ public class ValuationUnit extends DomainObject<String> {
 	private String id;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "vu_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_id_fkey"))
+    @JoinColumn(name = "vu_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_code_fkey"))
     private ValuationUnitType vu_type;
     
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)

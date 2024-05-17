@@ -7,7 +7,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +18,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "value_type", schema = "valuation")
+@Table(name = "value_type", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "value_type_display_value_key", columnNames = { "display_value" })})
 @Comment("Code list of value types used for valuation process.")
 public class ValueType {
 
@@ -37,4 +39,8 @@ public class ValueType {
 	@Column(columnDefinition = "character(1) default 'i'")
 	@Comment("Status in active of the value type as active (a) or inactive (i).")
 	private char status;
+	
+	@OneToOne(mappedBy = "value_type")
+	private Valuation valuation;
+	
 }

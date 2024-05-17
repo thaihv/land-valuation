@@ -1,13 +1,19 @@
 package com.jdvn.devtech.datamodel.schema.valuation;
 
+import java.util.Date;
+
 import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,18 +35,25 @@ public class Valuation extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
+    private ValueType value_type;
+	
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the valuation unit type.")
 	private String name;
 
 	@Column(length = 1000)
-	@Comment("Description of the valuation unit type.")
-	private String description;
+	@Comment("Value of object valuation in numeric.")
+	private Double value;
 
-	@Column(columnDefinition = "character(1) default 'i'")
-	@Comment("Status in active of the valuation unit type as active (a) or inactive (i).")
-	private char status;
+	@Comment("The date that value is made for valuation.")
+	private Date valuation_date;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "approach_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_code_fkey"))
+    private ValuationApproach valuation_approach;
+	
 	@Override
 	public String print() {
 		return id;

@@ -5,7 +5,9 @@ import org.hibernate.annotations.Comment;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "valuation_approach", schema = "valuation")
+@Table(name = "valuation_approach", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "valuation_approach_display_value_key", columnNames = { "display_value" })})
 @Comment("Code list that deals with three primary types of valuation methods, namely, sales comparison, income and cost methods dominant in practice.")
 public class ValuationApproach{
 	
@@ -36,5 +38,8 @@ public class ValuationApproach{
 	@Column(columnDefinition = "character(1) default 'a'")
 	@Comment("Status in active of the approach as active (a) or inactive (i).")
 	private char status;
+	
+	@OneToOne(mappedBy = "valuation_approach")
+	private Valuation valuation;
 
 }
