@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "valuation_approach", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "valuation_approach_display_value_key", columnNames = { "display_value" })})
+@Table(name = "valuation_approach", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "valuation_approach_display_value", columnNames = { "display_value" })})
 @Comment("Code list that deals with three primary types of valuation methods, namely, sales comparison, income and cost methods dominant in practice.")
 public class ValuationApproach{
 	
