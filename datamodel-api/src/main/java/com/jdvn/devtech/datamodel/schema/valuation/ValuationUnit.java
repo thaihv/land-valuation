@@ -11,7 +11,6 @@ import org.hibernate.annotations.Comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.address.Address;
-import com.jdvn.devtech.datamodel.schema.source.Source;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -71,16 +70,10 @@ public class ValuationUnit extends DomainObject<String> {
 	@JoinTable(name = "valuation_units_groups_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "vunit_group_id"), foreignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_group_id_fkey"))
 	private List<ValuationUnitGroup> vu_groups = new ArrayList<>();
 	
-	/* Control many-to-many relationship between valuation unit and source */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "valuation_units_sources_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "source_id"), foreignKey = @ForeignKey(name = "valuation_units_sources_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_sources_links_source_id_fkey"))
-	private List<Source> sources = new ArrayList<>();
-		
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit")
     @JsonBackReference
     private Set<UnitHasParameterValue> unit_parameters;
-	
-	
+		
 	@Override
 	public String print() {
 		return id;

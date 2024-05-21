@@ -26,7 +26,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "valuation_unit_category", schema = "valuation", indexes = {
 		@Index(name = "valuation_unit_category_on_rowidentifier", columnList = "rowidentifier") })
-@Comment("List of the valuation unit categories.")
+@Comment("List of the valuation unit categories as parcel or improvements (building, building unit) or parcel and buildings")
 public class ValuationUnitCategory extends DomainObject<String> {
 	
 	private static final long serialVersionUID = 1L;

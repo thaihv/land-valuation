@@ -47,7 +47,7 @@ ALTER TABLE IF EXISTS valuation.valuation_unit_category
     OWNER to postgres;
 
 COMMENT ON TABLE valuation.valuation_unit_category
-    IS 'List of the valuation unit categories.';
+    IS 'List of the valuation unit categories as parcel or improvements (building, building unit) or parcel and buildings';
 
 COMMENT ON COLUMN valuation.valuation_unit_category.name
     IS 'Display name of the valuation unit category.';
@@ -129,7 +129,7 @@ ALTER TABLE IF EXISTS valuation.valuation_unit_type
     OWNER to postgres;
 
 COMMENT ON TABLE valuation.valuation_unit_type
-    IS 'List of the valuation unit types.';
+    IS 'List of the valuation unit types as items belonged to categories.';
 
 COMMENT ON COLUMN valuation.valuation_unit_type.name
     IS 'Display name of the type.';
@@ -444,16 +444,25 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
     IS 'Value of the parameter with corresponding valuation unit.';
 
--- Table: valuation.valuation_units_sources_links
-CREATE TABLE IF NOT EXISTS valuation.valuation_units_sources_links
+-- Table: valuation.valuation_unit_uses_source
+
+-- DROP TABLE IF EXISTS valuation.valuation_unit_uses_source;
+
+CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source
 (
     source_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT valuation_units_sources_links_source_id_fkey FOREIGN KEY (source_id)
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT valuation_unit_uses_source_pkey PRIMARY KEY (source_id, vunit_id),
+    CONSTRAINT valuation_unit_uses_source_source_id_fkey FOREIGN KEY (source_id)
         REFERENCES source.source (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT valuation_units_sources_links_vunit_id_fkey FOREIGN KEY (vunit_id)
+    CONSTRAINT valuation_unit_uses_source_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -461,8 +470,47 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_units_sources_links
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS valuation.valuation_units_sources_links
+ALTER TABLE IF EXISTS valuation.valuation_unit_uses_source
     OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_unit_uses_source
+    IS 'Links the valuation unit to the sources (documents) in valuation process.';
+
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.source_id
+    IS 'Identifier of the source associated to the application.';
+
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.vunit_id
+    IS 'Identifier for the valuation unit the record is associated to.';
+
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+    
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_user
+    IS 'The user id of the last person to modify the row.';
+-- Index: valuation_unit_uses_source_on_rowidentifier
+CREATE INDEX IF NOT EXISTS valuation_unit_uses_source_on_rowidentifier
+    ON valuation.valuation_unit_uses_source USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: valuation_unit_uses_source_on_source_id
+CREATE INDEX IF NOT EXISTS valuation_unit_uses_source_on_source_id
+    ON valuation.valuation_unit_uses_source USING btree
+    (source_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: valuation_unit_uses_source_on_vunit_id
+CREATE INDEX IF NOT EXISTS valuation_unit_uses_source_on_vunit_id
+    ON valuation.valuation_unit_uses_source USING btree
+    (vunit_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
     
 -- Table: preparation.parcel
 CREATE TABLE IF NOT EXISTS preparation.parcel
@@ -645,6 +693,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS preparation.parcels_buildings_links
     OWNER to postgres;    
+COMMENT ON TABLE preparation.parcels_buildings_links
+    IS 'Provides relationship of parcels and buildings.';
     
 -- Table: preparation.building_unit
 CREATE TABLE IF NOT EXISTS preparation.building_unit
@@ -878,6 +928,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS preparation.parcels_utility_networks_links
     OWNER to postgres;    
+COMMENT ON TABLE preparation.parcels_utility_networks_links
+    IS 'Provides relationship of parcels and utility networks.'; 
     
 -- Table: valuation.appeal_status_type
 CREATE TABLE IF NOT EXISTS valuation.appeal_status_type

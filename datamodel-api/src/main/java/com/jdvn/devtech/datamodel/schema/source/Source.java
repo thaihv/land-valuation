@@ -1,15 +1,12 @@
 package com.jdvn.devtech.datamodel.schema.source;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.annotations.Comment;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnit;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,7 +16,6 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -116,12 +112,7 @@ public class Source extends DomainObject<String>{
 	@JoinColumn(name = "availability_status_code", foreignKey = @ForeignKey(name = "availability_status_type_fkey"))
 	@Comment("The code describing the availability status of the document.")
 	private AvailabilityStatusType availability_status_type;
-	
-    /* Control many-to-many relationship between source and valuation unit, 
-     * sources is a variable in ValuationUnit  */
-    @ManyToMany(mappedBy = "sources")
-    private List<ValuationUnit> valuation_units = new ArrayList<>();
-        
+	        
     @OneToOne(mappedBy = "source", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private SpatialSource spatial_source;
