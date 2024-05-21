@@ -214,4 +214,6 @@ INSERT INTO preparation.utility_network_type (code, display_value, status) VALUE
 -- Table: preparation.neighborhood_type
 INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('urban', 'Urban', 'a');
 INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('rural', 'Rural', 'a');
+INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('suburban', 'Sub Urban', 'a');
+INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('agricultural', 'Agricultural', 'a');
 

@@ -77,33 +77,7 @@ CREATE INDEX IF NOT EXISTS valuation_unit_category_on_rowidentifier
     ON valuation.valuation_unit_category USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;    
--- + Version: valuation_unit_historic
-CREATE OR REPLACE TRIGGER __track_changes
-    BEFORE INSERT OR UPDATE 
-    ON valuation.valuation_unit_category
-    FOR EACH ROW
-    EXECUTE FUNCTION public.f_for_trg_track_changes();
-CREATE OR REPLACE TRIGGER __track_history
-    AFTER DELETE OR UPDATE 
-    ON valuation.valuation_unit_category
-    FOR EACH ROW
-    EXECUTE FUNCTION public.f_for_trg_track_history();	
-CREATE TABLE IF NOT EXISTS valuation.valuation_unit_category_historic
-(
-    code character varying(40),
-    name character varying(500),
-    description character varying(1000),
-    status character(1),
-    rowidentifier character varying(40),
-    rowversion integer,
-    change_action character(1),
-    change_user character varying(50),
-    change_time timestamp without time zone,
-    change_time_valid_until timestamp without time zone DEFAULT now() NOT NULL
-);	
-COMMENT ON TABLE valuation.valuation_unit_category_historic
-    IS 'Version table for valuation_unit_category.';
-    
+
 -- Table: valuation.valuation_unit_type
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_type
 (
@@ -162,7 +136,9 @@ CREATE INDEX IF NOT EXISTS valuation_unit_type_on_rowidentifier
     ON valuation.valuation_unit_type USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
+    
 -- + Version: valuation_unit_type_historic
+/*
 CREATE OR REPLACE TRIGGER __track_changes
     BEFORE INSERT OR UPDATE 
     ON valuation.valuation_unit_type
@@ -189,7 +165,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit_type_historic
 );
 COMMENT ON TABLE valuation.valuation_unit_type_historic
     IS 'Version table for valuation_unit_type.';
-    
+*/    
 -- Table: preparation.types_parameters_links
 CREATE TABLE IF NOT EXISTS preparation.types_parameters_links
 (    

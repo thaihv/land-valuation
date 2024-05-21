@@ -9,6 +9,6 @@ INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('i
 INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('cost','Cost Method','a');
 
 -- Table: valuation.appeal_status_type
-INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('appeal', 'Appeal', 'a');
-INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('reviewing', 'Reviewing', 'a');
-INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('revaluated', 'Revaluated', 'a');
+INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('accepted', 'Accepted', 'a');
+INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('inDecision', 'In Decision', 'a');
+INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('rejected', 'Rejected', 'a');
