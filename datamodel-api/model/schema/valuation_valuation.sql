@@ -443,6 +443,26 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
 
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
     IS 'Value of the parameter with corresponding valuation unit.';
+
+-- Table: valuation.valuation_units_sources_links
+CREATE TABLE IF NOT EXISTS valuation.valuation_units_sources_links
+(
+    source_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT valuation_units_sources_links_source_id_fkey FOREIGN KEY (source_id)
+        REFERENCES source.source (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_units_sources_links_vunit_id_fkey FOREIGN KEY (vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_units_sources_links
+    OWNER to postgres;
     
 -- Table: preparation.parcel
 CREATE TABLE IF NOT EXISTS preparation.parcel
@@ -838,6 +858,26 @@ COMMENT ON COLUMN preparation.utility_network.change_user
 
 COMMENT ON COLUMN preparation.utility_network.change_time
     IS 'The date and time the row was last modified.';
+
+-- Table: preparation.parcels_utility_networks_links
+CREATE TABLE IF NOT EXISTS preparation.parcels_utility_networks_links
+(
+    parcel_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    utility_network_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT parcels_utility_networks_links_parcel_id_fkey FOREIGN KEY (parcel_id)
+        REFERENCES preparation.parcel (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT parcels_utility_networks_links_utility_network_id_fkey FOREIGN KEY (utility_network_id)
+        REFERENCES preparation.utility_network (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.parcels_utility_networks_links
+    OWNER to postgres;    
     
 -- Table: valuation.appeal_status_type
 CREATE TABLE IF NOT EXISTS valuation.appeal_status_type

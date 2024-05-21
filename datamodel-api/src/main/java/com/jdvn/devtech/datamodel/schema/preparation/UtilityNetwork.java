@@ -1,5 +1,8 @@
 package com.jdvn.devtech.datamodel.schema.preparation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
 import org.locationtech.jts.geom.MultiPolygon;
 
@@ -11,6 +14,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -51,6 +55,9 @@ public class UtilityNetwork extends DomainObject<String> {
 	@Comment("Geometry of the utility network.")
 	private MultiPolygon geom;
 	
+    @ManyToMany(mappedBy = "utility_networks")
+    private List<Parcel> parcels = new ArrayList<>();
+    
 	@Override
 	public String getId() {
 		return id;

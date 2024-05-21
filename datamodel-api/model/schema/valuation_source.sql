@@ -495,4 +495,4 @@ CREATE INDEX IF NOT EXISTS application_uses_source_on_rowidentifier
 CREATE INDEX IF NOT EXISTS application_uses_source_on_source_id
     ON application.application_uses_source USING btree
     (source_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;	
+    TABLESPACE pg_default;	 

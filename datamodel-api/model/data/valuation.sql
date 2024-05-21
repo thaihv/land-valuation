@@ -7,3 +7,8 @@ INSERT INTO valuation.valuation_unit_group_type(code, display_value, description
 INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('salesComparison','Sales Comparison','a');
 INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('income','Income Method','a');
 INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('cost','Cost Method','a');
+
+-- Table: valuation.appeal_status_type
+INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('appeal', 'Appeal', 'a');
+INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('reviewing', 'Reviewing', 'a');
+INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('revaluated', 'Revaluated', 'a');
