@@ -31,7 +31,7 @@ public class SpatialSourceType {
 	@Comment("The code for the spatial source type.")
 	private String code;
 
-	@Column(length = 1000, nullable = false)
+	@Column(length = 500, nullable = false)
 	@Comment("Displayed value of the spatial source type.")
 	private String display_value;
 

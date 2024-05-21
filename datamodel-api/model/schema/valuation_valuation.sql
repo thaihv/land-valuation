@@ -726,3 +726,36 @@ COMMENT ON COLUMN preparation.building_unit.volume
 
 COMMENT ON COLUMN preparation.building_unit.belongto_building_id
     IS 'Refer to identifying of a building.';        
+
+    
+-- Table: valuation.appeal_status_type
+CREATE TABLE IF NOT EXISTS valuation.appeal_status_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT appeal_status_type_pkey PRIMARY KEY (code),
+    CONSTRAINT appeal_status_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.appeal_status_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.appeal_status_type
+    IS 'List of the appeal status types in a valuaton process';
+
+COMMENT ON COLUMN valuation.appeal_status_type.code
+    IS 'Code of the appeal status type.';
+
+COMMENT ON COLUMN valuation.appeal_status_type.display_value
+    IS 'Displayed value of the appeal status type.';
+    
+COMMENT ON COLUMN valuation.appeal_status_type.description
+    IS 'Description of the appeal status type.';    
+
+COMMENT ON COLUMN valuation.appeal_status_type.status
+    IS 'Status in active of the appeal status type as active (a) or inactive (i).';
+    

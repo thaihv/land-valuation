@@ -39,9 +39,9 @@ public class Valuation extends DomainObject<String> {
     @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
     private ValueType value_type;
 	
-	@Column(length = 500, nullable = false)
-	@Comment("Display name of the valuation unit type.")
-	private String name;
+	@Column(length = 500)
+	@Comment("Display purpose of the valuation.")
+	private String purpose_valuation;
 
 	@Column(length = 1000)
 	@Comment("Value of object valuation in numeric.")
@@ -53,6 +53,10 @@ public class Valuation extends DomainObject<String> {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "approach_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_code_fkey"))
     private ValuationApproach valuation_approach;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "appeal_status_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_appeal_status_code_fkey"))
+    private AppealStatusType appeal_status;
 	
 	@Override
 	public String print() {
