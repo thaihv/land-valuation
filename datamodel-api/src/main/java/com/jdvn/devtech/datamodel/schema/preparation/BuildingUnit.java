@@ -71,14 +71,6 @@ public class BuildingUnit extends DomainObject<String> {
 	@Comment("Ratio of share of using facilities.")
 	private Double shareInJointFacilities;
 	
-	@Column(name = "s_price")
-	@Comment("Building unit price following the investigate in average per square meter.")
-	private Double reasearchPrice;
-
-	@Column(name = "f_price")
-	@Comment("Building unit price in average per square meter in fact.")
-	private Double decisionPrice;
-
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of building for spatial displaying.")
 	private MultiPolygon geom;

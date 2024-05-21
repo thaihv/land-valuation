@@ -50,14 +50,6 @@ public class Parcel extends DomainObject<String> {
 	@Comment("Code of planed land use.")
 	private String planed_land_use;
 	
-	@Column(name = "s_price")
-	@Comment("Land price following the investigate in average per square meter.")
-	private Double reasearchPrice;
-
-	@Column(name = "f_price")
-	@Comment("Land price in average per square meter in fact.")
-	private Double decisionPrice;
-
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of parcel for spatial displaying.")
 	private MultiPolygon geom;

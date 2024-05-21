@@ -437,8 +437,6 @@ CREATE TABLE IF NOT EXISTS preparation.parcel
     area double precision,
     curent_land_use character varying(255) COLLATE pg_catalog."default",    
     planed_land_use character varying(255) COLLATE pg_catalog."default",
-    s_price double precision,
-    f_price double precision,
     geom geometry NOT NULL,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
@@ -481,17 +479,11 @@ COMMENT ON COLUMN preparation.parcel.area
 COMMENT ON COLUMN preparation.parcel.curent_land_use
     IS 'Code of land use.';
 
-COMMENT ON COLUMN preparation.parcel.f_price
-    IS 'Land price in average per square meter in fact.';
-
 COMMENT ON COLUMN preparation.parcel.geom
     IS 'Geometry of parcel for spatial displaying.';
 
 COMMENT ON COLUMN preparation.parcel.planed_land_use
     IS 'Code of planed land use.';
-
-COMMENT ON COLUMN preparation.parcel.s_price
-    IS 'Land price following the investigate in average per square meter.';    
 
 -- Table: preparation.building
 CREATE TABLE IF NOT EXISTS preparation.building
@@ -510,9 +502,7 @@ CREATE TABLE IF NOT EXISTS preparation.building
     heating_source character varying(255) COLLATE pg_catalog."default",
     heating_system character varying(255) COLLATE pg_catalog."default",
     number_dwellings integer,
-    number_floors integer,    
-    s_price double precision,
-    f_price double precision,
+    number_floors integer,
     elevator integer,
     airconditioning integer,
     geom geometry NOT NULL,
@@ -566,9 +556,6 @@ COMMENT ON COLUMN preparation.building.construct_material
 COMMENT ON COLUMN preparation.building.date_construction
     IS 'The date of construction.';
 
-COMMENT ON COLUMN preparation.building.f_price
-    IS 'Building price in average per square meter in fact.';
-
 COMMENT ON COLUMN preparation.building.elevator
     IS 'Number of elevators of the building.';
 
@@ -595,9 +582,6 @@ COMMENT ON COLUMN preparation.building.number_floors
 
 COMMENT ON COLUMN preparation.building.quality
     IS 'Quality of the building if have a quality manegement.';
-
-COMMENT ON COLUMN preparation.building.s_price
-    IS 'Building price following the investigate in average per square meter.';
 
 COMMENT ON COLUMN preparation.building.status
     IS 'Status of the building if have a status manegement.';
@@ -639,8 +623,6 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit
     number_bathrooms integer,
     number_bedrooms integer,
     number_rooms integer,
-    s_price double precision,
-    f_price double precision,
     share_in_joint_facilities double precision,
     accessory_part boolean,
     accessory_part_type character varying(255) COLLATE pg_catalog."default",
@@ -694,9 +676,6 @@ COMMENT ON COLUMN preparation.building_unit.accessory_part_type
 COMMENT ON COLUMN preparation.building_unit.area
     IS 'Legal area value of the building unit.';
 
-COMMENT ON COLUMN preparation.building_unit.f_price
-    IS 'Building unit price in average per square meter in fact.';
-
 COMMENT ON COLUMN preparation.building_unit.geom
     IS 'Geometry of building for spatial displaying.';
 
@@ -712,8 +691,6 @@ COMMENT ON COLUMN preparation.building_unit.number_bedrooms
 COMMENT ON COLUMN preparation.building_unit.number_rooms
     IS 'Number of rooms in the bulding unit.';
 
-COMMENT ON COLUMN preparation.building_unit.s_price
-    IS 'Building unit price following the investigate in average per square meter.';
 
 COMMENT ON COLUMN preparation.building_unit.share_in_joint_facilities
     IS 'Ratio of share of using facilities.';

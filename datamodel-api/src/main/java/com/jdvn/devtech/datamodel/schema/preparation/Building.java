@@ -95,14 +95,6 @@ public class Building extends DomainObject<String> {
 	@Comment("Energy performance value of the bulding.")
 	private String energy_performance;
 	
-	@Column(name = "s_price")
-	@Comment("Building price following the investigate in average per square meter.")
-	private Double reasearchPrice;
-
-	@Column(name = "f_price")
-	@Comment("Building price in average per square meter in fact.")
-	private Double decisionPrice;
-
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of building for spatial displaying.")
 	private MultiPolygon geom;

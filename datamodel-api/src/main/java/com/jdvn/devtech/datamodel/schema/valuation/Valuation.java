@@ -39,16 +39,16 @@ public class Valuation extends DomainObject<String> {
     @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
     private ValueType value_type;
 	
-	@Column(length = 500)
-	@Comment("Display purpose of the valuation.")
-	private String purpose_valuation;
-
 	@Column(length = 1000)
 	@Comment("Value of object valuation in numeric.")
 	private Double value;
-
+	
 	@Comment("The date that value is made for valuation.")
 	private Date valuation_date;
+	
+	@Column(length = 500)
+	@Comment("Display purpose of the valuation.")
+	private String purpose_valuation;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "approach_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_code_fkey"))
