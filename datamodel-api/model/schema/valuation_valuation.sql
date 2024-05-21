@@ -353,6 +353,8 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit
     name character varying(500) COLLATE pg_catalog."default" NOT NULL,
     address_id character varying(40) COLLATE pg_catalog."default",
     vu_type_code character varying(40) COLLATE pg_catalog."default",
+    creation_date timestamp without time zone,
+    expiration_date timestamp without time zone,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
@@ -380,6 +382,18 @@ or land and improvements together as land or condominium property.';
 
 COMMENT ON COLUMN valuation.valuation_unit.name
     IS 'Display name of the valuation unit.';
+
+COMMENT ON COLUMN valuation.valuation_unit.address_id
+    IS 'Address identifier of the valuation unit.';
+    
+COMMENT ON COLUMN valuation.valuation_unit.vu_type_code
+    IS 'Valuation type code of unit, to classify by types or categories if need.';
+    
+COMMENT ON COLUMN valuation.valuation_unit.creation_date
+    IS 'The datetime the valuation unit is formally recognised by the land value assessment agency (i.e. registered or issued).';
+
+COMMENT ON COLUMN valuation.valuation_unit.expiration_date
+    IS 'The datetime the valuation unit was superseded and became historic.';    
     
 COMMENT ON COLUMN valuation.valuation_unit.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
@@ -704,6 +718,126 @@ COMMENT ON COLUMN preparation.building_unit.volume
 COMMENT ON COLUMN preparation.building_unit.belongto_building_id
     IS 'Refer to identifying of a building.';        
 
+-- Table: preparation.utility_network_status_type
+CREATE TABLE IF NOT EXISTS preparation.utility_network_status_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT utility_network_status_type_pkey PRIMARY KEY (code),
+    CONSTRAINT utility_network_status_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.utility_network_status_type
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.utility_network_status_type
+    IS 'Code list of utility network status types. E.g. inUse, outOfUse, planned, etc.';
+
+COMMENT ON COLUMN preparation.utility_network_status_type.code
+    IS 'Code of the utility network status type.';
+
+COMMENT ON COLUMN preparation.utility_network_status_type.display_value
+    IS 'Displayed value of the utility network status type.';
+
+COMMENT ON COLUMN preparation.utility_network_status_type.description
+    IS 'Description of the utility network status type.';
+    
+COMMENT ON COLUMN preparation.utility_network_status_type.status
+    IS 'Status in active of the utility network status type as active (a) or inactive (i).';
+
+    -- Table: preparation.utility_network_type
+CREATE TABLE IF NOT EXISTS preparation.utility_network_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT utility_network_type_pkey PRIMARY KEY (code),
+    CONSTRAINT utility_network_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.utility_network_type
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.utility_network_type
+    IS 'Code list of utility network types. E.g. gas, oil, water, etc';
+
+COMMENT ON COLUMN preparation.utility_network_type.code
+    IS 'Code of the utility network type.';
+
+COMMENT ON COLUMN preparation.utility_network_type.display_value
+    IS 'Displayed value of the utility network type.';
+
+COMMENT ON COLUMN preparation.utility_network_type.description
+    IS 'Description of the utility network type.';
+    
+COMMENT ON COLUMN preparation.utility_network_type.status
+    IS 'Status in active of the utility network type as active (a) or inactive (i).';    
+
+-- Table: preparation.utility_network
+CREATE TABLE IF NOT EXISTS preparation.utility_network
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    ext_physical_network_id character varying(40) COLLATE pg_catalog."default",
+    status_code character varying(20) COLLATE pg_catalog."default",
+    type_code character varying(20) COLLATE pg_catalog."default",
+    geom geometry,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,      
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),  
+    CONSTRAINT utility_network_pkey PRIMARY KEY (id),
+    CONSTRAINT utility_network_status_code_fkey FOREIGN KEY (status_code)
+        REFERENCES preparation.utility_network_status_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT utility_network_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES preparation.utility_network_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.utility_network
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.utility_network
+    IS 'A utility network concerns to implementation of the LADM LA_LegalSpaceUtilityNetwork class. Not used by Lao Land Valuation System.';
+
+COMMENT ON COLUMN preparation.utility_network.ext_physical_network_id
+    IS 'External identifier for a physical utility network.';
+
+COMMENT ON COLUMN preparation.utility_network.status_code
+    IS 'Status code for the utility network.';
+
+COMMENT ON COLUMN preparation.utility_network.type_code
+    IS 'Type code for the utility network.';
+    
+COMMENT ON COLUMN preparation.utility_network.geom
+    IS 'Geometry of the utility network.';
+
+COMMENT ON COLUMN preparation.utility_network.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN preparation.utility_network.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';  
+    
+COMMENT ON COLUMN preparation.utility_network.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN preparation.utility_network.change_user
+    IS 'The user id of the last person to modify the row.';    
+
+COMMENT ON COLUMN preparation.utility_network.change_time
+    IS 'The date and time the row was last modified.';
     
 -- Table: valuation.appeal_status_type
 CREATE TABLE IF NOT EXISTS valuation.appeal_status_type

@@ -1,6 +1,8 @@
 package com.jdvn.devtech.datamodel.schema.valuation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -55,12 +57,19 @@ public class ValuationUnit extends DomainObject<String> {
 	@Comment("Display name of the valuation unit type.")
 	private String name;
 
+	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
+	@Comment("The datetime the valuation unit is formally recognised by the land value assessment agency (i.e. registered or issued).")
+	private LocalDateTime creation_date = LocalDateTime.now();
+	
+	@Column
+	@Comment("The datetime the valuation unit was superseded and became historic.")
+	private Date expiration_date;
+		
 	/* Control many-to-many relationship between valuation unit and valuation unit group */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "valuation_units_groups_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "vunit_group_id"), foreignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_group_id_fkey"))
 	private List<ValuationUnitGroup> vu_groups = new ArrayList<>();
-	
-	
+		
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit")
     @JsonBackReference
     private Set<UnitHasParameterValue> unit_parameters;

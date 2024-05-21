@@ -197,3 +197,16 @@ INSERT INTO preparation.parameter_setting(code, key, value) VALUES ('landParcelA
 INSERT INTO preparation.parameter_setting(code, key, value) VALUES ('landParcelArea','Min Area','1');
 INSERT INTO preparation.parameter_setting(code, key, value) VALUES ('landParcelArea','Max Area','1000000');
 
+-- Table: preparation.utility_network_status_type
+INSERT INTO preparation.utility_network_status_type (code, display_value, status) VALUES ('inUse', 'In Use', 'a');
+INSERT INTO preparation.utility_network_status_type (code, display_value, status) VALUES ('outOfUse', 'Out of Use', 'a');
+INSERT INTO preparation.utility_network_status_type (code, display_value, status) VALUES ('planned', 'Planned', 'a');
+
+-- Table: preparation.utility_network_type
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('chemical', 'Chemicals', 'a');
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('electricity', 'Electricity', 'a');
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('gas', 'Gas', 'a');
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('heating', 'Heating', 'a');
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('oil', 'Oil', 'a');
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('telecommunication', 'Telecommunication', 'a');
+INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('water', 'Water', 'a');
