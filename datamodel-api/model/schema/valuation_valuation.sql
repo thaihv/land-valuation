@@ -345,14 +345,45 @@ COMMENT ON COLUMN valuation.valuation_unit_group.change_user
 COMMENT ON COLUMN valuation.valuation_unit_group.change_time
     IS 'The date and time the row was last modified.';
     
+-- Table: preparation.neighborhood_type
+CREATE TABLE IF NOT EXISTS preparation.neighborhood_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT neighborhood_type_pkey PRIMARY KEY (code),
+    CONSTRAINT neighborhood_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.neighborhood_type
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.neighborhood_type
+    IS 'Code list of neighborhood types. E.g., urban, rural, etc';
+
+COMMENT ON COLUMN preparation.neighborhood_type.code
+    IS 'Code of the neighborhood type.';
+
+COMMENT ON COLUMN preparation.neighborhood_type.display_value
+    IS 'Displayed value of the neighborhood type.';
+
+COMMENT ON COLUMN preparation.neighborhood_type.description
+    IS 'Description of the neighborhood type.';
+    
+COMMENT ON COLUMN preparation.neighborhood_type.status
+    IS 'Status in active of the neighborhood type as active (a) or inactive (i).';
     
 -- Table: valuation.valuation_unit
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    name character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(500) COLLATE pg_catalog."default",
     address_id character varying(40) COLLATE pg_catalog."default",
     vu_type_code character varying(40) COLLATE pg_catalog."default",
+    neighborhood_code character varying(20) COLLATE pg_catalog."default",
     creation_date timestamp without time zone,
     expiration_date timestamp without time zone,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
@@ -365,6 +396,10 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit
         REFERENCES address.address (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
+   CONSTRAINT valuation_unit_neighborhood_code_fkey FOREIGN KEY (neighborhood_code)
+        REFERENCES preparation.neighborhood_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,        
     CONSTRAINT valuation_unit_vu_type_code_fkey FOREIGN KEY (vu_type_code)
         REFERENCES valuation.valuation_unit_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -388,6 +423,9 @@ COMMENT ON COLUMN valuation.valuation_unit.address_id
     
 COMMENT ON COLUMN valuation.valuation_unit.vu_type_code
     IS 'Valuation type code of unit, to classify by types or categories if need.';
+
+COMMENT ON COLUMN valuation.valuation_unit.neighborhood_code
+    IS 'Neighborhood code as urban or rural, for example.';    
     
 COMMENT ON COLUMN valuation.valuation_unit.creation_date
     IS 'The datetime the valuation unit is formally recognised by the land value assessment agency (i.e. registered or issued).';
@@ -445,9 +483,6 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
     IS 'Value of the parameter with corresponding valuation unit.';
 
 -- Table: valuation.valuation_unit_uses_source
-
--- DROP TABLE IF EXISTS valuation.valuation_unit_uses_source;
-
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source
 (
     source_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
@@ -930,7 +965,7 @@ ALTER TABLE IF EXISTS preparation.parcels_utility_networks_links
     OWNER to postgres;    
 COMMENT ON TABLE preparation.parcels_utility_networks_links
     IS 'Provides relationship of parcels and utility networks.'; 
-    
+        
 -- Table: valuation.appeal_status_type
 CREATE TABLE IF NOT EXISTS valuation.appeal_status_type
 (

@@ -11,6 +11,7 @@ import org.hibernate.annotations.Comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.address.Address;
+import com.jdvn.devtech.datamodel.schema.preparation.NeighborhoodType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -52,6 +53,11 @@ public class ValuationUnit extends DomainObject<String> {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_address_id_fkey"))
     private Address address;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@Comment("Neighborhood code as urban or rural, for example")
+    @JoinColumn(name = "neighborhood_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_neighborhood_code_fkey"))
+    private NeighborhoodType neighborhood_type;
         
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the valuation unit type.")

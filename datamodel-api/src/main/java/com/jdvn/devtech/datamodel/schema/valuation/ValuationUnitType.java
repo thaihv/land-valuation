@@ -40,7 +40,7 @@ public class ValuationUnitType extends DomainObject<String> {
 	@Comment("Code of the valuation unit type.")
 	private String code;
 
-	@Column(length = 500, nullable = false)
+	@Column(length = 500)
 	@Comment("Display name of the type.")
 	private String name;
 

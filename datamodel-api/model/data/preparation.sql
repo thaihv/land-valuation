@@ -210,3 +210,8 @@ INSERT INTO preparation.utility_network_type (code, display_value, status) VALUE
 INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('oil', 'Oil', 'a');
 INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('telecommunication', 'Telecommunication', 'a');
 INSERT INTO preparation.utility_network_type (code, display_value, status) VALUES ('water', 'Water', 'a');
+
+-- Table: preparation.neighborhood_type
+INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('urban', 'Urban', 'a');
+INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('rural', 'Rural', 'a');
+
