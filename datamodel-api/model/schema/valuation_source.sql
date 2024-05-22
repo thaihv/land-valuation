@@ -303,6 +303,7 @@ CREATE TABLE IF NOT EXISTS application.request_type_requires_source_type
 (
     request_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
     source_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT request_type_requires_source_type_pkey PRIMARY KEY (request_type_code, source_type_code),
     CONSTRAINT request_type_requires_source_type_request_type_code_fkey FOREIGN KEY (request_type_code)
         REFERENCES application.request_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION

@@ -1,7 +1,6 @@
 package com.jdvn.devtech.datamodel.schema.preparation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.Comment;
 import org.locationtech.jts.geom.MultiPolygon;
@@ -63,14 +62,14 @@ public class Parcel extends DomainObject<String> {
 	 * located at few parcels */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "parcels_buildings_links", schema = "preparation", joinColumns = @JoinColumn(name = "parcel_id"), inverseJoinColumns = @JoinColumn(name = "building_id"), foreignKey = @ForeignKey(name = "parcels_buildings_links_parcel_id_fkey"), inverseForeignKey = @ForeignKey(name = "parcels_buildings_links_building_id_fkey"))
-	private List<Building> buildings = new ArrayList<>();
+	private Set<Building> buildings;
 
 	/* Control many-to-many relationship between parcel and utility
 	 * as a parcel may contains many utilities and a utility may
 	 * located at few parcels */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "parcels_utility_networks_links", schema = "preparation", joinColumns = @JoinColumn(name = "parcel_id"), inverseJoinColumns = @JoinColumn(name = "utility_network_id"), foreignKey = @ForeignKey(name = "parcels_utility_networks_links_parcel_id_fkey"), inverseForeignKey = @ForeignKey(name = "parcels_utility_networks_links_utility_network_id_fkey"))
-	private List<UtilityNetwork> utility_networks = new ArrayList<>();
+	private Set<UtilityNetwork> utility_networks;
 	
 	@Override
 	public String getId() {

@@ -49,7 +49,7 @@ public class ValuationUnitGroup extends DomainObject<String> {
 	private String description;
 	
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vu_group_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_group_vu_group_type_code_fkey"))
+    @JoinColumn(name = "vu_group_type_code", nullable=false, referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_group_vu_group_type_code_fkey"))
     @Comment("Type of the valuation unit group as zone or locality.")
     private ValuationUnitGroupType vu_group_type;
 

@@ -1,7 +1,5 @@
 package com.jdvn.devtech.datamodel.schema.application;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.Comment;
@@ -58,6 +56,6 @@ public class RequestType{
 	/* Control many-to-many relationship between request_type and source */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "request_type_requires_source_type", schema = "application", joinColumns = @JoinColumn(name = "request_type_code"), inverseJoinColumns = @JoinColumn(name = "source_type_code"), foreignKey = @ForeignKey(name = "request_type_requires_source_type_request_type_code_fkey"), inverseForeignKey = @ForeignKey(name = "request_type_requires_source_type_source_type_code_fkey"))
-	private List<SourceType> source_types = new ArrayList<>();
+	private Set<SourceType> source_types;
 	
 }

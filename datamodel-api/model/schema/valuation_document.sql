@@ -90,6 +90,7 @@ CREATE OR REPLACE TRIGGER __track_history
     EXECUTE FUNCTION public.f_for_trg_track_history();
 	
 -- Table: document.document_historic
+/*
 CREATE TABLE IF NOT EXISTS document.document_historic
 (
 	id character varying(40) COLLATE pg_catalog."default",
@@ -113,7 +114,7 @@ CREATE INDEX IF NOT EXISTS document_historic_on_rowidentifier
     ON document.document_historic USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
-
+*/
 -- Table: document.document_chunk
 -- + SEQUENCE: document.document_chunk_id_seq
 CREATE SEQUENCE IF NOT EXISTS document.document_chunk_id_seq

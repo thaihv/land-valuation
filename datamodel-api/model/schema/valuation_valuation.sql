@@ -256,7 +256,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit_group
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),        
     name character varying(500) COLLATE pg_catalog."default" NOT NULL,
-    vu_group_type_code character varying(20) COLLATE pg_catalog."default",
+    vu_group_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
     description character varying(1000) COLLATE pg_catalog."default",
     reference_point geometry,
     geom geometry NOT NULL,
@@ -690,6 +690,7 @@ CREATE TABLE IF NOT EXISTS preparation.parcels_buildings_links
 (
     parcel_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     building_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT parcels_buildings_links_pkey PRIMARY KEY (parcel_id, building_id),
     CONSTRAINT parcels_buildings_links_building_id_fkey FOREIGN KEY (building_id)
         REFERENCES preparation.building (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -925,6 +926,7 @@ CREATE TABLE IF NOT EXISTS preparation.parcels_utility_networks_links
 (
     parcel_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     utility_network_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT parcels_utility_networks_links_pkey PRIMARY KEY (parcel_id, utility_network_id),
     CONSTRAINT parcels_utility_networks_links_parcel_id_fkey FOREIGN KEY (parcel_id)
         REFERENCES preparation.parcel (id) MATCH SIMPLE
         ON UPDATE NO ACTION

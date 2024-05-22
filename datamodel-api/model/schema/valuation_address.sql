@@ -62,6 +62,7 @@ CREATE OR REPLACE TRIGGER __track_history
     EXECUTE FUNCTION public.f_for_trg_track_history();
     
 -- Table: address.address_historic
+/*
 CREATE TABLE IF NOT EXISTS address.address_historic
 (
 	id character varying(40) COLLATE pg_catalog."default" NOT NULL,
@@ -84,3 +85,4 @@ CREATE INDEX IF NOT EXISTS address_historic_on_rowidentifier
     ON address.address_historic USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;	
+*/    
