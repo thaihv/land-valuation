@@ -39,9 +39,9 @@ public class Valuation extends DomainObject<String> {
     @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
     private ValueType value_type;
 	
-	@Column(length = 1000)
+	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("Value of object valuation in numeric.")
-	private Double value;
+	private Double assessed_value;
 	
 	@Comment("The date that value is made for valuation.")
 	private Date valuation_date;

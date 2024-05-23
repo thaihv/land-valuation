@@ -1010,3 +1010,205 @@ COMMENT ON COLUMN valuation.appeal_status_type.description
 COMMENT ON COLUMN valuation.appeal_status_type.status
     IS 'Status in active of the appeal status type as active (a) or inactive (i).';
     
+-- Table: valuation.mass_appraisal_analysis_type
+CREATE TABLE IF NOT EXISTS valuation.mass_appraisal_analysis_type
+(
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL,    
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT mass_appraisal_analysis_type_pkey PRIMARY KEY (code),
+    CONSTRAINT mass_appraisal_analysis_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.mass_appraisal_analysis_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.mass_appraisal_analysis_type
+    IS 'List of the mass appraisal analysis types used for valuaton process, such as multiple regreesion, time serial analysis.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_analysis_type.code
+    IS 'Code of the mass appraisal analysis type.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_analysis_type.display_value
+    IS 'Displayed value of the mass appraisal analysis type.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_analysis_type.description
+    IS 'Description of the mass appraisal analysis type.';
+    
+COMMENT ON COLUMN valuation.mass_appraisal_analysis_type.status
+    IS 'Status in active of the mass appraisal analysis type as active (a) or inactive (i).';   
+    
+-- Table: valuation.appraisal_level_type
+CREATE TABLE IF NOT EXISTS valuation.appraisal_level_type
+(
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT appraisal_level_type_pkey PRIMARY KEY (code),
+    CONSTRAINT appraisal_level_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.appraisal_level_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.appraisal_level_type
+    IS 'List of the appraisal level types used for valuaton process, such as mean, median, weighted mean.';
+
+COMMENT ON COLUMN valuation.appraisal_level_type.code
+    IS 'Code of the appraisal level type.';
+
+COMMENT ON COLUMN valuation.appraisal_level_type.display_value
+    IS 'Displayed value of the appraisal level type.';
+
+COMMENT ON COLUMN valuation.appraisal_level_type.description
+    IS 'Description of the appraisal level type.';
+    
+COMMENT ON COLUMN valuation.appraisal_level_type.status
+    IS 'Status in active of the appraisal level type as active (a) or inactive (i).';  
+    
+-- Table: valuation.appraisal_uniformity_type
+CREATE TABLE IF NOT EXISTS valuation.appraisal_uniformity_type
+(
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT appraisal_uniformity_type_pkey PRIMARY KEY (code),
+    CONSTRAINT appraisal_uniformity_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.appraisal_uniformity_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.appraisal_uniformity_type
+    IS 'List of the appraisal uniformity types used for valuaton process, such as standard deviation, coefficient of variation.';
+
+COMMENT ON COLUMN valuation.appraisal_uniformity_type.code
+    IS 'Code of the appraisal uniformity type.';
+
+COMMENT ON COLUMN valuation.appraisal_uniformity_type.display_value
+    IS 'Displayed value of the appraisal uniformity type.';
+    
+COMMENT ON COLUMN valuation.appraisal_uniformity_type.description
+    IS 'Description of the appraisal uniformity type.';
+    
+-- Table: valuation.mass_appraisal_performance
+CREATE TABLE IF NOT EXISTS valuation.mass_appraisal_performance
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    analysis_date timestamp(6) without time zone,
+    appraisal_level numeric(20,2),
+    appraisal_uniformity numeric(20,2),
+    simple_size integer NOT NULL,
+    analysis_type_code character varying(40) COLLATE pg_catalog."default",
+    CONSTRAINT mass_appraisal_performance_pkey PRIMARY KEY (id),
+    CONSTRAINT mass_appraisal_performance_analysis_type_code_fkey FOREIGN KEY (analysis_type_code)
+        REFERENCES valuation.mass_appraisal_analysis_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.mass_appraisal_performance
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.mass_appraisal_performance
+    IS 'Presents performance indicator characteristics of mass appraisal implementation';
+
+COMMENT ON COLUMN valuation.mass_appraisal_performance.id
+    IS 'Mass appraisal identifier.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_date
+    IS 'The analysis date of mass appraisal implementation.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_performance.appraisal_level
+    IS 'The appraisal level for mass appraisal process implementation.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_performance.appraisal_uniformity
+    IS 'The appraisal_uniformity for mass appraisal process implementation.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_performance.simple_size
+    IS 'Size of mass appraisal model sample.';
+
+COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_type_code
+    IS 'Type of the mass appraisal analysis.';    
+COMMENT ON COLUMN valuation.appraisal_uniformity_type.status
+    IS 'Status in active of the appraisal uniformity type as active (a) or inactive (i).';   
+    
+-- Table: valuation.measure_performances_levels_links
+CREATE TABLE IF NOT EXISTS valuation.measure_performances_levels_links
+(
+    performance_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    level_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    measured_value numeric(20,2),
+    CONSTRAINT measure_performances_levels_links_pkey PRIMARY KEY (level_code, performance_id),
+    CONSTRAINT measure_performances_levels_links_level_code_fkey FOREIGN KEY (level_code)
+        REFERENCES valuation.appraisal_level_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT measure_performances_levels_links_performance_id_fkey FOREIGN KEY (performance_id)
+        REFERENCES valuation.mass_appraisal_performance (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.measure_performances_levels_links
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.measure_performances_levels_links
+    IS 'Value of measurement of appraisal levels.';
+
+COMMENT ON COLUMN valuation.measure_performances_levels_links.level_code
+    IS 'The code of mass appraisal level.';
+
+COMMENT ON COLUMN valuation.measure_performances_levels_links.performance_id
+    IS 'The id of the mass appraisal performance.';
+
+COMMENT ON COLUMN valuation.measure_performances_levels_links.measured_value
+    IS 'Value of the measurement.';    
+
+-- Table: valuation.measure_performances_uniformities_links
+CREATE TABLE IF NOT EXISTS valuation.measure_performances_uniformities_links
+(
+    performance_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    uniformity_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    measured_value numeric(20,2),
+    CONSTRAINT measure_performances_uniformities_links_pkey PRIMARY KEY (performance_id, uniformity_code),
+    CONSTRAINT measure_performances_levels_links_performance_id_fkey FOREIGN KEY (performance_id)
+        REFERENCES valuation.mass_appraisal_performance (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT measure_performances_uniformities_links_uniformity_code_fkey FOREIGN KEY (uniformity_code)
+        REFERENCES valuation.appraisal_uniformity_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.measure_performances_uniformities_links
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.measure_performances_uniformities_links
+    IS 'Value of measurement of appraisal uniformities.';
+
+COMMENT ON COLUMN valuation.measure_performances_uniformities_links.performance_id
+    IS 'The id of the mass appraisal performance.';
+
+COMMENT ON COLUMN valuation.measure_performances_uniformities_links.uniformity_code
+    IS 'The code of mass appraisal uniformities.';
+
+COMMENT ON COLUMN valuation.measure_performances_uniformities_links.measured_value
+    IS 'Value of the uniformity measurement.';    
+    
