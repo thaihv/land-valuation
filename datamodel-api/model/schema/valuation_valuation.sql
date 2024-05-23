@@ -577,14 +577,45 @@ COMMENT ON COLUMN preparation.parcel.geom
 
 COMMENT ON COLUMN preparation.parcel.planed_land_use
     IS 'Code of planed land use.';
+    
+-- Table: preparation.building_use_type
+CREATE TABLE IF NOT EXISTS preparation.building_use_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,    
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT building_use_type_pkey PRIMARY KEY (code),
+    CONSTRAINT building_use_type_display_value UNIQUE (display_value)
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.building_use_type
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.building_use_type
+    IS 'Code list of types of building use, i.e., residential, office and industrial';
+
+COMMENT ON COLUMN preparation.building_use_type.code
+    IS 'Code of the building use type.';
+
+COMMENT ON COLUMN preparation.building_use_type.display_value
+    IS 'Displayed value of the building use type.';
+
+COMMENT ON COLUMN preparation.building_use_type.description
+    IS 'Description of the building use type.';
+    
+COMMENT ON COLUMN preparation.building_use_type.status
+    IS 'Status in active of the building use as active (a) or inactive (i).';
+    
 -- Table: preparation.building
 CREATE TABLE IF NOT EXISTS preparation.building
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     area double precision,
     volume double precision,
-    use_type character varying(255) COLLATE pg_catalog."default",
+    type_use_code character varying(20) COLLATE pg_catalog."default",
     building_type character varying(255) COLLATE pg_catalog."default",
     construct_material character varying(255) COLLATE pg_catalog."default",
     date_construction timestamp(6) without time zone,
@@ -608,7 +639,11 @@ CREATE TABLE IF NOT EXISTS preparation.building
     CONSTRAINT building_id_fkey FOREIGN KEY (id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_type_use_code_fkey FOREIGN KEY (type_use_code)
+        REFERENCES preparation.building_use_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
@@ -679,7 +714,7 @@ COMMENT ON COLUMN preparation.building.quality
 COMMENT ON COLUMN preparation.building.status
     IS 'Status of the building if have a status manegement.';
 
-COMMENT ON COLUMN preparation.building.use_type
+COMMENT ON COLUMN preparation.building.type_use_code
     IS 'Use type of the building.';
 
 COMMENT ON COLUMN preparation.building.volume

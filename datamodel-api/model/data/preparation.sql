@@ -217,3 +217,8 @@ INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES (
 INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('suburban', 'Sub Urban', 'a');
 INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES ('agricultural', 'Agricultural', 'a');
 
+
+-- Table: preparation.building_use_type
+INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('residential','Residential','a');
+INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('office','Office','a');
+INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('industrial','Industrial','a');
