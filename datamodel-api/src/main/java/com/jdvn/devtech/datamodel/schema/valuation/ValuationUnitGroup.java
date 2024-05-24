@@ -71,7 +71,10 @@ public class ValuationUnitGroup extends DomainObject<String> {
      * vu_groups is a variable in ValuationUnit  */
     @ManyToMany(mappedBy = "vu_groups")
     private List<ValuationUnit> valuation_units = new ArrayList<>();
-    
+        
+	@OneToOne(mappedBy = "valuation_unit_group")
+	private SalesStatistic sales_statistic;
+	
 	@Override
 	public String print() {
 		return id;

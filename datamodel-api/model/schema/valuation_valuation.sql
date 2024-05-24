@@ -1525,13 +1525,18 @@ CREATE TABLE IF NOT EXISTS valuation.sales_statistic
     base_price_index numeric(20,2) NOT NULL DEFAULT 0,
     base_price_date timestamp(6) without time zone,    
     price_index numeric(20,2) NOT NULL DEFAULT 0,
-    price_date timestamp(6) without time zone,    
+    price_date timestamp(6) without time zone,
+    group_id character varying(40) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
-    CONSTRAINT sales_statistic_pkey PRIMARY KEY (id)
+    CONSTRAINT sales_statistic_pkey PRIMARY KEY (id),
+    CONSTRAINT sales_statistic_group_id_fkey FOREIGN KEY (group_id)
+        REFERENCES valuation.valuation_unit_group (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION    
 )
 
 TABLESPACE pg_default;
@@ -1570,13 +1575,16 @@ COMMENT ON COLUMN valuation.sales_statistic.base_price_date
     IS 'The date to implement analysis of base price index.';
 
 COMMENT ON COLUMN valuation.sales_statistic.base_price_index
-    IS 'Base price index calculated from transaction prices';
+    IS 'Base price index calculated from transaction prices.';
 
 COMMENT ON COLUMN valuation.sales_statistic.price_date
     IS 'The date to implement analysis of price index.';
 
 COMMENT ON COLUMN valuation.sales_statistic.price_index
-    IS 'Price index calculated from transaction prices';
+    IS 'Price index calculated from transaction prices.';
+
+COMMENT ON COLUMN valuation.sales_statistic.group_id
+    IS 'Reference to valuation unit group for statistic.';    
 -- Index: sales_statistic_on_rowidentifier
 CREATE INDEX IF NOT EXISTS sales_statistic_on_rowidentifier
     ON valuation.sales_statistic USING btree

@@ -8,8 +8,12 @@ import com.jdvn.devtech.datamodel.schema.DomainObject;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,18 +43,23 @@ public class SalesStatistic extends DomainObject<String> {
 	private Double average_price_per_square_meter;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("Base price index calculated from transaction prices")
+	@Comment("Base price index calculated from transaction prices.")
 	private Double base_price_index;
 
 	@Comment("The date to implement analysis of base price index.")
 	private Date base_price_date;
 
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("Price index calculated from transaction prices")
+	@Comment("Price index calculated from transaction prices.")
 	private Double price_index;
 
 	@Comment("The date to implement analysis of price index.")
 	private Date price_date;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "group_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "sales_statistic_group_id_fkey"))
+	@Comment("Reference to valuation unit group for statistic.")
+    private ValuationUnitGroup valuation_unit_group;	
 	
 	@Override
 	public String print() {
