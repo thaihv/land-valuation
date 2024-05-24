@@ -1283,8 +1283,8 @@ CREATE TABLE IF NOT EXISTS valuation.taxation
     tax_date timestamp(6) without time zone,
     assement_ratio numeric(20,2) NOT NULL DEFAULT 0,
     fiscal_year timestamp(6) without time zone,
-    type_currency character varying(500) COLLATE pg_catalog."default",
-    rate character varying(500) COLLATE pg_catalog."default",    
+    rate character varying(500) COLLATE pg_catalog."default", 
+    rate_type character varying(500) COLLATE pg_catalog."default",    
     exemption_property character varying(500) COLLATE pg_catalog."default",
     exemption_type character varying(500) COLLATE pg_catalog."default",    
     valuation_unit_id character varying(40) COLLATE pg_catalog."default",
@@ -1343,13 +1343,13 @@ COMMENT ON COLUMN valuation.taxation.fiscal_year
     IS 'The fiscal year the tax is effective.';
 
 COMMENT ON COLUMN valuation.taxation.rate
-    IS 'The rate of currency for calculating at the date.';
+    IS 'The rate calculated at the date.';
 
 COMMENT ON COLUMN valuation.taxation.tax_date
     IS 'The date that tax is calculated and effective.';
 
-COMMENT ON COLUMN valuation.taxation.type_currency
-    IS 'Type of currency for taxation.';
+COMMENT ON COLUMN valuation.taxation.rate_type
+    IS 'Type of rate of taxation.';
 -- Index: taxation_on_rowidentifier
 CREATE INDEX IF NOT EXISTS taxation_on_rowidentifier
     ON valuation.taxation USING btree

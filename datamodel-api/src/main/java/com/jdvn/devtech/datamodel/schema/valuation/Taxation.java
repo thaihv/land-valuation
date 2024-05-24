@@ -54,12 +54,12 @@ public class Taxation extends DomainObject<String> {
 	private Date fiscal_year;	
 	
 	@Column(length = 500)
-	@Comment("The rate of currency for calculating at the date.")
+	@Comment("The rate calculated at the date.")
 	private String rate;	
 	
 	@Column(length = 500)
-	@Comment("Type of currency for taxation.")
-	private String type;	
+	@Comment("Type of rate of taxation.")
+	private String rate_type;	
 	
 	@Column(length = 500)
 	@Comment("Properties is exempted from tax calculation.")
