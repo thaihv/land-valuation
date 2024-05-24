@@ -1515,3 +1515,70 @@ CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_vunit_id
     ON valuation.valuation_unit_has_transaction_price USING btree
     (vunit_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
+    
+-- Table: valuation.sales_statistic
+CREATE TABLE IF NOT EXISTS valuation.sales_statistic
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    analysis_date timestamp(6) without time zone,
+    average_price_per_square_meter numeric(20,2) NOT NULL DEFAULT 0,
+    base_price_index numeric(20,2) NOT NULL DEFAULT 0,
+    base_price_date timestamp(6) without time zone,    
+    price_index numeric(20,2) NOT NULL DEFAULT 0,
+    price_date timestamp(6) without time zone,    
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT sales_statistic_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.sales_statistic
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.sales_statistic
+    IS 'Represents sales statistics produced through the analysis of transaction prices for monitoring price trends.';
+
+COMMENT ON COLUMN valuation.sales_statistic.id
+    IS 'The analysis identifier.';
+
+COMMENT ON COLUMN valuation.sales_statistic.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.sales_statistic.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.sales_statistic.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.sales_statistic.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.sales_statistic.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN valuation.sales_statistic.analysis_date
+    IS 'The date that contract or declaration implement.';
+
+COMMENT ON COLUMN valuation.sales_statistic.average_price_per_square_meter
+    IS 'Price calculated average per square meter.';
+
+COMMENT ON COLUMN valuation.sales_statistic.base_price_date
+    IS 'The date to implement analysis of base price index.';
+
+COMMENT ON COLUMN valuation.sales_statistic.base_price_index
+    IS 'Base price index calculated from transaction prices';
+
+COMMENT ON COLUMN valuation.sales_statistic.price_date
+    IS 'The date to implement analysis of price index.';
+
+COMMENT ON COLUMN valuation.sales_statistic.price_index
+    IS 'Price index calculated from transaction prices';
+-- Index: sales_statistic_on_rowidentifier
+CREATE INDEX IF NOT EXISTS sales_statistic_on_rowidentifier
+    ON valuation.sales_statistic USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;    
