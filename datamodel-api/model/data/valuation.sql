@@ -1,4 +1,6 @@
 -- Table: valuation.valuation_unit_group_type
+INSERT INTO valuation.valuation_unit_group_type(code, display_value, description, status) VALUES ('district','District','A locality represents a administrative unit level','a');
+INSERT INTO valuation.valuation_unit_group_type(code, display_value, description, status) VALUES ('street','Street','A zone with similar statistical influence on property characterstics','a');
 INSERT INTO valuation.valuation_unit_group_type(code, display_value, description, status) VALUES ('zone','Zone','The valuation zones can be useful to represent geographical parts of the country (i.e. postcode areas, enumeration districts, towns or regions, or even as, for examples buffers on high streets or industrial zones), which may have similar statistical influence on the technical parameters and on the technical object value','a');
 INSERT INTO valuation.valuation_unit_group_type(code, display_value, description, status) VALUES ('locality','Locality','The valuation groups can represent the geographical union of different parts of country with similar statistical characteristics (e.g. major city centers, rural suburbs, west/east of the country, etc.)','a');
 
@@ -44,3 +46,11 @@ INSERT INTO valuation.appraisal_uniformity_type (code, display_value, status) VA
 -- Table: valuation.cost_approach_type
 INSERT INTO valuation.cost_approach_type (code, display_value, status) VALUES ('replacement', 'Replacement', 'a');
 INSERT INTO valuation.cost_approach_type (code, display_value, status) VALUES ('reproduction', 'Reproduction', 'a');
+
+-- Table: valuation.property_transaction_type
+INSERT INTO valuation.property_transaction_type (code, display_value, status) VALUES ('openMarketSale', 'Open Market Sale', 'a');
+INSERT INTO valuation.property_transaction_type (code, display_value, status) VALUES ('inheritence', 'Inheritence', 'a');
+INSERT INTO valuation.property_transaction_type (code, display_value, status) VALUES ('forcedSale', 'Forced Sale', 'a');
+INSERT INTO valuation.property_transaction_type (code, display_value, status) VALUES ('familyTransfer', 'Family Transfer', 'a');
+INSERT INTO valuation.property_transaction_type (code, display_value, status) VALUES ('auction', 'Auction', 'a');
+INSERT INTO valuation.property_transaction_type (code, display_value, status) VALUES ('other', 'Other', 'a');

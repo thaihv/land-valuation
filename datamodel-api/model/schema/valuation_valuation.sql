@@ -1278,21 +1278,23 @@ COMMENT ON COLUMN valuation.taxation_type.status
 CREATE TABLE IF NOT EXISTS valuation.taxation
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    amount numeric(20,2) NOT NULL DEFAULT 0,
+    assessment_tax numeric(20,2) NOT NULL DEFAULT 0,
     tax_type_code character varying(40) COLLATE pg_catalog."default",
-    tax_date timestamp(6) without time zone,
-    assement_ratio numeric(20,2) NOT NULL DEFAULT 0,
+    payment_date timestamp(6) without time zone,    
+    due_date timestamp(6) without time zone,
     fiscal_year timestamp(6) without time zone,
-    rate character varying(500) COLLATE pg_catalog."default", 
-    rate_type character varying(500) COLLATE pg_catalog."default",    
-    exemption_property character varying(500) COLLATE pg_catalog."default",
+    assement_ratio numeric(20,2) NOT NULL DEFAULT 1,
+    tax_rate character varying(500) COLLATE pg_catalog."default",    
+    rate_type character varying(500) COLLATE pg_catalog."default",
+    tax_arrear_amount numeric(20,2) NOT NULL DEFAULT 0,
+    exemption_amount numeric(20,2) NOT NULL DEFAULT 0,
     exemption_type character varying(500) COLLATE pg_catalog."default",    
     valuation_unit_id character varying(40) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    rowversion integer NOT NULL DEFAULT 0,     
+    rowversion integer NOT NULL DEFAULT 0,        
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
-    change_time timestamp without time zone NOT NULL DEFAULT now(),   
+    change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT taxation_pkey PRIMARY KEY (id),
     CONSTRAINT taxation_tax_type_code_fkey FOREIGN KEY (tax_type_code)
         REFERENCES valuation.taxation_type (code) MATCH SIMPLE
@@ -1327,14 +1329,17 @@ COMMENT ON COLUMN valuation.taxation.rowidentifier
 COMMENT ON COLUMN valuation.taxation.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
-COMMENT ON COLUMN valuation.taxation.amount
-    IS 'Money amount calculated for this valuation unit.';
-
 COMMENT ON COLUMN valuation.taxation.assement_ratio
-    IS 'The ratio of tax to assessment value.';
+    IS 'The ratio of assessment to property as 1 for whole property';
 
-COMMENT ON COLUMN valuation.taxation.exemption_property
-    IS 'Properties is exempted from tax calculation.';
+COMMENT ON COLUMN valuation.taxation.assessment_tax
+    IS 'Money amount on tax calculated.';
+
+COMMENT ON COLUMN valuation.taxation.due_date
+    IS 'The due date that tax has payment.';
+
+COMMENT ON COLUMN valuation.taxation.exemption_amount
+    IS 'Amount is exempted from tax calculation.';
 
 COMMENT ON COLUMN valuation.taxation.exemption_type
     IS 'Type of tax exemption.';
@@ -1342,16 +1347,171 @@ COMMENT ON COLUMN valuation.taxation.exemption_type
 COMMENT ON COLUMN valuation.taxation.fiscal_year
     IS 'The fiscal year the tax is effective.';
 
-COMMENT ON COLUMN valuation.taxation.rate
-    IS 'The rate calculated at the date.';
-
-COMMENT ON COLUMN valuation.taxation.tax_date
+COMMENT ON COLUMN valuation.taxation.payment_date
     IS 'The date that tax is calculated and effective.';
 
 COMMENT ON COLUMN valuation.taxation.rate_type
     IS 'Type of rate of taxation.';
+
+COMMENT ON COLUMN valuation.taxation.tax_arrear_amount
+    IS 'Any portion of property taxes that remain unpaid after the date on which they are due and includes late payment charges or other charges.';
+
+COMMENT ON COLUMN valuation.taxation.tax_rate
+    IS 'The tax rate calculated at the date.';
 -- Index: taxation_on_rowidentifier
 CREATE INDEX IF NOT EXISTS taxation_on_rowidentifier
     ON valuation.taxation USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+    
+-- Table: valuation.property_transaction_type
+CREATE TABLE IF NOT EXISTS valuation.property_transaction_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT property_transaction_type_pkey PRIMARY KEY (code),
+    CONSTRAINT property_transaction_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.property_transaction_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.property_transaction_type
+    IS 'List of the property transaction types in a collection';
+
+COMMENT ON COLUMN valuation.property_transaction_type.code
+    IS 'Code of the property transaction type.';
+
+COMMENT ON COLUMN valuation.property_transaction_type.display_value
+    IS 'Displayed value of the property transaction type.';
+    
+COMMENT ON COLUMN valuation.property_transaction_type.description
+    IS 'Description of the property transaction type.';
+
+COMMENT ON COLUMN valuation.property_transaction_type.status
+    IS 'Status in active of the property transaction type as active (a) or inactive (i).';
+    
+-- Table: valuation.transaction_price
+CREATE TABLE IF NOT EXISTS valuation.transaction_price
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    contract_date timestamp(6) without time zone,
+    transaction_price numeric(20,2) NOT NULL DEFAULT 0,
+    transaction_type_code character varying(20) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,  
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),  
+    CONSTRAINT transaction_price_pkey PRIMARY KEY (id),
+    CONSTRAINT transaction_price_transaction_type_code_fkey FOREIGN KEY (transaction_type_code)
+        REFERENCES valuation.property_transaction_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.transaction_price
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.transaction_price
+    IS 'Represents the information related to property transactions.';
+
+COMMENT ON COLUMN valuation.transaction_price.id
+    IS 'The contract or declaration identifier.';
+
+COMMENT ON COLUMN valuation.transaction_price.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.transaction_price.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.transaction_price.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.transaction_price.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.transaction_price.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN valuation.transaction_price.contract_date
+    IS 'The date that contract or declaration implement.';
+
+COMMENT ON COLUMN valuation.transaction_price.transaction_price
+    IS 'Price of property in transaction implementation.';
+-- Index: transaction_price_on_rowidentifier
+CREATE INDEX IF NOT EXISTS transaction_price_on_rowidentifier
+    ON valuation.transaction_price USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;    
+
+-- Table: valuation.valuation_unit_has_transaction_price
+CREATE TABLE IF NOT EXISTS valuation.valuation_unit_has_transaction_price
+(
+    vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    transaction_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default", 
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT valuation_unit_has_transaction_price_pkey PRIMARY KEY (transaction_id, vunit_id),
+    CONSTRAINT valuation_unit_has_transaction_price_transaction_id_fkey FOREIGN KEY (transaction_id)
+        REFERENCES valuation.transaction_price (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_unit_has_transaction_price_vunit_id_fkey FOREIGN KEY (vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_unit_has_transaction_price
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_unit_has_transaction_price
+    IS 'Links the valuation unit to the its recorded transaction price.';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.transaction_id
+    IS 'Identifier of the contract or declaration of property transaction price.';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.vunit_id
+    IS 'Identifier for the valuation unit the record is associated to.';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+-- Index: valuation_unit_has_transaction_price_on_rowidentifier
+CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_rowidentifier
+    ON valuation.valuation_unit_has_transaction_price USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: valuation_unit_has_transaction_price_on_transaction_id
+CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_transaction_id
+    ON valuation.valuation_unit_has_transaction_price USING btree
+    (transaction_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: valuation_unit_has_transaction_price_on_vunit_id
+CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_vunit_id
+    ON valuation.valuation_unit_has_transaction_price USING btree
+    (vunit_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

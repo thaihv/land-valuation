@@ -36,34 +36,41 @@ public class Taxation extends DomainObject<String> {
 	private String id;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("Money amount calculated for this valuation unit.")
-	private Double amount;
+	@Comment("Money amount on tax calculated.")
+	private Double assessment_tax;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "tax_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "taxation_tax_type_code_fkey"))
     private TaxType tax_type;
 	
 	@Comment("The date that tax is calculated and effective.")
-	private Date tax_date;
+	private Date payment_date;
+
+	@Comment("The due date that tax has payment.")
+	private Date due_date;
 	
-	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The ratio of tax to assessment value.")
+	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 1")
+	@Comment("The ratio of assessment to property as 1 for whole property")
 	private Double assement_ratio;
 	
 	@Comment("The fiscal year the tax is effective.")
 	private Date fiscal_year;	
 	
 	@Column(length = 500)
-	@Comment("The rate calculated at the date.")
-	private String rate;	
+	@Comment("The tax rate calculated at the date.")
+	private String tax_rate;	
 	
 	@Column(length = 500)
 	@Comment("Type of rate of taxation.")
 	private String rate_type;	
 	
-	@Column(length = 500)
-	@Comment("Properties is exempted from tax calculation.")
-	private String exemption_property;	
+	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+	@Comment("Any portion of property taxes that remain unpaid after the date on which they are due and includes late payment charges or other charges.")
+	private Double tax_arrear_amount;
+	
+	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+	@Comment("Amount is exempted from tax calculation.")
+	private Double exemption_amount;	
 	
 	@Column(length = 500)
 	@Comment("Type of tax exemption.")
