@@ -1242,3 +1242,116 @@ COMMENT ON COLUMN valuation.cost_approach_type.description
     
 COMMENT ON COLUMN valuation.cost_approach_type.status
     IS 'Status in active of the cost approach type as active (a) or inactive (i).';
+    
+-- Table: valuation.taxation_type
+CREATE TABLE IF NOT EXISTS valuation.taxation_type
+(
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT taxation_type_pkey PRIMARY KEY (code),
+    CONSTRAINT taxation_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.taxation_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.taxation_type
+    IS 'List of the tax types.';
+
+COMMENT ON COLUMN valuation.taxation_type.code
+    IS 'Code of the tax type.';
+
+COMMENT ON COLUMN valuation.taxation_type.display_value
+    IS 'Displayed value of the tax type.';
+
+COMMENT ON COLUMN valuation.taxation_type.description
+    IS 'Description of the tax type.';
+    
+COMMENT ON COLUMN valuation.taxation_type.status
+    IS 'Status in active of the tax type as active (a) or inactive (i).'; 
+    
+-- Table: valuation.taxation
+CREATE TABLE IF NOT EXISTS valuation.taxation
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    amount numeric(20,2) NOT NULL DEFAULT 0,
+    tax_type_code character varying(40) COLLATE pg_catalog."default",
+    tax_date timestamp(6) without time zone,
+    assement_ratio numeric(20,2) NOT NULL DEFAULT 0,
+    fiscal_year timestamp(6) without time zone,
+    type_currency character varying(500) COLLATE pg_catalog."default",
+    rate character varying(500) COLLATE pg_catalog."default",    
+    exemption_property character varying(500) COLLATE pg_catalog."default",
+    exemption_type character varying(500) COLLATE pg_catalog."default",    
+    valuation_unit_id character varying(40) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,     
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),   
+    CONSTRAINT taxation_pkey PRIMARY KEY (id),
+    CONSTRAINT taxation_tax_type_code_fkey FOREIGN KEY (tax_type_code)
+        REFERENCES valuation.taxation_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT taxation_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.taxation
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.taxation
+    IS 'An improved form of the ExtTaxation external class of LADM to support links to taxation system.';
+
+COMMENT ON COLUMN valuation.taxation.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.taxation.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.taxation.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.taxation.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.taxation.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN valuation.taxation.amount
+    IS 'Money amount calculated for this valuation unit.';
+
+COMMENT ON COLUMN valuation.taxation.assement_ratio
+    IS 'The ratio of tax to assessment value.';
+
+COMMENT ON COLUMN valuation.taxation.exemption_property
+    IS 'Properties is exempted from tax calculation.';
+
+COMMENT ON COLUMN valuation.taxation.exemption_type
+    IS 'Type of tax exemption.';
+
+COMMENT ON COLUMN valuation.taxation.fiscal_year
+    IS 'The fiscal year the tax is effective.';
+
+COMMENT ON COLUMN valuation.taxation.rate
+    IS 'The rate of currency for calculating at the date.';
+
+COMMENT ON COLUMN valuation.taxation.tax_date
+    IS 'The date that tax is calculated and effective.';
+
+COMMENT ON COLUMN valuation.taxation.type_currency
+    IS 'Type of currency for taxation.';
+-- Index: taxation_on_rowidentifier
+CREATE INDEX IF NOT EXISTS taxation_on_rowidentifier
+    ON valuation.taxation USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;    
