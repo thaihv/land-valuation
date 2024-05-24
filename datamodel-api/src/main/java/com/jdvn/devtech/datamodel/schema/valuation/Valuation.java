@@ -51,8 +51,8 @@ public class Valuation extends DomainObject<String> {
 	private String purpose_valuation;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "approach_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_code_fkey"))
-    private ValuationApproach valuation_approach;
+    @JoinColumn(name = "approach_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_type_code_fkey"))
+    private ValuationApproachType valuation_approach_type;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "appeal_status_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_appeal_status_code_fkey"))

@@ -3,10 +3,10 @@ INSERT INTO valuation.valuation_unit_group_type(code, display_value, description
 INSERT INTO valuation.valuation_unit_group_type(code, display_value, description, status) VALUES ('locality','Locality','The valuation groups can represent the geographical union of different parts of country with similar statistical characteristics (e.g. major city centers, rural suburbs, west/east of the country, etc.)','a');
 
 
--- Table: valuation.valuation_approach
-INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('salesComparison','Sales Comparison','a');
-INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('income','Income Method','a');
-INSERT INTO valuation.valuation_approach(code, display_value, status) VALUES ('cost','Cost Method','a');
+-- Table: valuation.valuation_approach_type
+INSERT INTO valuation.valuation_approach_type(code, display_value, status) VALUES ('directComparison','Direct Comparison','a');
+INSERT INTO valuation.valuation_approach_type(code, display_value, status) VALUES ('income','Income Method','a');
+INSERT INTO valuation.valuation_approach_type(code, display_value, status) VALUES ('cost','Cost Method','a');
 
 -- Table: valuation.appeal_status_type
 INSERT INTO valuation.appeal_status_type (code, display_value, status) VALUES ('accepted', 'Accepted', 'a');
@@ -40,3 +40,7 @@ INSERT INTO valuation.appraisal_uniformity_type (code, display_value, status) VA
 INSERT INTO valuation.appraisal_uniformity_type (code, display_value, status) VALUES ('weightedCoefficientVariation', 'Weighted Coefficient Variation', 'a');
 INSERT INTO valuation.appraisal_uniformity_type (code, display_value, status) VALUES ('vif', 'VIF-Variance Inflation Factor', 'a');
 INSERT INTO valuation.appraisal_uniformity_type (code, display_value, status) VALUES ('r2', 'R-Squared-Coefficient Of Determination', 'a');
+
+-- Table: valuation.cost_approach_type
+INSERT INTO valuation.cost_approach_type (code, display_value, status) VALUES ('replacement', 'Replacement', 'a');
+INSERT INTO valuation.cost_approach_type (code, display_value, status) VALUES ('reproduction', 'Reproduction', 'a');

@@ -189,36 +189,36 @@ ALTER TABLE IF EXISTS preparation.types_parameters_links
 COMMENT ON TABLE preparation.types_parameters_links
     IS 'Associates a type with one or more parameters';    
 
--- Table: valuation.valuation_approach
-CREATE TABLE IF NOT EXISTS valuation.valuation_approach
+-- Table: valuation.valuation_approach_type
+CREATE TABLE IF NOT EXISTS valuation.valuation_approach_type
 (
-    code character varying(20) COLLATE pg_catalog."default" NOT NULL,    
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
     display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(1000) COLLATE pg_catalog."default",
+    description character varying(1000) COLLATE pg_catalog."default",    
     status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
-    CONSTRAINT valuation_approach_pkey PRIMARY KEY (code),
-    CONSTRAINT valuation_approach_display_value UNIQUE (display_value)
+    CONSTRAINT valuation_approach_type_pkey PRIMARY KEY (code),
+    CONSTRAINT valuation_approach_type_display_value UNIQUE (display_value)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS valuation.valuation_approach
+ALTER TABLE IF EXISTS valuation.valuation_approach_type
     OWNER to postgres;
 
-COMMENT ON TABLE valuation.valuation_approach
+COMMENT ON TABLE valuation.valuation_approach_type
     IS 'Code list that deals with three primary types of valuation methods, namely, sales comparison, income and cost methods dominant in practice.';
 
-COMMENT ON COLUMN valuation.valuation_approach.code
-    IS 'The code for the approach.';
+COMMENT ON COLUMN valuation.valuation_approach_type.code
+    IS 'The code for the approach type.';
 
-COMMENT ON COLUMN valuation.valuation_approach.display_value
-    IS 'Displayed value of the approach.';
+COMMENT ON COLUMN valuation.valuation_approach_type.display_value
+    IS 'Displayed value of the approach type.';
 
-COMMENT ON COLUMN valuation.valuation_approach.description
-    IS 'Description of the approach.';
+COMMENT ON COLUMN valuation.valuation_approach_type.description
+    IS 'Description of the approach type.';
     
-COMMENT ON COLUMN valuation.valuation_approach.status
-    IS 'Status in active of the approach as active (a) or inactive (i).';
+COMMENT ON COLUMN valuation.valuation_approach_type.status
+    IS 'Status in active of the approach type as active (a) or inactive (i).';
     
 -- Table: valuation.valuation_unit_group_type
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_group_type
@@ -1212,3 +1212,33 @@ COMMENT ON COLUMN valuation.measure_performances_uniformities_links.uniformity_c
 COMMENT ON COLUMN valuation.measure_performances_uniformities_links.measured_value
     IS 'Value of the uniformity measurement.';    
     
+-- Table: valuation.cost_approach_type
+CREATE TABLE IF NOT EXISTS valuation.cost_approach_type
+(
+    code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT cost_approach_type_pkey PRIMARY KEY (code),
+    CONSTRAINT cost_approach_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.cost_approach_type
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.cost_approach_type
+    IS 'List of the code types for cost approach of valuation, such as replacement or reproduction';
+
+COMMENT ON COLUMN valuation.cost_approach_type.code
+    IS 'Code of the cost approach type.';
+
+COMMENT ON COLUMN valuation.cost_approach_type.display_value
+    IS 'Displayed value of the cost approach type.';
+
+COMMENT ON COLUMN valuation.cost_approach_type.description
+    IS 'Description of the cost approach type.';
+    
+COMMENT ON COLUMN valuation.cost_approach_type.status
+    IS 'Status in active of the cost approach type as active (a) or inactive (i).';
