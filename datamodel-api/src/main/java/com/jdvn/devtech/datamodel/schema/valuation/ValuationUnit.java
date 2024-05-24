@@ -22,6 +22,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -77,7 +78,10 @@ public class ValuationUnit extends DomainObject<String> {
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit")
     @JsonBackReference
     private Set<UnitHasParameterValue> unit_parameters;
-		
+
+	@OneToOne(mappedBy = "valuation_unit")
+	private Valuation valuation;
+	
 	@Override
 	public String print() {
 		return id;

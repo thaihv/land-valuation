@@ -34,14 +34,14 @@ public class Valuation extends DomainObject<String> {
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
-    private ValueType value_type;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("Value of object valuation in numeric.")
 	private Double assessed_value;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
+    private ValueType value_type;
 	
 	@Comment("The date that value is made for valuation.")
 	private Date valuation_date;
@@ -58,6 +58,10 @@ public class Valuation extends DomainObject<String> {
     @JoinColumn(name = "appeal_status_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_appeal_status_code_fkey"))
     private AppealStatusType appeal_status;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "valuation_unit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_valuation_unit_id_fkey"))
+    private ValuationUnit valuation_unit;
+	    
 	@Override
 	public String print() {
 		return id;
