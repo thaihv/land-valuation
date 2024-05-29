@@ -28,9 +28,34 @@ public class IncomeCalibration {
 	@Comment("The income approach identifier.")
 	private String id;	
 	
-	@Comment("The date that income approach implemented.")
-	private Date analysis_date;
+	@Comment("The date that income approach calibration implemented.")
+	private Date calibrated_date;
+	
+	@Comment("The net income value(in currency) in calibration.")
+	private Double netIncome;
 
+	@Comment("The potential gross income value(in currency) in calibration.")
+	private Double potential_gross_income;
+	
+	@Comment("The effective gross income value(in currency) in calibration.")
+	private Double effective_gross_income;
+	
+	@Comment("The operating_expenses (in currency) in calibration.")
+	private Double operating_expenses;
+	
+	@Comment("The capitalization rate in calibration.")
+	private Double capitalization_rate;
+	
+	@Comment("The gross income multiplier used in calculated.")
+	private Double gross_income_multiplier;
+	
+	@Comment("The discount rate in calibration.")
+	private Double discount_rate;
+						
+	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+	@Comment("The value estimated from income calibration.")
+	private Double estimate_value;
+	
 	@OneToOne(mappedBy = "income_approach")
 	private SinglePropertyAppraisal single_property_appraisal;
 

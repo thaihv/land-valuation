@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -37,4 +38,6 @@ public class CostApproachType{
 	@Comment("Status in active of the cost approach type as active (a) or inactive (i).")
 	private char status;
 	
+	@OneToOne(mappedBy = "cost_approach_type")
+	private CostCalibration cost_calibration;
 }

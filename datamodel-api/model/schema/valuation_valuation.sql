@@ -1590,3 +1590,324 @@ CREATE INDEX IF NOT EXISTS sales_statistic_on_rowidentifier
     ON valuation.sales_statistic USING btree
     (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;    
+    
+-- Table: valuation.sales_compare_calibration
+CREATE TABLE IF NOT EXISTS valuation.sales_compare_calibration
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    compared_vunit_id character varying(40),
+    calibrated_date timestamp(6) without time zone,
+    time_adjustment numeric(20,2) NOT NULL DEFAULT 0,
+    location_adjustment numeric(20,2) NOT NULL DEFAULT 0,
+    physical_adjustment numeric(20,2) NOT NULL DEFAULT 0,
+    estimate_value numeric(20,2) NOT NULL DEFAULT 0,
+    CONSTRAINT sales_compare_calibration_pkey PRIMARY KEY (id),
+    CONSTRAINT sales_compare_calibration_compared_vunit_id_fkey FOREIGN KEY (compared_vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.sales_compare_calibration
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.sales_compare_calibration
+    IS 'Represents contents of adjustments of time, location and physical ones with estimated value for sales comparision between valuation units.';
+
+COMMENT ON COLUMN valuation.sales_compare_calibration.id
+    IS 'The sales comparision approach identifier.';
+
+COMMENT ON COLUMN valuation.sales_compare_calibration.calibrated_date
+    IS 'The date that sales comparision approach implemented.';
+
+COMMENT ON COLUMN valuation.sales_compare_calibration.estimate_value
+    IS 'Base price index calculated from transaction prices.';
+
+COMMENT ON COLUMN valuation.sales_compare_calibration.location_adjustment
+    IS 'Adjustments of location in value to compared valuation unit.';
+
+COMMENT ON COLUMN valuation.sales_compare_calibration.physical_adjustment
+    IS 'Adjustments of physical ones in value to compared valuation unit.';
+
+COMMENT ON COLUMN valuation.sales_compare_calibration.time_adjustment
+    IS 'Adjustments of time in value to compared valuation unit.';    
+    
+-- Table: valuation.cost_calibration
+CREATE TABLE IF NOT EXISTS valuation.cost_calibration
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    calibrated_date timestamp(6) without time zone,
+    cost_approach_type_code character varying(40) COLLATE pg_catalog."default",
+    cost_price_per_square_meter numeric(20,2) NOT NULL DEFAULT 0,
+    source_of_cost_price character varying(255) COLLATE pg_catalog."default",
+    total_cost numeric(20,2) NOT NULL DEFAULT 0,
+    chronological_age integer NOT NULL,
+    effective_age integer NOT NULL,
+    functional_obsolescence double precision,
+    physical_obsolescence double precision,
+    external_obsolescence double precision,
+    total_obsolescence double precision,
+    estimate_value numeric(20,2) NOT NULL DEFAULT 0,
+    CONSTRAINT cost_calibration_pkey PRIMARY KEY (id),
+    CONSTRAINT cost_calibration_cost_approach_type_code_fkey FOREIGN KEY (cost_approach_type_code)
+        REFERENCES valuation.cost_approach_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.cost_calibration
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.cost_calibration
+    IS 'Represents cost-related characteristics, such as cost type (e.g., replacement or reproduction cost), cost-related attributes, chronological and effective age of building and obsolescence for valuation approach of cost.';
+
+COMMENT ON COLUMN valuation.cost_calibration.id
+    IS 'The cost approach identifier.';
+
+COMMENT ON COLUMN valuation.cost_calibration.calibrated_date
+    IS 'The date that cost approach calibration implemented.';
+
+COMMENT ON COLUMN valuation.cost_calibration.chronological_age
+    IS 'The chronological age of property.';
+
+COMMENT ON COLUMN valuation.cost_calibration.cost_price_per_square_meter
+    IS 'The value (in currency) calculated per each square meter.';
+
+COMMENT ON COLUMN valuation.cost_calibration.effective_age
+    IS 'The effective age of property.';
+
+COMMENT ON COLUMN valuation.cost_calibration.estimate_value
+    IS 'The value (in currency) estimated from cost calibration.';
+
+COMMENT ON COLUMN valuation.cost_calibration.external_obsolescence
+    IS 'The value (in currency) calculated for external obsolescence.';
+
+COMMENT ON COLUMN valuation.cost_calibration.functional_obsolescence
+    IS 'The value (in currency) calculated for functional obsolescence.';
+
+COMMENT ON COLUMN valuation.cost_calibration.physical_obsolescence
+    IS 'The value (in currency) calculated for physical obsolescence.';
+
+COMMENT ON COLUMN valuation.cost_calibration.source_of_cost_price
+    IS 'The source of cost price the calibration refered to.';
+
+COMMENT ON COLUMN valuation.cost_calibration.total_cost
+    IS 'The value (in currency) in total cost calculated.';
+
+COMMENT ON COLUMN valuation.cost_calibration.total_obsolescence
+    IS 'The value (in currency) calculated for total obsolescence.';    
+    
+-- Table: valuation.income_calibration
+CREATE TABLE IF NOT EXISTS valuation.income_calibration
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    calibrated_date timestamp(6) without time zone,
+    net_income double precision,
+    potential_gross_income double precision,
+    effective_gross_income double precision,
+    gross_income_multiplier double precision,
+    operating_expenses double precision,    
+    capitalization_rate double precision,
+    discount_rate double precision,
+    estimate_value numeric(20,2) NOT NULL DEFAULT 0,    
+    CONSTRAINT income_calibration_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.income_calibration
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.income_calibration
+    IS 'Represents income information, such as gross, effective and net income and operating expenses and capitalization rates characteristics for valuation approach of income.';
+
+COMMENT ON COLUMN valuation.income_calibration.id
+    IS 'The income approach identifier.';
+
+COMMENT ON COLUMN valuation.income_calibration.calibrated_date
+    IS 'The date that income approach calibration implemented.';
+
+COMMENT ON COLUMN valuation.income_calibration.capitalization_rate
+    IS 'The capitalization rate in calibration.';
+
+COMMENT ON COLUMN valuation.income_calibration.discount_rate
+    IS 'The discount rate in calibration.';
+
+COMMENT ON COLUMN valuation.income_calibration.effective_gross_income
+    IS 'The effective gross income value(in currency) in calibration.';
+
+COMMENT ON COLUMN valuation.income_calibration.estimate_value
+    IS 'The value estimated from income calibration.';
+
+COMMENT ON COLUMN valuation.income_calibration.gross_income_multiplier
+    IS 'The gross income multiplier used in calculated.';
+
+COMMENT ON COLUMN valuation.income_calibration.net_income
+    IS 'The net income value(in currency) in calibration.';
+
+COMMENT ON COLUMN valuation.income_calibration.operating_expenses
+    IS 'The operating_expenses (in currency) in calibration.';
+
+COMMENT ON COLUMN valuation.income_calibration.potential_gross_income
+    IS 'The potential gross income value(in currency) in calibration.';   
+    
+-- Table: valuation.valuation
+CREATE TABLE IF NOT EXISTS valuation.valuation
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    assessed_value numeric(20,2) NOT NULL DEFAULT 0,
+    purpose_valuation character varying(500) COLLATE pg_catalog."default",
+    valuation_date timestamp(6) without time zone,
+    appeal_status_code character varying(20) COLLATE pg_catalog."default",
+    approach_type_code character varying(20) COLLATE pg_catalog."default",
+    value_type_code character varying(20) COLLATE pg_catalog."default",
+    valuation_unit_id character varying(40) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,    
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT valuation_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_appeal_status_code_fkey FOREIGN KEY (appeal_status_code)
+        REFERENCES valuation.appeal_status_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_approach_type_code_fkey FOREIGN KEY (approach_type_code)
+        REFERENCES valuation.valuation_approach_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_value_type_code_fkey FOREIGN KEY (value_type_code)
+        REFERENCES valuation.value_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation
+    IS 'An improved form of the ExtValuation external class of LADM and specifies output data yielded during a valuation process.';
+
+COMMENT ON COLUMN valuation.valuation.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.valuation.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.valuation.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN valuation.valuation.assessed_value
+    IS 'Value of object valuation in numeric.';
+
+COMMENT ON COLUMN valuation.valuation.purpose_valuation
+    IS 'Display purpose of the valuation.';
+
+COMMENT ON COLUMN valuation.valuation.valuation_date
+    IS 'The date that value is made for valuation.';
+    
+-- Index: valuation_on_rowidentifier
+CREATE INDEX IF NOT EXISTS valuation_on_rowidentifier
+    ON valuation.valuation USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;    
+    
+-- Table: valuation.mass_appraisal
+CREATE TABLE IF NOT EXISTS valuation.mass_appraisal
+(
+    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    mathematical_model character varying(255) COLLATE pg_catalog."default",
+    estimated_value numeric(20,2) NOT NULL DEFAULT 0,    
+    performance_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    CONSTRAINT mass_appraisal_pkey PRIMARY KEY (id),
+    CONSTRAINT mass_appraisal_id_fkey FOREIGN KEY (id)
+        REFERENCES valuation.valuation (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT mass_appraisal_performance_id_fkey FOREIGN KEY (performance_id)
+        REFERENCES valuation.mass_appraisal_performance (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.mass_appraisal
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.mass_appraisal
+    IS 'Provides information represents mass appraisal-related information, such as mathematical models, sample sizes and mass appraisal analysis types';
+
+COMMENT ON COLUMN valuation.mass_appraisal.id
+    IS 'Mass Appraisal identifier.';
+
+COMMENT ON COLUMN valuation.mass_appraisal.estimated_value
+    IS 'The value estimated from mass appraisal process.';
+
+COMMENT ON COLUMN valuation.mass_appraisal.mathematical_model
+    IS 'The mathematical model is used for mass appraisal valuation.';
+    
+-- Table: valuation.single_appraisal
+
+-- DROP TABLE IF EXISTS valuation.single_appraisal;
+
+CREATE TABLE IF NOT EXISTS valuation.single_appraisal
+(
+    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    cost_approach_id character varying(40) COLLATE pg_catalog."default",
+    income_approach_id character varying(40) COLLATE pg_catalog."default",
+    sales_comparison_approach_id character varying(40) COLLATE pg_catalog."default",
+    CONSTRAINT single_appraisal_pkey PRIMARY KEY (id),
+    CONSTRAINT single_appraisal_cost_approach_id_fkey FOREIGN KEY (cost_approach_id)
+        REFERENCES valuation.cost_calibration (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT single_appraisal_id_fkey FOREIGN KEY (id)
+        REFERENCES valuation.valuation (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT single_appraisal_income_approach_id_fkey FOREIGN KEY (income_approach_id)
+        REFERENCES valuation.income_calibration (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT single_appraisal_sales_comparison_approach_id_fkey FOREIGN KEY (sales_comparison_approach_id)
+        REFERENCES valuation.sales_compare_calibration (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.single_appraisal
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.single_appraisal
+    IS 'Provides information on single property appraisal for valuation unit';
+
+COMMENT ON COLUMN valuation.single_appraisal.id
+    IS 'Single Appraisal identifier.';    
+    
+COMMENT ON COLUMN valuation.single_appraisal.cost_approach_id
+    IS 'The identifier of cost approach, if any.';
+
+COMMENT ON COLUMN valuation.single_appraisal.income_approach_id
+    IS 'The identifier of income approach, if any.';
+
+COMMENT ON COLUMN valuation.single_appraisal.sales_comparison_approach_id
+    IS 'The identifier of sales comparison approach, if any.';
