@@ -1873,7 +1873,10 @@ CREATE TABLE IF NOT EXISTS valuation.single_appraisal
     cost_approach_id character varying(40) COLLATE pg_catalog."default",
     income_approach_id character varying(40) COLLATE pg_catalog."default",
     sales_comparison_approach_id character varying(40) COLLATE pg_catalog."default",
-    CONSTRAINT single_appraisal_pkey PRIMARY KEY (id),
+    CONSTRAINT single_appraisal_pkey PRIMARY KEY (id),        
+    CONSTRAINT single_appraisal_cost_approach_id UNIQUE (cost_approach_id),
+    CONSTRAINT single_appraisal_income_approach_id UNIQUE (income_approach_id),
+    CONSTRAINT single_appraisal_sales_comparison_approach_id UNIQUE (sales_comparison_approach_id),
     CONSTRAINT single_appraisal_cost_approach_id_fkey FOREIGN KEY (cost_approach_id)
         REFERENCES valuation.cost_calibration (id) MATCH SIMPLE
         ON UPDATE NO ACTION
