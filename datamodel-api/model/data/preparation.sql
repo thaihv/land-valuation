@@ -21,7 +21,13 @@ INSERT INTO valuation.value_type(code, display_value, description, status) VALUE
 INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('taxValue','Tax Value','This value is for taxing operations','a');
 INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('financeValue','Financing Value','This value is for financing of real estate as sale,buy,rent or lease','a');
 INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('compensationValue','Compensation Value','This value is for compensating upon revocation of land use rights or land consolidation','a');
-INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('insuranceValue','Insurance Value','This value is for operating of insurance assessment', 'i');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('insuranceValue','Insurance Value','This value is for operating of insurance assessment', 'a');
+INSERT INTO valuation.value_type(code, display_value, status) VALUES ('investmentValue','Investment Value', 'a');
+INSERT INTO valuation.value_type(code, display_value, status) VALUES ('reversionaryValue','Reversionary Value', 'i');
+INSERT INTO valuation.value_type(code, display_value, status) VALUES ('reconstrutionValue','Reconstrution Value', 'i');
+INSERT INTO valuation.value_type(code, display_value, status) VALUES ('morgageLendingValue','Morgage Lending Value', 'i');
+INSERT INTO valuation.value_type(code, display_value, status) VALUES ('netPresentValue','Net Present Value', 'i');
+INSERT INTO valuation.value_type(code, display_value, status) VALUES ('synertegicValue','Synertegic Value', 'i');
 
 -- Table: preparation.tech_parameter
 INSERT INTO preparation.tech_parameter(code, name, type, description, is_active, is_mandatory, is_virtual) VALUES ('id', 'ID','String','Property label from Cadastre.',true,true,true);
