@@ -4,9 +4,11 @@ import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -29,17 +31,17 @@ public class SinglePropertyAppraisal {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of cost approach, if any.")
     @JoinColumn(name = "cost_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_cost_approach_id_fkey"))
     private CostCalibration cost_approach;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of income approach, if any.")
     @JoinColumn(name = "income_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_income_approach_id_fkey"))
     private IncomeCalibration income_approach;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of sales comparison approach, if any.")
     @JoinColumn(name = "sales_comparison_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_sales_comparison_approach_id_fkey"))
     private SalesComparisonCalibration sales_comparison_approach;
