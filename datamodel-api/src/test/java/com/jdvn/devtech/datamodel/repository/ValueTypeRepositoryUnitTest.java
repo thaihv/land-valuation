@@ -10,7 +10,7 @@ import com.jdvn.devtech.datamodel.DatamodelApplication;
 import com.jdvn.devtech.datamodel.schema.valuation.ValueType;
 
 @SpringBootTest(classes = DatamodelApplication.class)
-public class ValueTypeRepositoryTest {
+public class ValueTypeRepositoryUnitTest {
 	
 	@Autowired
 	private ValueTypeRepository valueTypeRepository;

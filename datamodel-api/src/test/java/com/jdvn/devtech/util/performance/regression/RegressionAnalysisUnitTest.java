@@ -11,7 +11,7 @@ import com.jdvn.devtech.datamodel.DatamodelApplication;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 
 @SpringBootTest(classes=DatamodelApplication.class)
-public class RegressionAnalysisTest {
+public class RegressionAnalysisUnitTest {
 	@Test
 	public void dummyRegressionTest() throws Exception {
 		RegressionVariable orgRv = new RegressionVariable("DON VI LOP BANG SO SANH 1");
