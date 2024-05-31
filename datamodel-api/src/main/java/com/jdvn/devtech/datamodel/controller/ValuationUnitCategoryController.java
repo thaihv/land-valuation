@@ -51,16 +51,16 @@ public class ValuationUnitCategoryController {
 		return valuationUnitCategoryRepository.findAll();
 	}
 	@Operation(
-			summary = "Retrieve a valuation unit by id", 
-			description = "Get a valuation unit category object by specifying its id. The response is a valuation unit category object with id, name, description and status and metadata.", 
+			summary = "Retrieve a valuation unit by code", 
+			description = "Get a valuation unit category object by specifying its code. The response is a valuation unit category object with code, name, description and status and metadata.", 
 			tags = {"Category Objects", "Get" })
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@GetMapping("/find/{id}")
-	public Optional<ValuationUnitCategory> findValuationUnitCategoryById(@PathVariable Long id) {
-		return valuationUnitCategoryRepository.findById(id);
+	@GetMapping("/find/{code}")
+	public Optional<ValuationUnitCategory> findValuationUnitCategoryById(@PathVariable String code) {
+		return valuationUnitCategoryRepository.findById(code);
 	}
 	@Operation(
 			summary = "Retrieve a valuation unit by name", 
@@ -93,8 +93,8 @@ public class ValuationUnitCategoryController {
 		return valuationUnitCategoryRepository.findAll();
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public void deleteValuationUnitCategory(@PathVariable Long id) {
-		valuationUnitCategoryRepository.deleteById(id);
+	@DeleteMapping("/delete/{code}")
+	public void deleteValuationUnitCategory(@PathVariable String code) {
+		valuationUnitCategoryRepository.deleteById(code);
 	}
 }

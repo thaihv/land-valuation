@@ -10,6 +10,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitCategory;
 
 @RepositoryRestResource
-public interface ValuationUnitCategoryRepository extends PagingAndSortingRepository<ValuationUnitCategory, Long>, CrudRepository<ValuationUnitCategory, Long> {	
+public interface ValuationUnitCategoryRepository extends PagingAndSortingRepository<ValuationUnitCategory, String>, CrudRepository<ValuationUnitCategory, String> {	
 	List<ValuationUnitCategory> findAllByName(String name, Pageable pageable);
 }
