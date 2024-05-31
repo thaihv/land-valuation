@@ -65,7 +65,6 @@ public class ValuationUnitCategoryServiceUnitTest {
     @CsvFileSource(resources = {"/mock_tests.csv"}, numLinesToSkip = 1)
     public void whenValuationUnitCategoryQueried_thenDetailsAsExpected(String queriedBy, String queryValue) {
     	List<ValuationUnitCategory> objValuationUnitCategories = new ArrayList<>();
-    	Optional<ValuationUnitCategory> vu_codo = null;
         boolean isParamCode = queriedBy.equals("code");
 
         if (isParamCode) {
@@ -73,15 +72,12 @@ public class ValuationUnitCategoryServiceUnitTest {
                     .thenReturn(this.vuCategories);
             
             objValuationUnitCategories = this.vuCategoryService.findAllCategories();
-            vu_codo = this.vuCategoryService.findByCategoryCode(queryValue);
-            
-        }
-
-        if (vu_codo.isPresent()) {
-        	System.out.println(vu_codo.get().getName());
-        	Assertions.assertEquals("Codominium", vu_codo.get().getName());
-        }
-        	
+            Optional<ValuationUnitCategory> vu_codo = this.vuCategoryService.findByCategoryCode(queryValue);
+            if (vu_codo.isPresent()) {
+            	System.out.println(vu_codo.get().getName());
+            	Assertions.assertEquals("Codominium", vu_codo.get().getName());
+            } 
+        }       	
         Assertions.assertEquals(this.vuCategories.size(), objValuationUnitCategories.size());
         for (int idx = 0; idx < this.vuCategories.size(); idx++) {
             Assertions.assertEquals(this.vuCategories.get(idx).getCode(), objValuationUnitCategories.get(idx).getCode());
