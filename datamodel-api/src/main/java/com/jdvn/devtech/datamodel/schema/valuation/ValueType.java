@@ -4,6 +4,8 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -41,6 +43,7 @@ public class ValueType {
 	private char status;
 	
 	@OneToOne(mappedBy = "value_type")
+	@JsonBackReference
 	private Valuation valuation;
 	
 }

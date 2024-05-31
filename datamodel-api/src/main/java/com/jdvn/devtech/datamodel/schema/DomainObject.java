@@ -7,6 +7,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.Comment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
@@ -37,20 +39,19 @@ public abstract class DomainObject<ID extends Serializable> implements Serializa
 	@Comment("The date and time the row was last modified.")
 	private LocalDateTime change_time = LocalDateTime.now();
 
+	@JsonIgnore
 	public abstract ID getId();
-
+	@JsonIgnore
 	public LocalDateTime getChangeTimeAt() {
 		return change_time;
 	}
-
 	public void setChangeTimeAt(LocalDateTime createdAt) {
 		this.change_time = createdAt;
 	}
-
+	@JsonIgnore
 	public String getChangedBy() {
 		return change_user;
 	}
-
 	public void setChangedBy(String createdBy) {
 		this.change_user = createdBy;
 	}
