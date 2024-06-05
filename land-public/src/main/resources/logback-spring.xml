@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="60 seconds">
-    <springProfile name="dev">
-        <property resource="logback-dev.properties"/>
+    <springProfile name="local">
+        <property resource="logback-local.properties"/>
     </springProfile> 
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
 

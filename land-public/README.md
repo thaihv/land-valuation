@@ -5,3 +5,4 @@
     * Open APIs
     * CustomUserDetails
     * Spring Boot 3 and Spring Security 6 
+Note: Adjust to spring profile as "dev" and adjust your configurations for first run in log & application properties
