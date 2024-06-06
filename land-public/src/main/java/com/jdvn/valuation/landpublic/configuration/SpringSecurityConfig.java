@@ -1,7 +1,6 @@
 package com.jdvn.valuation.landpublic.configuration;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.jdvn.valuation.landpublic.exception.AjaxAccessDeniedHandler;
@@ -46,12 +46,13 @@ public class SpringSecurityConfig {
 	@Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
         http
-        .cors(cors -> cors.configurationSource(corsConfigurationSource("*")))
         .csrf(csrf -> csrf.disable())
         		.authorizeHttpRequests(auth -> auth
                     .requestMatchers(HttpMethod.GET,"/greeting/**").permitAll()
                     .requestMatchers(HttpMethod.POST,"/greeting/**").permitAll()
                     .requestMatchers(HttpMethod.PATCH,"/greeting/**").permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                    .requestMatchers(HttpMethod.HEAD,"/greeting/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/api-docs/**").permitAll()
                     .anyRequest().authenticated()
@@ -63,17 +64,16 @@ public class SpringSecurityConfig {
 		http.exceptionHandling(ex -> ex.authenticationEntryPoint(new AjaxAuthenticationFailureHandler()));
         return http.build();
 	}
-    private UrlBasedCorsConfigurationSource corsConfigurationSource(String... origins) {
-        final var configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(origins));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("*"));
-
-        final var source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+    	CorsConfiguration configuration = new CorsConfiguration();
+    	configuration.setAllowedOrigins(Arrays.asList("*"));
+    	configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","HEAD","PATCH","OPTIONS"));
+    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    	source.registerCorsConfiguration("/**", configuration);
+    	return source;
     }
+    
     @Bean
     PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
