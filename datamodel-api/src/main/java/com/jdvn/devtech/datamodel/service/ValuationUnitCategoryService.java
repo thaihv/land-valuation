@@ -81,9 +81,13 @@ public class ValuationUnitCategoryService {
 			if (unitCategoryAttributes.getName() != null && !unitCategoryAttributes.getName().isEmpty()) {
 				newOne.setName(unitCategoryAttributes.getName());
 			}
-			newOne.setDescription(unitCategoryAttributes.getDescription());
-			if (unitCategoryAttributes.getStatus().length() == 1)
-				newOne.setStatus(unitCategoryAttributes.getStatus().charAt(0));
+			if (unitCategoryAttributes.getDescription() != null && !unitCategoryAttributes.getDescription().isEmpty()) {
+				newOne.setDescription(unitCategoryAttributes.getDescription());
+			}
+			if (unitCategoryAttributes.getStatus() != null && !unitCategoryAttributes.getStatus().isEmpty()) {
+				if (unitCategoryAttributes.getStatus().length() == 1)
+					newOne.setStatus(unitCategoryAttributes.getStatus().charAt(0));
+			}
 			return this.vuCategoryRepository.save(newOne);
 		}
 		return null;

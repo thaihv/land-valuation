@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +53,7 @@ public class ValuationUnitCategoryController {
 	@Operation(
 			summary = "Retrieve a valuation unit category by code", 
 			description = "Get a valuation unit category object by specifying its code. The response is a valuation unit category object with code, name, description and status and metadata.", 
-			tags = {"Search"})
+			tags = {"Filter"})
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
@@ -64,7 +65,7 @@ public class ValuationUnitCategoryController {
 	@Operation(
 			summary = "Retrieve a valuation unit category by name", 
 			description = "Get a valuation unit category object by specifying its name and pageable from/to. The response is a valuation unit category object with id, name, description and status and metadata.", 
-			tags = {"Search"})
+			tags = {"Filter"})
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
@@ -74,16 +75,28 @@ public class ValuationUnitCategoryController {
 		return valuationUnitCategoryService.findByCategoryName(name, from, to);	
 	}
 	@Operation(
-			summary = "Update a valuation unit category by code", 
+			summary = "Update a valuation unit category by provide whole object information. If the object is not existing then creating new one", 
 			description = "Update a valuation unit category object by specifying its code and attribute. The response is a updated valuation unit category object.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
-	@PatchMapping("/update")
-	public ValuationUnitCategory updateValuationUnitCategory(@RequestBody UnitCategoryAttributesDTO attrs) {
+	@PutMapping("/update")
+	public ValuationUnitCategory updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
 		return valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
 	}
+	
+	@Operation(
+			summary = "Update a valuation unit category by provide code and attributes", 
+			description = "Update a valuation unit category object by specifying its code and few attributes. The response is a updated valuation unit category object.")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
+	@PatchMapping("/update")
+	public ValuationUnitCategory updateValuationUnitCategoryByPartial(@RequestBody UnitCategoryAttributesDTO attrs) {
+		return valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
+	}	
 	@Operation(
 			summary = "Create a valuation unit category by provide a new object", 
 			description = "Create a valuation unit category object. The response is a list of most updated valuation unit category objects.")
