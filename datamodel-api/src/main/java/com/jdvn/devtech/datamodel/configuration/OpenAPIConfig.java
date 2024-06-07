@@ -17,16 +17,16 @@ public class OpenAPIConfig {
 
     Contact contact = new Contact();
     contact.setEmail("thaihv@uitgis.com");
-    contact.setName("Bobby");
-    contact.setUrl("https://www.tamky.xyz");
+    contact.setName("JungdoUIT Vietnam");
+    contact.setUrl("http://uitgis.com/viet/");
 
-    License mitLicense = new License().name("Bobby License").url("https://www.tamky.xyz/");
+    License mitLicense = new License().name("No License").url("http://uitgis.com/viet/");
 
     Info info = new Info()
         .title("Property Valuation Management APIs")
         .version("1.0")
         .contact(contact)
-        .description("This API exposes endpoints to manage Valuation Information Model.").termsOfService("https://www.tamky.xyz/")
+        .description("This API exposes endpoints to manage Valuation Information Model.").termsOfService("http://uitgis.com/viet/")
         .license(mitLicense);
 
     return new OpenAPI().info(info);
