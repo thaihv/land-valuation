@@ -5,6 +5,7 @@ import java.util.Set;
 import org.hibernate.annotations.Comment;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 
 import jakarta.persistence.CascadeType;
@@ -51,6 +52,7 @@ public class ValuationUnitCategory extends DomainObject<String> {
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit_category")
     @JsonBackReference
+    @JsonIgnore
     private Set<ValuationUnitType> valuationUnitTypes;
 
 	@Override

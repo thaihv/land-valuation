@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UnitCategoryAttributesDTO {
-    @JsonProperty private String code;
+	@JsonProperty private String code;
     @JsonProperty private String name;
     @JsonProperty private String description;
     @JsonProperty private String status;

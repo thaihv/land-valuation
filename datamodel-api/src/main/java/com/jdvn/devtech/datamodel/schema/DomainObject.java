@@ -11,32 +11,43 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 
 @MappedSuperclass
 @SuppressWarnings("serial")
 /*
  * For version objects
  */
+
 public abstract class DomainObject<ID extends Serializable> implements Serializable {
 
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	@Comment("Identifies the all change records for the row in the table.")
+	@JsonIgnore
+	@Transient
 	private String rowidentifier;
 
 	@Column(nullable = false, columnDefinition = "integer DEFAULT 0")
 	@Comment("Sequential value indicating the number of times this row has been modified.")
+	@JsonIgnore
+	@Transient
 	private int rowversion;
 
 	@Column(nullable = false, columnDefinition = "character(1) default 'i'")
 	@Comment("Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).")
+	@JsonIgnore
+	@Transient
 	private char change_action;
 
 	@Column(length = 50)
 	@Comment("The user id of the last person to modify the row.")
+	@JsonIgnore
 	private String change_user;
 
 	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
 	@Comment("The date and time the row was last modified.")
+	@JsonIgnore
+	@Transient
 	private LocalDateTime change_time = LocalDateTime.now();
 
 	@JsonIgnore
