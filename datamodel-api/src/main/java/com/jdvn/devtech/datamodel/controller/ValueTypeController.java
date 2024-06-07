@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -64,15 +65,26 @@ public class ValueTypeController {
 	}
 	@Operation(
 			summary = "Update a value type by provide whole object information", 
-			description = "Update a value type object by specifying its code and attribute. The response is a updated value type object.")
+			description = "Update a value type object by specifying its whole object information. The response is a updated value type object.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@PutMapping("/update")
-	public ValueType updateValueType(@RequestBody ValueType valueType) {
+	public ValueType updateValueTypeByWhole(@RequestBody ValueType valueType) {
 		return valueTypeRepository.save(valueType);
 	}
+	@Operation(
+			summary = "Update a value type by partial information", 
+			description = "Update a value type object by specifying its code and attribute. The response is a updated value type object.")
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+	@PatchMapping("/update")
+	public ValueType updateValueTypeByPartial(@RequestBody ValueType valueType) {
+		return valueTypeRepository.save(valueType);
+	}	
 	@Operation(
 			summary = "Create a value type by provide a value type object", 
 			description = "Create a value type object. The response is a list of most updated value type objects.")
