@@ -69,8 +69,9 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
 	@PutMapping
-	public ValuationUnitCategory updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
-		return valuationUnitCategoryService.updateOrSaveValuationUnitCategoryAttributes(attrs);
+	public ResponseEntity<ValuationUnitCategory> updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
+		ValuationUnitCategory vu = valuationUnitCategoryService.updateOrSaveValuationUnitCategoryAttributes(attrs);
+		return ResponseEntity.status(HttpStatus.OK).body(vu);
 	}
 	
 	@Operation(
@@ -79,25 +80,28 @@ public class ValuationUnitCategoryController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
+			@ApiResponse(responseCode = "501", content = { @Content(schema = @Schema()) }) })		
 	@PatchMapping
-	public ValuationUnitCategory updateValuationUnitCategoryByPartial(@RequestBody UnitCategoryAttributesDTO attrs) {
-		return valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
+	public ResponseEntity<ValuationUnitCategory> updateValuationUnitCategoryByPartial(@RequestBody UnitCategoryAttributesDTO attrs) {
+		ValuationUnitCategory vu = valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
+		if (vu != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(vu);
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(vu);
+		}
 	}	
 	@Operation(
 			summary = "Create a valuation unit category by provide a new object", 
 			description = "Create a valuation unit category object. The response is a list of most updated valuation unit category objects.")
 	@ApiResponses({
-			@ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-			@ApiResponse(responseCode = "501", content = { @Content(schema = @Schema()) }) })
+			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 	@PostMapping
 	public ResponseEntity<ValuationUnitCategory> createValuationUnitCategory(@RequestBody UnitCategoryAttributesDTO valuationUnittoAdd) {
 		ValuationUnitCategory vu = valuationUnitCategoryService.addCategory(valuationUnittoAdd);
-		if (vu != null)
-			return ResponseEntity.status(HttpStatus.CREATED).body(vu);
-		else
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(vu);
+		return ResponseEntity.status(HttpStatus.OK).body(vu);
 	}
 	@Operation(
 			summary = "Delete a valuation unit category by code", 

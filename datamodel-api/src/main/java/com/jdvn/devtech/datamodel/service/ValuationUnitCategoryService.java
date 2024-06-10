@@ -65,8 +65,9 @@ public class ValuationUnitCategoryService {
 
 	@Transactional
 	public void removeCategory(@NonNull String code) {
-		Optional<ValuationUnitCategory> vu_Category = this.findByCategoryCode(code);
-		this.vuCategoryRepository.delete(vu_Category.get());
+		Optional<ValuationUnitCategory> existingOne = this.findByCategoryCode(code);
+		if (existingOne.isPresent())
+			this.vuCategoryRepository.delete(existingOne.get());
 	}
 
 	@Transactional
@@ -83,12 +84,13 @@ public class ValuationUnitCategoryService {
 			try {
 				FieldPatcher.doPatchingFields(existingOne, unitCategoryAttributes);
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return this.vuCategoryRepository.save(existingOne);
 		}
-		return null;
+		else {
+			return null;
+		}
 	}
 
 	@Transactional
