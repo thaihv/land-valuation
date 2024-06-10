@@ -40,18 +40,17 @@ public class ValuationUnitCategoryService {
 	}
 
 	@Transactional
-	public void addCategory(@NonNull UnitCategoryAttributesDTO categoryToAdd) {
+	public ValuationUnitCategory addCategory(@NonNull UnitCategoryAttributesDTO categoryToAdd) {
 		Optional<ValuationUnitCategory> checkExistOne = this.vuCategoryRepository.findById(categoryToAdd.getCode());
 		if (checkExistOne.isPresent()) {
-			return;
+			return null;
 		}else {
 			ValuationUnitCategory newOne = new ValuationUnitCategory();
 			newOne.setCode(categoryToAdd.getCode());
 			newOne.setName(categoryToAdd.getName());
 			newOne.setDescription(categoryToAdd.getDescription());
-			if (categoryToAdd.getStatus().length() == 1)
-				newOne.setStatus(categoryToAdd.getStatus().charAt(0));
-			this.vuCategoryRepository.save(newOne);			
+			newOne.setStatus(categoryToAdd.getStatus());
+			return this.vuCategoryRepository.save(newOne);			
 		}				
 	}
 
@@ -80,22 +79,41 @@ public class ValuationUnitCategoryService {
 			@NonNull UnitCategoryAttributesDTO unitCategoryAttributes) {
 		Optional<ValuationUnitCategory> vu_Category = this.vuCategoryRepository.findById(unitCategoryAttributes.getCode());
 		if (vu_Category.isPresent()) {
-			ValuationUnitCategory newOne = vu_Category.get();
-			
-			if (unitCategoryAttributes.getName() != null && !unitCategoryAttributes.getName().isEmpty()) {
-				newOne.setName(unitCategoryAttributes.getName());
+			ValuationUnitCategory existingOne = vu_Category.get();
+			try {
+				FieldPatcher.doPatchingFields(existingOne, unitCategoryAttributes);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if (unitCategoryAttributes.getDescription() != null && !unitCategoryAttributes.getDescription().isEmpty()) {
-				newOne.setDescription(unitCategoryAttributes.getDescription());
-			}
-			if (unitCategoryAttributes.getStatus() != null && !unitCategoryAttributes.getStatus().isEmpty()) {
-				if (unitCategoryAttributes.getStatus().length() == 1)
-					newOne.setStatus(unitCategoryAttributes.getStatus().charAt(0));
-			}
-//			fieldPatcher.internPatcher(unitCategoryAttributes, unitCategoryAttributes);
-			return this.vuCategoryRepository.save(newOne);
+			return this.vuCategoryRepository.save(existingOne);
 		}
 		return null;
 	}
 
+	@Transactional
+	public ValuationUnitCategory updateOrSaveValuationUnitCategoryAttributes(
+			@NonNull UnitCategoryAttributesDTO unitCategoryAttributes) {
+		Optional<ValuationUnitCategory> vu_Category = this.vuCategoryRepository.findById(unitCategoryAttributes.getCode());
+		if (vu_Category.isPresent()) {
+			ValuationUnitCategory existingOne = vu_Category.get();
+			try {
+				FieldPatcher.doPatchingFields(existingOne, unitCategoryAttributes);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return this.vuCategoryRepository.save(existingOne);
+		}
+		else {
+			ValuationUnitCategory newOne = new ValuationUnitCategory();
+			try {
+				FieldPatcher.doPatchingFields(newOne, unitCategoryAttributes);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return this.vuCategoryRepository.save(newOne);			
+		}
+	}
 }

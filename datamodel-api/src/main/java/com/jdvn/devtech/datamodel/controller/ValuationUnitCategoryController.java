@@ -3,7 +3,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +70,7 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
 	@PutMapping
 	public ValuationUnitCategory updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
-		return valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
+		return valuationUnitCategoryService.updateOrSaveValuationUnitCategoryAttributes(attrs);
 	}
 	
 	@Operation(
@@ -88,11 +90,14 @@ public class ValuationUnitCategoryController {
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+			@ApiResponse(responseCode = "501", content = { @Content(schema = @Schema()) }) })
 	@PostMapping
-	public List<ValuationUnitCategory> createValuationUnitCategory(@RequestBody UnitCategoryAttributesDTO valuationUnittoAdd) {
-		valuationUnitCategoryService.addCategory(valuationUnittoAdd);
-		return valuationUnitCategoryService.findAllCategories();
+	public ResponseEntity<ValuationUnitCategory> createValuationUnitCategory(@RequestBody UnitCategoryAttributesDTO valuationUnittoAdd) {
+		ValuationUnitCategory vu = valuationUnitCategoryService.addCategory(valuationUnittoAdd);
+		if (vu != null)
+			return ResponseEntity.status(HttpStatus.OK).body(vu);
+		else
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
 	}
 	@Operation(
 			summary = "Delete a valuation unit category by code", 

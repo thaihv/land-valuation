@@ -4,29 +4,34 @@ import java.lang.reflect.Field;
 
 import org.springframework.stereotype.Component;
 
-import com.jdvn.devtech.datamodel.dto.UnitCategoryAttributesDTO;
-
 @Component
 public class FieldPatcher {
-    public static void internPatcher(UnitCategoryAttributesDTO existingIntern, UnitCategoryAttributesDTO incompleteIntern) throws IllegalAccessException {
+    public static void doPatchingFields(Object existingObj, Object dtoObj) throws IllegalAccessException {
 
-        //GET THE COMPILED VERSION OF THE CLASS
-        Class<?> internClass= UnitCategoryAttributesDTO.class;
-        Field[] internFields=internClass.getDeclaredFields();
-        System.out.println(internFields.length);
-        for(Field field : internFields){
-            System.out.println(field.getName());
-            //CANT ACCESS IF THE FIELD IS PRIVATE
-            field.setAccessible(true);
-            //CHECK IF THE VALUE OF THE FIELD IS NOT NULL, IF NOT UPDATE EXISTING INTERN
-            Object value=field.get(incompleteIntern);
+        //Get the compiled version of the class
+        Class<?> dtoClass = dtoObj.getClass();
+        Field[] dtoFields = dtoClass.getDeclaredFields();
+        
+        Class<?> targetClass = existingObj.getClass();
+        Field[] targetFields = targetClass.getDeclaredFields();
+        
+        for(Field dtoF : dtoFields){
+            //If field is private
+            dtoF.setAccessible(true);
+            //If the value of the field not null then update
+            Object value=dtoF.get(dtoObj);
             if(value!=null){
-                field.set(existingIntern,value);
+            	for(Field tf : targetFields) {
+            		if (tf.getName().equals(dtoF.getName())) {
+            			tf.setAccessible(true);
+            			tf.set(existingObj,value); 
+            			tf.setAccessible(false);
+            			break;
+            		}
+            			           		
+            	}
             }
-            //MAKE THE FIELD PRIVATE AGAIN
-            field.setAccessible(false);
+            dtoF.setAccessible(false);
         }
-
     }
-
 }
