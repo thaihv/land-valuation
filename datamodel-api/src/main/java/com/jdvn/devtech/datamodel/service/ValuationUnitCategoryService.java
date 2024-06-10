@@ -43,7 +43,7 @@ public class ValuationUnitCategoryService {
 	public ValuationUnitCategory addCategory(@NonNull UnitCategoryAttributesDTO categoryToAdd) {
 		Optional<ValuationUnitCategory> checkExistOne = this.vuCategoryRepository.findById(categoryToAdd.getCode());
 		if (checkExistOne.isPresent()) {
-			return null;
+			return checkExistOne.get();
 		}else {
 			ValuationUnitCategory newOne = new ValuationUnitCategory();
 			newOne.setCode(categoryToAdd.getCode());
@@ -55,12 +55,12 @@ public class ValuationUnitCategoryService {
 	}
 
 	@Transactional
-	public void addCategory(@NonNull ValuationUnitCategory vu_categoryToAdd) {
+	public ValuationUnitCategory addCategory(@NonNull ValuationUnitCategory vu_categoryToAdd) {
 		Optional<ValuationUnitCategory> newOne = this.vuCategoryRepository.findById(vu_categoryToAdd.getCode());
 		if (newOne.isPresent()) {
-			return;
+			return newOne.get();
 		} else
-			this.vuCategoryRepository.save(vu_categoryToAdd);
+			return this.vuCategoryRepository.save(vu_categoryToAdd);
 	}
 
 	@Transactional

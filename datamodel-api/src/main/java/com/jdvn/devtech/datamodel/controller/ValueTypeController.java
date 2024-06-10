@@ -59,7 +59,7 @@ public class ValueTypeController {
 		return valueTypeRepository.findAll();
 	}
 	@Operation(
-			summary = "Update a value type by provide whole object information", 
+			summary = "Update a value type by provide by provide fully object information. If the object is not existing then creating new one", 
 			description = "Update a value type object by specifying its whole object information. The response is a updated value type object.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
@@ -70,7 +70,7 @@ public class ValueTypeController {
 		return valueTypeRepository.save(valueType);
 	}
 	@Operation(
-			summary = "Update a value type by partial information", 
+			summary = "Update a value type by provide code and attributes", 
 			description = "Update a value type object by specifying its code and attribute. The response is a updated value type object.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),

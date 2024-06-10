@@ -62,7 +62,7 @@ public class ValuationUnitCategoryController {
 		return valuationUnitCategoryService.findAllCategories();
 	}
 	@Operation(
-			summary = "Update a valuation unit category by provide whole object information. If the object is not existing then creating new one", 
+			summary = "Update a valuation unit category by provide fully object information. If the object is not existing then creating new one", 
 			description = "Update a valuation unit category object by specifying its code and attribute. The response is a updated valuation unit category object.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
@@ -88,16 +88,16 @@ public class ValuationUnitCategoryController {
 			summary = "Create a valuation unit category by provide a new object", 
 			description = "Create a valuation unit category object. The response is a list of most updated valuation unit category objects.")
 	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
+			@ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "501", content = { @Content(schema = @Schema()) }) })
 	@PostMapping
 	public ResponseEntity<ValuationUnitCategory> createValuationUnitCategory(@RequestBody UnitCategoryAttributesDTO valuationUnittoAdd) {
 		ValuationUnitCategory vu = valuationUnitCategoryService.addCategory(valuationUnittoAdd);
 		if (vu != null)
-			return ResponseEntity.status(HttpStatus.OK).body(vu);
+			return ResponseEntity.status(HttpStatus.CREATED).body(vu);
 		else
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(vu);
 	}
 	@Operation(
 			summary = "Delete a valuation unit category by code", 
