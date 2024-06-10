@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.jdvn.devtech.datamodel.dto.UnitCategoryAttributesDTO;
+import com.jdvn.devtech.datamodel.exception.RequestPageable;
 import com.jdvn.devtech.datamodel.repository.ValuationUnitCategoryRepository;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitCategory;
 import com.jdvn.devtech.datamodel.utils.FieldPatcher;
@@ -30,15 +32,18 @@ public class ValuationUnitCategoryService {
 		return this.vuCategoryRepository.findById(code);
 	}
 
-	public List<ValuationUnitCategory> findByCategoryName(@NonNull String name, int from, int to) {
-		Pageable pageable = PageRequest.of(from, to, Sort.by("name").descending());
-		return this.vuCategoryRepository.findAllByName(name, pageable);
+	public Page<ValuationUnitCategory> findByCategoryName(@NonNull String name, @NonNull RequestPageable pageable ) {
+		Pageable p = PageRequest.of(pageable.getPage() - 1, pageable.getRpp(), Sort.by("name").descending());		
+		return this.vuCategoryRepository.findAllByName(name, p);
 	}
 
+	public Page<ValuationUnitCategory> findAllCategories(@NonNull RequestPageable pageable) {
+		Pageable p = PageRequest.of(pageable.getPage() - 1, pageable.getRpp());
+		return this.vuCategoryRepository.findAll(p);
+	}
 	public List<ValuationUnitCategory> findAllCategories() {
 		return (List<ValuationUnitCategory>) this.vuCategoryRepository.findAll();
 	}
-
 	@Transactional
 	public ValuationUnitCategory addCategory(@NonNull UnitCategoryAttributesDTO categoryToAdd) {
 		Optional<ValuationUnitCategory> checkExistOne = this.vuCategoryRepository.findById(categoryToAdd.getCode());

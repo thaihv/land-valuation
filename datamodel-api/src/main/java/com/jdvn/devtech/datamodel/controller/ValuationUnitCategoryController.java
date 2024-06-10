@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdvn.devtech.datamodel.dto.UnitCategoryAttributesDTO;
+import com.jdvn.devtech.datamodel.exception.RequestPageable;
+import com.jdvn.devtech.datamodel.exception.Response;
+import com.jdvn.devtech.datamodel.exception.ResponseBuilder;
+import com.jdvn.devtech.datamodel.exception.ResponsePageable;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitCategory;
 import com.jdvn.devtech.datamodel.service.ValuationUnitCategoryService;
 
@@ -49,17 +54,22 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<ValuationUnitCategory> getValuationUnitCategories(@RequestParam(defaultValue = "empty") String code, @RequestParam(defaultValue = "empty") String name, @RequestParam (defaultValue = "0") int from, @RequestParam (defaultValue = "10") int to) {
+	public Response<ResponsePageable<ValuationUnitCategory>> getValuationUnitCategories(@RequestParam(defaultValue = "empty") String code, @RequestParam(defaultValue = "empty") String name, RequestPageable pageable) {
 		if (!code.equals("empty")) {
 			Optional<ValuationUnitCategory> vu= valuationUnitCategoryService.findByCategoryCode(code);
 			if (vu.isPresent()) {
-				return List.of(vu.get());
+				ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(1, List.of(vu.get()), pageable);
+				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build();
 			}
 		}
 		if (!name.equals("empty")) {
-			return valuationUnitCategoryService.findByCategoryName(name, from, to);	
+			Page<ValuationUnitCategory> page = valuationUnitCategoryService.findByCategoryName(name, pageable);
+			ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(page.getTotalElements(), page.toList(), pageable);
+			return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
 		}
-		return valuationUnitCategoryService.findAllCategories();
+		Page<ValuationUnitCategory> page = valuationUnitCategoryService.findAllCategories(pageable);
+		ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(page.getTotalElements(), page.toList(), pageable);
+		return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
 	}
 	@Operation(
 			summary = "Update a valuation unit category by provide fully object information. If the object is not existing then creating new one", 
@@ -69,9 +79,9 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
 	@PutMapping
-	public ResponseEntity<ValuationUnitCategory> updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
+	public Response<ValuationUnitCategory> updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
 		ValuationUnitCategory vu = valuationUnitCategoryService.updateOrSaveValuationUnitCategoryAttributes(attrs);
-		return ResponseEntity.status(HttpStatus.OK).body(vu);
+		return new ResponseBuilder<ValuationUnitCategory>().addData(vu).build(); 
 	}
 	
 	@Operation(
