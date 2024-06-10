@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,36 +33,30 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/valuetypes/v1")
+@RequestMapping("/v1/value-types")
 @Tag(name = "Value Type", description = "Value Type Management APIs")
 public class ValueTypeController {
 	@Autowired
 	private ValueTypeRepository valueTypeRepository;
 
 	@Operation(
-			summary = "Retrieve all value type values", 
-			description = "Get all value type objects. The response is a collection of value type objects.", 
+			summary = "Retrieve value type values. It can be using a filter to do search", 
+			description = "Get value type objects. The response is a collection of value type objects.", 
 			tags = {"Code Lists"})
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Iterable<ValueType> getAllValueTypes() {
+	public Iterable<ValueType> getAllValueTypes(@RequestParam(defaultValue = "empty") String code) {
+		if (!code.equals("empty")) {
+			Optional<ValueType> vt= valueTypeRepository.findById(code);
+			if (vt.isPresent()) {
+				return List.of(vt.get());
+			}
+		}
 		return valueTypeRepository.findAll();
-	}
-	@Operation(
-			summary = "Retrieve a value type by code", 
-			description = "Get a value type object by specifying its code. The response is a value type object with code, display value, description and status.",
-			tags = {"Filter"})
-	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
-			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@GetMapping("/find/{code}")
-	public Optional<ValueType> findValueTypeByCode(@PathVariable String code) {
-		return valueTypeRepository.findById(code);
 	}
 	@Operation(
 			summary = "Update a value type by provide whole object information", 
@@ -70,7 +65,7 @@ public class ValueTypeController {
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@PutMapping("/update")
+	@PutMapping
 	public ValueType updateValueTypeByWhole(@RequestBody ValueType valueType) {
 		return valueTypeRepository.save(valueType);
 	}
@@ -81,7 +76,7 @@ public class ValueTypeController {
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@PatchMapping("/update")
+	@PatchMapping
 	public ValueType updateValueTypeByPartial(@RequestBody ValueType valueType) {
 		return valueTypeRepository.save(valueType);
 	}	
@@ -92,7 +87,7 @@ public class ValueTypeController {
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValueType.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@PostMapping("/create")
+	@PostMapping
 	public Iterable<ValueType> createValueType(@RequestBody ValueType valueType) {
 		valueTypeRepository.save(valueType);
 		return valueTypeRepository.findAll();
@@ -100,7 +95,7 @@ public class ValueTypeController {
 	@Operation(
 			summary = "Delete a value type by code", 
 			description = "Delete a valuation unit category object by specifying its code.")
-	@DeleteMapping("/delete/{code}")
+	@DeleteMapping("/{code}")
 	public void deleteValueType(@PathVariable String code) {
 		valueTypeRepository.deleteById(code);
 	}

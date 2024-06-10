@@ -30,49 +30,34 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/vucategories/v1")
+@RequestMapping("/v1/vu-categories")
 @Tag(name = "Valuation Unit Categories", description = "Valuation Technical Object Categoty Management APIs")
 public class ValuationUnitCategoryController {
-
+	
 	@Autowired
 	private ValuationUnitCategoryService valuationUnitCategoryService;
 	
 	@Operation(
-			summary = "Retrieve all valuation unit category values", 
-			description = "Get all valuation unit category objects. The response is a collection of valuation unit category objects.", 
+			summary = "Retrieve valuation unit category objects. It can be using a filter to do search", 
+			description = "Get valuation unit category objects. The response is a collection of valuation unit category objects.", 
 			tags = {"Code Lists"})
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })	
-	@GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<ValuationUnitCategory> getAllValuationUnitCategories() {
+	public List<ValuationUnitCategory> getValuationUnitCategories(@RequestParam(defaultValue = "empty") String code, @RequestParam(defaultValue = "empty") String name, @RequestParam (defaultValue = "0") int from, @RequestParam (defaultValue = "10") int to) {
+		if (!code.equals("empty")) {
+			Optional<ValuationUnitCategory> vu= valuationUnitCategoryService.findByCategoryCode(code);
+			if (vu.isPresent()) {
+				return List.of(vu.get());
+			}
+		}
+		if (!name.equals("empty")) {
+			return valuationUnitCategoryService.findByCategoryName(name, from, to);	
+		}
 		return valuationUnitCategoryService.findAllCategories();
-	}
-	@Operation(
-			summary = "Retrieve a valuation unit category by code", 
-			description = "Get a valuation unit category object by specifying its code. The response is a valuation unit category object with code, name, description and status and metadata.", 
-			tags = {"Filter"})
-	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
-			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@GetMapping("/find/{code}")
-	public Optional<ValuationUnitCategory> findValuationUnitCategoryById(@PathVariable String code) {
-		return valuationUnitCategoryService.findByCategoryCode(code);
-	}
-	@Operation(
-			summary = "Retrieve a valuation unit category by name", 
-			description = "Get a valuation unit category object by specifying its name and pageable from/to. The response is a valuation unit category object with id, name, description and status and metadata.", 
-			tags = {"Filter"})
-	@ApiResponses({
-			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
-			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })	
-	@GetMapping("/findbyname/{name}")
-	public List<ValuationUnitCategory> findValuationUnitCategoryByName(@PathVariable String name, @RequestParam int from, @RequestParam int to) {
-		return valuationUnitCategoryService.findByCategoryName(name, from, to);	
 	}
 	@Operation(
 			summary = "Update a valuation unit category by provide whole object information. If the object is not existing then creating new one", 
@@ -81,7 +66,7 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
-	@PutMapping("/update")
+	@PutMapping
 	public ValuationUnitCategory updateValuationUnitCategoryByWholeObject(@RequestBody UnitCategoryAttributesDTO attrs) {
 		return valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
 	}
@@ -93,7 +78,7 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })		
-	@PatchMapping("/update")
+	@PatchMapping
 	public ValuationUnitCategory updateValuationUnitCategoryByPartial(@RequestBody UnitCategoryAttributesDTO attrs) {
 		return valuationUnitCategoryService.updateValuationUnitCategoryAttributes(attrs);
 	}	
@@ -104,7 +89,7 @@ public class ValuationUnitCategoryController {
 			@ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ValuationUnitCategory.class), mediaType = "application/json") }),
 			@ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
 			@ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-	@PostMapping("/create")
+	@PostMapping
 	public List<ValuationUnitCategory> createValuationUnitCategory(@RequestBody UnitCategoryAttributesDTO valuationUnittoAdd) {
 		valuationUnitCategoryService.addCategory(valuationUnittoAdd);
 		return valuationUnitCategoryService.findAllCategories();
@@ -112,7 +97,7 @@ public class ValuationUnitCategoryController {
 	@Operation(
 			summary = "Delete a valuation unit category by code", 
 			description = "Delete a valuation unit category object by specifying its code.")
-	@DeleteMapping("/delete/{code}")
+	@DeleteMapping("/{code}")
 	public void deleteValuationUnitCategory(@PathVariable String code) {
 		valuationUnitCategoryService.removeCategory(code);
 	}

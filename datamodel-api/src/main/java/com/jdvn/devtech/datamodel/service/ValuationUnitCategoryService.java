@@ -12,13 +12,17 @@ import org.springframework.stereotype.Service;
 import com.jdvn.devtech.datamodel.dto.UnitCategoryAttributesDTO;
 import com.jdvn.devtech.datamodel.repository.ValuationUnitCategoryRepository;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitCategory;
+import com.jdvn.devtech.datamodel.utils.FieldPatcher;
 
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 
 @Service
 public class ValuationUnitCategoryService {
-
+	
+	@Autowired
+	FieldPatcher fieldPatcher;
+	
 	@Autowired
 	private ValuationUnitCategoryRepository vuCategoryRepository;
 
@@ -88,6 +92,7 @@ public class ValuationUnitCategoryService {
 				if (unitCategoryAttributes.getStatus().length() == 1)
 					newOne.setStatus(unitCategoryAttributes.getStatus().charAt(0));
 			}
+//			fieldPatcher.internPatcher(unitCategoryAttributes, unitCategoryAttributes);
 			return this.vuCategoryRepository.save(newOne);
 		}
 		return null;
