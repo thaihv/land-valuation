@@ -64,8 +64,8 @@ public class ValuationUnitCategoryController {
 				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build();
 			}
 			else {
-				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0001.getValue(),
-								BizErrorCode.E0001.getDescription(), "Object has not found!")).build();
+				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0002.getValue(),
+								BizErrorCode.E0002.getDescription(), "The valuation unit category object has not been found!")).build();
 			}
 		}
 		if (!name.equals("empty")) {
@@ -75,8 +75,8 @@ public class ValuationUnitCategoryController {
 				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
 			}
 			else {
-				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0001.getValue(),
-						BizErrorCode.E0001.getDescription(), "Object has not found!")).build();
+				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0002.getValue(),
+						BizErrorCode.E0002.getDescription(), "The valuation unit category object has not been found!")).build();
 			}
 
 		}
@@ -86,8 +86,8 @@ public class ValuationUnitCategoryController {
 			return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
 		}
 		else {
-			return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0001.getValue(),
-					BizErrorCode.E0001.getDescription(), "There is no objects have been found!")).build();			
+			return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0002.getValue(),
+					BizErrorCode.E0002.getDescription(), "There is no valuation unit category objects have been found!")).build();			
 		}
 
 	}
