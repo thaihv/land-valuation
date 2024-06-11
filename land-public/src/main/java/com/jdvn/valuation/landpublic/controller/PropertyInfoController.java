@@ -36,8 +36,11 @@ public class PropertyInfoController {
         return info;
     }
     @PostMapping("/parcel/propertyToAdd")
-    public String createInfo(@RequestBody String parcel_info) {
+    public Map<String, String> createInfo(@RequestBody String parcel_info) {
+    	HashMap<String, String> info = new HashMap<>();
     	System.out.println(parcel_info.toString());
-        return "Added! " + parcel_info;
+    	info.put("data", parcel_info);
+    	info.put("status", "Added!");
+        return info;
     }
 }
