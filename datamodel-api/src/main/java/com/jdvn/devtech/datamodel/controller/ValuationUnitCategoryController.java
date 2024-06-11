@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdvn.devtech.datamodel.dto.UnitCategoryAttributesDTO;
+import com.jdvn.devtech.datamodel.exception.BizErrorCode;
 import com.jdvn.devtech.datamodel.exception.RequestPageable;
 import com.jdvn.devtech.datamodel.exception.Response;
 import com.jdvn.devtech.datamodel.exception.ResponseBuilder;
+import com.jdvn.devtech.datamodel.exception.ResponseError;
 import com.jdvn.devtech.datamodel.exception.ResponsePageable;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitCategory;
 import com.jdvn.devtech.datamodel.service.ValuationUnitCategoryService;
@@ -61,15 +63,33 @@ public class ValuationUnitCategoryController {
 				ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(1, List.of(vu.get()), pageable);
 				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build();
 			}
+			else {
+				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0001.getValue(),
+								BizErrorCode.E0001.getDescription(), "Object has not found!")).build();
+			}
 		}
 		if (!name.equals("empty")) {
 			Page<ValuationUnitCategory> page = valuationUnitCategoryService.findByCategoryName(name, pageable);
+			if (page.getNumberOfElements() > 0) {
+				ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(page.getTotalElements(), page.toList(), pageable);
+				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
+			}
+			else {
+				return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0001.getValue(),
+						BizErrorCode.E0001.getDescription(), "Object has not found!")).build();
+			}
+
+		}
+		Page<ValuationUnitCategory> page = valuationUnitCategoryService.findAllCategories(pageable);
+		if (page.getNumberOfElements() > 0) {
 			ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(page.getTotalElements(), page.toList(), pageable);
 			return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
 		}
-		Page<ValuationUnitCategory> page = valuationUnitCategoryService.findAllCategories(pageable);
-		ResponsePageable<ValuationUnitCategory> responseVo = new ResponsePageable<>(page.getTotalElements(), page.toList(), pageable);
-		return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().addData(responseVo).build(); 
+		else {
+			return new ResponseBuilder<ResponsePageable<ValuationUnitCategory>>().fail().error(new ResponseError(BizErrorCode.E0001.getValue(),
+					BizErrorCode.E0001.getDescription(), "There is no objects have been found!")).build();			
+		}
+
 	}
 	@Operation(
 			summary = "Update a valuation unit category by provide fully object information. If the object is not existing then creating new one", 
