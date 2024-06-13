@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdvn.valuation.landpublic.exception.BizErrorCode;
+import com.jdvn.valuation.landpublic.exception.BizException;
 import com.jdvn.valuation.landpublic.exception.Response;
 import com.jdvn.valuation.landpublic.exception.ResponseBuilder;
-import com.jdvn.valuation.landpublic.exception.ResponseError;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -32,13 +32,12 @@ public class HelloController {
         return new ResponseBuilder<Map<String, String>>().addData(info).build();
     }
     @PostMapping("/sayHi")
-    public Response<String> getStartedWithPost(@RequestBody String info) {
+    public Response<String> getStartedWithPost(@RequestBody String info) throws BizException {
 		if (info.equals("Hello")) {
 			return new ResponseBuilder<String>().addData(info).build(); 
 		}
 		else {
-			return new ResponseBuilder<String>().fail().error(new ResponseError(BizErrorCode.E0003.getValue(),
-					BizErrorCode.E0003.getDescription(), "Message must be Hello as expected!")).build();			
+			throw new BizException(BizErrorCode.E0003, "RequestBody must have a value such as Hello!");			
 		}
     }
 }

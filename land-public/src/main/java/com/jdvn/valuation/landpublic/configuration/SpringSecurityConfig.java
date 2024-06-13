@@ -21,7 +21,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.jdvn.valuation.landpublic.exception.AjaxAccessDeniedHandler;
 import com.jdvn.valuation.landpublic.exception.AjaxAuthenticationFailureHandler;
 import com.jdvn.valuation.landpublic.exception.AjaxAuthenticationFilter;
 
@@ -57,9 +56,7 @@ public class SpringSecurityConfig {
 				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.NEVER))
 				.addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.httpBasic(Customizer.withDefaults());
-
-		http.exceptionHandling(ex -> ex.authenticationEntryPoint(new AjaxAuthenticationFailureHandler()))
-				.exceptionHandling(ex -> ex.accessDeniedHandler(new AjaxAccessDeniedHandler()));
+		http.exceptionHandling(ex -> ex.authenticationEntryPoint(new AjaxAuthenticationFailureHandler()));
 		return http.build();
 	}
 
