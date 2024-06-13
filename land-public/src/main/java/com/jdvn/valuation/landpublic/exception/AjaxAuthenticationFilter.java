@@ -39,16 +39,18 @@ public class AjaxAuthenticationFilter extends AbstractAuthenticationProcessingFi
                 byte[] decodedBytes = Base64.getDecoder().decode(based64);
                 String decoded = new String(decodedBytes);                
                 List<String> info = Arrays.asList(decoded.split(":"));
-                if (info.get(0).isEmpty() || info.get(0).isBlank()) {
-                	throw new IllegalArgumentException("Invalid username or password");                    
+                if (info.size() == 2) {
+                    logger.debug(info.get(0) + " : " + info.get(1));
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(info.get(0), info.get(1));
+                    return getAuthenticationManager().authenticate(token);                     	
                 }
-                logger.debug(info.get(0) + " : " + info.get(1));
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(info.get(0), info.get(1));
-                return getAuthenticationManager().authenticate(token);                
+                else {
+                	throw new IllegalArgumentException("No authentication info has not been detected!");
+                }
             }
         }
         else {
-        	throw new IllegalArgumentException("Invalid username or password");
+        	throw new IllegalArgumentException("No authentication info has been found!");
         }
 		return null;		
     }
