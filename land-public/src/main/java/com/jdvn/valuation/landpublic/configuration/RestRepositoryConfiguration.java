@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 @Configuration
 public class RestRepositoryConfiguration implements RepositoryRestConfigurer {
 
-    @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+	@Override
+	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 
-    	//Disable display default entity repository Rest APIs
-        config.setExposeRepositoryMethodsByDefault(false); 
-    }
+		// Disable display default entity repository Rest APIs
+		config.setExposeRepositoryMethodsByDefault(false);
+	}
 }
