@@ -39,7 +39,7 @@ public class PropertyInfoController {
         return new ResponseBuilder<Map<String, String>>().addData(info).build();
     }
     @PostMapping("/parcel/propertyToAdd")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN!') or hasAuthority('USER')")
     public Response<Map<String, String>> createInfo(@RequestBody String parcel_info) {
     	HashMap<String, String> info = new HashMap<>();
     	info.put("data", parcel_info);
