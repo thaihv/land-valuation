@@ -45,38 +45,36 @@ public class SpringSecurityConfig {
 			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-	
+
 	@Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
-        http
-        .csrf(csrf -> csrf.disable())
-        		.authorizeHttpRequests(auth -> auth
-                    .requestMatchers(HttpMethod.GET,"/greeting/**").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/greeting/**").permitAll()
-                    .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                    .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                    .anyRequest().authenticated()
-                )
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.NEVER))
-                .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(Customizer.withDefaults());
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/greeting/**").permitAll()
+						.requestMatchers(HttpMethod.POST, "/greeting/**").permitAll()
+						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+						.requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll().anyRequest()
+						.authenticated())
+				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+				.addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.httpBasic(Customizer.withDefaults());
 
 		http.exceptionHandling(ex -> ex.authenticationEntryPoint(new AjaxAuthenticationFailureHandler()))
-			.exceptionHandling(ex -> ex.accessDeniedHandler(new AjaxAccessDeniedHandler()));
-        return http.build();
+				.exceptionHandling(ex -> ex.accessDeniedHandler(new AjaxAccessDeniedHandler()));
+		return http.build();
 	}
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-    	CorsConfiguration configuration = new CorsConfiguration();
-    	configuration.setAllowedOrigins(Arrays.asList("*"));
-    	configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","HEAD","PATCH","OPTIONS"));
-    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    	source.registerCorsConfiguration("/**", configuration);
-    	return source;
-    }
-    
-    @Bean
-    PasswordEncoder passwordEncoder() {
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "HEAD", "PATCH", "OPTIONS"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
