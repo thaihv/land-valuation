@@ -50,11 +50,8 @@ public class SpringSecurityConfig {
         		.authorizeHttpRequests(auth -> auth
                     .requestMatchers(HttpMethod.GET,"/greeting/**").permitAll()
                     .requestMatchers(HttpMethod.POST,"/greeting/**").permitAll()
-                    .requestMatchers(HttpMethod.PATCH,"/greeting/**").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                    .requestMatchers(HttpMethod.HEAD,"/greeting/**").permitAll()
-                    .requestMatchers("/swagger-ui/**").permitAll()
-                    .requestMatchers("/api-docs/**").permitAll()
+                    .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.NEVER))
