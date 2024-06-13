@@ -45,7 +45,7 @@ public class AjaxAuthenticationFilter extends AbstractAuthenticationProcessingFi
                     return getAuthenticationManager().authenticate(token);                     	
                 }
                 else {
-                	throw new IllegalArgumentException("No authentication info has not been detected!");
+                	throw new IllegalArgumentException("Authentication info may not for basic http!");
                 }
             }
         }
@@ -58,8 +58,13 @@ public class AjaxAuthenticationFilter extends AbstractAuthenticationProcessingFi
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 	        Authentication authResult) throws IOException, ServletException {
 	    SecurityContextHolder.getContext().setAuthentication(authResult);
-
+	    logger.debug("Authenticated successfully!...");
 	    chain.doFilter(request, response);
 	}
-
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+	        AuthenticationException failed) throws IOException, ServletException {
+	    logger.debug("Failed authentication while attempting to access ");
+	    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed");
+	}
 }

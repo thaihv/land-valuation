@@ -3,6 +3,7 @@ package com.jdvn.valuation.landpublic.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,6 @@ public class PropertyInfoController {
 	@Operation(
 			summary = "Retrieve basic info of a parcel", 
 			description = "Get all basic info. The response is a collection of values.",
-//			security = @SecurityRequirement(name = "basicAuth"),
 			tags = {"parcel", "get" })
     public Response<Map<String, String>>  getParcelBasicInfo(Model model) {
         HashMap<String, String> info = new HashMap<>();
@@ -39,9 +39,9 @@ public class PropertyInfoController {
         return new ResponseBuilder<Map<String, String>>().addData(info).build();
     }
     @PostMapping("/parcel/propertyToAdd")
+    @PreAuthorize("hasAuthority('ADMIN!') or hasAuthority('USER')")
     public Response<Map<String, String>> createInfo(@RequestBody String parcel_info) {
     	HashMap<String, String> info = new HashMap<>();
-    	System.out.println(parcel_info.toString());
     	info.put("data", parcel_info);
     	info.put("status", "Added!");
         return new ResponseBuilder<Map<String, String>>().addData(info).build();

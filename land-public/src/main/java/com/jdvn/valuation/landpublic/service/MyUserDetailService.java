@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import com.jdvn.valuation.landpublic.model.Member;
 @Component
 public class MyUserDetailService implements UserDetailsService {
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	private final MemberService memberService;
 
 	public MyUserDetailService(MemberService memberService) {
@@ -28,7 +32,7 @@ public class MyUserDetailService implements UserDetailsService {
 		Member member = findOne.orElseThrow(() -> new UsernameNotFoundException("User has not been found!"));
 		List<GrantedAuthority> roles = new ArrayList<>();
 		roles.add(new SimpleGrantedAuthority(member.getRoles()));
-		
+		logger.debug(roles.toString());
 		MyUserDetails memberContext = new MyUserDetails(member, roles);
 		return memberContext;
 	}
