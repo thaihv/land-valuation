@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.jdvn.valuation.landpublic.exception.BizErrorCode;
+import com.jdvn.valuation.landpublic.exception.Response;
+import com.jdvn.valuation.landpublic.exception.ResponseBuilder;
+import com.jdvn.valuation.landpublic.exception.ResponseError;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -21,14 +25,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class HelloController {
 
     @GetMapping("/sayHi/{message}")
-    public Map<String, String> getStarted(@PathVariable String message) {        
+    public Response<Map<String, String>> getStarted(@PathVariable String message) {        
     	HashMap<String, String> info = new HashMap<>();
-    	info.put("info", message);
-    	info.put("status", "Hello, World");
-        return info;
+    	info.put("Your info", message);
+    	info.put("sayHi", "Hello, World");
+        return new ResponseBuilder<Map<String, String>>().addData(info).build();
     }
     @PostMapping("/sayHi")
-    public @ResponseBody String getStartedWithPost(@RequestBody String info) {
-        return "Hello, World" + info;
+    public Response<String> getStartedWithPost(@RequestBody String info) {
+		if (info.equals("Hello")) {
+			return new ResponseBuilder<String>().addData(info).build(); 
+		}
+		else {
+			return new ResponseBuilder<String>().fail().error(new ResponseError(BizErrorCode.E0003.getValue(),
+					BizErrorCode.E0003.getDescription(), "Message must be Hello as expected!")).build();			
+		}
     }
 }

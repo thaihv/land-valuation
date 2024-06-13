@@ -14,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+// For authentication
 public class AjaxAuthenticationFailureHandler implements AuthenticationEntryPoint {
 
 	private ObjectMapper objectMapper = new ObjectMapper();

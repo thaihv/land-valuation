@@ -57,11 +57,12 @@ public class SpringSecurityConfig {
                     .requestMatchers("/api-docs/**").permitAll()
                     .anyRequest().authenticated()
                 )
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .httpBasic(Customizer.withDefaults());
                 //.addFilterAfter(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-		http.exceptionHandling(ex -> ex.authenticationEntryPoint(new AjaxAuthenticationFailureHandler()));
+		http.exceptionHandling(ex -> ex.authenticationEntryPoint(new AjaxAuthenticationFailureHandler()))
+			.exceptionHandling(ex -> ex.accessDeniedHandler(ajaxAccessDeniedHandler()));
         return http.build();
 	}
     @Bean
