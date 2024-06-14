@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdvn.valuation.landpublic.exception.BizErrorCode;
-import com.jdvn.valuation.landpublic.exception.BizException;
-import com.jdvn.valuation.landpublic.exception.Response;
-import com.jdvn.valuation.landpublic.exception.ResponseBuilder;
+import com.jdvn.valuation.landpublic.except.BizErrorCode;
+import com.jdvn.valuation.landpublic.except.BizException;
+import com.jdvn.valuation.landpublic.except.Response;
+import com.jdvn.valuation.landpublic.except.ResponseBuilder;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

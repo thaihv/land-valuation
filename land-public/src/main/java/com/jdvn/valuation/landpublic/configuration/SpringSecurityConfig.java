@@ -21,8 +21,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.jdvn.valuation.landpublic.exception.AjaxAuthenticationFailureHandler;
-import com.jdvn.valuation.landpublic.exception.AjaxAuthenticationFilter;
+import com.jdvn.valuation.landpublic.handler.AjaxAuthenticationFailureHandler;
+import com.jdvn.valuation.landpublic.handler.AjaxAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

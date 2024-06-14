@@ -1,4 +1,4 @@
-package com.jdvn.valuation.landpublic.exception;
+package com.jdvn.valuation.landpublic.handler;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.jdvn.valuation.landpublic.exception;
+package com.jdvn.valuation.landpublic.handler;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public class AjaxAuthenticationFilter extends AbstractAuthenticationProcessingFi
             }
         }
         else {
-        	throw new IllegalArgumentException("No authentication info has been found!");
+        	throw new IllegalArgumentException("No authentication information has been found!");
         }
 		return null;		
     }
