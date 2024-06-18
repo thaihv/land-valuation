@@ -20,8 +20,8 @@ SET BUILD_LOG="%current_dir%..\logs\datamodel.log"
 SET host=localhost
 SET port=5432
 SET dbname=laolis
-SET username=laolis
-SET pword=laolis
+SET username=postgres
+SET pword=postgres
 SET createDb=Y
 SET fillWithSampleData=Y
 
