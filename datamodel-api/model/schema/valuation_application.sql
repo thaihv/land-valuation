@@ -218,4 +218,105 @@ COMMENT ON COLUMN application.request_type.description
 
 COMMENT ON COLUMN application.request_type.status
     IS 'Status in active of the application action type as active (a) or inactive (i).';	
+    
+
+-- Table: application.service
+
+-- DROP TABLE IF EXISTS application.service;
+
+CREATE TABLE IF NOT EXISTS application.service
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    application_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    request_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    service_order integer NOT NULL DEFAULT 0,
+    lodging_datetime timestamp without time zone NOT NULL DEFAULT now(),
+    nr_days_to_complete integer NOT NULL DEFAULT 10,
+    status_code character varying(255) COLLATE pg_catalog."default",                
+    action_code character varying(255) COLLATE pg_catalog."default",
+    action_notes character varying(255) COLLATE pg_catalog."default",
+    base_fee numeric(20,2) NOT NULL DEFAULT 0,    
+    area_fee numeric(20,2) NOT NULL DEFAULT 0,
+    value_fee numeric(20,2) NOT NULL DEFAULT 0,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,    
+    change_user character varying(50) COLLATE pg_catalog."default",
+	change_time timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT service_pkey PRIMARY KEY (id),
+    CONSTRAINT service_application_id_fkey FOREIGN KEY (application_id)
+        REFERENCES application.application (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT service_request_type_code_fkey FOREIGN KEY (request_type_code)
+        REFERENCES application.request_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.service
+    OWNER to postgres;
+
+COMMENT ON TABLE application.service
+    IS 'Used to control the type of plan application as mass appraisals or single or individual appraisals.';
+
+COMMENT ON COLUMN application.service.id
+    IS 'Identifier for the service.';
+
+COMMENT ON COLUMN application.service.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN application.service.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN application.service.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN application.service.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN application.service.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN application.service.action_code
+    IS 'Service action code. Indicates the last action to occur on the service. E.g. lodge, start, complete, cancel, etc.';
+
+COMMENT ON COLUMN application.service.action_notes
+    IS 'Optional description of the action';
+
+COMMENT ON COLUMN application.service.area_fee
+    IS 'The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application.';
+
+COMMENT ON COLUMN application.service.base_fee
+    IS 'The fixed fee charged for the service.';
+
+COMMENT ON COLUMN application.service.lodging_datetime
+    IS 'The date the service was lodged on the application. Typically will match the application lodgement_datetime, but may vary if a service is added after the application is lodged.';
+
+COMMENT ON COLUMN application.service.nr_days_to_complete
+    IS 'The number of days it should take for the service to be completed.';
+
+COMMENT ON COLUMN application.service.service_order
+    IS 'The relative order of the service within the application. Can be used to imply a workflow sequence for application related tasks.';
+
+COMMENT ON COLUMN application.service.status_code
+    IS 'Service status code.';
+
+COMMENT ON COLUMN application.service.value_fee
+    IS 'The value fee charged for the service. Calculated from the sum of all values listed for properties on the application.';
+
+COMMENT ON COLUMN application.service.application_id
+    IS 'Identifier for the application the service is associated with.';
+
+COMMENT ON COLUMN application.service.request_type_code
+    IS 'The request type identifying the purpose of the service.';
+    
+-- Index: service_on_rowidentifier
+CREATE INDEX IF NOT EXISTS service_on_rowidentifier
+    ON application.service USING btree
+    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;    
+    
 	
