@@ -2113,4 +2113,55 @@ COMMENT ON COLUMN administrative.source_describes_rrr.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
 
 COMMENT ON COLUMN administrative.source_describes_rrr.rowversion
-    IS 'Sequential value indicating the number of times this row has been modified.';        
+    IS 'Sequential value indicating the number of times this row has been modified.';  
+    
+-- Table: administrative.party_for_rrr
+CREATE TABLE IF NOT EXISTS administrative.party_for_rrr
+(
+    party_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rrr_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    share_id character varying(40) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),            
+    CONSTRAINT party_for_rrr_pkey PRIMARY KEY (party_id, rrr_id),
+    CONSTRAINT party_for_rrr_party_id_fkey FOREIGN KEY (party_id)
+        REFERENCES administrative.party (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT party_for_rrr_rrr_id_fkey FOREIGN KEY (rrr_id)
+        REFERENCES administrative.rrr (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.party_for_rrr
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.party_for_rrr
+    IS 'Identifies the parties involved in each RRR. Also identifies the share each party has in the RRR if the RRR is subject to shared allocation.';
+
+COMMENT ON COLUMN administrative.party_for_rrr.party_id
+    IS 'Identifier for the party associated to the RRR.';
+
+COMMENT ON COLUMN administrative.party_for_rrr.rrr_id
+    IS 'The id of the rrr.';
+
+COMMENT ON COLUMN administrative.party_for_rrr.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.party_for_rrr.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.party_for_rrr.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.party_for_rrr.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.party_for_rrr.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';          
