@@ -299,4 +299,85 @@ COMMENT ON COLUMN administrative.party_member.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
 COMMENT ON COLUMN administrative.party_member.share
-    IS 'The share of a RRR held by a party member expressed as a fraction with a numerator and a denominator.';               
+    IS 'The share of a RRR held by a party member expressed as a fraction with a numerator and a denominator.';
+    
+-- Table: administrative.party_role_type
+CREATE TABLE IF NOT EXISTS administrative.party_role_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT party_role_type_pkey PRIMARY KEY (code),
+    CONSTRAINT party_role_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.party_role_type
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.party_role_type
+    IS 'Code list of party role types. Used to identify the types of role a party can have in relation to land office transactions and data. E.g. applicant, bank, lodgingAgent, notary, etc.';
+
+COMMENT ON COLUMN administrative.party_role_type.code
+    IS 'Code of the party role type.';
+
+COMMENT ON COLUMN administrative.party_role_type.description
+    IS 'Description of the party role type.';
+
+COMMENT ON COLUMN administrative.party_role_type.display_value
+    IS 'Displayed value of the party role type.';
+
+COMMENT ON COLUMN administrative.party_role_type.status
+    IS 'Status in active of the party role type as active (a) or inactive (i).'; 
+    
+-- Table: administrative.party_role
+CREATE TABLE IF NOT EXISTS administrative.party_role
+(
+    party_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    type_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),        
+    CONSTRAINT party_role_pkey PRIMARY KEY (party_id, type_code),
+    CONSTRAINT party_role_party_id_fkey FOREIGN KEY (party_id)
+        REFERENCES administrative.party (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT party_role_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES administrative.party_role_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.party_role
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.party_role
+    IS 'Identifies the roles a party has in relation to the land office transactions and data.';
+
+COMMENT ON COLUMN administrative.party_role.party_id
+    IS 'The id of the party.';
+
+COMMENT ON COLUMN administrative.party_role.type_code
+    IS 'The code of role.';
+
+COMMENT ON COLUMN administrative.party_role.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.party_role.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.party_role.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.party_role.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.party_role.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';                      
