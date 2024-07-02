@@ -12,9 +12,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +25,9 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "party_for_rrr", schema = "administrative")
+@Table(name = "party_for_rrr", schema = "administrative", indexes = {
+		@Index(name = "party_for_rrr_on_rowidentifier", columnList = "rowidentifier") }, uniqueConstraints = {
+		@UniqueConstraint(name = "party_for_rrr_share_rrr_id", columnNames = { "share_id", "rrr_id"}) })
 @Comment("Identifies the parties involved in each RRR. Also identifies the share each party has in the RRR if the RRR is subject to shared allocation.")
 @IdClass(PartyRRRId.class)
 public class PartyForRRR extends DomainObject<String> {
@@ -49,7 +53,7 @@ public class PartyForRRR extends DomainObject<String> {
 	@Comment("Reference to the involved party.")
 	private Party party;
 
-//    @ManyToOne(cascade = CascadeType.ALL , optional = true)
+//    @ManyToOne(fetch = FetchType.LAZY, optional = true)
 ////    @JoinColumn(name = "share_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "party_for_rrr_share_id_fkey"))
 //    @JoinColumns({
 //    	@JoinColumn(name = "share_id", referencedColumnName = "id"),

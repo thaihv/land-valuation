@@ -14,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,7 +26,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "party", schema = "administrative")
+@Table(name = "party", schema = "administrative", indexes = {
+		@Index(name = "party_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("An individual, group or organisation that is associated in some way with land office services. Implementation of the LADM LA_Party class.")
 public class Party extends DomainObject<String> {
 

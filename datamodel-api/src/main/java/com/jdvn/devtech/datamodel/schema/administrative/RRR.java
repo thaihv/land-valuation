@@ -14,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,7 +26,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "rrr", schema = "administrative")
+@Table(name = "rrr", schema = "administrative", indexes = {
+		@Index(name = "rrr_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Store the specific rights, restrictions and responsibilities that might be enquire from a valuation unit (called also a property) e.g. freehold ownership, lease, mortgage, caveat, etc. Implementation of the LADM LA_RRR class.")
 public class RRR extends DomainObject<String> {
 

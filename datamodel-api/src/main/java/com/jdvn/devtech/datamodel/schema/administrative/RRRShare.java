@@ -12,6 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -23,7 +24,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "rrr_share", schema = "administrative")
+@Table(name = "rrr_share", schema = "administrative", indexes = {
+		@Index(name = "rrr_share_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Identifies the share a party has in an RRR.")
 @IdClass(RRRShareId.class)
 public class RRRShare extends DomainObject<String> {

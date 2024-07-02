@@ -39,7 +39,7 @@ import lombok.Setter;
 @Comment("Provides information about objects of valuation unit for fundamental recording of land and improvements (buildings), which can only be land, building\r\n"
 		+ "or land and improvements together as land or condominium property.")
 public class ValuationUnit extends DomainObject<String> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -47,18 +47,18 @@ public class ValuationUnit extends DomainObject<String> {
 	private String id;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "vu_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_code_fkey"))
-    private ValuationUnitType vu_type;
-    
+	@JoinColumn(name = "vu_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_code_fkey"))
+	private ValuationUnitType vu_type;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_address_id_fkey"))
-    private Address address;
-	
+	@JoinColumn(name = "address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_address_id_fkey"))
+	private Address address;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("Neighborhood code as urban or rural, for example")
-    @JoinColumn(name = "neighborhood_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_neighborhood_code_fkey"))
-    private NeighborhoodType neighborhood_type;
-        
+	@JoinColumn(name = "neighborhood_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_neighborhood_code_fkey"))
+	private NeighborhoodType neighborhood_type;
+
 	@Column(length = 500, nullable = false)
 	@Comment("Display name of the valuation unit type.")
 	private String name;
@@ -66,19 +66,22 @@ public class ValuationUnit extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
 	@Comment("The datetime the valuation unit is formally recognised by the land value assessment agency (i.e. registered or issued).")
 	private LocalDateTime creation_date = LocalDateTime.now();
-	
+
 	@Column
 	@Comment("The datetime the valuation unit was superseded and became historic.")
 	private Date expiration_date;
-		
-	/* Control many-to-many relationship between valuation unit and valuation unit group */
+
+	/*
+	 * Control many-to-many relationship between valuation unit and valuation unit
+	 * group
+	 */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "valuation_units_groups_links", schema = "valuation", joinColumns = @JoinColumn(name = "vunit_id"), inverseJoinColumns = @JoinColumn(name = "vunit_group_id"), foreignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_units_groups_links_vunit_group_id_fkey"))
 	private Set<ValuationUnitGroup> vu_groups;
-	
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "valuation_unit")
-    @JsonBackReference
-    private Set<UnitHasParameterValue> unit_parameters;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "valuation_unit")
+	@JsonBackReference
+	private Set<UnitHasParameterValue> unit_parameters;
 
 	@OneToOne(mappedBy = "valuation_unit")
 	private Valuation valuation;
@@ -88,14 +91,13 @@ public class ValuationUnit extends DomainObject<String> {
 
 	@OneToOne(mappedBy = "valuation_unit")
 	private RRR rrr;
-	
+
 	@OneToOne(mappedBy = "valuation_unit")
 	private SalesComparisonCalibration sales_comparison;
-	
+
 	@Override
 	public String print() {
 		return id;
 	}
-	
 
 }
