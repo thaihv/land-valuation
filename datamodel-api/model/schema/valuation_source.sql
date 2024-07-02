@@ -497,3 +497,55 @@ CREATE INDEX IF NOT EXISTS application_uses_source_on_source_id
     ON application.application_uses_source USING btree
     (source_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;	 
+    
+-- Table: administrative.source_describes_party
+CREATE TABLE IF NOT EXISTS administrative.source_describes_party
+(
+    party_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    source_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),        
+    CONSTRAINT source_describes_party_pkey PRIMARY KEY (party_id, source_id),
+    CONSTRAINT source_describes_party_party_id_fkey FOREIGN KEY (party_id)
+        REFERENCES administrative.party (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT source_describes_party_source_id_fkey FOREIGN KEY (source_id)
+        REFERENCES source.source (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.source_describes_party
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.source_describes_party
+    IS 'Implements the many-to-many relationship identifying administrative source instances with party instances.';
+
+COMMENT ON COLUMN administrative.source_describes_party.party_id
+    IS 'The id of the party.';
+
+COMMENT ON COLUMN administrative.source_describes_party.source_id
+    IS 'The id of source.';
+
+COMMENT ON COLUMN administrative.source_describes_party.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.source_describes_party.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.source_describes_party.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.source_describes_party.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.source_describes_party.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.'; 
+    
+       

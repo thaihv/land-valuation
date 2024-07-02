@@ -1911,3 +1911,206 @@ COMMENT ON COLUMN valuation.single_appraisal.income_approach_id
 
 COMMENT ON COLUMN valuation.single_appraisal.sales_comparison_approach_id
     IS 'The identifier of sales comparison approach, if any.';
+    
+-- Table: administrative.rrr
+CREATE TABLE IF NOT EXISTS administrative.rrr
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    valuation_unit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    reference_nr character varying(20) COLLATE pg_catalog."default", 
+    type_code character varying(20) COLLATE pg_catalog."default",
+    status_code character varying(20) COLLATE pg_catalog."default",
+    is_primary boolean NOT NULL DEFAULT false,
+    registration_date timestamp(6) without time zone,    
+    expiration_date timestamp(6) without time zone,                   
+    amount numeric(29,2),
+    due_date timestamp(6) without time zone,
+    mortgage_interest_rate numeric(5,2),
+    mortgage_ranking integer NOT NULL,
+    mortgage_type_code character varying(20) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),            
+    CONSTRAINT rrr_pkey PRIMARY KEY (id),
+    CONSTRAINT rrr_mortgage_type_code_fkey FOREIGN KEY (mortgage_type_code)
+        REFERENCES administrative.mortgage_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT rrr_status_code_fkey FOREIGN KEY (status_code)
+        REFERENCES administrative.rrr_group_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT rrr_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES administrative.rrr_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT rrr_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.rrr
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.rrr
+    IS 'Store the specific rights, restrictions and responsibilities that might be enquire from a valuation unit (called also a property) e.g. freehold ownership, lease, mortgage, caveat, etc. Implementation of the LADM LA_RRR class.';
+
+COMMENT ON COLUMN administrative.rrr.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.rrr.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.rrr.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.rrr.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.rrr.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN administrative.rrr.amount
+    IS 'The value of the mortgage.';
+
+COMMENT ON COLUMN administrative.rrr.due_date
+    IS 'The date of the next payment for the RRR.';
+
+COMMENT ON COLUMN administrative.rrr.expiration_date
+    IS 'The date and time defining when the RRR remains in force to.';
+
+COMMENT ON COLUMN administrative.rrr.is_primary
+    IS 'Flag to indicate if the RRR type is a primary RRR from Valuation Unit.';
+
+COMMENT ON COLUMN administrative.rrr.mortgage_interest_rate
+    IS 'The interest rate of the mortgage as a percentage.';
+
+COMMENT ON COLUMN administrative.rrr.mortgage_ranking
+    IS 'The ranking order if more than one mortgage applies to the right.';
+
+COMMENT ON COLUMN administrative.rrr.reference_nr
+    IS 'Number to identify the hitorical RRR. Could be determined by the generate function of business rule. This value is useful to track the different versions of the RRR as it is edited over time.';
+
+COMMENT ON COLUMN administrative.rrr.registration_date
+    IS 'The date and time the RRR was formally registered by the Land Administration Agency.';
+
+COMMENT ON COLUMN administrative.rrr.mortgage_type_code
+    IS 'The type of mortgage.';
+
+COMMENT ON COLUMN administrative.rrr.status_code
+    IS 'The status of the RRR.';
+
+COMMENT ON COLUMN administrative.rrr.type_code
+    IS 'The type of RRR. E.g. freehold ownership, lease, mortage, caveat, etc.';
+
+COMMENT ON COLUMN administrative.rrr.valuation_unit_id
+    IS 'Identifier for the Valuation Unit the RRR need to query. In terms of Land Registration, this relationship is similar to RRR and BA_Unit from LADM';
+    
+-- Table: administrative.rrr_share
+CREATE TABLE IF NOT EXISTS administrative.rrr_share
+(
+    rrr_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    nominator integer NOT NULL,
+    denominator integer NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),            
+    CONSTRAINT rrr_share_pkey PRIMARY KEY (id, rrr_id),
+    CONSTRAINT rrr_share_rrr_id_fkey FOREIGN KEY (rrr_id)
+        REFERENCES administrative.rrr (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.rrr_share
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.rrr_share
+    IS 'Identifies the share a party has in an RRR.';
+
+COMMENT ON COLUMN administrative.rrr_share.id
+    IS 'Identifier for the RRR share.';
+
+COMMENT ON COLUMN administrative.rrr_share.rrr_id
+    IS 'Identifier of the RRR the share is assocaited with.';
+
+COMMENT ON COLUMN administrative.rrr_share.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.rrr_share.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.rrr_share.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.rrr_share.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.rrr_share.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN administrative.rrr_share.denominator
+    IS 'Denominator part of the share (i.e. bottom number of fraction)';
+
+COMMENT ON COLUMN administrative.rrr_share.nominator
+    IS 'Nominiator part of the share (i.e. top number of fraction)';
+    
+-- Table: administrative.source_describes_rrr
+CREATE TABLE IF NOT EXISTS administrative.source_describes_rrr
+(
+    rrr_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    source_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,    
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT source_describes_rrr_pkey PRIMARY KEY (rrr_id, source_id),
+    CONSTRAINT source_describes_rrr_rrr_id_fkey FOREIGN KEY (rrr_id)
+        REFERENCES administrative.rrr (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT source_describes_rrr_source_id_fkey FOREIGN KEY (source_id)
+        REFERENCES source.source (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.source_describes_rrr
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.source_describes_rrr
+    IS 'Associates a RRR with one or more source (a.k.a. document) records. Implementation of the LADM LA_RRR to LA_AdministrativeSource relationship.';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.rrr_id
+    IS 'The id of the rrr.';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.source_id
+    IS 'The id of source.';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.source_describes_rrr.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';        

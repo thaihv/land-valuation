@@ -9,6 +9,7 @@ import org.hibernate.annotations.Comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.address.Address;
+import com.jdvn.devtech.datamodel.schema.administrative.RRR;
 import com.jdvn.devtech.datamodel.schema.preparation.NeighborhoodType;
 
 import jakarta.persistence.CascadeType;
@@ -85,6 +86,9 @@ public class ValuationUnit extends DomainObject<String> {
 	@OneToOne(mappedBy = "valuation_unit")
 	private Taxation taxation;
 
+	@OneToOne(mappedBy = "valuation_unit")
+	private RRR rrr;
+	
 	@OneToOne(mappedBy = "valuation_unit")
 	private SalesComparisonCalibration sales_comparison;
 	

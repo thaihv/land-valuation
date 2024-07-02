@@ -448,4 +448,120 @@ COMMENT ON COLUMN administrative.party_role.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
 
 COMMENT ON COLUMN administrative.party_role.rowversion
-    IS 'Sequential value indicating the number of times this row has been modified.';                      
+    IS 'Sequential value indicating the number of times this row has been modified.';    
+    
+-- Table: administrative.rrr_group_type
+CREATE TABLE IF NOT EXISTS administrative.rrr_group_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT rrr_group_type_pkey PRIMARY KEY (code),
+    CONSTRAINT rrr_group_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.rrr_group_type
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.rrr_group_type
+    IS 'Code list of rrr status types. E.g. current, historic, pending, previous.';
+
+COMMENT ON COLUMN administrative.rrr_group_type.code
+    IS 'Code of the RRR group type.';
+
+COMMENT ON COLUMN administrative.rrr_group_type.description
+    IS 'Description of the RRR group type.';
+
+COMMENT ON COLUMN administrative.rrr_group_type.display_value
+    IS 'Displayed value of the RRR group type.';
+
+COMMENT ON COLUMN administrative.rrr_group_type.status
+    IS 'Status in active of the RRR group type as active (a) or inactive (i).';
+    
+-- Table: administrative.rrr_type
+CREATE TABLE IF NOT EXISTS administrative.rrr_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    rrr_group_type_code character varying(20) COLLATE pg_catalog."default",
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    is_primary boolean NOT NULL DEFAULT false,
+    share_check boolean NOT NULL,
+    party_required boolean NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,                
+    CONSTRAINT rrr_type_pkey PRIMARY KEY (code),
+    CONSTRAINT rrr_type_display_value UNIQUE (display_value),
+    CONSTRAINT rrr_type_rrr_group_type_code_fkey FOREIGN KEY (rrr_group_type_code)
+        REFERENCES administrative.rrr_group_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.rrr_type
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.rrr_type
+    IS 'Code list of RRR types. E.g. freehold owernship, lease, mortgage, caveat, etc.';
+
+COMMENT ON COLUMN administrative.rrr_type.code
+    IS 'Code of the RRR type.';
+
+COMMENT ON COLUMN administrative.rrr_type.description
+    IS 'Description of the RRR type.';
+
+COMMENT ON COLUMN administrative.rrr_type.display_value
+    IS 'Displayed value of the RRR type.';
+
+COMMENT ON COLUMN administrative.rrr_type.is_primary
+    IS 'Flag to indicate if the RRR type is a primary RRR.';
+
+COMMENT ON COLUMN administrative.rrr_type.party_required
+    IS 'Flag to indicate at least one party must be associated with this RRR.';
+
+COMMENT ON COLUMN administrative.rrr_type.share_check
+    IS 'Flag to indicate the that the sum of all shares for this RRR must be checked to ensure it equals 1.';
+
+COMMENT ON COLUMN administrative.rrr_type.status
+    IS 'Status in active of the RRR type as active (a) or inactive (i).';
+
+COMMENT ON COLUMN administrative.rrr_type.rrr_group_type_code
+    IS 'Identifies if the RRR type is a right, restriction or a responsibility.';
+    
+-- Table: administrative.mortgage_type
+CREATE TABLE IF NOT EXISTS administrative.mortgage_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT mortgage_type_pkey PRIMARY KEY (code),
+    CONSTRAINT mortgage_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.mortgage_type
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.mortgage_type
+    IS 'Code list of Mortgage types. E.g. levelPayment, linear, etc.';
+
+COMMENT ON COLUMN administrative.mortgage_type.code
+    IS 'Code of the mortgage type.';
+
+COMMENT ON COLUMN administrative.mortgage_type.description
+    IS 'Description of the mortgage type.';
+
+COMMENT ON COLUMN administrative.mortgage_type.display_value
+    IS 'Displayed value of the mortgage type.';
+
+COMMENT ON COLUMN administrative.mortgage_type.status
+    IS 'Status in active of the mortgage type as active (a) or inactive (i).';
+    
+        
+                                  
