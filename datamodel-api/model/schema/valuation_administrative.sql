@@ -158,13 +158,42 @@ CREATE TABLE IF NOT EXISTS administrative.party
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     ext_id character varying(255) COLLATE pg_catalog."default",
-    type_code character varying(20) COLLATE pg_catalog."default",
+    type_code character varying(20) COLLATE pg_catalog."default",      
+    name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(50) COLLATE pg_catalog."default",          
+    alias character varying(50) COLLATE pg_catalog."default",
+    birth_date timestamp(6) without time zone,
+    gender_code character varying(20) COLLATE pg_catalog."default",
+    address_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),    
+    id_type_code character varying(20) COLLATE pg_catalog."default",
+    id_number character varying(20) COLLATE pg_catalog."default",                
+    email character varying(50) COLLATE pg_catalog."default",
+    mobile character varying(15) COLLATE pg_catalog."default",
+    phone character varying(15) COLLATE pg_catalog."default",
+    fax character varying(15) COLLATE pg_catalog."default",
+    preferred_communication_code character varying(20) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),            
     CONSTRAINT party_pkey PRIMARY KEY (id),
+    CONSTRAINT party_address_id_fkey FOREIGN KEY (address_id)
+        REFERENCES address.address (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT party_gender_code_fkey FOREIGN KEY (gender_code)
+        REFERENCES administrative.gender_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT party_id_preferred_communication_code_fkey FOREIGN KEY (preferred_communication_code)
+        REFERENCES administrative.communication_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT party_id_type_code_fkey FOREIGN KEY (id_type_code)
+        REFERENCES administrative.id_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT party_type_code_fkey FOREIGN KEY (type_code)
         REFERENCES administrative.party_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -194,8 +223,47 @@ COMMENT ON COLUMN administrative.party.rowidentifier
 COMMENT ON COLUMN administrative.party.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
+COMMENT ON COLUMN administrative.party.alias
+    IS 'Any alias for the party. A party can have more than one alias. If so, the aliases should be separated by a comma.';
+
+COMMENT ON COLUMN administrative.party.birth_date
+    IS 'Date of birth of naturalPerson party, if any.';
+
+COMMENT ON COLUMN administrative.party.email
+    IS 'The contact email address of the party.';
+
 COMMENT ON COLUMN administrative.party.ext_id
     IS 'An identifier for the party from some external system such as a customer relationship management (CRM) system.';
+
+COMMENT ON COLUMN administrative.party.fax
+    IS ' The fax number of the party.';
+
+COMMENT ON COLUMN administrative.party.id_number
+    IS 'The number from the id used to verify the identity of the party.';
+
+COMMENT ON COLUMN administrative.party.last_name
+    IS 'The last name for the party or blank for groups and organisations.';
+
+COMMENT ON COLUMN administrative.party.mobile
+    IS 'The contact mobile phone number of the party.';
+
+COMMENT ON COLUMN administrative.party.name
+    IS 'The first name(s) for the party or the group or organisation name.';
+
+COMMENT ON COLUMN administrative.party.phone
+    IS 'The main contact phone number of the party. I.e. landline.';
+
+COMMENT ON COLUMN administrative.party.address_id
+    IS 'Identifier for the contact address of the party.';
+
+COMMENT ON COLUMN administrative.party.preferred_communication_code
+    IS 'Used to indicate the preferred means of communication the party will use with the land administration agency.';
+
+COMMENT ON COLUMN administrative.party.gender_code
+    IS 'Identifies the gender for the party. If the party is of type naturalPerson then a gender code must be specified.';
+
+COMMENT ON COLUMN administrative.party.id_type_code
+    IS 'Used to indicate the type of id used to verify the identity of the party.';
 
 COMMENT ON COLUMN administrative.party.type_code
     IS 'The type of the party. E.g. naturalPerson, nonNaturalPerson, etc.';

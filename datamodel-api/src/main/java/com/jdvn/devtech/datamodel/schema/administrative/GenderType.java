@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -37,4 +38,6 @@ public class GenderType{
 	@Comment("Status in active of the gender type as active (a) or inactive (i).")
 	private char status;
 
+	@OneToOne(mappedBy = "gender_type")
+	private Party party;
 }

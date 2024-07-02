@@ -8,6 +8,7 @@ import org.hibernate.annotations.Comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
+import com.jdvn.devtech.datamodel.schema.administrative.Party;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -43,15 +44,17 @@ public class Application extends DomainObject<String>{
 	@Column(length = 20, nullable = false)
 	@Comment("The application number displayed to end users.")
 	private String app_nr;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "agent_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "application_agent_id_fkey"))
+	@Comment("Identifier of the party (individual or organization) that is requesting a plan.")
+    private Party agent;	
 
-	@Column(length = 40)
-	@Comment("Identifier of the party (individual or organization) that is requesting a plan")
-	private String agent_id;
-	
-	@Comment("The person to contact in regard to the application of plan")
-	@Column(length = 40, nullable = false)
-	private String contact_person_id;
-	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "contact_person_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "application_contact_person_id_fkey"))
+	@Comment("Identifier of the person to contact in regard to the application of plan.")
+    private Party contact_person;	
+		
 	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
 	@Comment("The lodging date and time of the application. This date identifies when the application is officially accepted by the valuation office")
 	private Date lodging_datetime;

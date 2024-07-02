@@ -78,8 +78,8 @@ CREATE TABLE IF NOT EXISTS application.application
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     app_nr character varying(20) COLLATE pg_catalog."default" NOT NULL,
-	agent_id character varying(40) COLLATE pg_catalog."default",
-	contact_person_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+	agent_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+	contact_person_id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	lodging_datetime timestamp without time zone NOT NULL DEFAULT now(),
 	expected_completion_date timestamp without time zone NOT NULL DEFAULT now(),	    
     assignee_id character varying(40) COLLATE pg_catalog."default",
@@ -101,6 +101,14 @@ CREATE TABLE IF NOT EXISTS application.application
     CONSTRAINT application_pkey PRIMARY KEY (id),
     CONSTRAINT application_action_code_fkey FOREIGN KEY (action_code)
         REFERENCES application.application_action_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT application_agent_id_fkey FOREIGN KEY (agent_id)
+        REFERENCES administrative.party (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT application_contact_person_id_fkey FOREIGN KEY (contact_person_id)
+        REFERENCES administrative.party (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT application_status_code_fkey FOREIGN KEY (status_code)

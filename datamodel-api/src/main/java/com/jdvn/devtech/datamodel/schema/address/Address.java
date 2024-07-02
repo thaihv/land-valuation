@@ -3,6 +3,7 @@ package com.jdvn.devtech.datamodel.schema.address;
 import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
+import com.jdvn.devtech.datamodel.schema.administrative.Party;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnit;
 
 import jakarta.persistence.Column;
@@ -41,6 +42,9 @@ public class Address extends DomainObject<String> {
 	
 	@OneToOne(mappedBy = "address")
 	private ValuationUnit valuation_unit;
+	
+	@OneToOne(mappedBy = "address")
+	private Party party;
 	
 	@Override
 	public String print() {
