@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS application.application_status_type
 (
     code character varying(20) COLLATE pg_catalog."default" NOT NULL,
     display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
-	description character varying(1000) COLLATE pg_catalog."default",
     CONSTRAINT application_status_type_pkey PRIMARY KEY (code),
     CONSTRAINT application_status_type_display_value_key UNIQUE (display_value)
 )
