@@ -27,40 +27,40 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "rrr", schema = "administrative")
 @Comment("Store the specific rights, restrictions and responsibilities that might be enquire from a valuation unit (called also a property) e.g. freehold ownership, lease, mortgage, caveat, etc. Implementation of the LADM LA_RRR class.")
-public class RRR extends DomainObject<String>{
-	
+public class RRR extends DomainObject<String> {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "valuation_unit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "rrr_valuation_unit_id_fkey"))
+	@JoinColumn(name = "valuation_unit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "rrr_valuation_unit_id_fkey"))
 	@Comment("Identifier for the Valuation Unit the RRR need to query. In terms of Land Registration, this relationship is similar to RRR and BA_Unit from LADM")
-    private ValuationUnit valuation_unit;
+	private ValuationUnit valuation_unit;
 
 	@Column(length = 20)
 	@Comment("Number to identify the hitorical RRR. Could be determined by the generate function of business rule. This value is useful to track the different versions of the RRR as it is edited over time.")
 	private String reference_nr;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_type_code_fkey"))
+	@JoinColumn(name = "type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_type_code_fkey"))
 	@Comment("The type of RRR. E.g. freehold ownership, lease, mortage, caveat, etc.")
-    private RRRType rrr_type;
+	private RRRType rrr_type;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "status_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_status_code_fkey"))
+	@JoinColumn(name = "status_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_status_code_fkey"))
 	@Comment("The status of the RRR.")
-    private RRRStatusType rrr_status_type;
-	
+	private RRRStatusType rrr_status_type;
+
 	@Column(columnDefinition = "boolean NOT NULL DEFAULT false")
 	@Comment("Flag to indicate if the RRR type is a primary RRR from Valuation Unit.")
 	private boolean is_primary;
 
 	@Comment("The date and time the RRR was formally registered by the Land Administration Agency.")
 	private Date registration_date;
-	
+
 	@Comment("The date and time defining when the RRR remains in force to.")
 	private Date expiration_date;
 
@@ -77,12 +77,12 @@ public class RRR extends DomainObject<String>{
 
 	@Comment("The ranking order if more than one mortgage applies to the right.")
 	private int mortgage_ranking;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "mortgage_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_mortgage_type_code_fkey"))
+	@JoinColumn(name = "mortgage_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_mortgage_type_code_fkey"))
 	@Comment("The type of mortgage.")
-    private MortgageType mortgage_type;
-	
+	private MortgageType mortgage_type;
+
 	@Override
 	public String getId() {
 		return id;

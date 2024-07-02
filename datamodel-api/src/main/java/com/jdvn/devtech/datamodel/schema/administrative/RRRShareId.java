@@ -9,6 +9,10 @@ public class RRRShareId implements Serializable {
 	private String rrr_id;
 	private String id;
 
+	public RRRShareId() {
+
+	}
+
 	public RRRShareId(String rrr_id, String id) {
 		this.rrr_id = rrr_id;
 		this.id = id;

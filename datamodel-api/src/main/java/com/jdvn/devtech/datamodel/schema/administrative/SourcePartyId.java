@@ -9,6 +9,10 @@ public class SourcePartyId implements Serializable {
 	private String party_id;
 	private String source_id;
 
+	public SourcePartyId() {
+
+	}
+
 	public SourcePartyId(String party_id, String source_id) {
 		this.party_id = party_id;
 		this.source_id = source_id;

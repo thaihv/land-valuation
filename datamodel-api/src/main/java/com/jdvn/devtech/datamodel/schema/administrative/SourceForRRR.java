@@ -35,7 +35,7 @@ public class SourceForRRR extends DomainObject<String> {
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the rrr.")
 	private String rrr_id;
-    @Id
+	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The id of source.")
 	private String source_id;
@@ -44,13 +44,12 @@ public class SourceForRRR extends DomainObject<String> {
 	@JoinColumn(name = "rrr_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "source_describes_rrr_rrr_id_fkey"))
 	@Comment("Reference to a RRR to identify.")
 	private RRR rrr;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "source_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "source_describes_rrr_source_id_fkey"))
 	@Comment("Reference to the source to verify a party.")
 	private Source source;
 
-	
 	@Override
 	public String getId() {
 		return rrr_id + "_" + source_id;

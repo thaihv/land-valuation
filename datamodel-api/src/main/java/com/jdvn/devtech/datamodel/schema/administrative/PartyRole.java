@@ -34,7 +34,7 @@ public class PartyRole extends DomainObject<String> {
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the party.")
 	private String party_id;
-    @Id
+	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The code of role.")
 	private String type_code;
@@ -43,13 +43,12 @@ public class PartyRole extends DomainObject<String> {
 	@JoinColumn(name = "party_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "party_role_party_id_fkey"))
 	@Comment("Reference to a party holds.")
 	private Party party;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "party_role_type_code_fkey"))
 	@Comment("The type of role the party holds.")
 	private PartyRoleType party_role_type;
 
-	
 	@Override
 	public String getId() {
 		return party_id + "_" + type_code;

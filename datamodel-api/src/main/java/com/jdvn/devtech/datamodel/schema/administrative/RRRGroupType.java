@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "rrr_group_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "rrr_group_type_display_value", columnNames = { "display_value" })})
+@Table(name = "rrr_group_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "rrr_group_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of RRR group types. Used to identify if an RRR is a responsibility, right or restriction.")
-public class RRRGroupType{
+public class RRRGroupType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the RRR group type.")

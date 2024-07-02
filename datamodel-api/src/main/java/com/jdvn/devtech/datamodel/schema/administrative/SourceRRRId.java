@@ -9,6 +9,10 @@ public class SourceRRRId implements Serializable {
 	private String rrr_id;
 	private String source_id;
 
+	public SourceRRRId() {
+
+	}
+
 	public SourceRRRId(String rrr_id, String source_id) {
 		this.rrr_id = rrr_id;
 		this.source_id = source_id;

@@ -34,7 +34,7 @@ public class PartyForRRR extends DomainObject<String> {
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the rrr.")
 	private String rrr_id;
-    @Id
+	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("Identifier for the party associated to the RRR.")
 	private String party_id;
@@ -43,7 +43,7 @@ public class PartyForRRR extends DomainObject<String> {
 	@JoinColumn(name = "rrr_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "party_for_rrr_rrr_id_fkey"))
 	@Comment("Reference to a RRR to identify.")
 	private RRR rrr;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "party_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "party_for_rrr_party_id_fkey"))
 	@Comment("Reference to the involved party.")
@@ -57,7 +57,7 @@ public class PartyForRRR extends DomainObject<String> {
 //    })
 //    @Comment("Reference to a rrr share.")
 //    private RRRShare rrr_share;
-	
+
 	@Override
 	public String getId() {
 		return rrr_id + "_" + party_id;

@@ -35,7 +35,7 @@ public class SourceForParty extends DomainObject<String> {
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the party.")
 	private String party_id;
-    @Id
+	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The id of source.")
 	private String source_id;
@@ -44,13 +44,12 @@ public class SourceForParty extends DomainObject<String> {
 	@JoinColumn(name = "party_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "source_describes_party_party_id_fkey"))
 	@Comment("Reference to a party need to idetify.")
 	private Party party;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "source_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "source_describes_party_source_id_fkey"))
 	@Comment("Reference to the source to verify a party.")
 	private Source source;
 
-	
 	@Override
 	public String getId() {
 		return party_id + "_" + source_id;

@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "party_role_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "party_role_type_display_value", columnNames = { "display_value" })})
+@Table(name = "party_role_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "party_role_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of party role types. Used to identify the types of role a party can have in relation to land office transactions and data. E.g. applicant, bank, lodgingAgent, notary, etc.")
-public class PartyRoleType{
+public class PartyRoleType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the party role type.")

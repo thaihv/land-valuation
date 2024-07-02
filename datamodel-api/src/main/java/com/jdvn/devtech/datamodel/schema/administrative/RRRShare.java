@@ -26,16 +26,16 @@ import lombok.Setter;
 @Table(name = "rrr_share", schema = "administrative")
 @Comment("Identifies the share a party has in an RRR.")
 @IdClass(RRRShareId.class)
-public class RRRShare extends DomainObject<String> { 
-	
+public class RRRShare extends DomainObject<String> {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("Identifier of the RRR the share is assocaited with.")
 	private String rrr_id;
-	
-    @Id
+
+	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("Identifier for the RRR share.")
 	private String id;
@@ -45,12 +45,12 @@ public class RRRShare extends DomainObject<String> {
 
 	@Comment("Denominator part of the share (i.e. bottom number of fraction)")
 	private int denominator;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "rrr_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "rrr_share_rrr_id_fkey"))
 	@Comment("Reference to a RRR to identify.")
 	private RRR rrr;
-	
+
 	@Override
 	public String getId() {
 		return rrr_id + "_" + id;
@@ -60,5 +60,5 @@ public class RRRShare extends DomainObject<String> {
 	public String print() {
 		return rrr_id + "_" + id;
 	}
-    
+
 }

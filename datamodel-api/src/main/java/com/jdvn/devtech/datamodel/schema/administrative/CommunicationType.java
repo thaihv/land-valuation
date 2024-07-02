@@ -17,9 +17,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "communication_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "communication_type_display_value", columnNames = { "display_value" })})
+@Table(name = "communication_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "communication_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of communication types. Used to identify the types of communication that can be used between the land valuation assessment agency and their clients.")
-public class CommunicationType{
+public class CommunicationType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the communication type.")

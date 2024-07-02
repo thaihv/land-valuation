@@ -26,32 +26,32 @@ import lombok.Setter;
 @Table(name = "party_member", schema = "administrative")
 @Comment("Identifies the parties belonging to a group party. Implementation of the LADM LA_PartyMember class.")
 @IdClass(PartyGroupId.class)
-public class PartyMember extends DomainObject<String> { 
-	
+public class PartyMember extends DomainObject<String> {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the party.")
 	private String party_id;
-    @Id
+	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The id of group party.")
 	private String group_id;
 
-    @Column(columnDefinition = "numeric(17,7)")
+	@Column(columnDefinition = "numeric(17,7)")
 	@Comment("The share of a RRR held by a party member expressed as a fraction with a numerator and a denominator.")
 	private Double share;
-	
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "party_id", foreignKey = @ForeignKey(name = "party_member_party_id_fkey"))
-    @Comment("Reference to a party.")
-    private Party party;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "party_member_group_id_fkey"))
-    @Comment("Reference to a group party.")
-    private GroupParty group_party;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "party_id", foreignKey = @ForeignKey(name = "party_member_party_id_fkey"))
+	@Comment("Reference to a party.")
+	private Party party;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "party_member_group_id_fkey"))
+	@Comment("Reference to a group party.")
+	private GroupParty group_party;
 
 	@Override
 	public String getId() {
@@ -62,5 +62,5 @@ public class PartyMember extends DomainObject<String> {
 	public String print() {
 		return party_id + "_" + group_id;
 	}
-    
+
 }

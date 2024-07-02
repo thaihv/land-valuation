@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "rrr_group_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "rrr_group_type_display_value", columnNames = { "display_value" })})
+@Table(name = "rrr_group_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "rrr_group_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of rrr status types. E.g. current, historic, pending, previous.")
-public class RRRStatusType{
+public class RRRStatusType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the rrr status type.")

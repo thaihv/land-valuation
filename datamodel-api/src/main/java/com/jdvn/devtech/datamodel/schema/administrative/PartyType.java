@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "party_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "party_type_display_value", columnNames = { "display_value" })})
+@Table(name = "party_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "party_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of party types.Implementation of the LADM LA_PartyType class.")
-public class PartyType{
+public class PartyType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the party type.")

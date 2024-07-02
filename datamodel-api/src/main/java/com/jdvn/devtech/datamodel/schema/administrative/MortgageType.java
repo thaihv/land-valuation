@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "mortgage_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "mortgage_type_display_value", columnNames = { "display_value" })})
+@Table(name = "mortgage_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "mortgage_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of Mortgage types. E.g. levelPayment, linear, etc.")
-public class MortgageType{
+public class MortgageType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the mortgage type.")

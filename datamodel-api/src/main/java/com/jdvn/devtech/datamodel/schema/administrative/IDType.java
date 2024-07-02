@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "id_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "id_type_display_value", columnNames = { "display_value" })})
+@Table(name = "id_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "id_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of id types. Used to identify the types of id that can be used to verify the identity of an individual, group or organisation. E.g. nationalId, nationalPassport, driverLicense, etc.")
-public class IDType{
+public class IDType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the id type.")
@@ -37,7 +38,7 @@ public class IDType{
 	@Column(columnDefinition = "character(1) default 'a'")
 	@Comment("Status in active of the id type as active (a) or inactive (i).")
 	private char status;
-	
+
 	@OneToOne(mappedBy = "id_type")
 	private Party party;
 }

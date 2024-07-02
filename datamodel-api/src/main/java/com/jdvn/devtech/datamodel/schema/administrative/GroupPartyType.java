@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "group_party_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "group_party_type_display_value", columnNames = { "display_value" })})
+@Table(name = "group_party_type", schema = "administrative", uniqueConstraints = {
+		@UniqueConstraint(name = "group_party_type_display_value", columnNames = { "display_value" }) })
 @Comment("Code list of group party types. Implementation of the LADM LA_GroupPartyType class. Not used by Land Valuation.")
-public class GroupPartyType{
+public class GroupPartyType {
 	@Id
 	@Column(length = 20, nullable = false)
 	@Comment("Code of the group party type.")

@@ -42,8 +42,8 @@ public class GroupParty extends DomainObject<String> {
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "group_party_id_fkey"))
-	private Party party;	
-	
+	private Party party;
+
 	@Override
 	public String getId() {
 		return id;
