@@ -27,7 +27,12 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "party", schema = "administrative", indexes = {
-		@Index(name = "party_index_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "party_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "party_address_id_fkey_ind", columnList = "address_id"),
+		@Index(name = "party_gender_code_fkey_ind", columnList = "gender_code"),
+		@Index(name = "party_id_type_code_fkey_ind", columnList = "id_type_code"),
+		@Index(name = "party_id_preferred_communication_code_fkey_ind", columnList = "preferred_communication_code"),
+		@Index(name = "party_type_code_fkey_ind", columnList = "type_code")})
 @Comment("An individual, group or organisation that is associated in some way with land office services. Implementation of the LADM LA_Party class.")
 public class Party extends DomainObject<String> {
 
