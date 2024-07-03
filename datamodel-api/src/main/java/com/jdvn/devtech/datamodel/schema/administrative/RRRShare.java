@@ -52,11 +52,6 @@ public class RRRShare extends DomainObject<String> {
 	@JoinColumn(name = "rrr_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "rrr_share_rrr_id_fkey"))
 	@Comment("Reference to a RRR to identify.")
 	private RRR rrr;
-
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "id", referencedColumnName = "share_id", foreignKey = @ForeignKey(name = "rrr_share_id_fkey"))
-//	@Comment("Reference to a Party for RRR.")
-//	private PartyForRRR party_rrr;
 	
 	@Override
 	public String getId() {

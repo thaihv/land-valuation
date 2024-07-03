@@ -480,7 +480,36 @@ COMMENT ON COLUMN administrative.rrr_group_type.display_value
 
 COMMENT ON COLUMN administrative.rrr_group_type.status
     IS 'Status in active of the RRR group type as active (a) or inactive (i).';
-    
+-- Table: administrative.rrr_status_type
+CREATE TABLE IF NOT EXISTS administrative.rrr_status_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT rrr_status_type_pkey PRIMARY KEY (code)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.rrr_status_type
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.rrr_status_type
+    IS 'Code list of rrr status types. E.g. current, historic, pending, previous.';
+
+COMMENT ON COLUMN administrative.rrr_status_type.code
+    IS 'Code of the rrr status type.';
+
+COMMENT ON COLUMN administrative.rrr_status_type.description
+    IS 'Description of the rrr status type.';
+
+COMMENT ON COLUMN administrative.rrr_status_type.display_value
+    IS 'Displayed value of the rrr status type.';
+
+COMMENT ON COLUMN administrative.rrr_status_type.status
+    IS 'Status in active of the rrr status type as active (a) or inactive (i).';
+        
 -- Table: administrative.rrr_type
 CREATE TABLE IF NOT EXISTS administrative.rrr_type
 (
