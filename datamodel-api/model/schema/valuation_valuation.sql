@@ -2168,4 +2168,117 @@ COMMENT ON COLUMN administrative.party_for_rrr.rowidentifier
     IS 'Identifies the all change records for the row in the table.';
 
 COMMENT ON COLUMN administrative.party_for_rrr.rowversion
-    IS 'Sequential value indicating the number of times this row has been modified.';          
+    IS 'Sequential value indicating the number of times this row has been modified.';
+    
+-- Table: administrative.mortgage_isbased_in_rrr
+CREATE TABLE IF NOT EXISTS administrative.mortgage_isbased_in_rrr
+(
+    mortgage_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rrr_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT mortgage_isbased_in_rrr_pkey PRIMARY KEY (mortgage_id, rrr_id),
+    CONSTRAINT mortgage_isbased_in_rrr_mortgage_id_fkey FOREIGN KEY (mortgage_id)
+        REFERENCES administrative.rrr (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT mortgage_isbased_in_rrr_rrr_id_fkey FOREIGN KEY (rrr_id)
+        REFERENCES administrative.rrr (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.mortgage_isbased_in_rrr
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.mortgage_isbased_in_rrr
+    IS 'Identifies RRR that is subject to mortgage. Not used as if the primary right will always be the subject of the mortgage.';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.mortgage_id
+    IS 'Identifier for the mortgage.';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.rrr_id
+    IS 'Identifier for the RRR associated to the mortgage.';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.mortgage_isbased_in_rrr.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+    
+-- Table: administrative.condition_for_rrr
+CREATE TABLE IF NOT EXISTS administrative.condition_for_rrr
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rrr_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    condition_code character varying(20) COLLATE pg_catalog."default",    
+    custom_condition_text character varying(500) COLLATE pg_catalog."default",
+    condition_quantity integer NOT NULL,
+    condition_unit character varying(15) COLLATE pg_catalog."default",
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT condition_for_rrr_pkey PRIMARY KEY (id),
+    CONSTRAINT condition_for_rrr_condition_code_fkey FOREIGN KEY (condition_code)
+        REFERENCES administrative.condition_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT condition_for_rrr_rrr_id_fkey FOREIGN KEY (rrr_id)
+        REFERENCES administrative.rrr (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.condition_for_rrr
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.condition_for_rrr
+    IS 'Captures any statutory or agreed conditions in relation to an RRR. E.g. conditions of lease, etc. An RRR can have multiple conditions associated to it.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.condition_quantity
+    IS 'A quantity value associted to the condition.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.condition_unit
+    IS 'The unit of measure applicable for the condition quantity.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.custom_condition_text
+    IS 'User entered text describing the condition and_or updated or revised text obtained from the template condition text.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.condition_code
+    IS 'The type of condition.';
+
+COMMENT ON COLUMN administrative.condition_for_rrr.rrr_id
+    IS 'Identifier of the RRR the condition relates to.';                  

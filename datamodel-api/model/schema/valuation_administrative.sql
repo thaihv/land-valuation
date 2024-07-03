@@ -594,5 +594,34 @@ COMMENT ON COLUMN administrative.mortgage_type.display_value
 COMMENT ON COLUMN administrative.mortgage_type.status
     IS 'Status in active of the mortgage type as active (a) or inactive (i).';
     
-        
+-- Table: administrative.condition_type
+CREATE TABLE IF NOT EXISTS administrative.condition_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT condition_type_pkey PRIMARY KEY (code),
+    CONSTRAINT condition_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS administrative.condition_type
+    OWNER to postgres;
+
+COMMENT ON TABLE administrative.condition_type
+    IS 'Code list of condition types.';
+
+COMMENT ON COLUMN administrative.condition_type.code
+    IS 'Code of the condition type.';
+
+COMMENT ON COLUMN administrative.condition_type.description
+    IS 'Description of the condition type.';
+
+COMMENT ON COLUMN administrative.condition_type.display_value
+    IS 'Displayed value of the condition type.';
+
+COMMENT ON COLUMN administrative.condition_type.status
+    IS 'Status in active of the condition type as active (a) or inactive (i).';        
                                   
