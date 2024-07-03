@@ -25,7 +25,10 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "party_for_rrr", schema = "administrative", indexes = {
-		@Index(name = "party_for_rrr_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "party_for_rrr_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "party_for_rrr_party_id_fkey_ind", columnList = "party_id"),
+		@Index(name = "party_for_rrr_rrr_id_share_id_fkey_ind", columnList = "rrr_id,share_id"),
+		@Index(name = "party_for_rrr_rrr_id_fkey_ind", columnList = "rrr_id")})
 @Comment("Identifies the parties involved in each RRR. Also identifies the share each party has in the RRR if the RRR is subject to shared allocation.")
 @IdClass(PartyRRRId.class)
 public class PartyForRRR extends DomainObject<String> {
