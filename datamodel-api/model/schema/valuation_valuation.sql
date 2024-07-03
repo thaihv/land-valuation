@@ -2118,8 +2118,8 @@ COMMENT ON COLUMN administrative.source_describes_rrr.rowversion
 -- Table: administrative.party_for_rrr
 CREATE TABLE IF NOT EXISTS administrative.party_for_rrr
 (
-    party_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     rrr_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    party_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     share_id character varying(40) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,

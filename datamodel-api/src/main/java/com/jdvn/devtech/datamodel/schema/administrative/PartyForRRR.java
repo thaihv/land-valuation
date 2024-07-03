@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -28,7 +29,7 @@ import lombok.Setter;
 		@Index(name = "party_for_rrr_index_on_rowidentifier", columnList = "rowidentifier"),
 		@Index(name = "party_for_rrr_party_id_fkey_ind", columnList = "party_id"),
 		@Index(name = "party_for_rrr_rrr_id_share_id_fkey_ind", columnList = "rrr_id,share_id"),
-		@Index(name = "party_for_rrr_rrr_id_fkey_ind", columnList = "rrr_id")})
+		@Index(name = "party_for_rrr_rrr_id_fkey_ind", columnList = "rrr_id") })
 @Comment("Identifies the parties involved in each RRR. Also identifies the share each party has in the RRR if the RRR is subject to shared allocation.")
 @IdClass(PartyRRRId.class)
 public class PartyForRRR extends DomainObject<String> {
@@ -57,12 +58,13 @@ public class PartyForRRR extends DomainObject<String> {
 	@JoinColumn(name = "party_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "party_for_rrr_party_id_fkey"))
 	@Comment("Reference to the involved party.")
 	private Party party;
-	
-//	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-//	@JoinColumn(name = "rrr_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "party_for_rrr_rrr_id_share_id_fkey"))
-//	@Comment("Reference to a RRR to identify.")
-//	private RRRShare rrr_share;
-		
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumns(foreignKey = @ForeignKey(name = "party_for_rrr_rrr_id_share_id_fkey"), value = {
+			@JoinColumn(name = "rrr_id", referencedColumnName = "rrr_id", insertable = false, updatable = false),
+			@JoinColumn(name = "share_id", referencedColumnName = "id", insertable = false, updatable = false) })
+	@Comment("Reference to a RRR to identify.")
+	private RRRShare rrr_share;
 
 	@Override
 	public String getId() {
