@@ -1939,7 +1939,7 @@ CREATE TABLE IF NOT EXISTS administrative.rrr
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT rrr_status_code_fkey FOREIGN KEY (status_code)
-        REFERENCES administrative.rrr_group_type (code) MATCH SIMPLE
+        REFERENCES administrative.rrr_status_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT rrr_type_code_fkey FOREIGN KEY (type_code)
