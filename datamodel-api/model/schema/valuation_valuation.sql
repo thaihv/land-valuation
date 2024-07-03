@@ -2134,7 +2134,11 @@ CREATE TABLE IF NOT EXISTS administrative.party_for_rrr
     CONSTRAINT party_for_rrr_rrr_id_fkey FOREIGN KEY (rrr_id)
         REFERENCES administrative.rrr (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT party_for_rrr_rrr_id_share_id_fkey FOREIGN KEY (rrr_id, share_id)
+        REFERENCES administrative.rrr_share (rrr_id, id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
