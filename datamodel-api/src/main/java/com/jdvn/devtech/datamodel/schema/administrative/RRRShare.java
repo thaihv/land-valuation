@@ -25,7 +25,8 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "rrr_share", schema = "administrative", indexes = {
-		@Index(name = "rrr_share_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "rrr_share_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "rrr_share_rrr_id_fkey_ind", columnList = "rrr_id")})
 @Comment("Identifies the share a party has in an RRR.")
 @IdClass(RRRShareId.class)
 public class RRRShare extends DomainObject<String> {

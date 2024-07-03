@@ -2023,7 +2023,7 @@ CREATE TABLE IF NOT EXISTS administrative.rrr_share
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),            
-    CONSTRAINT rrr_share_pkey PRIMARY KEY (id, rrr_id),
+    CONSTRAINT rrr_share_pkey PRIMARY KEY (rrr_id, id),
     CONSTRAINT rrr_share_rrr_id_fkey FOREIGN KEY (rrr_id)
         REFERENCES administrative.rrr (id) MATCH SIMPLE
         ON UPDATE NO ACTION
