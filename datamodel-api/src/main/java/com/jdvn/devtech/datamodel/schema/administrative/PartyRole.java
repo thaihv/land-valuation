@@ -25,7 +25,7 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "party_role", schema = "administrative", indexes = {
-		@Index(name = "party_role_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "party_role_index_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Identifies the roles a party has in relation to the land office transactions and data.")
 @IdClass(PartyRoleId.class)
 public class PartyRole extends DomainObject<String> {

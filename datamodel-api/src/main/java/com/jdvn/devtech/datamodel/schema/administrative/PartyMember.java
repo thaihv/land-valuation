@@ -25,7 +25,7 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "party_member", schema = "administrative", indexes = {
-		@Index(name = "party_member_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "party_member_index_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Identifies the parties belonging to a group party. Implementation of the LADM LA_PartyMember class.")
 @IdClass(PartyGroupId.class)
 public class PartyMember extends DomainObject<String> {
