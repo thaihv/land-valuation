@@ -90,12 +90,6 @@ INSERT INTO administrative.rrr_type (code, rrr_group_type_code, display_value, i
 INSERT INTO administrative.rrr_type (code, rrr_group_type_code, display_value, is_primary, share_check, party_required, status) VALUES ('limitedAccess', 'restrictions', 'Limited Access (to Road)', false, false, false, 'a');
 INSERT INTO administrative.rrr_type (code, rrr_group_type_code, display_value, is_primary, share_check, party_required, status) VALUES ('stateOwnership', 'rights', 'State Ownership', true, false, false, 'a');
 
--- Table: administrative.rrr_status_type
-INSERT INTO administrative.rrr_status_type (code, display_value, status) VALUES ('current', 'Current', 'a');
-INSERT INTO administrative.rrr_status_type (code, display_value, status) VALUES ('historic', 'Historic', 'a');
-INSERT INTO administrative.rrr_status_type (code, display_value, status) VALUES ('previous', 'Previous', 'a');
-INSERT INTO administrative.rrr_status_type (code, display_value, status) VALUES ('pending', 'Pending', 'i');
-
 -- Table: administrative.condition_type
 INSERT INTO administrative.condition_type (code, display_value, description, status) VALUES ('c1', 'Condition 1', 'Unless the Minister directs otherwise the Lessee shall fence the boundaries of the land within 6 (six) months of the date of the grant and the Lessee shall maintain the fence to the satisfaction of the Commissioner.', 'a');
 INSERT INTO administrative.condition_type (code, display_value, description, status) VALUES ('c2', 'Condition 2', 'Unless special written authority is given by the Commissioner, the Lessee shall commence development of the land within 5 years of the date of the granting of a lease. This shall also apply to further development of the land held under a lease during the term of the lease.', 'a');

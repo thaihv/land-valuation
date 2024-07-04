@@ -1919,7 +1919,6 @@ CREATE TABLE IF NOT EXISTS administrative.rrr
     valuation_unit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     reference_nr character varying(20) COLLATE pg_catalog."default", 
     type_code character varying(20) COLLATE pg_catalog."default",
-    status_code character varying(20) COLLATE pg_catalog."default",
     is_primary boolean NOT NULL DEFAULT false,
     registration_date timestamp(6) without time zone,    
     expiration_date timestamp(6) without time zone,                   
@@ -1936,10 +1935,6 @@ CREATE TABLE IF NOT EXISTS administrative.rrr
     CONSTRAINT rrr_pkey PRIMARY KEY (id),
     CONSTRAINT rrr_mortgage_type_code_fkey FOREIGN KEY (mortgage_type_code)
         REFERENCES administrative.mortgage_type (code) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT rrr_status_code_fkey FOREIGN KEY (status_code)
-        REFERENCES administrative.rrr_status_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT rrr_type_code_fkey FOREIGN KEY (type_code)
@@ -2001,9 +1996,6 @@ COMMENT ON COLUMN administrative.rrr.registration_date
 
 COMMENT ON COLUMN administrative.rrr.mortgage_type_code
     IS 'The type of mortgage.';
-
-COMMENT ON COLUMN administrative.rrr.status_code
-    IS 'The status of the RRR.';
 
 COMMENT ON COLUMN administrative.rrr.type_code
     IS 'The type of RRR. E.g. freehold ownership, lease, mortage, caveat, etc.';

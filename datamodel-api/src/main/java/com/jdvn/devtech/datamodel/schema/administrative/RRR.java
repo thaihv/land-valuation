@@ -30,7 +30,6 @@ import lombok.Setter;
 		@Index(name = "rrr_index_on_rowidentifier", columnList = "rowidentifier"),
 		@Index(name = "rrr_valuation_unit_id_fkey_ind", columnList = "valuation_unit_id"),
 		@Index(name = "rrr_type_code_fkey_ind", columnList = "type_code"),
-		@Index(name = "rrr_status_code_fkey_ind", columnList = "status_code"),
 		@Index(name = "rrr_mortgage_type_code_ind", columnList = "mortgage_type_code")})
 @Comment("Store the specific rights, restrictions and responsibilities that might be enquire from a valuation unit (called also a property) e.g. freehold ownership, lease, mortgage, caveat, etc. Implementation of the LADM LA_RRR class.")
 public class RRR extends DomainObject<String> {
@@ -54,11 +53,6 @@ public class RRR extends DomainObject<String> {
 	@JoinColumn(name = "type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_type_code_fkey"))
 	@Comment("The type of RRR. E.g. freehold ownership, lease, mortage, caveat, etc.")
 	private RRRType rrr_type;
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "status_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "rrr_status_code_fkey"))
-	@Comment("The status of the RRR.")
-	private RRRStatusType rrr_status_type;
 
 	@Column(columnDefinition = "boolean NOT NULL DEFAULT false")
 	@Comment("Flag to indicate if the RRR type is a primary RRR from Valuation Unit.")
