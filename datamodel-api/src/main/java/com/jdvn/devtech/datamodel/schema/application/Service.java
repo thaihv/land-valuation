@@ -28,7 +28,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "service", schema = "application", indexes = {
-		@Index(name = "service_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "service_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "service_request_type_code_fkey_ind", columnList = "request_type_code"),
+		@Index(name = "service_action_code_fkey_ind", columnList = "action_code"),
+		@Index(name = "service_status_code_fkey_ind", columnList = "status_code")})
 @Comment("Used to control the type of plan application as mass appraisals or single or individual appraisals.")
 public class Service extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
@@ -60,12 +63,18 @@ public class Service extends DomainObject<String>{
 	@Column(columnDefinition = "integer NOT NULL DEFAULT 10")
 	@Comment("The number of days it should take for the service to be completed.")
 	private int nr_days_to_complete;
-    
-	@Comment("Service status code.")
-	private String status_code;
-	
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "action_code", foreignKey = @ForeignKey(name = "service_action_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodge'::character varying")
 	@Comment("Service action code. Indicates the last action to occur on the service. E.g. lodge, start, complete, cancel, etc.")
-	private String action_code;
+	private ServiceActionType service_action_type;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "status_code", foreignKey = @ForeignKey(name = "service_status_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodged'::character varying")
+	@Comment("Service status code.")
+	private ServiceStatusType service_status_type;
 	
     @Column(length = 255)
 	@Comment("Optional description of the action")

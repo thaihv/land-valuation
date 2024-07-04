@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS application.application
     fee_paid boolean NOT NULL DEFAULT false,
 	receipt_reference character varying(100) COLLATE pg_catalog."default",	
     action_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodge'::character varying,
-	action_notes character varying(255) COLLATE pg_catalog."default",
-    status_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodge'::character varying,
+    status_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodged'::character varying,
+	action_notes character varying(255) COLLATE pg_catalog."default",        
 	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
@@ -190,11 +190,6 @@ COMMENT ON COLUMN application.application.change_user
 	
 COMMENT ON COLUMN application.application.change_time
     IS 'The date and time the row was last modified.';
--- Index: application_on_rowidentifier
-CREATE INDEX IF NOT EXISTS application_on_rowidentifier
-    ON application.application USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;	
 
 -- Table: application.request_type
 CREATE TABLE IF NOT EXISTS application.request_type
@@ -227,11 +222,77 @@ COMMENT ON COLUMN application.request_type.description
 COMMENT ON COLUMN application.request_type.status
     IS 'Status in active of the application action type as active (a) or inactive (i).';	
     
+-- Table: application.service_status_type
+CREATE TABLE IF NOT EXISTS application.service_status_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT service_status_type_pkey PRIMARY KEY (code),
+    CONSTRAINT service_status_type_display_value_key UNIQUE (display_value)
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.service_status_type
+    OWNER to postgres;
+
+COMMENT ON TABLE application.service_status_type
+    IS 'Code list of service status types.';
+
+COMMENT ON COLUMN application.service_status_type.code
+    IS 'The code for the service status type.';
+
+COMMENT ON COLUMN application.service_status_type.description
+    IS 'Description of the service status type.';
+
+COMMENT ON COLUMN application.service_status_type.display_value
+    IS 'Displayed value of the service status type.';
+
+COMMENT ON COLUMN application.service_status_type.status
+    IS 'Status of the service status type as active (a) or inactive (i).';
+    
+-- Table: application.service_action_type
+CREATE TABLE IF NOT EXISTS application.service_action_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    status_to_set character varying(20) COLLATE pg_catalog."default",
+    description character varying(1000) COLLATE pg_catalog."default",
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,    
+    CONSTRAINT service_action_type_pkey PRIMARY KEY (code),
+    CONSTRAINT service_action_type_display_value_key UNIQUE (display_value),
+    CONSTRAINT service_action_type_status_to_set_fkey FOREIGN KEY (status_to_set)
+        REFERENCES application.service_status_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.service_action_type
+    OWNER to postgres;
+
+COMMENT ON TABLE application.service_action_type
+    IS 'Code list of service action types. Service actions identify the actions user can perform against services. E.g. lodge, start, revert, cancel, complete.';
+
+COMMENT ON COLUMN application.service_action_type.code
+    IS 'The code for the service action type.';
+
+COMMENT ON COLUMN application.service_action_type.description
+    IS 'Description of the service action type.';
+
+COMMENT ON COLUMN application.service_action_type.display_value
+    IS 'Displayed value of the service action type.';
+
+COMMENT ON COLUMN application.service_action_type.status
+    IS 'Status of the service action type as active (a) or inactive (i).';
+
+COMMENT ON COLUMN application.service_action_type.status_to_set
+    IS 'The status to set on the service when the service action is applied.';
+    
 -- Table: application.service
-
--- DROP TABLE IF EXISTS application.service;
-
 CREATE TABLE IF NOT EXISTS application.service
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
@@ -240,8 +301,8 @@ CREATE TABLE IF NOT EXISTS application.service
     service_order integer NOT NULL DEFAULT 0,
     lodging_datetime timestamp without time zone NOT NULL DEFAULT now(),
     nr_days_to_complete integer NOT NULL DEFAULT 10,
-    status_code character varying(255) COLLATE pg_catalog."default",                
-    action_code character varying(255) COLLATE pg_catalog."default",
+    action_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodge'::character varying,
+    status_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodged'::character varying,    
     action_notes character varying(255) COLLATE pg_catalog."default",
     base_fee numeric(20,2) NOT NULL DEFAULT 0,    
     area_fee numeric(20,2) NOT NULL DEFAULT 0,
@@ -252,12 +313,20 @@ CREATE TABLE IF NOT EXISTS application.service
     change_user character varying(50) COLLATE pg_catalog."default",
 	change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT service_pkey PRIMARY KEY (id),
+    CONSTRAINT service_action_code_fkey FOREIGN KEY (action_code)
+        REFERENCES application.service_action_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT service_application_id_fkey FOREIGN KEY (application_id)
         REFERENCES application.application (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT service_request_type_code_fkey FOREIGN KEY (request_type_code)
         REFERENCES application.request_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT service_status_code_fkey FOREIGN KEY (status_code)
+        REFERENCES application.service_status_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -320,11 +389,3 @@ COMMENT ON COLUMN application.service.application_id
 
 COMMENT ON COLUMN application.service.request_type_code
     IS 'The request type identifying the purpose of the service.';
-    
--- Index: service_on_rowidentifier
-CREATE INDEX IF NOT EXISTS service_on_rowidentifier
-    ON application.service USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;    
-    
-	

@@ -31,3 +31,16 @@ INSERT INTO application.application_action_type (code, display_value, status_to_
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('dispatch', 'Dispatch', NULL, 'a', 'Application documents and new land office products are sent or collected by applicant (action is manually logged)');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('lodge', 'Lodgement Notice Prepared', 'lodged', 'a', 'Lodgement notice is prepared (action is automatically logged when application details are saved for the first time');
 
+-- Table: application.service_status_type
+INSERT INTO application.service_status_type (code, display_value, status) VALUES ('cancelled', 'Cancelled', 'a');
+INSERT INTO application.service_status_type (code, display_value, status) VALUES ('completed', 'Completed', 'a');
+INSERT INTO application.service_status_type (code, display_value, status, description) VALUES ('lodged', 'Lodged', 'a', 'Application for a service has been lodged and officially received by land office');
+INSERT INTO application.service_status_type (code, display_value, status) VALUES ('pending', 'Pending', 'c');
+
+-- Table: application.service_action_type
+INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('complete', 'Complete', 'completed', 'a', 'Application is ready for approval (action is automatically logged when service is marked as complete');
+INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('lodge', 'Lodge', 'lodged', 'a', 'Application for service(s) is officially received by Land Valuation Office (action is automatically logged when application is saved for the first time)');
+INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('revert', 'Revert', 'pending', 'a', 'The status of the service has been reverted to pending from being completed (action is automatically logged when a service is reverted back for further work)');
+INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('cancel', 'Cancel', 'cancelled', 'a', 'Service is cancelled by Land Valuation Office (action is automatically logged when a service is cancelled)');
+INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('start', 'Start', 'pending', 'a', 'Changes Made to Database as a result of application (action is automatically logged when a change is made to a valuation object)');
+

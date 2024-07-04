@@ -32,7 +32,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "application", schema = "application", indexes = {
-		@Index(name = "application_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "application_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "application_agent_id_fkey_ind", columnList = "agent_id"),
+		@Index(name = "application_contact_person_id_fkey_ind", columnList = "contact_person_id"),
+		@Index(name = "application_action_code_fkey_ind", columnList = "action_code"),
+		@Index(name = "application_status_code_fkey", columnList = "status_code"),})
 @Comment("Application or Plan, to capture details and manage requests received by the valuation office for a plan.")
 public class Application extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
@@ -74,18 +78,18 @@ public class Application extends DomainObject<String>{
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "action_code", foreignKey = @ForeignKey(name = "application_action_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodge'::character varying")
-	@Comment("The last action that happended to the application. E.g. lodged, assigned, validated, approved, etc.")
+	@Comment("The last action that happended to the application. E.g. lodge, assign, validate, approve, etc.")
     private ApplicationActionType application_action_type;
+    	
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "status_code", foreignKey = @ForeignKey(name = "application_status_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodged'::character varying")
+	@Comment("The status of the application.")
+    private ApplicationStatusType application_status_type;
     
     @Column(length = 255)
 	@Comment("Optional description of the action")
-	private String action_notes;
-	
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JoinColumn(name = "status_code", foreignKey = @ForeignKey(name = "application_status_code_fkey"), columnDefinition="character varying(20) NOT NULL DEFAULT 'lodge'::character varying")
-	@Comment("The status of the application.")
-    private ApplicationStatusType application_status_type;
+	private String action_notes;    
     
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
     @Comment("The sum of all service fees.")
