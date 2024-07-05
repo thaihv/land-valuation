@@ -48,15 +48,17 @@ public class ValuationUnit extends DomainObject<String> {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "vu_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_vu_type_code_fkey"))
+	@Comment("Valuation type code of unit, to classify by types or categories if need.")
 	private ValuationUnitType vu_type;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_unit_address_id_fkey"))
+	@Comment("Address identifier of the valuation unit.")
 	private Address address;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@Comment("Neighborhood code as urban or rural, for example")
 	@JoinColumn(name = "neighborhood_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_unit_neighborhood_code_fkey"))
+	@Comment("Neighborhood code as urban or rural, for example.")
 	private NeighborhoodType neighborhood_type;
 
 	@Column(length = 500, nullable = false)
