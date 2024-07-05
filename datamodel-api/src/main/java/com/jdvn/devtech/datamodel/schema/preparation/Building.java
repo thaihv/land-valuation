@@ -10,7 +10,6 @@ import org.locationtech.jts.geom.MultiPolygon;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnit;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,9 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,21 +47,21 @@ public class Building extends DomainObject<String> {
 
 	@Comment("Total volume value of the building.")
 	private Double volume;
-	
+
 	@Comment("Type of the building if have a classification.")
 	private String building_type;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "type_use_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_type_use_code_fkey"))
+	@JoinColumn(name = "type_use_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_type_use_code_fkey"))
 	@Comment("Use type of the building.")
-    private BuildingUseType building_use_type;
-	
+	private BuildingUseType building_use_type;
+
 	@Comment("Quality of the building if have a quality manegement.")
 	private String quality;
 
 	@Comment("Status of the building if have a status manegement.")
 	private String status;
-	
+
 	@Column(nullable = true)
 	@Comment("Number of elevators of the building.")
 	private int elevator;
@@ -72,50 +69,44 @@ public class Building extends DomainObject<String> {
 	@Column(nullable = true)
 	@Comment("Number of air condition in the building.")
 	private int airconditioning;
-	
+
 	@Comment("The date of construction.")
 	private Date date_construction;
 
 	@Column(nullable = true)
 	@Comment("Number of floors of the building.")
 	private int number_floors;
-	
+
 	@Column(nullable = true)
 	@Comment("Number of dwellings of the building.")
 	private int number_dwellings;
 
 	@Comment("Material type of the building facade.")
 	private String facade_material;
-	
+
 	@Comment("Material type used for constructing of building.")
 	private String construct_material;
-	
+
 	@Comment("Heating system type of the bulding.")
 	private String heating_system;
-	
+
 	@Comment("Heating source type of the bulding.")
 	private String heating_source;
-	
+
 	@Comment("Energy performance value of the bulding.")
 	private String energy_performance;
-	
+
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of building for spatial displaying.")
 	private MultiPolygon geom;
 
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "building_id_fkey"))
-	private ValuationUnit valuation_unit;
-	   
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "building")
+	@JsonBackReference
+	private Set<BuildingUnit> building_units;
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "building")
-    @JsonBackReference
-    private Set<BuildingUnit> building_units;
-    
-    @ManyToMany(mappedBy = "buildings")
-    private List<Parcel> parcels = new ArrayList<>();
-    
+	@ManyToMany(mappedBy = "buildings")
+	private List<Parcel> parcels = new ArrayList<>();
+
 	@Override
 	public String getId() {
 		return id;

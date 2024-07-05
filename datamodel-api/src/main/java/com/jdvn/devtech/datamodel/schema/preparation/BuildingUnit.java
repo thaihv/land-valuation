@@ -5,7 +5,6 @@ import org.locationtech.jts.geom.MultiPolygon;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnit;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,8 +14,6 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -74,12 +71,6 @@ public class BuildingUnit extends DomainObject<String> {
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of building for spatial displaying.")
 	private MultiPolygon geom;
-
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "building_unit_id_fkey"))
-	private ValuationUnit valuation_unit;
-
 	
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

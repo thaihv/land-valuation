@@ -536,11 +536,7 @@ CREATE TABLE IF NOT EXISTS preparation.parcel
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,    
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),
-    CONSTRAINT parcel_pkey PRIMARY KEY (id),
-    CONSTRAINT parcel_id_fkey FOREIGN KEY (id)
-        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    CONSTRAINT parcel_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
@@ -636,10 +632,6 @@ CREATE TABLE IF NOT EXISTS preparation.building
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT building_pkey PRIMARY KEY (id),
-    CONSTRAINT building_id_fkey FOREIGN KEY (id)
-        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT building_type_use_code_fkey FOREIGN KEY (type_use_code)
         REFERENCES preparation.building_use_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -767,10 +759,6 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit
     CONSTRAINT building_unit_pkey PRIMARY KEY (id),
     CONSTRAINT building_unit_belongto_building_id_fkey FOREIGN KEY (belongto_building_id)
         REFERENCES preparation.building (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT building_unit_id_fkey FOREIGN KEY (id)
-        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -2274,7 +2262,65 @@ COMMENT ON COLUMN administrative.condition_for_rrr.condition_code
 
 COMMENT ON COLUMN administrative.condition_for_rrr.rrr_id
     IS 'Identifier of the RRR the condition relates to.';                  
-    
+
+-- Table: valuation.valuation_unit_contains_spatial_unit
+CREATE TABLE IF NOT EXISTS valuation.valuation_unit_contains_spatial_unit
+(
+    spatial_unit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),        
+    CONSTRAINT valuation_unit_contains_spatial_unit_pkey PRIMARY KEY (spatial_unit_id, vunit_id),
+    CONSTRAINT valuation_unit_contains_spatial_unit_parcel_id_fkey FOREIGN KEY (spatial_unit_id)
+        REFERENCES preparation.parcel (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,    
+    CONSTRAINT valuation_unit_contains_spatial_unit_building_id_fkey FOREIGN KEY (spatial_unit_id)
+        REFERENCES preparation.building (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_unit_contains_spatial_unit_building_unit_id_fkey FOREIGN KEY (spatial_unit_id)
+        REFERENCES preparation.building_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,        
+    CONSTRAINT valuation_unit_contains_spatial_unit_vunit_id_fkey FOREIGN KEY (vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_unit_contains_spatial_unit
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_unit_contains_spatial_unit
+    IS 'Associate the valuation unit to the one or many cadastre objects as parcels, buildings valuation process.';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.spatial_unit_id
+    IS 'Identifier for the Spatial Unit associated to the Valuation Unit.';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.vunit_id
+    IS 'Identifier for the valuation unit to be associated to.';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+        
 -- Table: application.application_property
 CREATE TABLE IF NOT EXISTS application.application_property
 (

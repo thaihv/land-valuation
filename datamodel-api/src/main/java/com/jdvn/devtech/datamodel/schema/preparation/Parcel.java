@@ -6,7 +6,6 @@ import org.hibernate.annotations.Comment;
 import org.locationtech.jts.geom.MultiPolygon;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnit;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,8 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,32 +42,30 @@ public class Parcel extends DomainObject<String> {
 
 	@Comment("Code of land use.")
 	private String curent_land_use;
-	
+
 	@Comment("Code of planed land use.")
 	private String planed_land_use;
-	
+
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of parcel for spatial displaying.")
 	private MultiPolygon geom;
 
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "parcel_id_fkey"))
-	private ValuationUnit valuation_unit;	
-	/* Control many-to-many relationship between parcel and building
-	 * as a parcel may contains many buildings and a building may
-	 * located at few parcels */
+	/*
+	 * Control many-to-many relationship between parcel and building as a parcel may
+	 * contains many buildings and a building may located at few parcels
+	 */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "parcels_buildings_links", schema = "preparation", joinColumns = @JoinColumn(name = "parcel_id"), inverseJoinColumns = @JoinColumn(name = "building_id"), foreignKey = @ForeignKey(name = "parcels_buildings_links_parcel_id_fkey"), inverseForeignKey = @ForeignKey(name = "parcels_buildings_links_building_id_fkey"))
 	private Set<Building> buildings;
 
-	/* Control many-to-many relationship between parcel and utility
-	 * as a parcel may contains many utilities and a utility may
-	 * located at few parcels */
+	/*
+	 * Control many-to-many relationship between parcel and utility as a parcel may
+	 * contains many utilities and a utility may located at few parcels
+	 */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "parcels_utility_networks_links", schema = "preparation", joinColumns = @JoinColumn(name = "parcel_id"), inverseJoinColumns = @JoinColumn(name = "utility_network_id"), foreignKey = @ForeignKey(name = "parcels_utility_networks_links_parcel_id_fkey"), inverseForeignKey = @ForeignKey(name = "parcels_utility_networks_links_utility_network_id_fkey"))
 	private Set<UtilityNetwork> utility_networks;
-	
+
 	@Override
 	public String getId() {
 		return id;
