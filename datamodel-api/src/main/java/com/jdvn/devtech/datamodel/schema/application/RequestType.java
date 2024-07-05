@@ -56,6 +56,7 @@ public class RequestType{
 	/* Control many-to-many relationship between request_type and source */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "request_type_requires_source_type", schema = "application", joinColumns = @JoinColumn(name = "request_type_code"), inverseJoinColumns = @JoinColumn(name = "source_type_code"), foreignKey = @ForeignKey(name = "request_type_requires_source_type_request_type_code_fkey"), inverseForeignKey = @ForeignKey(name = "request_type_requires_source_type_source_type_code_fkey"))
+	@Comment("Points out which types of source will be associated with request type of service.")
 	private Set<SourceType> source_types;
 	
 }

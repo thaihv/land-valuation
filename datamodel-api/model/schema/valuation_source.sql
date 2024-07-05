@@ -318,7 +318,9 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS application.request_type_requires_source_type
     OWNER to postgres;
-	
+COMMENT ON TABLE application.request_type_requires_source_type
+    IS 'Points out which types of source will be associated with request type of service.';
+    	
 -- Table: source.spatial_source
 CREATE TABLE IF NOT EXISTS source.spatial_source
 (
