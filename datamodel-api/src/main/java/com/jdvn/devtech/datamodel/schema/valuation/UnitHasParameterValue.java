@@ -30,7 +30,7 @@ public class UnitHasParameterValue {
 	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the valuation unit.")
-	private String unit_id;
+	private String vunit_id;
     @Id
 	@Column(length = 40, nullable = false)
 	@Comment("The code of the technical parameter.")
@@ -41,7 +41,7 @@ public class UnitHasParameterValue {
 	private String value;
 	
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "unit_id", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_unit_id_fkey"))
+    @JoinColumn(name = "vunit_id", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_vunit_id_fkey"))
     @Comment("Reference to a valuation unit.")
     private ValuationUnit valuation_unit;
     

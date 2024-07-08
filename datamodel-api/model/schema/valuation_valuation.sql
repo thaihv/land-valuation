@@ -427,15 +427,15 @@ COMMENT ON COLUMN valuation.valuation_unit.change_time
 -- Table: valuation.valuation_units_parameters_links
 CREATE TABLE IF NOT EXISTS valuation.valuation_units_parameters_links
 (
-	unit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+	vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,    
     value character varying(500) COLLATE pg_catalog."default",
-    CONSTRAINT valuation_units_parameters_links_pkey PRIMARY KEY (parameter_code, unit_id),
+    CONSTRAINT valuation_units_parameters_links_pkey PRIMARY KEY (parameter_code, vunit_id),
     CONSTRAINT valuation_units_parameters_links_parameter_code_fkey FOREIGN KEY (parameter_code)
         REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT valuation_units_parameters_links_unit_id_fkey FOREIGN KEY (unit_id)
+    CONSTRAINT valuation_units_parameters_links_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -449,7 +449,7 @@ ALTER TABLE IF EXISTS valuation.valuation_units_parameters_links
 COMMENT ON TABLE valuation.valuation_units_parameters_links
     IS 'Value of parameters as independent variable for each unit for regression model.';
 
-COMMENT ON COLUMN valuation.valuation_units_parameters_links.unit_id
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.vunit_id
     IS 'The id of the valuation unit.';
     
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
@@ -1388,14 +1388,23 @@ CREATE TABLE IF NOT EXISTS valuation.transaction_price
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     contract_date timestamp(6) without time zone,
-    transaction_price numeric(20,2) NOT NULL DEFAULT 0,
+    contract_number character varying(40) COLLATE pg_catalog."default",
+    price numeric(20,2) NOT NULL DEFAULT 0,
+    unit_price numeric(20,2) NOT NULL DEFAULT 0,    
+    certificated_date timestamp(6) without time zone,
+    real_estate_agency_name character varying(255) COLLATE pg_catalog."default",    
+    real_estate_agency_address_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     transaction_type_code character varying(20) COLLATE pg_catalog."default",
-    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    rowversion integer NOT NULL DEFAULT 0,  
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
-    change_time timestamp without time zone NOT NULL DEFAULT now(),  
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
     CONSTRAINT transaction_price_pkey PRIMARY KEY (id),
+    CONSTRAINT transaction_price_real_estate_agency_address_id_fkey FOREIGN KEY (real_estate_agency_address_id)
+        REFERENCES address.address (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT transaction_price_transaction_type_code_fkey FOREIGN KEY (transaction_type_code)
         REFERENCES valuation.property_transaction_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -1428,16 +1437,23 @@ COMMENT ON COLUMN valuation.transaction_price.rowidentifier
 COMMENT ON COLUMN valuation.transaction_price.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
+COMMENT ON COLUMN valuation.transaction_price.certificated_date
+    IS 'The date of certification.';
+
 COMMENT ON COLUMN valuation.transaction_price.contract_date
     IS 'The date that contract or declaration implement.';
 
-COMMENT ON COLUMN valuation.transaction_price.transaction_price
-    IS 'Price of property in transaction implementation.';
--- Index: transaction_price_on_rowidentifier
-CREATE INDEX IF NOT EXISTS transaction_price_on_rowidentifier
-    ON valuation.transaction_price USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;    
+COMMENT ON COLUMN valuation.transaction_price.price
+    IS 'Price of property in transaction.';
+
+COMMENT ON COLUMN valuation.transaction_price.real_estate_agency_name
+    IS 'Name of real estate agency.';
+
+COMMENT ON COLUMN valuation.transaction_price.unit_price
+    IS 'Price of property in transaction calculated per meter square.';
+
+COMMENT ON COLUMN valuation.transaction_price.real_estate_agency_address_id
+    IS 'Identifier for the real estate agency address.';   
 
 -- Table: valuation.valuation_unit_has_transaction_price
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_has_transaction_price
