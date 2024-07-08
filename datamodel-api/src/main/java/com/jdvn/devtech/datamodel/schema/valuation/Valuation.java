@@ -26,7 +26,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "valuation", schema = "valuation", indexes = {
-		@Index(name = "valuation_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "valuation_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "valuation_value_type_code_fkey_ind", columnList = "value_type_code"),
+		@Index(name = "valuation_approach_type_code_fkey_ind", columnList = "approach_type_code"),
+		@Index(name = "valuation_appeal_status_code_fkey_ind", columnList = "appeal_status_code")})
 @Comment("An improved form of the ExtValuation external class of LADM and specifies output data yielded during a valuation process.")
 public class Valuation extends DomainObject<String> {
 	private static final long serialVersionUID = 1L;

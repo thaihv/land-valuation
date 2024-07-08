@@ -22,9 +22,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "valuation_unit_uses_source", schema = "valuation", indexes = {
-		@Index(name = "valuation_unit_uses_source_on_vunit_id", columnList = "vunit_id"), 
-		@Index(name = "valuation_unit_uses_source_on_source_id", columnList = "source_id"),
-		@Index(name = "valuation_unit_uses_source_on_rowidentifier", columnList = "rowidentifier")})
+		@Index(name = "valuation_unit_uses_source_vunit_id_fkey_ind", columnList = "vunit_id"), 
+		@Index(name = "valuation_unit_uses_source_source_id_fkey_ind", columnList = "source_id"),
+		@Index(name = "valuation_unit_uses_index_source_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the valuation unit to the sources (documents) in valuation process.")
 @IdClass(SourceUnitId.class)
 public class ValuationUnitUsesSource extends DomainObject<String> {

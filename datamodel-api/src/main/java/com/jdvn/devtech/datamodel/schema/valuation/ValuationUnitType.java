@@ -31,7 +31,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "valuation_unit_type", schema = "valuation", indexes = {@Index(name = "valuation_unit_type_on_rowidentifier", columnList = "rowidentifier")})
+@Table(name = "valuation_unit_type", schema = "valuation", indexes = {
+		@Index(name = "valuation_unit_type_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("List of the valuation unit types as items belonged to categories.")
 @SuppressWarnings({ "serial" })
 public class ValuationUnitType extends DomainObject<String> {

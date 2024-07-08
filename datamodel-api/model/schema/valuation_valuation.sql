@@ -71,13 +71,7 @@ COMMENT ON COLUMN valuation.valuation_unit_category.change_user
     IS 'The user id of the last person to modify the row.';
 	
 COMMENT ON COLUMN valuation.valuation_unit_category.change_time
-    IS 'The date and time the row was last modified.';
--- + Index: valuation_unit_category_on_rowidentifier
-CREATE INDEX IF NOT EXISTS valuation_unit_category_on_rowidentifier
-    ON valuation.valuation_unit_category USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;    
-
+    IS 'The date and time the row was last modified.';  
 -- Table: valuation.valuation_unit_type
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_type
 (
@@ -131,12 +125,7 @@ COMMENT ON COLUMN valuation.valuation_unit_type.change_user
 
 COMMENT ON COLUMN valuation.valuation_unit_type.change_time
     IS 'The date and time the row was last modified.';
--- + Index: valuation_unit_type_on_rowidentifier
-CREATE INDEX IF NOT EXISTS valuation_unit_type_on_rowidentifier
-    ON valuation.valuation_unit_type USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
-    
+
 -- + Version: valuation_unit_type_historic
 /*
 CREATE OR REPLACE TRIGGER __track_changes
@@ -507,21 +496,6 @@ COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_time
 
 COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_user
     IS 'The user id of the last person to modify the row.';
--- Index: valuation_unit_uses_source_on_rowidentifier
-CREATE INDEX IF NOT EXISTS valuation_unit_uses_source_on_rowidentifier
-    ON valuation.valuation_unit_uses_source USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: valuation_unit_uses_source_on_source_id
-CREATE INDEX IF NOT EXISTS valuation_unit_uses_source_on_source_id
-    ON valuation.valuation_unit_uses_source USING btree
-    (source_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: valuation_unit_uses_source_on_vunit_id
-CREATE INDEX IF NOT EXISTS valuation_unit_uses_source_on_vunit_id
-    ON valuation.valuation_unit_uses_source USING btree
-    (vunit_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
     
 -- Table: preparation.parcel
 CREATE TABLE IF NOT EXISTS preparation.parcel
@@ -1504,22 +1478,6 @@ COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.rowidentifier
 
 COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
--- Index: valuation_unit_has_transaction_price_on_rowidentifier
-CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_rowidentifier
-    ON valuation.valuation_unit_has_transaction_price USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: valuation_unit_has_transaction_price_on_transaction_id
-CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_transaction_id
-    ON valuation.valuation_unit_has_transaction_price USING btree
-    (transaction_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: valuation_unit_has_transaction_price_on_vunit_id
-CREATE INDEX IF NOT EXISTS valuation_unit_has_transaction_price_on_vunit_id
-    ON valuation.valuation_unit_has_transaction_price USING btree
-    (vunit_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
-    
 -- Table: valuation.sales_statistic
 CREATE TABLE IF NOT EXISTS valuation.sales_statistic
 (
@@ -1589,12 +1547,7 @@ COMMENT ON COLUMN valuation.sales_statistic.price_index
 
 COMMENT ON COLUMN valuation.sales_statistic.group_id
     IS 'Reference to valuation unit group for statistic.';    
--- Index: sales_statistic_on_rowidentifier
-CREATE INDEX IF NOT EXISTS sales_statistic_on_rowidentifier
-    ON valuation.sales_statistic USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;    
-    
+
 -- Table: valuation.sales_compare_calibration
 CREATE TABLE IF NOT EXISTS valuation.sales_compare_calibration
 (
@@ -1825,13 +1778,7 @@ COMMENT ON COLUMN valuation.valuation.purpose_valuation
 
 COMMENT ON COLUMN valuation.valuation.valuation_date
     IS 'The date that value is made for valuation.';
-    
--- Index: valuation_on_rowidentifier
-CREATE INDEX IF NOT EXISTS valuation_on_rowidentifier
-    ON valuation.valuation USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;    
-    
+
 -- Table: valuation.mass_appraisal
 CREATE TABLE IF NOT EXISTS valuation.mass_appraisal
 (
@@ -1868,9 +1815,6 @@ COMMENT ON COLUMN valuation.mass_appraisal.mathematical_model
     IS 'The mathematical model is used for mass appraisal valuation.';
     
 -- Table: valuation.single_appraisal
-
--- DROP TABLE IF EXISTS valuation.single_appraisal;
-
 CREATE TABLE IF NOT EXISTS valuation.single_appraisal
 (
     id character varying(255) COLLATE pg_catalog."default" NOT NULL,

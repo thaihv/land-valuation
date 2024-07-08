@@ -18,6 +18,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -35,7 +36,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "valuation_unit", schema = "valuation")
+@Table(name = "valuation_unit", schema = "valuation", indexes = {
+		@Index(name = "valuation_unit_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "valuation_unit_vu_type_code_fkey_ind", columnList = "vu_type_code"),
+		@Index(name = "valuation_unit_address_id_fkey_ind", columnList = "address_id"),
+		@Index(name = "valuation_unit_neighborhood_code_fkey_ind", columnList = "neighborhood_code")})
 @Comment("Provides information about objects of valuation unit for fundamental recording of land and improvements (buildings), which can only be land, building\r\n"
 		+ "or land and improvements together as land or condominium property.")
 public class ValuationUnit extends DomainObject<String> {

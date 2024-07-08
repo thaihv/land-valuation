@@ -21,9 +21,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "valuation_unit_has_transaction_price", schema = "valuation", indexes = {
-		@Index(name = "valuation_unit_has_transaction_price_on_vunit_id", columnList = "vunit_id"), 
-		@Index(name = "valuation_unit_has_transaction_price_on_transaction_id", columnList = "transaction_id"),
-		@Index(name = "valuation_unit_has_transaction_price_on_rowidentifier", columnList = "rowidentifier")})
+		@Index(name = "valuation_unit_has_transaction_price_vunit_id_fkey_ind", columnList = "vunit_id"), 
+		@Index(name = "valuation_unit_has_transaction_price_transaction_id_fkey_ind", columnList = "transaction_id"),
+		@Index(name = "valuation_unit_has_transaction_price_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the valuation unit to the its recorded transaction price.")
 @IdClass(TransactionUnitId.class)
 public class ValuationUnitHasTransactionPrice extends DomainObject<String> {

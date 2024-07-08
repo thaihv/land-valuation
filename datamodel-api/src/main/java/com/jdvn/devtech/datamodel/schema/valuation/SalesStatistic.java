@@ -25,7 +25,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sales_statistic", schema = "valuation", indexes = {@Index(name = "sales_statistic_on_rowidentifier", columnList = "rowidentifier")})
+@Table(name = "sales_statistic", schema = "valuation", indexes = {
+		@Index(name = "sales_statistic_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Represents sales statistics produced through the analysis of transaction prices for monitoring price trends.")
 public class SalesStatistic extends DomainObject<String> {
 	private static final long serialVersionUID = 1L;
