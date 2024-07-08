@@ -28,7 +28,7 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "rrr", schema = "administrative", indexes = {
 		@Index(name = "rrr_index_on_rowidentifier", columnList = "rowidentifier"),
-		@Index(name = "rrr_valuation_unit_id_fkey_ind", columnList = "valuation_unit_id"),
+		@Index(name = "rrr_vunit_id_fkey_ind", columnList = "vunit_id"),
 		@Index(name = "rrr_type_code_fkey_ind", columnList = "type_code"),
 		@Index(name = "rrr_mortgage_type_code_ind", columnList = "mortgage_type_code")})
 @Comment("Store the specific rights, restrictions and responsibilities that might be enquire from a valuation unit (called also a property) e.g. freehold ownership, lease, mortgage, caveat, etc. Implementation of the LADM LA_RRR class.")
@@ -41,7 +41,7 @@ public class RRR extends DomainObject<String> {
 	private String id;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "valuation_unit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "rrr_valuation_unit_id_fkey"))
+	@JoinColumn(name = "vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "rrr_vunit_id_fkey"))
 	@Comment("Identifier for the Valuation Unit the RRR need to query. In terms of Land Registration, this relationship is similar to RRR and BA_Unit from LADM")
 	private ValuationUnit valuation_unit;
 

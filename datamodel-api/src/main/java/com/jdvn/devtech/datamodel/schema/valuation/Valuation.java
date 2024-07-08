@@ -62,7 +62,7 @@ public class Valuation extends DomainObject<String> {
     private AppealStatusType appeal_status;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "valuation_unit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_valuation_unit_id_fkey"))
+    @JoinColumn(name = "vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_vunit_id_fkey"))
     private ValuationUnit valuation_unit;
 	    
 	@Override

@@ -26,7 +26,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "taxation", schema = "valuation", indexes = {
-		@Index(name = "taxation_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "taxation_index_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("An improved form of the ExtTaxation external class of LADM to support links to taxation system.")
 public class Taxation extends DomainObject<String> {
 	private static final long serialVersionUID = 1L;
@@ -78,7 +78,7 @@ public class Taxation extends DomainObject<String> {
 	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "valuation_unit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "taxation_valuation_unit_id_fkey"))
+    @JoinColumn(name = "vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "taxation_vunit_id_fkey"))
     private ValuationUnit valuation_unit;
 	    
 	@Override

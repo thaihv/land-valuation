@@ -1251,7 +1251,7 @@ CREATE TABLE IF NOT EXISTS valuation.taxation
     tax_arrear_amount numeric(20,2) NOT NULL DEFAULT 0,
     exemption_amount numeric(20,2) NOT NULL DEFAULT 0,
     exemption_type character varying(500) COLLATE pg_catalog."default",    
-    valuation_unit_id character varying(40) COLLATE pg_catalog."default",
+    vunit_id character varying(40) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,        
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
@@ -1262,7 +1262,7 @@ CREATE TABLE IF NOT EXISTS valuation.taxation
         REFERENCES valuation.taxation_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT taxation_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+    CONSTRAINT taxation_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -1320,12 +1320,7 @@ COMMENT ON COLUMN valuation.taxation.tax_arrear_amount
 
 COMMENT ON COLUMN valuation.taxation.tax_rate
     IS 'The tax rate calculated at the date.';
--- Index: taxation_on_rowidentifier
-CREATE INDEX IF NOT EXISTS taxation_on_rowidentifier
-    ON valuation.taxation USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
-    
+
 -- Table: valuation.property_transaction_type
 CREATE TABLE IF NOT EXISTS valuation.property_transaction_type
 (
@@ -1722,7 +1717,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation
     appeal_status_code character varying(20) COLLATE pg_catalog."default",
     approach_type_code character varying(20) COLLATE pg_catalog."default",
     value_type_code character varying(20) COLLATE pg_catalog."default",
-    valuation_unit_id character varying(40) COLLATE pg_catalog."default",
+    vunit_id character varying(40) COLLATE pg_catalog."default",
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,    
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
@@ -1737,7 +1732,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation
         REFERENCES valuation.valuation_approach_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT valuation_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+    CONSTRAINT valuation_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -1864,7 +1859,7 @@ COMMENT ON COLUMN valuation.single_appraisal.sales_comparison_approach_id
 CREATE TABLE IF NOT EXISTS administrative.rrr
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    valuation_unit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    vunit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     reference_nr character varying(20) COLLATE pg_catalog."default", 
     type_code character varying(20) COLLATE pg_catalog."default",
     is_primary boolean NOT NULL DEFAULT false,
@@ -1889,7 +1884,7 @@ CREATE TABLE IF NOT EXISTS administrative.rrr
         REFERENCES administrative.rrr_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT rrr_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+    CONSTRAINT rrr_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -1948,7 +1943,7 @@ COMMENT ON COLUMN administrative.rrr.mortgage_type_code
 COMMENT ON COLUMN administrative.rrr.type_code
     IS 'The type of RRR. E.g. freehold ownership, lease, mortage, caveat, etc.';
 
-COMMENT ON COLUMN administrative.rrr.valuation_unit_id
+COMMENT ON COLUMN administrative.rrr.vunit_id
     IS 'Identifier for the Valuation Unit the RRR need to query. In terms of Land Registration, this relationship is similar to RRR and BA_Unit from LADM';
     
 -- Table: administrative.rrr_share
@@ -2286,7 +2281,7 @@ CREATE TABLE IF NOT EXISTS application.application_property
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	application_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
-    valuation_unit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    vunit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     area double precision,
     verified_exists boolean NOT NULL DEFAULT false,
     verified_location boolean NOT NULL DEFAULT false,
@@ -2300,7 +2295,7 @@ CREATE TABLE IF NOT EXISTS application.application_property
         REFERENCES application.application (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT application_property_valuation_unit_id_fkey FOREIGN KEY (valuation_unit_id)
+    CONSTRAINT application_property_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -2344,5 +2339,5 @@ COMMENT ON COLUMN application.application_property.verified_location
 COMMENT ON COLUMN application.application_property.application_id
     IS 'Identifier for the application the record is associated to.';
 
-COMMENT ON COLUMN application.application_property.valuation_unit_id
+COMMENT ON COLUMN application.application_property.vunit_id
     IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.';    
