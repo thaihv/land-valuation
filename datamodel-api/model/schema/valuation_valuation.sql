@@ -2341,3 +2341,55 @@ COMMENT ON COLUMN application.application_property.application_id
 
 COMMENT ON COLUMN application.application_property.vunit_id
     IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.';    
+-- Table: valuation.valuation_unit_area
+CREATE TABLE IF NOT EXISTS valuation.valuation_unit_area
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    vunit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    type_code character varying(20) COLLATE pg_catalog."default",    
+    size numeric(20,2) NOT NULL DEFAULT 0,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),            
+    CONSTRAINT valuation_unit_area_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_unit_area_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES administrative.area_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_unit_area_vunit_id_fkey FOREIGN KEY (vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE IF EXISTS valuation.valuation_unit_area
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_unit_area
+    IS 'Identifies the overall area of the Valuation Unit. This should be the sum of all parcel areas that are part of the Valuation Unit.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.size
+    IS 'The value of the area. Must be in metres squared and can be converted for display if requried.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.type_code
+    IS 'The type of area. E.g. officialArea, calculatedArea, etc.';
+
+COMMENT ON COLUMN valuation.valuation_unit_area.vunit_id
+    IS 'Identifier for the Valuation Unit this area value is associated to.';    
