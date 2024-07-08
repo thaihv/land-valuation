@@ -2282,7 +2282,6 @@ CREATE TABLE IF NOT EXISTS application.application_property
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	application_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     vunit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
-    area double precision,
     verified_exists boolean NOT NULL DEFAULT false,
     verified_location boolean NOT NULL DEFAULT false,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
@@ -2326,9 +2325,6 @@ COMMENT ON COLUMN application.application_property.rowidentifier
 
 COMMENT ON COLUMN application.application_property.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
-
-COMMENT ON COLUMN application.application_property.area
-    IS 'The area of the property. This value should be square meters and converted if required for display to the user. e.g. Converted on display into and imperial acres, roods and perches value.';
 
 COMMENT ON COLUMN application.application_property.verified_exists
     IS 'Flag to indicate if the property details provided for the application match an existing property record in the Valuation Unit table.';

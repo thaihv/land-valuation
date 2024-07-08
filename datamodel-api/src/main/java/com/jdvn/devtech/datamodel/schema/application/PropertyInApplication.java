@@ -46,10 +46,6 @@ public class PropertyInApplication extends DomainObject<String>{
 	@Comment("Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.")
     private ValuationUnit valuation_unit;
 	
-	@Column(name = "area")
-	@Comment("The area of the property. This value should be square meters and converted if required for display to the user. e.g. Converted on display into and imperial acres, roods and perches value.")
-	private Double area;
-	
 	@Column(columnDefinition = "boolean NOT NULL DEFAULT false")
 	@Comment("Flag to indicate if the property details provided for the application match an existing property record in the Valuation Unit table.")
 	private boolean verified_exists;
