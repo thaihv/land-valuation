@@ -37,6 +37,10 @@ CREATE SCHEMA IF NOT EXISTS administrative
 AUTHORIZATION postgres;
 COMMENT ON SCHEMA administrative IS 'As an extension of land valuation, It is a schema from Land Registration Domain for models land use rights and restrictions how those rights and restrictions relate to property and people.';
 
+CREATE SCHEMA IF NOT EXISTS transaction
+AUTHORIZATION postgres;
+COMMENT ON SCHEMA transaction IS 'Used to track all changes made to data as a result of an application service.';
+
 CREATE OR REPLACE FUNCTION public.uuid_generate_v1(
 	)
     RETURNS uuid
