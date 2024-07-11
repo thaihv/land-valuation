@@ -35,12 +35,14 @@ public class Parcel extends DomainObject<String> {
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
-
-	@Comment("Code of land use.")
-	private String curent_land_use;
-
-	@Comment("Code of planed land use.")
-	private String planed_land_use;
+	
+	/*
+	 * Control many-to-many relationship between parcel and land use type as a parcel may
+	 * have many land use type recorded and a land use type may applying for many parcels
+	 */
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "parcels_land_use_types_links", schema = "preparation", joinColumns = @JoinColumn(name = "parcel_id"), inverseJoinColumns = @JoinColumn(name = "code"), foreignKey = @ForeignKey(name = "parcels_land_use_types_links_parcel_id_fkey"), inverseForeignKey = @ForeignKey(name = "parcels_land_use_types_links_code_fkey"))
+	private Set<LandUseType> land_use_types;
 
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of parcel for spatial displaying.")

@@ -130,3 +130,33 @@ COMMENT ON COLUMN preparation.volume_type.display_value
 COMMENT ON COLUMN preparation.volume_type.status
     IS 'Status in active of the volume type as active (a) or inactive (i).';
     
+-- Table: preparation.land_use_type
+CREATE TABLE IF NOT EXISTS preparation.land_use_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
+    CONSTRAINT land_use_type_pkey PRIMARY KEY (code),
+    CONSTRAINT land_use_type_display_value UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.land_use_type
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.land_use_type
+    IS 'Code list of land use types. Identifies the types of land use that can be recorded for a property.';
+
+COMMENT ON COLUMN preparation.land_use_type.code
+    IS 'Code of the land use type.';
+
+COMMENT ON COLUMN preparation.land_use_type.description
+    IS 'Description of the land use type.';
+
+COMMENT ON COLUMN preparation.land_use_type.display_value
+    IS 'Displayed value of the land use type.';
+
+COMMENT ON COLUMN preparation.land_use_type.status
+    IS 'Status in active of the land use type as active (a) or inactive (i).';    

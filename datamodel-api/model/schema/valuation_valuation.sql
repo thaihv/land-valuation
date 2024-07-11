@@ -505,8 +505,6 @@ COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_user
 CREATE TABLE IF NOT EXISTS preparation.parcel
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    curent_land_use character varying(255) COLLATE pg_catalog."default",    
-    planed_land_use character varying(255) COLLATE pg_catalog."default",
     geom geometry NOT NULL,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
@@ -523,7 +521,10 @@ ALTER TABLE IF EXISTS preparation.parcel
 
 COMMENT ON TABLE preparation.parcel
     IS 'Provides detailed information about valuation unit as parcel.';
-
+    
+COMMENT ON COLUMN preparation.parcel.geom
+    IS 'Geometry of parcel for spatial displaying.';
+    
 COMMENT ON COLUMN preparation.parcel.change_action
     IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
 
@@ -539,15 +540,6 @@ COMMENT ON COLUMN preparation.parcel.rowidentifier
 COMMENT ON COLUMN preparation.parcel.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
-COMMENT ON COLUMN preparation.parcel.curent_land_use
-    IS 'Code of land use.';
-
-COMMENT ON COLUMN preparation.parcel.geom
-    IS 'Geometry of parcel for spatial displaying.';
-
-COMMENT ON COLUMN preparation.parcel.planed_land_use
-    IS 'Code of planed land use.';
-    
 -- Table: preparation.building_use_type
 CREATE TABLE IF NOT EXISTS preparation.building_use_type
 (
