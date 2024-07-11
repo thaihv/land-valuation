@@ -36,10 +36,6 @@ public class Parcel extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
-	@Column(name = "area")
-	@Comment("Legal area value that recorded in cadastre.")
-	private Double area;
-
 	@Comment("Code of land use.")
 	private String curent_land_use;
 

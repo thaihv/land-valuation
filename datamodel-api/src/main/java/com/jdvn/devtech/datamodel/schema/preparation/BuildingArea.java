@@ -28,7 +28,7 @@ public class BuildingArea {
 	private String id;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "building_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "building_area_parcel_id_fkey"))
+	@JoinColumn(name = "building_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "building_area_building_id_fkey"))
 	@Comment("Identifier for the building this area value is associated to.")
 	private Building building;
 

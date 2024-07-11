@@ -505,7 +505,6 @@ COMMENT ON COLUMN valuation.valuation_unit_uses_source.change_user
 CREATE TABLE IF NOT EXISTS preparation.parcel
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    area double precision,
     curent_land_use character varying(255) COLLATE pg_catalog."default",    
     planed_land_use character varying(255) COLLATE pg_catalog."default",
     geom geometry NOT NULL,
@@ -539,9 +538,6 @@ COMMENT ON COLUMN preparation.parcel.rowidentifier
 
 COMMENT ON COLUMN preparation.parcel.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
-
-COMMENT ON COLUMN preparation.parcel.area
-    IS 'Legal area value that recorded in cadastre.';
 
 COMMENT ON COLUMN preparation.parcel.curent_land_use
     IS 'Code of land use.';
@@ -587,7 +583,6 @@ COMMENT ON COLUMN preparation.building_use_type.status
 CREATE TABLE IF NOT EXISTS preparation.building
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    area double precision,
     volume double precision,
     type_use_code character varying(20) COLLATE pg_catalog."default",
     building_type character varying(255) COLLATE pg_catalog."default",
@@ -641,9 +636,6 @@ COMMENT ON COLUMN preparation.building.rowversion
 
 COMMENT ON COLUMN preparation.building.airconditioning
     IS 'Number of air condition in the building.';
-
-COMMENT ON COLUMN preparation.building.area
-    IS 'Total area value that recorded in legality.';
 
 COMMENT ON COLUMN preparation.building.building_type
     IS 'Type of the building if have a classification.';
@@ -719,7 +711,6 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	located_number character varying(255) COLLATE pg_catalog."default",
     use_type character varying(255) COLLATE pg_catalog."default",    
-    area double precision,
     volume double precision,            
     number_bathrooms integer,
     number_bedrooms integer,
@@ -769,9 +760,6 @@ COMMENT ON COLUMN preparation.building_unit.accessory_part
 
 COMMENT ON COLUMN preparation.building_unit.accessory_part_type
     IS 'Accessory part type of the building unit.';
-
-COMMENT ON COLUMN preparation.building_unit.area
-    IS 'Legal area value of the building unit.';
 
 COMMENT ON COLUMN preparation.building_unit.geom
     IS 'Geometry of building for spatial displaying.';
@@ -988,7 +976,7 @@ CREATE TABLE IF NOT EXISTS preparation.building_area
     type_code character varying(20) COLLATE pg_catalog."default",
     size numeric(20,2) NOT NULL DEFAULT 0,    
     CONSTRAINT building_area_pkey PRIMARY KEY (id),
-    CONSTRAINT building_area_parcel_id_fkey FOREIGN KEY (building_id)
+    CONSTRAINT building_area_building_id_fkey FOREIGN KEY (building_id)
         REFERENCES preparation.building (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -1023,8 +1011,8 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit_area
     type_code character varying(20) COLLATE pg_catalog."default",
     size numeric(20,2) NOT NULL DEFAULT 0,    
     CONSTRAINT building_unit_area_pkey PRIMARY KEY (id),
-    CONSTRAINT building_unit_area_parcel_id_fkey FOREIGN KEY (building_unit_id)
-        REFERENCES preparation.building (id) MATCH SIMPLE
+    CONSTRAINT building_unit_area_building_unit_id_fkey FOREIGN KEY (building_unit_id)
+        REFERENCES preparation.building_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT building_unit_area_type_code_fkey FOREIGN KEY (type_code)

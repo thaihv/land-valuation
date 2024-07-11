@@ -42,9 +42,6 @@ public class Building extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
-	@Comment("Total area value that recorded in legality.")
-	private Double area;
-
 	@Comment("Total volume value of the building.")
 	private Double volume;
 

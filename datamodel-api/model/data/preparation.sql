@@ -230,7 +230,7 @@ INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('
 INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('industrial','Industrial','a');
 
 -- Table: administrative.area_type
-INSERT INTO preparation.area_type (code, display_value, status) VALUES ('officialArea', 'Official Area', 'a');
-INSERT INTO preparation.area_type (code, display_value, status) VALUES ('surveyedArea', 'Surveyed Area', 'a');
-INSERT INTO preparation.area_type (code, display_value, status) VALUES ('calculatedArea', 'Calculated Area', 'a');
+INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('officialArea', 'Official Area', 'Legal total area value that recorded in cadastre.', 'a');
+INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('surveyedArea', 'Surveyed Area', 'Area value that recorded from surveyor. It might be record in cadastre then.', 'a');
+INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('calculatedArea', 'Calculated Area', 'Area value that calculated from technical methods.', 'a');
 INSERT INTO preparation.area_type (code, display_value, status) VALUES ('nonOfficialArea', 'Non-official Area', 'a');
