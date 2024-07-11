@@ -75,21 +75,31 @@ public class Building extends DomainObject<String> {
 	@Comment("Number of dwellings of the building.")
 	private int number_dwellings;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "facade_material_type", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_facade_material_type_fkey"))
 	@Comment("Material type of the building facade.")
-	private String facade_material;
-
+	private FacadeMaterialType facade_material;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "construct_material_type", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_construct_material_type_fkey"))
 	@Comment("Material type used for constructing of building.")
-	private String construct_material;
-
+	private ConstructionMaterialType construct_material;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "heating_system_type", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_heating_system_type_fkey"))
 	@Comment("Heating system type of the bulding.")
-	private String heating_system;
+	private HeatingSystemType heating_system;
 
-	@Comment("Heating source type of the bulding.")
-	private String heating_source;
-
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "heating_system_source_type", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_heating_system_source_type_fkey"))
+	@Comment("Heating system type of the bulding.")
+	private HeatingSystemSourceType heating_source;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "energy_performance_value", referencedColumnName = "code", foreignKey = @ForeignKey(name = "building_energy_performance_value_fkey"))
 	@Comment("Energy performance value of the bulding.")
-	private String energy_performance;
-
+	private EnergyPerformanceValue energy_performance;
+	
 	@Column(columnDefinition = "geometry NOT NULL")
 	@Comment("Geometry of building for spatial displaying.")
 	private MultiPolygon geom;

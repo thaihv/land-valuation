@@ -577,14 +577,14 @@ CREATE TABLE IF NOT EXISTS preparation.building
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     type_use_code character varying(20) COLLATE pg_catalog."default",
     building_type character varying(255) COLLATE pg_catalog."default",
-    construct_material character varying(255) COLLATE pg_catalog."default",
+    construct_material_type character varying(20) COLLATE pg_catalog."default",
+    facade_material_type character varying(20) COLLATE pg_catalog."default",    
     date_construction timestamp(6) without time zone,
     quality character varying(255) COLLATE pg_catalog."default",
-    status character varying(255) COLLATE pg_catalog."default",    
-    energy_performance character varying(255) COLLATE pg_catalog."default",
-    facade_material character varying(255) COLLATE pg_catalog."default",    
-    heating_source character varying(255) COLLATE pg_catalog."default",
-    heating_system character varying(255) COLLATE pg_catalog."default",
+    status character varying(255) COLLATE pg_catalog."default",        
+    energy_performance_value character varying(20) COLLATE pg_catalog."default",
+    heating_system_source_type character varying(20) COLLATE pg_catalog."default",
+    heating_system_type character varying(20) COLLATE pg_catalog."default",    
     number_dwellings integer,
     number_floors integer,
     elevator integer,
@@ -596,6 +596,26 @@ CREATE TABLE IF NOT EXISTS preparation.building
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT building_pkey PRIMARY KEY (id),
+    CONSTRAINT building_construct_material_type_fkey FOREIGN KEY (construct_material_type)
+        REFERENCES preparation.construction_material_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_facade_material_type_fkey FOREIGN KEY (facade_material_type)
+        REFERENCES preparation.facade_material_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,        
+    CONSTRAINT building_energy_performance_value_fkey FOREIGN KEY (energy_performance_value)
+        REFERENCES preparation.energy_performance_value (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_heating_system_source_type_fkey FOREIGN KEY (heating_system_source_type)
+        REFERENCES preparation.heating_system_source_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_heating_system_type_fkey FOREIGN KEY (heating_system_type)
+        REFERENCES preparation.heating_system_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,        
     CONSTRAINT building_type_use_code_fkey FOREIGN KEY (type_use_code)
         REFERENCES preparation.building_use_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -631,7 +651,7 @@ COMMENT ON COLUMN preparation.building.airconditioning
 COMMENT ON COLUMN preparation.building.building_type
     IS 'Type of the building if have a classification.';
 
-COMMENT ON COLUMN preparation.building.construct_material
+COMMENT ON COLUMN preparation.building.construct_material_type
     IS 'Material type used for constructing of building.';
 
 COMMENT ON COLUMN preparation.building.date_construction
@@ -640,19 +660,19 @@ COMMENT ON COLUMN preparation.building.date_construction
 COMMENT ON COLUMN preparation.building.elevator
     IS 'Number of elevators of the building.';
 
-COMMENT ON COLUMN preparation.building.energy_performance
+COMMENT ON COLUMN preparation.building.energy_performance_value
     IS 'Energy performance value of the bulding.';
 
-COMMENT ON COLUMN preparation.building.facade_material
+COMMENT ON COLUMN preparation.building.facade_material_type
     IS 'Material type of the building facade.';
 
 COMMENT ON COLUMN preparation.building.geom
     IS 'Geometry of building for spatial displaying.';
 
-COMMENT ON COLUMN preparation.building.heating_source
+COMMENT ON COLUMN preparation.building.heating_system_source_type
     IS 'Heating source type of the bulding.';
 
-COMMENT ON COLUMN preparation.building.heating_system
+COMMENT ON COLUMN preparation.building.heating_system_type
     IS 'Heating system type of the bulding.';
 
 COMMENT ON COLUMN preparation.building.number_dwellings
@@ -698,13 +718,12 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	located_number character varying(255) COLLATE pg_catalog."default",
-    use_type character varying(255) COLLATE pg_catalog."default",        
+    use_type character varying(20) COLLATE pg_catalog."default",        
     number_bathrooms integer,
     number_bedrooms integer,
     number_rooms integer,
     share_in_joint_facilities double precision,
-    accessory_part boolean,
-    accessory_part_type character varying(255) COLLATE pg_catalog."default",
+    existed_accessory_part boolean,
     belongto_building_id character varying(255) COLLATE pg_catalog."default",
     geom geometry NOT NULL,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
@@ -716,7 +735,11 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit
     CONSTRAINT building_unit_belongto_building_id_fkey FOREIGN KEY (belongto_building_id)
         REFERENCES preparation.building (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_unit_use_type_fkey FOREIGN KEY (use_type)
+        REFERENCES preparation.building_use_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
@@ -725,7 +748,7 @@ ALTER TABLE IF EXISTS preparation.building_unit
     OWNER to postgres;
 
 COMMENT ON TABLE preparation.building_unit
-    IS 'Provides detailed information about valuation unit as building unit.';
+    IS 'Provides detailed information about valuation unit as building unit or also called condominium unit.';
 
 COMMENT ON COLUMN preparation.building_unit.change_action
     IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
@@ -742,11 +765,8 @@ COMMENT ON COLUMN preparation.building_unit.rowidentifier
 COMMENT ON COLUMN preparation.building_unit.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
-COMMENT ON COLUMN preparation.building_unit.accessory_part
+COMMENT ON COLUMN preparation.building_unit.existed_accessory_part
     IS 'Whether space use as accessory or not.';
-
-COMMENT ON COLUMN preparation.building_unit.accessory_part_type
-    IS 'Accessory part type of the building unit.';
 
 COMMENT ON COLUMN preparation.building_unit.geom
     IS 'Geometry of building for spatial displaying.';
