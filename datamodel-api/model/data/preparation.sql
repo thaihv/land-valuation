@@ -234,3 +234,9 @@ INSERT INTO preparation.area_type (code, display_value, description, status) VAL
 INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('surveyedArea', 'Surveyed Area', 'Area value that recorded from surveyor. It might be record in cadastre then.', 'a');
 INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('calculatedArea', 'Calculated Area', 'Area value that calculated from technical methods.', 'a');
 INSERT INTO preparation.area_type (code, display_value, status) VALUES ('nonOfficialArea', 'Non-official Area', 'a');
+
+-- Table: administrative.volume_type
+INSERT INTO preparation.volume_type (code, display_value, description, status) VALUES ('officialVolume', 'Official Volume', 'Legal total volume value that recorded in cadastre.', 'a');
+INSERT INTO preparation.volume_type (code, display_value, description, status) VALUES ('surveyedVolume', 'Surveyed Volume', 'Volume value that recorded from surveyor. It might be record in cadastre then.', 'a');
+INSERT INTO preparation.volume_type (code, display_value, description, status) VALUES ('calculatedVolume', 'Calculated Volume', 'Volume value that calculated from technical methods.', 'a');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('nonOfficialVolume', 'Non-official Volume', 'a');

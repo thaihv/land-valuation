@@ -18,23 +18,23 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "volume_type", schema = "preparation", uniqueConstraints = { @UniqueConstraint(name = "volume_type_display_value", columnNames = { "display_value" })})
-@Comment("Code list of volume types. Identifies the types of area (calculated, official, survey defined, etc) that can be recorded for a valuation unit.")
+@Comment("Code list of volume types. Identifies the types of volume (calculated, official, survey defined, etc) that can be recorded for a property.")
 public class VolumeType{
 	@Id
 	@Column(length = 20, nullable = false)
-	@Comment("Code of the area type.")
+	@Comment("Code of the volume type.")
 	private String code;
 
 	@Column(length = 500, nullable = false)
-	@Comment("Displayed value of the area type.")
+	@Comment("Displayed value of the volume type.")
 	private String display_value;
 
 	@Column(length = 1000)
-	@Comment("Description of the area type.")
+	@Comment("Description of the volume type.")
 	private String description;
 
 	@Column(columnDefinition = "character(1) default 'a'")
-	@Comment("Status in active of the area type as active (a) or inactive (i).")
+	@Comment("Status in active of the volume type as active (a) or inactive (i).")
 	private char status;
 
 }

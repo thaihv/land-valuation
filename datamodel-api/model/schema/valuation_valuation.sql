@@ -583,7 +583,6 @@ COMMENT ON COLUMN preparation.building_use_type.status
 CREATE TABLE IF NOT EXISTS preparation.building
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    volume double precision,
     type_use_code character varying(20) COLLATE pg_catalog."default",
     building_type character varying(255) COLLATE pg_catalog."default",
     construct_material character varying(255) COLLATE pg_catalog."default",
@@ -678,10 +677,7 @@ COMMENT ON COLUMN preparation.building.status
 
 COMMENT ON COLUMN preparation.building.type_use_code
     IS 'Use type of the building.';
-
-COMMENT ON COLUMN preparation.building.volume
-    IS 'Total volume value of the building.';    
-
+    
 -- Table: preparation.parcels_buildings_links
 CREATE TABLE IF NOT EXISTS preparation.parcels_buildings_links
 (
@@ -710,8 +706,7 @@ CREATE TABLE IF NOT EXISTS preparation.building_unit
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
 	located_number character varying(255) COLLATE pg_catalog."default",
-    use_type character varying(255) COLLATE pg_catalog."default",    
-    volume double precision,            
+    use_type character varying(255) COLLATE pg_catalog."default",        
     number_bathrooms integer,
     number_bedrooms integer,
     number_rooms integer,
@@ -776,15 +771,11 @@ COMMENT ON COLUMN preparation.building_unit.number_bedrooms
 COMMENT ON COLUMN preparation.building_unit.number_rooms
     IS 'Number of rooms in the bulding unit.';
 
-
 COMMENT ON COLUMN preparation.building_unit.share_in_joint_facilities
     IS 'Ratio of share of using facilities.';
 
 COMMENT ON COLUMN preparation.building_unit.use_type
     IS 'Use type of the building unit.';
-
-COMMENT ON COLUMN preparation.building_unit.volume
-    IS 'Total volume value of the building unit.';
 
 COMMENT ON COLUMN preparation.building_unit.belongto_building_id
     IS 'Refer to identifying of a building.';        
@@ -1037,6 +1028,76 @@ COMMENT ON COLUMN preparation.building_unit_area.building_unit_id
 
 COMMENT ON COLUMN preparation.building_unit_area.type_code
     IS 'The type of area. E.g. officialArea, calculatedArea, etc.';        
+
+-- Table: preparation.building_volume
+CREATE TABLE IF NOT EXISTS preparation.building_volume
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    building_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    type_code character varying(20) COLLATE pg_catalog."default",
+    size numeric(20,2) NOT NULL DEFAULT 0,    
+    CONSTRAINT building_volume_pkey PRIMARY KEY (id),
+    CONSTRAINT building_volume_building_id_fkey FOREIGN KEY (building_id)
+        REFERENCES preparation.building (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_volume_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES preparation.volume_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.building_volume
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.building_volume
+    IS 'Identifies the overall volume of the building.';
+
+COMMENT ON COLUMN preparation.building_volume.size
+    IS 'The value of the volume. Must be in cubic meter and can be converted for display if requried.';
+
+COMMENT ON COLUMN preparation.building_volume.building_id
+    IS 'Identifier for the building this volume value is associated to.';
+
+COMMENT ON COLUMN preparation.building_volume.type_code
+    IS 'The type of volume. E.g. officialVolume, calculatedVolume, etc.';
+
+-- Table: preparation.building_unit_volume
+CREATE TABLE IF NOT EXISTS preparation.building_unit_volume
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    building_unit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    type_code character varying(20) COLLATE pg_catalog."default",
+    size numeric(20,2) NOT NULL DEFAULT 0,    
+    CONSTRAINT building_unit_volume_pkey PRIMARY KEY (id),
+    CONSTRAINT building_unit_volume_building_unit_id_fkey FOREIGN KEY (building_unit_id)
+        REFERENCES preparation.building_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_unit_volume_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES preparation.volume_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.building_unit_volume
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.building_unit_volume
+    IS 'Identifies the overall volume of the building unit.';
+
+COMMENT ON COLUMN preparation.building_unit_volume.size
+    IS 'The value of the volume. Must be in metres cubic and can be converted for display if requried.';
+
+COMMENT ON COLUMN preparation.building_unit_volume.building_unit_id
+    IS 'Identifier for the parcel this area value is associated to.';
+
+COMMENT ON COLUMN preparation.building_unit_volume.type_code
+    IS 'The type of volume. E.g. officialVolume, calculatedVolume, etc.';    
     
 -- Table: valuation.appeal_status_type
 CREATE TABLE IF NOT EXISTS valuation.appeal_status_type

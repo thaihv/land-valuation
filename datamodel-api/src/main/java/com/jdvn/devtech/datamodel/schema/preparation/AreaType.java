@@ -18,7 +18,7 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "area_type", schema = "preparation", uniqueConstraints = { @UniqueConstraint(name = "area_type_display_value", columnNames = { "display_value" })})
-@Comment("Code list of area types. Identifies the types of area (calculated, official, survey defined, etc) that can be recorded for a valuation unit.")
+@Comment("Code list of area types. Identifies the types of area (calculated, official, survey defined, etc) that can be recorded for a property.")
 public class AreaType{
 	@Id
 	@Column(length = 20, nullable = false)
