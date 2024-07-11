@@ -97,10 +97,3 @@ INSERT INTO administrative.condition_type (code, display_value, description, sta
 INSERT INTO administrative.condition_type (code, display_value, description, status) VALUES ('c4', 'Condtion 4', 'The Lessee shall use the land comprised in the lease only for the purpose specified in the lease or in any variation made to the original lease.', 'a');
 INSERT INTO administrative.condition_type (code, display_value, description, status) VALUES ('c5', 'Condition 5', 'Save with the written authority of the planning authority, no electrical power or telephone pole or line or water, drainage or sewer pipe being upon or passing through, over or under the land and no replacement thereof, shall be moved or in any way be interfered with and reasonable access thereto shall be preserved to allow for inspection, maintenance, repair, renewal and replacement.', 'a');
 INSERT INTO administrative.condition_type (code, display_value, description, status) VALUES ('c6', 'Condition 6', 'The interior and exterior of any building erected on the land and all building additions thereto and all other buildings at any time erected or standing on the land and walls, drains and other appurtenances, shall be kept by the Lessee in good repair and tenantable condition to the satisfaction of the planning authority.', 'a');
-
--- Table: administrative.area_type
-INSERT INTO administrative.area_type (code, display_value, status) VALUES ('officialArea', 'Official Area', 'a');
-INSERT INTO administrative.area_type (code, display_value, status) VALUES ('surveyedArea', 'Surveyed Area', 'a');
-INSERT INTO administrative.area_type (code, display_value, status) VALUES ('calculatedArea', 'Calculated Area', 'a');
-INSERT INTO administrative.area_type (code, display_value, status) VALUES ('nonOfficialArea', 'Non-official Area', 'a');
-

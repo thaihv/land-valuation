@@ -2351,7 +2351,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit_area
     change_time timestamp without time zone NOT NULL DEFAULT now(),            
     CONSTRAINT valuation_unit_area_pkey PRIMARY KEY (id),
     CONSTRAINT valuation_unit_area_type_code_fkey FOREIGN KEY (type_code)
-        REFERENCES administrative.area_type (code) MATCH SIMPLE
+        REFERENCES preparation.area_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT valuation_unit_area_vunit_id_fkey FOREIGN KEY (vunit_id)

@@ -3,7 +3,7 @@ package com.jdvn.devtech.datamodel.schema.valuation;
 import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
-import com.jdvn.devtech.datamodel.schema.administrative.AreaType;
+import com.jdvn.devtech.datamodel.schema.preparation.AreaType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

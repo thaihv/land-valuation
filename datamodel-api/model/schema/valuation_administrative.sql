@@ -592,34 +592,5 @@ COMMENT ON COLUMN administrative.condition_type.display_value
     IS 'Displayed value of the condition type.';
 
 COMMENT ON COLUMN administrative.condition_type.status
-    IS 'Status in active of the condition type as active (a) or inactive (i).';
-    
--- Table: administrative.area_type
-CREATE TABLE IF NOT EXISTS administrative.area_type
-(
-    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(1000) COLLATE pg_catalog."default",    
-    status character(1) COLLATE pg_catalog."default" DEFAULT 'a'::bpchar,
-    CONSTRAINT area_type_pkey PRIMARY KEY (code),
-    CONSTRAINT area_type_display_value UNIQUE (display_value)
-);
-
-ALTER TABLE IF EXISTS administrative.area_type
-    OWNER to postgres;
-
-COMMENT ON TABLE administrative.area_type
-    IS 'Code list of area types. Identifies the types of area (calculated, official, survey defined, etc) that can be recorded for a valuation unit.';
-
-COMMENT ON COLUMN administrative.area_type.code
-    IS 'Code of the area type.';
-
-COMMENT ON COLUMN administrative.area_type.description
-    IS 'Description of the area type.';
-
-COMMENT ON COLUMN administrative.area_type.display_value
-    IS 'Displayed value of the area type.';
-
-COMMENT ON COLUMN administrative.area_type.status
-    IS 'Status in active of the area type as active (a) or inactive (i).';            
+    IS 'Status in active of the condition type as active (a) or inactive (i).';          
                                   

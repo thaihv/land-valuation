@@ -1,4 +1,4 @@
-package com.jdvn.devtech.datamodel.schema.administrative;
+package com.jdvn.devtech.datamodel.schema.preparation;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -20,7 +20,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "area_type", schema = "administrative", uniqueConstraints = { @UniqueConstraint(name = "area_type_display_value", columnNames = { "display_value" })})
+@Table(name = "area_type", schema = "preparation", uniqueConstraints = { @UniqueConstraint(name = "area_type_display_value", columnNames = { "display_value" })})
 @Comment("Code list of area types. Identifies the types of area (calculated, official, survey defined, etc) that can be recorded for a valuation unit.")
 public class AreaType{
 	@Id

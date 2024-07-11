@@ -228,3 +228,9 @@ INSERT INTO preparation.neighborhood_type (code, display_value, status) VALUES (
 INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('residential','Residential','a');
 INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('office','Office','a');
 INSERT INTO preparation.building_use_type(code, display_value, status) VALUES ('industrial','Industrial','a');
+
+-- Table: administrative.area_type
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('officialArea', 'Official Area', 'a');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('surveyedArea', 'Surveyed Area', 'a');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('calculatedArea', 'Calculated Area', 'a');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('nonOfficialArea', 'Non-official Area', 'a');
