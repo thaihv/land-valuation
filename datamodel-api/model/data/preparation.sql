@@ -234,9 +234,38 @@ INSERT INTO preparation.area_type (code, display_value, description, status) VAL
 INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('surveyedArea', 'Surveyed Area', 'Area value that recorded from surveyor. It might be record in cadastre then.', 'a');
 INSERT INTO preparation.area_type (code, display_value, description, status) VALUES ('calculatedArea', 'Calculated Area', 'Area value that calculated from technical methods.', 'a');
 INSERT INTO preparation.area_type (code, display_value, status) VALUES ('nonOfficialArea', 'Non-official Area', 'a');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('usableArea', 'Usable Area', 'a');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('servicesArea', 'Services Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('circulationArea', 'Circulation Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('buildingEnvelopeArea', 'Building Envelope Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('effectActualLossArea', 'Effective And Actual Building Loss Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('actualActualLossArea', 'Actual Building Loss Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('coveredArea', 'Covered Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('effectLossArea', 'Effective Building Loss Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('intra-murosArea', 'Intra-muros Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('totalFloorArea', 'Total Floor Area', 'i');
+INSERT INTO preparation.area_type (code, display_value, status) VALUES ('netFloorArea', 'Net Floor Area', 'i');
+
 
 -- Table: administrative.volume_type
 INSERT INTO preparation.volume_type (code, display_value, description, status) VALUES ('officialVolume', 'Official Volume', 'Legal total volume value that recorded in cadastre.', 'a');
 INSERT INTO preparation.volume_type (code, display_value, description, status) VALUES ('surveyedVolume', 'Surveyed Volume', 'Volume value that recorded from surveyor. It might be record in cadastre then.', 'a');
 INSERT INTO preparation.volume_type (code, display_value, description, status) VALUES ('calculatedVolume', 'Calculated Volume', 'Volume value that calculated from technical methods.', 'a');
 INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('nonOfficialVolume', 'Non-official Volume', 'a');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('netVolume', 'Net Volume', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('netVolGrossInternal', 'Net Volume Above Gross Internal', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('netVolUsableArea', 'Net Volume Above Usable Area', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('netVolServiceArea', 'Net Volume Above Service Area', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('netVolCirculArea', 'Net Volume Above Circulation Area', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('netVolNetFloorArea', 'Net Volume Above Net Floor Area', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('grossVolume', 'Gross Volume', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('gVolEnclosedCovered', 'Gross Volume Enclosed Covered', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('gVolNoEncloseCovered', 'Gross Volume Not Enclosed Covered', 'i');
+INSERT INTO preparation.volume_type (code, display_value, status) VALUES ('gVolEncloseNoCovered', 'Gross Volume Enclosed Not Covered', 'i');
+
+-- Table: preparation.land_use_type
+INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('urbanLivings', 'Urban Livings', 'Land For Urban Living', 'a');
+INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('ruralLivings', 'Rural Livings', 'Land For Rural Living', 'a');
+INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('industrial', 'Industrial and Manufactures', 'Land for Industrial and Manufactures', 'a');
+INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('agricultural', 'Agricultural Harvest', 'Land for Agricultural', 'a');
+INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('agriPerennial', 'Agricultural Growing Perennial Harvest', 'Land for Growing Perennial Crops', 'a');
