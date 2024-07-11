@@ -4,12 +4,9 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitArea;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -40,6 +37,4 @@ public class AreaType{
 	@Comment("Status in active of the area type as active (a) or inactive (i).")
 	private char status;
 
-	@OneToOne(mappedBy = "type_code")
-	private ValuationUnitArea vu_area;
 }

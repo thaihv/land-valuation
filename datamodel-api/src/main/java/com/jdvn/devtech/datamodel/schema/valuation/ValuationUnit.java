@@ -70,6 +70,10 @@ public class ValuationUnit extends DomainObject<String> {
 	@Comment("Display name of the valuation unit type.")
 	private String name;
 
+	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+	@Comment("Identifies the overall area of the Valuation Unit. This should be the sum of all parcel areas that are part of the Valuation Unit.")
+	private Double area;
+	
 	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
 	@Comment("The datetime the valuation unit is formally recognised by the land value assessment agency (i.e. registered or issued).")
 	private LocalDateTime creation_date = LocalDateTime.now();

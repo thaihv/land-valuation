@@ -98,3 +98,6 @@ COMMENT ON COLUMN preparation.area_type.display_value
 
 COMMENT ON COLUMN preparation.area_type.status
     IS 'Status in active of the area type as active (a) or inactive (i).';          
+    
+
+    

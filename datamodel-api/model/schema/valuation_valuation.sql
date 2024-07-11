@@ -346,6 +346,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_unit
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     name character varying(500) COLLATE pg_catalog."default",
+    area numeric(20,2) NOT NULL DEFAULT 0,
     address_id character varying(40) COLLATE pg_catalog."default",
     vu_type_code character varying(40) COLLATE pg_catalog."default",
     neighborhood_code character varying(20) COLLATE pg_catalog."default",
@@ -383,6 +384,9 @@ or land and improvements together as land or condominium property.';
 COMMENT ON COLUMN valuation.valuation_unit.name
     IS 'Display name of the valuation unit.';
 
+COMMENT ON COLUMN valuation.valuation_unit.area
+    IS 'Identifies the overall area of the Valuation Unit. This should be the sum of all parcel areas that are part of the Valuation Unit.';
+    
 COMMENT ON COLUMN valuation.valuation_unit.address_id
     IS 'Address identifier of the valuation unit.';
     
@@ -940,7 +944,112 @@ ALTER TABLE IF EXISTS preparation.parcels_utility_networks_links
     OWNER to postgres;    
 COMMENT ON TABLE preparation.parcels_utility_networks_links
     IS 'Provides relationship of parcels and utility networks.'; 
-        
+
+-- Table: preparation.parcel_area
+CREATE TABLE IF NOT EXISTS preparation.parcel_area
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    parcel_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    type_code character varying(20) COLLATE pg_catalog."default",
+    size numeric(20,2) NOT NULL DEFAULT 0,
+    CONSTRAINT parcel_area_pkey PRIMARY KEY (id),
+    CONSTRAINT parcel_area_parcel_id_fkey FOREIGN KEY (parcel_id)
+        REFERENCES preparation.parcel (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT parcel_area_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES preparation.area_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.parcel_area
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.parcel_area
+    IS 'Identifies the overall area of the parcel.';
+
+COMMENT ON COLUMN preparation.parcel_area.size
+    IS 'The value of the area. Must be in metres squared and can be converted for display if requried.';
+
+COMMENT ON COLUMN preparation.parcel_area.parcel_id
+    IS 'Identifier for the parcel this area value is associated to.';
+
+COMMENT ON COLUMN preparation.parcel_area.type_code
+    IS 'The type of area. E.g. officialArea, calculatedArea, etc.';
+    
+-- Table: preparation.building_area
+CREATE TABLE IF NOT EXISTS preparation.building_area
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    building_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    type_code character varying(20) COLLATE pg_catalog."default",
+    size numeric(20,2) NOT NULL DEFAULT 0,    
+    CONSTRAINT building_area_pkey PRIMARY KEY (id),
+    CONSTRAINT building_area_parcel_id_fkey FOREIGN KEY (building_id)
+        REFERENCES preparation.building (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_area_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES preparation.area_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.building_area
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.building_area
+    IS 'Identifies the overall area of the building.';
+
+COMMENT ON COLUMN preparation.building_area.size
+    IS 'The value of the area. Must be in metres squared and can be converted for display if requried.';
+
+COMMENT ON COLUMN preparation.building_area.building_id
+    IS 'Identifier for the building this area value is associated to.';
+
+COMMENT ON COLUMN preparation.building_area.type_code
+    IS 'The type of area. E.g. officialArea, calculatedArea, etc.'; 
+
+-- Table: preparation.building_unit_area
+CREATE TABLE IF NOT EXISTS preparation.building_unit_area
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    building_unit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    type_code character varying(20) COLLATE pg_catalog."default",
+    size numeric(20,2) NOT NULL DEFAULT 0,    
+    CONSTRAINT building_unit_area_pkey PRIMARY KEY (id),
+    CONSTRAINT building_unit_area_parcel_id_fkey FOREIGN KEY (building_unit_id)
+        REFERENCES preparation.building (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT building_unit_area_type_code_fkey FOREIGN KEY (type_code)
+        REFERENCES preparation.area_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.building_unit_area
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.building_unit_area
+    IS 'Identifies the overall area of the building unit.';
+
+COMMENT ON COLUMN preparation.building_unit_area.size
+    IS 'The value of the area. Must be in metres squared and can be converted for display if requried.';
+
+COMMENT ON COLUMN preparation.building_unit_area.building_unit_id
+    IS 'Identifier for the building unit this area value is associated to.';
+
+COMMENT ON COLUMN preparation.building_unit_area.type_code
+    IS 'The type of area. E.g. officialArea, calculatedArea, etc.';        
+    
 -- Table: valuation.appeal_status_type
 CREATE TABLE IF NOT EXISTS valuation.appeal_status_type
 (
@@ -2337,59 +2446,7 @@ COMMENT ON COLUMN application.application_property.application_id
 
 COMMENT ON COLUMN application.application_property.vunit_id
     IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.';    
--- Table: valuation.valuation_unit_area
-CREATE TABLE IF NOT EXISTS valuation.valuation_unit_area
-(
-    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    vunit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
-    type_code character varying(20) COLLATE pg_catalog."default",    
-    size numeric(20,2) NOT NULL DEFAULT 0,
-    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    rowversion integer NOT NULL DEFAULT 0,
-    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
-    change_user character varying(50) COLLATE pg_catalog."default",
-    change_time timestamp without time zone NOT NULL DEFAULT now(),            
-    CONSTRAINT valuation_unit_area_pkey PRIMARY KEY (id),
-    CONSTRAINT valuation_unit_area_type_code_fkey FOREIGN KEY (type_code)
-        REFERENCES preparation.area_type (code) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT valuation_unit_area_vunit_id_fkey FOREIGN KEY (vunit_id)
-        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
 
-ALTER TABLE IF EXISTS valuation.valuation_unit_area
-    OWNER to postgres;
-
-COMMENT ON TABLE valuation.valuation_unit_area
-    IS 'Identifies the overall area of the Valuation Unit. This should be the sum of all parcel areas that are part of the Valuation Unit.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.change_action
-    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.change_time
-    IS 'The date and time the row was last modified.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.change_user
-    IS 'The user id of the last person to modify the row.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.rowidentifier
-    IS 'Identifies the all change records for the row in the table.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.rowversion
-    IS 'Sequential value indicating the number of times this row has been modified.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.size
-    IS 'The value of the area. Must be in metres squared and can be converted for display if requried.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.type_code
-    IS 'The type of area. E.g. officialArea, calculatedArea, etc.';
-
-COMMENT ON COLUMN valuation.valuation_unit_area.vunit_id
-    IS 'Identifier for the Valuation Unit this area value is associated to.';    
-    
 -- Table: transaction.bulk_operation_valuation
 CREATE TABLE IF NOT EXISTS transaction.bulk_operation_valuation
 (
