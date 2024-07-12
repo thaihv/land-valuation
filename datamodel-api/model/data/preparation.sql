@@ -15,6 +15,10 @@ INSERT INTO valuation.valuation_unit_type(code, name, description, status, vunit
 INSERT INTO valuation.valuation_unit_type(code, name, description, status, vunit_category_code) VALUES ('garage', 'Garage','Area included to Building for Parking','i', 'buildingUnit');
 
 -- Table: valuation.value_type
+-- For REB mass appraisals need two types of value below
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('reasearchValue','Reasearch Value', 'Collected as field surveying from REB Korea for mass appraisals sample data', 'a');
+INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('decisionValue','Decision Value', 'Used as final value from REB Korea for mass appraisals using multiregression methods', 'a');
+-- -------------
 INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('assessedValue','Assessement Value','The value is amount local government identifes the property worth','a');
 INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('marketValue','Market Value','This value is refelct for market transaction. It is consumer-driven','a');
 INSERT INTO valuation.value_type(code, display_value, description, status) VALUES ('appraisedValue','Appraised Value','This value is the amount a professional appraiser identifes the property worth','a');
@@ -28,6 +32,7 @@ INSERT INTO valuation.value_type(code, display_value, status) VALUES ('reconstru
 INSERT INTO valuation.value_type(code, display_value, status) VALUES ('morgageLendingValue','Morgage Lending Value', 'i');
 INSERT INTO valuation.value_type(code, display_value, status) VALUES ('netPresentValue','Net Present Value', 'i');
 INSERT INTO valuation.value_type(code, display_value, status) VALUES ('synertegicValue','Synertegic Value', 'i');
+
 
 -- Table: preparation.tech_parameter
 INSERT INTO preparation.tech_parameter(code, name, type, description, is_active, is_mandatory, is_virtual) VALUES ('id', 'ID','String','Property label from Cadastre.',true,true,true);
@@ -269,3 +274,68 @@ INSERT INTO preparation.land_use_type (code, display_value, description, status)
 INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('industrial', 'Industrial and Manufactures', 'Land for Industrial and Manufactures', 'a');
 INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('agricultural', 'Agricultural Harvest', 'Land for Agricultural', 'a');
 INSERT INTO preparation.land_use_type (code, display_value, description, status) VALUES ('agriPerennial', 'Agricultural Growing Perennial Harvest', 'Land for Growing Perennial Crops', 'a');
+
+-- Table: preparation.accessory_part_type
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('garage', 'Garage', 'a');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('shop', 'Shop', 'a');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('laundry', 'Laundry', 'a');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('swimmingPool', 'Swimming Pool', 'a');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('pharmacy', 'Pharmacy', 'a');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('bank', 'Bank', 'i');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('office', 'Office', 'i');
+INSERT INTO preparation.accessory_part_type (code, display_value, status) VALUES ('other', 'Other', 'a');
+
+-- Table: preparation.facade_material_type
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('adobe', 'Adobe', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('asbestos', 'Asbestos', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('composite', 'Composite', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('ceramicTiles', 'Ceramic Tiles', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('concrete', 'concrete', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('glass', 'Glass', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('limestone', 'Lime Stone', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('masonry', 'Masonry', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('naturalStone', 'Natural Stone', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('vegetated', 'Vegetated', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('wood', 'Wood', 'a');
+INSERT INTO preparation.facade_material_type (code, display_value, status) VALUES ('metal', 'Metal', 'a');
+
+-- Table: preparation.construction_material_type
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('adobeBlockWalls', 'Adobe Block Walls', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('concreteBlockMasonry', 'Concrete Block Masonry', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('firedBrickMasonry', 'Fired Brick Masonry', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('informalConstruction', 'Informal Constructions', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('massiveStoneMasonry', 'Massive Stone Masonry', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('mobileHomes', 'Mobile Homes', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('mudWalls', 'Mud Walls', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('reinforcedConcrete', 'Reinforced Concrete', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('rubleStoneMasonry', 'Ruble Stone Masonry', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('stoneMasonryBlock', 'Stone Masonry Block', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('wood', 'Wood', 'a');
+INSERT INTO preparation.construction_material_type (code, display_value, status) VALUES ('precastConcreteTilt', 'Precast Concrete Tilt-upWalls', 'a');
+
+-- Table: preparation.heating_system_type
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('centralHeating', 'Central Heating', 'a');
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('districtHeating', 'District Heating', 'a');
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('electricRaditors', 'Electric Raditors', 'a');
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('heatPump', 'Heat Pump', 'a');
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('portableGasHeating', 'Portable Gas Heating', 'a');
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('solarHeating', 'Solar Heating', 'a');
+INSERT INTO preparation.heating_system_type (code, display_value, status) VALUES ('stove', 'Stove', 'a');
+
+-- Table: preparation.heating_system_source_type
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('biogas', 'Bio-Gas', 'a');
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('electricity', 'Electricity', 'a');
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('liquidFuels', 'Liquid Fuels', 'a');
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('naturalGas', 'Natural Gas', 'a');
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('solidFuels', 'Solid Fuels', 'a');
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('straw', 'Straw', 'a');
+INSERT INTO preparation.heating_system_source_type (code, display_value, status) VALUES ('warmWaterOrStream', 'Warm Water Or Stream', 'a');
+
+-- Table: preparation.energy_performance_value
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('A', 'A', 'a');
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('B', 'B', 'a');
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('C', 'C', 'a');
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('D', 'D', 'a');
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('E', 'E', 'a');
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('F', 'F', 'a');
+INSERT INTO preparation.energy_performance_value (code, display_value, status) VALUES ('G', 'G', 'a');
