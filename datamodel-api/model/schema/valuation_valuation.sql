@@ -1881,8 +1881,9 @@ COMMENT ON COLUMN valuation.income_calibration.potential_gross_income
 CREATE TABLE IF NOT EXISTS valuation.valuation
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    transaction_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     assessed_value numeric(20,2) NOT NULL DEFAULT 0,
-    purpose_valuation character varying(500) COLLATE pg_catalog."default",
+    valuation_purpose character varying(500) COLLATE pg_catalog."default",
     valuation_date timestamp(6) without time zone,
     appeal_status_code character varying(20) COLLATE pg_catalog."default",
     approach_type_code character varying(20) COLLATE pg_catalog."default",
@@ -1894,6 +1895,10 @@ CREATE TABLE IF NOT EXISTS valuation.valuation
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT valuation_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_transaction_id_fkey FOREIGN KEY (transaction_id)
+        REFERENCES transaction.transaction (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,    
     CONSTRAINT valuation_appeal_status_code_fkey FOREIGN KEY (appeal_status_code)
         REFERENCES valuation.appeal_status_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -1935,10 +1940,13 @@ COMMENT ON COLUMN valuation.valuation.rowidentifier
 COMMENT ON COLUMN valuation.valuation.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
+COMMENT ON COLUMN valuation.valuation.transaction_id
+    IS 'Identifier to a transaction for report purpose.';    
+    
 COMMENT ON COLUMN valuation.valuation.assessed_value
     IS 'Value of object valuation in numeric.';
 
-COMMENT ON COLUMN valuation.valuation.purpose_valuation
+COMMENT ON COLUMN valuation.valuation.valuation_purpose
     IS 'Display purpose of the valuation.';
 
 COMMENT ON COLUMN valuation.valuation.valuation_date

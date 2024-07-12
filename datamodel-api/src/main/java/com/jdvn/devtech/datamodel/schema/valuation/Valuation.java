@@ -5,6 +5,7 @@ import java.util.Date;
 import org.hibernate.annotations.Comment;
 
 import com.jdvn.devtech.datamodel.schema.DomainObject;
+import com.jdvn.devtech.datamodel.schema.transaction.Transaction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +28,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "valuation", schema = "valuation", indexes = {
 		@Index(name = "valuation_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "valuation_transaction_id_fkey_ind", columnList = "transaction_id"),
 		@Index(name = "valuation_value_type_code_fkey_ind", columnList = "value_type_code"),
 		@Index(name = "valuation_approach_type_code_fkey_ind", columnList = "approach_type_code"),
 		@Index(name = "valuation_appeal_status_code_fkey_ind", columnList = "appeal_status_code")})
@@ -38,12 +40,18 @@ public class Valuation extends DomainObject<String> {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "transaction_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_transaction_id_fkey"))
+	@Comment("Identifier to a transaction for report purpose.")
+    private Transaction transaction;
+	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("Value of object valuation in numeric.")
 	private Double assessed_value;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
+	@Comment("Type of value need to be assessment.")
     private ValueType value_type;
 	
 	@Comment("The date that value is made for valuation.")
@@ -51,7 +59,7 @@ public class Valuation extends DomainObject<String> {
 	
 	@Column(length = 500)
 	@Comment("Display purpose of the valuation.")
-	private String purpose_valuation;	
+	private String valuation_purpose;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "approach_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_type_code_fkey"))
