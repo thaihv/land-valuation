@@ -1942,12 +1942,18 @@ COMMENT ON COLUMN valuation.valuation.rowversion
 
 COMMENT ON COLUMN valuation.valuation.transaction_id
     IS 'Identifier to a transaction for report purpose.';    
+
+COMMENT ON COLUMN valuation.valuation.vunit_id
+    IS 'Identifier to valuation unit of assement activity.';
     
 COMMENT ON COLUMN valuation.valuation.assessed_value
     IS 'Value of object valuation in numeric.';
 
 COMMENT ON COLUMN valuation.valuation.valuation_purpose
     IS 'Display purpose of the valuation.';
+    
+COMMENT ON COLUMN valuation.valuation.value_type_code
+    IS 'Type of value need to be valuated,  i.e., reasearchValue for survey operation, compensationValue for specific purpose, decisionValue for final mass appraisals.';
 
 COMMENT ON COLUMN valuation.valuation.valuation_date
     IS 'The date that value is made for valuation.';

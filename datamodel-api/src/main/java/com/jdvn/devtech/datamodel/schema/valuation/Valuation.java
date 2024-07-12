@@ -51,7 +51,7 @@ public class Valuation extends DomainObject<String> {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "value_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_value_type_code_fkey"))
-	@Comment("Type of value need to be assessment.")
+	@Comment("Type of value need to be valuated,  i.e., reasearchValue for survey operation, compensationValue for specific purpose, decisionValue for final mass appraisals.")
     private ValueType value_type;
 	
 	@Comment("The date that value is made for valuation.")
@@ -71,6 +71,7 @@ public class Valuation extends DomainObject<String> {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_vunit_id_fkey"))
+	@Comment("Identifier to valuation unit of assement activity.")
     private ValuationUnit valuation_unit;
 	    
 	@Override
