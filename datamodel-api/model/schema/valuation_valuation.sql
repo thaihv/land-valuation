@@ -1941,7 +1941,7 @@ COMMENT ON COLUMN valuation.valuation.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
 
 COMMENT ON COLUMN valuation.valuation.transaction_id
-    IS 'Identifier to a transaction for report purpose.';    
+    IS 'Identifier to a transaction for report purposes.';    
 
 COMMENT ON COLUMN valuation.valuation.vunit_id
     IS 'Identifier to valuation unit of assement activity.';

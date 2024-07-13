@@ -42,7 +42,7 @@ public class Valuation extends DomainObject<String> {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "transaction_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_transaction_id_fkey"))
-	@Comment("Identifier to a transaction for report purpose.")
+	@Comment("Identifier to a transaction for report purposes.")
     private Transaction transaction;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
