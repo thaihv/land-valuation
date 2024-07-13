@@ -2522,6 +2522,57 @@ COMMENT ON COLUMN application.application_property.application_id
 COMMENT ON COLUMN application.application_property.vunit_id
     IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.';    
 
+-- Table: valuation.valuation_appeal
+CREATE TABLE IF NOT EXISTS valuation.valuation_appeal
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    valuation_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    appeal_subject character varying(1000) COLLATE pg_catalog."default" NOT NULL,
+    appeal_date timestamp(6) without time zone,
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),            
+    CONSTRAINT valuation_appeal_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_appeal_valuation_id_fkey FOREIGN KEY (valuation_id)
+        REFERENCES valuation.valuation (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_appeal
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_appeal
+    IS 'To be enable tracking status of possible appeals against to assessed values.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN valuation.valuation_appeal.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.appeal_date
+    IS 'The date that appeal is submited against the valuation unit.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.appeal_subject
+    IS 'The subject of the appeal need to be handle.';
+
+COMMENT ON COLUMN valuation.valuation_appeal.valuation_id
+    IS 'Identifier to a valuation activity';
+    
 -- Table: transaction.bulk_operation_valuation
 CREATE TABLE IF NOT EXISTS transaction.bulk_operation_valuation
 (
