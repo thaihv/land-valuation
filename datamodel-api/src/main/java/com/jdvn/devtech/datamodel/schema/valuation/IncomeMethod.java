@@ -19,41 +19,41 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "income_calibration", schema = "valuation")
+@Table(name = "income_method", schema = "valuation")
 @Comment("Represents income information, such as gross, effective and net income and operating expenses and capitalization rates characteristics for valuation approach of income.")
-public class IncomeCalibration {
+public class IncomeMethod {
 
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	@Comment("The income approach identifier.")
 	private String id;	
 	
-	@Comment("The date that income approach calibration implemented.")
-	private Date calibrated_date;
+	@Comment("The date that income approach implemented.")
+	private Date implemented_date;
 	
-	@Comment("The net income value(in currency) in calibration.")
+	@Comment("The net income value(in currency) in implementation.")
 	private Double netIncome;
 
-	@Comment("The potential gross income value(in currency) in calibration.")
+	@Comment("The potential gross income value(in currency) in implementation.")
 	private Double potential_gross_income;
 	
-	@Comment("The effective gross income value(in currency) in calibration.")
+	@Comment("The effective gross income value(in currency) in implementation.")
 	private Double effective_gross_income;
 	
-	@Comment("The operating_expenses (in currency) in calibration.")
+	@Comment("The operating_expenses (in currency) in implementation.")
 	private Double operating_expenses;
 	
-	@Comment("The capitalization rate in calibration.")
+	@Comment("The capitalization rate in implementation.")
 	private Double capitalization_rate;
 	
 	@Comment("The gross income multiplier used in calculated.")
 	private Double gross_income_multiplier;
 	
-	@Comment("The discount rate in calibration.")
+	@Comment("The discount rate in implementation.")
 	private Double discount_rate;
 						
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The value estimated from income calibration.")
+	@Comment("The value estimated from income implementation.")
 	private Double estimate_value;
 	
 	@OneToOne(mappedBy = "income_approach")

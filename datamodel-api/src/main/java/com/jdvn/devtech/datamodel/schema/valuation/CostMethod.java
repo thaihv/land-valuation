@@ -23,9 +23,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "cost_calibration", schema = "valuation")
+@Table(name = "cost_method", schema = "valuation")
 @Comment("Represents cost-related characteristics, such as cost type (e.g., replacement or reproduction cost), cost-related attributes, chronological and effective age of building and obsolescence for valuation approach of cost.")
-public class CostCalibration {
+public class CostMethod {
 
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
@@ -33,11 +33,11 @@ public class CostCalibration {
 	private String id;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "cost_approach_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "cost_calibration_cost_approach_type_code_fkey"))
+    @JoinColumn(name = "cost_approach_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "cost_method_cost_approach_type_code_fkey"))
     private CostApproachType cost_approach_type;
 	
-	@Comment("The date that cost approach calibration implemented.")
-	private Date calibrated_date;
+	@Comment("The date that cost approach implemented.")
+	private Date implemented_date;
 
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("The value (in currency) calculated per each square meter.")
@@ -47,7 +47,7 @@ public class CostCalibration {
 	@Comment("The value (in currency) in total cost calculated.")
 	private Double total_cost;
 	
-	@Comment("The source of cost price the calibration refered to.")
+	@Comment("The source of cost price the implementation refered to.")
 	private String source_of_cost_price;
 	
 	@Comment("The chronological age of property.")
@@ -69,7 +69,7 @@ public class CostCalibration {
 	private Double total_obsolescence;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The value (in currency) estimated from cost calibration.")
+	@Comment("The value (in currency) estimated from cost implementation.")
 	private Double estimate_value;
 
 	@OneToOne(mappedBy = "cost_approach")

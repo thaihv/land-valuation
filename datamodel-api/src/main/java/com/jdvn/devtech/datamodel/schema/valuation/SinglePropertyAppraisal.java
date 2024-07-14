@@ -34,17 +34,17 @@ public class SinglePropertyAppraisal {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of cost approach, if any.")
     @JoinColumn(name = "cost_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_cost_approach_id_fkey"))
-    private CostCalibration cost_approach;
+    private CostMethod cost_approach;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of income approach, if any.")
     @JoinColumn(name = "income_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_income_approach_id_fkey"))
-    private IncomeCalibration income_approach;
+    private IncomeMethod income_approach;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of sales comparison approach, if any.")
     @JoinColumn(name = "sales_comparison_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_sales_comparison_approach_id_fkey"))
-    private SalesComparisonCalibration sales_comparison_approach;
+    private SalesComparisonMethod sales_comparison_approach;
 		
 	@OneToOne
 	@MapsId

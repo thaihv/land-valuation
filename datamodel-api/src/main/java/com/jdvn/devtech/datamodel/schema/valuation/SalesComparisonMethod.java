@@ -23,24 +23,24 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sales_compare_calibration", schema = "valuation")
+@Table(name = "sales_comparison_method", schema = "valuation")
 @Comment("Represents contents of adjustments of time, location and physical ones with estimated value for sales comparision between valuation units.")
-public class SalesComparisonCalibration {
+public class SalesComparisonMethod {
 
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	@Comment("The sales comparision approach identifier.")
 	private String id;	
 	
-	@Comment("The date that sales comparision approach calibration implemented.")
-	private Date calibrated_date;
+	@Comment("The date that sales comparision approach implemented.")
+	private Date implemented_date;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "compared_vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "sales_compare_calibration_compared_vunit_id_fkey"))
+    @JoinColumn(name = "compared_vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "sales_comparison_method_compared_vunit_id_fkey"))
     private ValuationUnit valuation_unit;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The value (in currency) estimated from calibration.")
+	@Comment("The value (in currency) estimated from the implementation.")
 	private Double estimate_value;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")

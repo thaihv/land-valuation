@@ -104,7 +104,7 @@ public class ValuationUnit extends DomainObject<String> {
 	private RRR rrr;
 
 	@OneToOne(mappedBy = "valuation_unit")
-	private SalesComparisonCalibration sales_comparison;
+	private SalesComparisonMethod sales_comparison;
 
 	@Override
 	public String print() {

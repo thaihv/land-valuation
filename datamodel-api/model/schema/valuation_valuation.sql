@@ -1713,18 +1713,18 @@ COMMENT ON COLUMN valuation.sales_statistic.price_index
 COMMENT ON COLUMN valuation.sales_statistic.group_id
     IS 'Reference to valuation unit group for statistic.';    
 
--- Table: valuation.sales_compare_calibration
-CREATE TABLE IF NOT EXISTS valuation.sales_compare_calibration
+-- Table: valuation.sales_comparison_method
+CREATE TABLE IF NOT EXISTS valuation.sales_comparison_method
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     compared_vunit_id character varying(40),
-    calibrated_date timestamp(6) without time zone,
+    implemented_date timestamp(6) without time zone,
     time_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     location_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     physical_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
-    CONSTRAINT sales_compare_calibration_pkey PRIMARY KEY (id),
-    CONSTRAINT sales_compare_calibration_compared_vunit_id_fkey FOREIGN KEY (compared_vunit_id)
+    CONSTRAINT sales_comparison_method_pkey PRIMARY KEY (id),
+    CONSTRAINT sales_comparison_method_compared_vunit_id_fkey FOREIGN KEY (compared_vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -1732,35 +1732,35 @@ CREATE TABLE IF NOT EXISTS valuation.sales_compare_calibration
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS valuation.sales_compare_calibration
+ALTER TABLE IF EXISTS valuation.sales_comparison_method
     OWNER to postgres;
 
-COMMENT ON TABLE valuation.sales_compare_calibration
+COMMENT ON TABLE valuation.sales_comparison_method
     IS 'Represents contents of adjustments of time, location and physical ones with estimated value for sales comparision between valuation units.';
 
-COMMENT ON COLUMN valuation.sales_compare_calibration.id
+COMMENT ON COLUMN valuation.sales_comparison_method.id
     IS 'The sales comparision approach identifier.';
 
-COMMENT ON COLUMN valuation.sales_compare_calibration.calibrated_date
+COMMENT ON COLUMN valuation.sales_comparison_method.implemented_date
     IS 'The date that sales comparision approach implemented.';
 
-COMMENT ON COLUMN valuation.sales_compare_calibration.estimate_value
-    IS 'Base price index calculated from transaction prices.';
+COMMENT ON COLUMN valuation.sales_comparison_method.estimate_value
+    IS 'The value (in currency) estimated from the implementation.';
 
-COMMENT ON COLUMN valuation.sales_compare_calibration.location_adjustment
+COMMENT ON COLUMN valuation.sales_comparison_method.location_adjustment
     IS 'Adjustments of location in value to compared valuation unit.';
 
-COMMENT ON COLUMN valuation.sales_compare_calibration.physical_adjustment
+COMMENT ON COLUMN valuation.sales_comparison_method.physical_adjustment
     IS 'Adjustments of physical ones in value to compared valuation unit.';
 
-COMMENT ON COLUMN valuation.sales_compare_calibration.time_adjustment
+COMMENT ON COLUMN valuation.sales_comparison_method.time_adjustment
     IS 'Adjustments of time in value to compared valuation unit.';    
     
--- Table: valuation.cost_calibration
-CREATE TABLE IF NOT EXISTS valuation.cost_calibration
+-- Table: valuation.cost_method
+CREATE TABLE IF NOT EXISTS valuation.cost_method
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    calibrated_date timestamp(6) without time zone,
+    implemented_date timestamp(6) without time zone,
     cost_approach_type_code character varying(40) COLLATE pg_catalog."default",
     cost_price_per_square_meter numeric(20,2) NOT NULL DEFAULT 0,
     source_of_cost_price character varying(255) COLLATE pg_catalog."default",
@@ -1772,8 +1772,8 @@ CREATE TABLE IF NOT EXISTS valuation.cost_calibration
     external_obsolescence double precision,
     total_obsolescence double precision,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
-    CONSTRAINT cost_calibration_pkey PRIMARY KEY (id),
-    CONSTRAINT cost_calibration_cost_approach_type_code_fkey FOREIGN KEY (cost_approach_type_code)
+    CONSTRAINT cost_method_pkey PRIMARY KEY (id),
+    CONSTRAINT cost_method_cost_approach_type_code_fkey FOREIGN KEY (cost_approach_type_code)
         REFERENCES valuation.cost_approach_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -1781,53 +1781,53 @@ CREATE TABLE IF NOT EXISTS valuation.cost_calibration
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS valuation.cost_calibration
+ALTER TABLE IF EXISTS valuation.cost_method
     OWNER to postgres;
 
-COMMENT ON TABLE valuation.cost_calibration
+COMMENT ON TABLE valuation.cost_method
     IS 'Represents cost-related characteristics, such as cost type (e.g., replacement or reproduction cost), cost-related attributes, chronological and effective age of building and obsolescence for valuation approach of cost.';
 
-COMMENT ON COLUMN valuation.cost_calibration.id
+COMMENT ON COLUMN valuation.cost_method.id
     IS 'The cost approach identifier.';
 
-COMMENT ON COLUMN valuation.cost_calibration.calibrated_date
-    IS 'The date that cost approach calibration implemented.';
+COMMENT ON COLUMN valuation.cost_method.implemented_date
+    IS 'The date that cost approach implemented.';
 
-COMMENT ON COLUMN valuation.cost_calibration.chronological_age
+COMMENT ON COLUMN valuation.cost_method.chronological_age
     IS 'The chronological age of property.';
 
-COMMENT ON COLUMN valuation.cost_calibration.cost_price_per_square_meter
+COMMENT ON COLUMN valuation.cost_method.cost_price_per_square_meter
     IS 'The value (in currency) calculated per each square meter.';
 
-COMMENT ON COLUMN valuation.cost_calibration.effective_age
+COMMENT ON COLUMN valuation.cost_method.effective_age
     IS 'The effective age of property.';
 
-COMMENT ON COLUMN valuation.cost_calibration.estimate_value
-    IS 'The value (in currency) estimated from cost calibration.';
+COMMENT ON COLUMN valuation.cost_method.estimate_value
+    IS 'The value (in currency) estimated from cost implementation.';
 
-COMMENT ON COLUMN valuation.cost_calibration.external_obsolescence
+COMMENT ON COLUMN valuation.cost_method.external_obsolescence
     IS 'The value (in currency) calculated for external obsolescence.';
 
-COMMENT ON COLUMN valuation.cost_calibration.functional_obsolescence
+COMMENT ON COLUMN valuation.cost_method.functional_obsolescence
     IS 'The value (in currency) calculated for functional obsolescence.';
 
-COMMENT ON COLUMN valuation.cost_calibration.physical_obsolescence
+COMMENT ON COLUMN valuation.cost_method.physical_obsolescence
     IS 'The value (in currency) calculated for physical obsolescence.';
 
-COMMENT ON COLUMN valuation.cost_calibration.source_of_cost_price
-    IS 'The source of cost price the calibration refered to.';
+COMMENT ON COLUMN valuation.cost_method.source_of_cost_price
+    IS 'The source of cost price the implementation refered to.';
 
-COMMENT ON COLUMN valuation.cost_calibration.total_cost
+COMMENT ON COLUMN valuation.cost_method.total_cost
     IS 'The value (in currency) in total cost calculated.';
 
-COMMENT ON COLUMN valuation.cost_calibration.total_obsolescence
+COMMENT ON COLUMN valuation.cost_method.total_obsolescence
     IS 'The value (in currency) calculated for total obsolescence.';    
     
--- Table: valuation.income_calibration
-CREATE TABLE IF NOT EXISTS valuation.income_calibration
+-- Table: valuation.income_method
+CREATE TABLE IF NOT EXISTS valuation.income_method
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    calibrated_date timestamp(6) without time zone,
+    implemented_date timestamp(6) without time zone,
     net_income double precision,
     potential_gross_income double precision,
     effective_gross_income double precision,
@@ -1841,41 +1841,41 @@ CREATE TABLE IF NOT EXISTS valuation.income_calibration
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS valuation.income_calibration
+ALTER TABLE IF EXISTS valuation.income_method
     OWNER to postgres;
 
-COMMENT ON TABLE valuation.income_calibration
+COMMENT ON TABLE valuation.income_method
     IS 'Represents income information, such as gross, effective and net income and operating expenses and capitalization rates characteristics for valuation approach of income.';
 
-COMMENT ON COLUMN valuation.income_calibration.id
+COMMENT ON COLUMN valuation.income_method.id
     IS 'The income approach identifier.';
 
-COMMENT ON COLUMN valuation.income_calibration.calibrated_date
-    IS 'The date that income approach calibration implemented.';
+COMMENT ON COLUMN valuation.income_method.implemented_date
+    IS 'The date that income approach implemented.';
 
-COMMENT ON COLUMN valuation.income_calibration.capitalization_rate
-    IS 'The capitalization rate in calibration.';
+COMMENT ON COLUMN valuation.income_method.capitalization_rate
+    IS 'The capitalization rate in implementation.';
 
-COMMENT ON COLUMN valuation.income_calibration.discount_rate
-    IS 'The discount rate in calibration.';
+COMMENT ON COLUMN valuation.income_method.discount_rate
+    IS 'The discount rate in implementation.';
 
-COMMENT ON COLUMN valuation.income_calibration.effective_gross_income
-    IS 'The effective gross income value(in currency) in calibration.';
+COMMENT ON COLUMN valuation.income_method.effective_gross_income
+    IS 'The effective gross income value(in currency) in implementation.';
 
-COMMENT ON COLUMN valuation.income_calibration.estimate_value
-    IS 'The value estimated from income calibration.';
+COMMENT ON COLUMN valuation.income_method.estimate_value
+    IS 'The value estimated from income implementation.';
 
-COMMENT ON COLUMN valuation.income_calibration.gross_income_multiplier
+COMMENT ON COLUMN valuation.income_method.gross_income_multiplier
     IS 'The gross income multiplier used in calculated.';
 
-COMMENT ON COLUMN valuation.income_calibration.net_income
-    IS 'The net income value(in currency) in calibration.';
+COMMENT ON COLUMN valuation.income_method.net_income
+    IS 'The net income value(in currency) in implementation.';
 
-COMMENT ON COLUMN valuation.income_calibration.operating_expenses
-    IS 'The operating_expenses (in currency) in calibration.';
+COMMENT ON COLUMN valuation.income_method.operating_expenses
+    IS 'The operating_expenses (in currency) in implementation.';
 
-COMMENT ON COLUMN valuation.income_calibration.potential_gross_income
-    IS 'The potential gross income value(in currency) in calibration.';   
+COMMENT ON COLUMN valuation.income_method.potential_gross_income
+    IS 'The potential gross income value(in currency) in implementation.';   
     
 -- Table: valuation.valuation
 CREATE TABLE IF NOT EXISTS valuation.valuation
@@ -2001,20 +2001,20 @@ CREATE TABLE IF NOT EXISTS valuation.single_appraisal
     income_approach_id character varying(40) COLLATE pg_catalog."default",
     sales_comparison_approach_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT single_appraisal_pkey PRIMARY KEY (id),
-    CONSTRAINT single_appraisal_cost_approach_id_fkey FOREIGN KEY (cost_approach_id)
-        REFERENCES valuation.cost_calibration (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT single_appraisal_id_fkey FOREIGN KEY (id)
         REFERENCES valuation.valuation (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
+    CONSTRAINT single_appraisal_cost_approach_id_fkey FOREIGN KEY (cost_approach_id)
+        REFERENCES valuation.cost_method (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,        
     CONSTRAINT single_appraisal_income_approach_id_fkey FOREIGN KEY (income_approach_id)
-        REFERENCES valuation.income_calibration (id) MATCH SIMPLE
+        REFERENCES valuation.income_method (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT single_appraisal_sales_comparison_approach_id_fkey FOREIGN KEY (sales_comparison_approach_id)
-        REFERENCES valuation.sales_compare_calibration (id) MATCH SIMPLE
+        REFERENCES valuation.sales_comparison_method (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )

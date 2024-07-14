@@ -39,5 +39,5 @@ public class CostApproachType{
 	private char status;
 	
 	@OneToOne(mappedBy = "cost_approach_type")
-	private CostCalibration cost_calibration;
+	private CostMethod cost_calibration;
 }
