@@ -1947,7 +1947,7 @@ COMMENT ON COLUMN valuation.valuation.vunit_id
     IS 'Identifier to valuation unit of assement activity.';
     
 COMMENT ON COLUMN valuation.valuation.assessed_value
-    IS 'Value of object valuation in numeric.';
+    IS 'The final decision value of valuation unit in currency.';
 
 COMMENT ON COLUMN valuation.valuation.valuation_purpose
     IS 'Display purpose of the valuation.';

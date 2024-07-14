@@ -46,7 +46,7 @@ public class Valuation extends DomainObject<String> {
     private Transaction transaction;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("Value of object valuation in numeric.")
+	@Comment("The final decision value of valuation unit in currency.")
 	private Double assessed_value;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
