@@ -416,24 +416,56 @@ COMMENT ON COLUMN valuation.valuation_unit.change_user
 
 COMMENT ON COLUMN valuation.valuation_unit.change_time
     IS 'The date and time the row was last modified.';
-            
+
+-- Table: preparation.valuation_model
+CREATE TABLE IF NOT EXISTS preparation.valuation_model
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    name character varying(500) COLLATE pg_catalog."default",
+    transaction_id character varying(40) COLLATE pg_catalog."default",    
+    version integer NOT NULL DEFAULT 1,
+    CONSTRAINT valuation_model_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_model_transaction_id_fkey FOREIGN KEY (transaction_id)
+        REFERENCES transaction.transaction (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.valuation_model
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.valuation_model
+    IS 'Used to store information about valuation model. it includes attributes such as transaction, version to trace inputs and outputs of model implementation';
+
+COMMENT ON COLUMN preparation.valuation_model.id
+    IS 'Identifier of the model.';
+
+COMMENT ON COLUMN preparation.valuation_model.name
+    IS 'Display name of the valuation model.';
+
+COMMENT ON COLUMN preparation.valuation_model.version
+    IS 'Version number of the model as system can support many versions in each transaction.';
+
+COMMENT ON COLUMN preparation.valuation_model.transaction_id
+    IS 'Identifier to which transaction is on valuation activities.';
+                
 -- Table: preparation.model_parameters
 CREATE TABLE IF NOT EXISTS preparation.model_parameters
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    model_id character varying(40) COLLATE pg_catalog."default",
     vunit_id character varying(40) COLLATE pg_catalog."default",
-    transaction_id character varying(40) COLLATE pg_catalog."default",
-    parameter_code character varying(40) COLLATE pg_catalog."default",
-    version integer NOT NULL DEFAULT 1,
-    value double precision NOT NULL DEFAULT 0,                
+    parameter_code character varying(40) COLLATE pg_catalog."default",    
+    value numeric(20,2) NOT NULL DEFAULT 0,    
     CONSTRAINT model_parameters_pkey PRIMARY KEY (id),
-    CONSTRAINT model_parameters_vunit_transaction_version_parameter UNIQUE (vunit_id, transaction_id, version, parameter_code),
-    CONSTRAINT model_parameters_parameter_code_fkey FOREIGN KEY (parameter_code)
-        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
+    CONSTRAINT model_parameters_model_id_fkey FOREIGN KEY (model_id)
+        REFERENCES preparation.valuation_model (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT model_parameters_transaction_id_fkey FOREIGN KEY (transaction_id)
-        REFERENCES transaction.transaction (id) MATCH SIMPLE
+    CONSTRAINT model_parameters_parameter_code_fkey FOREIGN KEY (parameter_code)
+        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT model_parameters_vunit_id_fkey FOREIGN KEY (vunit_id)
@@ -456,14 +488,11 @@ COMMENT ON COLUMN preparation.model_parameters.id
 COMMENT ON COLUMN preparation.model_parameters.value
     IS 'Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.';
 
-COMMENT ON COLUMN preparation.model_parameters.version
-    IS 'Version number of the model as system can support many versions in each transaction.';
+COMMENT ON COLUMN preparation.model_parameters.model_id
+    IS 'The id of the model associated.';
 
 COMMENT ON COLUMN preparation.model_parameters.parameter_code
     IS 'The code of the technical parameter.';
-
-COMMENT ON COLUMN preparation.model_parameters.transaction_id
-    IS 'Identifier to a transaction as the parameter value of a valuation unit might changes by time depends on valuation activity times.';
 
 COMMENT ON COLUMN preparation.model_parameters.vunit_id
     IS 'The id of the valuation unit.';
