@@ -451,8 +451,8 @@ COMMENT ON COLUMN preparation.valuation_model.version
 COMMENT ON COLUMN preparation.valuation_model.transaction_id
     IS 'Identifier to which transaction is on valuation activities.';
                 
--- Table: preparation.model_parameters
-CREATE TABLE IF NOT EXISTS preparation.model_parameters
+-- Table: preparation.model_parameter
+CREATE TABLE IF NOT EXISTS preparation.model_parameter
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     model_id character varying(40) COLLATE pg_catalog."default",
@@ -476,29 +476,29 @@ CREATE TABLE IF NOT EXISTS preparation.model_parameters
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS preparation.model_parameters
+ALTER TABLE IF EXISTS preparation.model_parameter
     OWNER to postgres;
 
-COMMENT ON TABLE preparation.model_parameters
+COMMENT ON TABLE preparation.model_parameter
     IS 'Used to store values of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model.';
 
-COMMENT ON COLUMN preparation.model_parameters.id
+COMMENT ON COLUMN preparation.model_parameter.id
     IS 'Identifier of the parameter for model.';
 
-COMMENT ON COLUMN preparation.model_parameters.value
+COMMENT ON COLUMN preparation.model_parameter.value
     IS 'Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.';
 
-COMMENT ON COLUMN preparation.model_parameters.model_id
+COMMENT ON COLUMN preparation.model_parameter.model_id
     IS 'The id of the model associated.';
 
-COMMENT ON COLUMN preparation.model_parameters.parameter_code
+COMMENT ON COLUMN preparation.model_parameter.parameter_code
     IS 'The code of the technical parameter.';
 
-COMMENT ON COLUMN preparation.model_parameters.vunit_id
+COMMENT ON COLUMN preparation.model_parameter.vunit_id
     IS 'The id of the valuation unit.';
     
--- Table: preparation.model_coefficients
-CREATE TABLE IF NOT EXISTS preparation.model_coefficients
+-- Table: preparation.model_coefficient
+CREATE TABLE IF NOT EXISTS preparation.model_coefficient
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     model_id character varying(40) COLLATE pg_catalog."default",
@@ -517,22 +517,22 @@ CREATE TABLE IF NOT EXISTS preparation.model_coefficients
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS preparation.model_coefficients
+ALTER TABLE IF EXISTS preparation.model_coefficient
     OWNER to postgres;
 
-COMMENT ON TABLE preparation.model_coefficients
-    IS 'Used to store the calculated coefficients and constants of regression model.';
+COMMENT ON TABLE preparation.model_coefficient
+    IS 'Used to store the calculated coefficients of regression model.';
 
-COMMENT ON COLUMN preparation.model_coefficients.id
+COMMENT ON COLUMN preparation.model_coefficient.id
     IS 'Identifier of the parameter for model.';
 
-COMMENT ON COLUMN preparation.model_coefficients.value
+COMMENT ON COLUMN preparation.model_coefficient.value
     IS 'Value of the coefficient corresponding with parameter code.';
 
-COMMENT ON COLUMN preparation.model_coefficients.model_id
+COMMENT ON COLUMN preparation.model_coefficient.model_id
     IS 'The id of the model associated.';
 
-COMMENT ON COLUMN preparation.model_coefficients.parameter_code
+COMMENT ON COLUMN preparation.model_coefficient.parameter_code
     IS 'The code of the technical parameter.';
 -- Table: valuation.valuation_unit_uses_source
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source

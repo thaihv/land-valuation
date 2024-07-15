@@ -22,7 +22,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "model_parameters", schema = "preparation")
+@Table(name = "model_parameter", schema = "preparation")
 @Comment("Used to store values of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model.")
 public class ModelHasParameter {  
 

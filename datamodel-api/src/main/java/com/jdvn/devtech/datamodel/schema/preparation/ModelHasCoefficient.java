@@ -20,8 +20,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "model_coefficients", schema = "preparation")
-@Comment("Used to store the calculated coefficients and constants of regression model.")
+@Table(name = "model_coefficient", schema = "preparation")
+@Comment("Used to store the calculated coefficients of regression model.")
 public class ModelHasCoefficient {  
 
 	@Id
