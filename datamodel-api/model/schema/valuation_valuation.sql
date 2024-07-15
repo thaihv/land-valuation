@@ -420,12 +420,17 @@ COMMENT ON COLUMN valuation.valuation_unit.change_time
 -- Table: valuation.valuation_units_parameters_links
 CREATE TABLE IF NOT EXISTS valuation.valuation_units_parameters_links
 (
-	vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,    
-    value character varying(500) COLLATE pg_catalog."default",
-    CONSTRAINT valuation_units_parameters_links_pkey PRIMARY KEY (parameter_code, vunit_id),
+    vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,    
+    transaction_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    value character varying(1000) COLLATE pg_catalog."default",
+    CONSTRAINT valuation_units_parameters_links_pkey PRIMARY KEY (parameter_code, transaction_id, vunit_id),
     CONSTRAINT valuation_units_parameters_links_parameter_code_fkey FOREIGN KEY (parameter_code)
         REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_units_parameters_links_transaction_id_fkey FOREIGN KEY (transaction_id)
+        REFERENCES transaction.transaction (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT valuation_units_parameters_links_vunit_id_fkey FOREIGN KEY (vunit_id)
@@ -442,11 +447,14 @@ ALTER TABLE IF EXISTS valuation.valuation_units_parameters_links
 COMMENT ON TABLE valuation.valuation_units_parameters_links
     IS 'Value of parameters as independent variable for each unit for regression model.';
 
-COMMENT ON COLUMN valuation.valuation_units_parameters_links.vunit_id
-    IS 'The id of the valuation unit.';
-    
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
     IS 'The code of the technical parameter.';
+
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.transaction_id
+    IS 'Identifier to a transaction as the parameter value of a valuation unit might changes by time depends on valuation activity times.';
+
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.vunit_id
+    IS 'The id of the valuation unit.';
 
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
     IS 'Value of the parameter with corresponding valuation unit.';

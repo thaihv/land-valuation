@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.jdvn.devtech.datamodel.schema.preparation.TechnicalParameter;
+import com.jdvn.devtech.datamodel.schema.transaction.Transaction;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -33,6 +34,10 @@ public class ValuationUnitHasParameter {
 	private String vunit_id;
     @Id
 	@Column(length = 40, nullable = false)
+	@Comment("Identifier to a transaction as the parameter value of a valuation unit might changes by time depends on valuation activity times.")
+	private String transaction_id;	
+    @Id
+	@Column(length = 40, nullable = false)
 	@Comment("The code of the technical parameter.")
 	private String parameter_code;
 
@@ -42,12 +47,14 @@ public class ValuationUnitHasParameter {
 	
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vunit_id", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_vunit_id_fkey"))
-    @Comment("Reference to a valuation unit.")
     private ValuationUnit valuation_unit;
     
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "transaction_id", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_transaction_id_fkey"))
+    private Transaction transaction;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parameter_code", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_parameter_code_fkey"))
-    @Comment("Reference to a technical parameter.")
     private TechnicalParameter technical_parameter;
     
 }
