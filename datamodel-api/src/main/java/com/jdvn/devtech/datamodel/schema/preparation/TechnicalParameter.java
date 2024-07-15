@@ -9,7 +9,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitHasParameter;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnitType;
 
 import jakarta.persistence.CascadeType;
@@ -70,5 +69,5 @@ public class TechnicalParameter {
 	
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "technical_parameter")
     @JsonBackReference
-    private Set<ValuationUnitHasParameter> unit_parameters;
+    private Set<ModelHasParameter> unit_parameters;
 }

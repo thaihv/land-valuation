@@ -11,6 +11,7 @@ import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.address.Address;
 import com.jdvn.devtech.datamodel.schema.administrative.RRR;
 import com.jdvn.devtech.datamodel.schema.preparation.NeighborhoodType;
+import com.jdvn.devtech.datamodel.schema.preparation.ModelHasParameter;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -92,7 +93,7 @@ public class ValuationUnit extends DomainObject<String> {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "valuation_unit")
 	@JsonBackReference
-	private Set<ValuationUnitHasParameter> unit_parameters;
+	private Set<ModelHasParameter> unit_parameters;
 
 	@OneToOne(mappedBy = "valuation_unit")
 	private Valuation valuation;
