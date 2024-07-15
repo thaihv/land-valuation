@@ -1237,8 +1237,6 @@ CREATE TABLE IF NOT EXISTS valuation.mass_appraisal_performance
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     analysis_date timestamp(6) without time zone,
-    appraisal_level numeric(20,2),
-    appraisal_uniformity numeric(20,2),
     simple_size integer NOT NULL,
     analysis_type_code character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT mass_appraisal_performance_pkey PRIMARY KEY (id),
@@ -1261,12 +1259,6 @@ COMMENT ON COLUMN valuation.mass_appraisal_performance.id
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_date
     IS 'The analysis date of mass appraisal implementation.';
-
-COMMENT ON COLUMN valuation.mass_appraisal_performance.appraisal_level
-    IS 'The appraisal level for mass appraisal process implementation.';
-
-COMMENT ON COLUMN valuation.mass_appraisal_performance.appraisal_uniformity
-    IS 'The appraisal_uniformity for mass appraisal process implementation.';
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.simple_size
     IS 'Size of mass appraisal model sample.';

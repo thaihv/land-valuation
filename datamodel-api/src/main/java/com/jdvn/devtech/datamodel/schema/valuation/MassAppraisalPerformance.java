@@ -39,17 +39,17 @@ public class MassAppraisalPerformance {
 	@Comment("Size of mass appraisal model sample.")
 	private int simple_size;
 	
-	@Column(columnDefinition = "numeric(20,2)")
-	@Comment("The appraisal level for mass appraisal process implementation. The Appraisal level is an indicator that shows the overall or typical\r\n"
-			+ "ratio of the appraised values to the market values and ascertained by central tendency measures such\r\n"
-			+ "as, mean, median, weighted mean")
-	private Double appraisal_level;
-
-	@Column(columnDefinition = "numeric(20,2)")
-	@Comment("The appraisal_uniformity for mass appraisal process implementation. The Appraisal uniformity defines appraisal\r\n"
-			+ "consistency and equity between and within groups of properties. It could be expressed for instance, by\r\n"
-			+ "the coefficient of dispersion, coefficient of variation, or price-related differential measures")
-	private Double appraisal_uniformity;
+//	@Column(columnDefinition = "numeric(20,2)")
+//	@Comment("The appraisal level for mass appraisal process implementation. The Appraisal level is an indicator that shows the overall or typical\r\n"
+//			+ "ratio of the appraised values to the market values and ascertained by central tendency measures such\r\n"
+//			+ "as, mean, median, weighted mean")
+//	private Double appraisal_level;
+//
+//	@Column(columnDefinition = "numeric(20,2)")
+//	@Comment("The appraisal_uniformity for mass appraisal process implementation. The Appraisal uniformity defines appraisal\r\n"
+//			+ "consistency and equity between and within groups of properties. It could be expressed for instance, by\r\n"
+//			+ "the coefficient of dispersion, coefficient of variation, or price-related differential measures")
+//	private Double appraisal_uniformity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "analysis_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "mass_appraisal_performance_analysis_type_code_fkey"))
