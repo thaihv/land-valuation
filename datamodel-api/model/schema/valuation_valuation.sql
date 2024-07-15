@@ -445,7 +445,7 @@ ALTER TABLE IF EXISTS valuation.valuation_units_parameters_links
     OWNER to postgres;
 
 COMMENT ON TABLE valuation.valuation_units_parameters_links
-    IS 'Value of parameters as independent variable for each unit for regression model.';
+    IS 'Value of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model. This can be a discrete value or a converted value.';
 
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
     IS 'The code of the technical parameter.';
@@ -457,7 +457,7 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.vunit_id
     IS 'The id of the valuation unit.';
 
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
-    IS 'Value of the parameter with corresponding valuation unit.';
+    IS 'Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.';
 
 -- Table: valuation.valuation_unit_uses_source
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source
