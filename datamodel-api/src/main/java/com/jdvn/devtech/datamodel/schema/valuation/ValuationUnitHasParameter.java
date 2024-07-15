@@ -25,8 +25,8 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "valuation_units_parameters_links", schema = "valuation")
 @Comment("Value of parameters as independent variable for each unit for regression model.")
-@IdClass(UnitParameterId.class)
-public class UnitHasParameterValue {  
+@IdClass(ValuationUnitParameterId.class)
+public class ValuationUnitHasParameter {  
 	@Id
 	@Column(length = 40, nullable = false)
 	@Comment("The id of the valuation unit.")

@@ -92,7 +92,7 @@ public class ValuationUnit extends DomainObject<String> {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "valuation_unit")
 	@JsonBackReference
-	private Set<UnitHasParameterValue> unit_parameters;
+	private Set<ValuationUnitHasParameter> unit_parameters;
 
 	@OneToOne(mappedBy = "valuation_unit")
 	private Valuation valuation;
