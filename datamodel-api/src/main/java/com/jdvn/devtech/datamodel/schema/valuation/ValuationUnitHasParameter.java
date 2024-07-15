@@ -25,7 +25,7 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "valuation_units_parameters_links", schema = "valuation")
-@Comment("Value of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model. This can be a discrete value or a converted value.")
+@Comment("Used to store values of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model.")
 @IdClass(ValuationUnitParameterId.class)
 public class ValuationUnitHasParameter {  
 	@Id
@@ -41,9 +41,8 @@ public class ValuationUnitHasParameter {
 	@Comment("The code of the technical parameter.")
 	private String parameter_code;
 
-	@Column(length = 1000)
 	@Comment("Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.")
-	private String value;
+	private Double value;
 	
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vunit_id", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_vunit_id_fkey"))

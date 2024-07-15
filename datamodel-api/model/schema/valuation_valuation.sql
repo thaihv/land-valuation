@@ -423,7 +423,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation_units_parameters_links
     vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,    
     transaction_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    value character varying(1000) COLLATE pg_catalog."default",
+    value double precision,
     CONSTRAINT valuation_units_parameters_links_pkey PRIMARY KEY (parameter_code, transaction_id, vunit_id),
     CONSTRAINT valuation_units_parameters_links_parameter_code_fkey FOREIGN KEY (parameter_code)
         REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
@@ -445,7 +445,7 @@ ALTER TABLE IF EXISTS valuation.valuation_units_parameters_links
     OWNER to postgres;
 
 COMMENT ON TABLE valuation.valuation_units_parameters_links
-    IS 'Value of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model. This can be a discrete value or a converted value.';
+    IS 'Used to store values of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model.';
 
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
     IS 'The code of the technical parameter.';
