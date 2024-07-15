@@ -2,18 +2,18 @@ package com.jdvn.devtech.datamodel.schema.valuation;
 
 import java.io.Serializable;
 
-public class TransactionUnitId implements Serializable {
+public class TransactionPriceUnitId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private String vunit_id;
 	private String transaction_id;
 
-	public TransactionUnitId() {
+	public TransactionPriceUnitId() {
 
 	}
 
-	public TransactionUnitId(String vunit_id, String transaction_id) {
+	public TransactionPriceUnitId(String vunit_id, String transaction_id) {
 		this.vunit_id = vunit_id;
 		this.transaction_id = transaction_id;
 	}
@@ -35,7 +35,7 @@ public class TransactionUnitId implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TransactionUnitId other = (TransactionUnitId) obj;
+		TransactionPriceUnitId other = (TransactionPriceUnitId) obj;
 		if (vunit_id == null) {
 			if (other.vunit_id != null)
 				return false;

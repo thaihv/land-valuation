@@ -25,7 +25,7 @@ import lombok.Setter;
 		@Index(name = "valuation_unit_has_transaction_price_transaction_id_fkey_ind", columnList = "transaction_id"),
 		@Index(name = "valuation_unit_has_transaction_price_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the valuation unit to the its recorded transaction price.")
-@IdClass(TransactionUnitId.class)
+@IdClass(TransactionPriceUnitId.class)
 public class ValuationUnitHasTransactionPrice extends DomainObject<String> {
 	
 	private static final long serialVersionUID = 1L;
