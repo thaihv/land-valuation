@@ -534,6 +534,41 @@ COMMENT ON COLUMN preparation.model_coefficient.model_id
 
 COMMENT ON COLUMN preparation.model_coefficient.parameter_code
     IS 'The code of the technical parameter.';
+
+-- Table: preparation.model_constant
+CREATE TABLE IF NOT EXISTS preparation.model_constant
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    model_id character varying(40) COLLATE pg_catalog."default",
+    constant_name character varying(40) COLLATE pg_catalog."default",
+    value numeric(20,2) NOT NULL DEFAULT 0,    
+    CONSTRAINT model_constant_pkey PRIMARY KEY (id),
+    CONSTRAINT model_constant_model_id_fkey FOREIGN KEY (model_id)
+        REFERENCES preparation.valuation_model (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.model_constant
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.model_constant
+    IS 'Used to store the calculated coefficients of regression model.';
+
+COMMENT ON COLUMN preparation.model_constant.id
+    IS 'Identifier of the parameter for model.';
+
+COMMENT ON COLUMN preparation.model_constant.constant_name
+    IS 'The name of model constant.';
+
+COMMENT ON COLUMN preparation.model_constant.value
+    IS 'Value of the constant name.';
+
+COMMENT ON COLUMN preparation.model_constant.model_id
+    IS 'The id of the model associated.';    
+    
 -- Table: valuation.valuation_unit_uses_source
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source
 (
