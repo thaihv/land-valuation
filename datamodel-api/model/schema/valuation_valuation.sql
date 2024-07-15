@@ -1373,13 +1373,13 @@ COMMENT ON TABLE valuation.mass_appraisal_performance
     IS 'Presents performance indicator characteristics of mass appraisal implementation';
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.id
-    IS 'Mass appraisal identifier.';
+    IS 'Mass appraisal performance identifier.';
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_date
     IS 'The analysis date of mass appraisal implementation.';
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.simple_size
-    IS 'Size of mass appraisal model sample.';
+    IS 'Size of mass appraisal implementation model sample.';
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_type_code
     IS 'Type of the mass appraisal analysis.';    
@@ -2094,19 +2094,19 @@ ALTER TABLE IF EXISTS valuation.mass_appraisal
     OWNER to postgres;
 
 COMMENT ON TABLE valuation.mass_appraisal
-    IS 'Provides information represents mass appraisal-related information, such as mathematical models, sample sizes and mass appraisal analysis types';
+    IS 'Provides the represent mass appraisal-related information, such as mathematical models, sample sizes and mass appraisal analysis types';
 
 COMMENT ON COLUMN valuation.mass_appraisal.id
     IS 'Mass Appraisal identifier.';
 
 COMMENT ON COLUMN valuation.mass_appraisal.estimated_value
-    IS 'The value estimated from all mass appraisal performances.';
+    IS 'The value estimated from the mass appraisal performance.';
 
 COMMENT ON COLUMN valuation.mass_appraisal.mathematical_model
-    IS 'The mathematical model is used for the selected mass appraisal performance.';
+    IS 'The mathematical model is used for the mass appraisal performance.';
 
 COMMENT ON COLUMN valuation.mass_appraisal.simple_size
-    IS 'Size of model sample of the selected mass appraisal performance.';    
+    IS 'Size of model sample of the mass appraisal performance.';    
 -- Table: valuation.single_appraisal
 CREATE TABLE IF NOT EXISTS valuation.single_appraisal
 (

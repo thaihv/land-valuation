@@ -28,7 +28,7 @@ import lombok.Setter;
 public class MassAppraisalPerformance {
 
 	@Id
-	@Comment("Mass appraisal identifier.")
+	@Comment("Mass appraisal performance identifier.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
@@ -36,7 +36,7 @@ public class MassAppraisalPerformance {
 	@Comment("The analysis date of mass appraisal implementation.")
 	private Date analysis_date;
 	
-	@Comment("Size of mass appraisal model sample.")
+	@Comment("Size of mass appraisal implementation model sample.")
 	private int simple_size;
 	
 //	@Column(columnDefinition = "numeric(20,2)")

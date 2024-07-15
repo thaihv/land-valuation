@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "mass_appraisal", schema = "valuation")
-@Comment("Provides information represents mass appraisal-related information, such as mathematical models, sample sizes and mass appraisal analysis types")
+@Comment("Provides the represent mass appraisal-related information, such as mathematical models, sample sizes and mass appraisal analysis types.")
 public class MassAppraisal {
 
 	@Id
@@ -33,14 +33,14 @@ public class MassAppraisal {
     @JoinColumn(name = "valuation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_valuation_id_fkey"))
 	private Valuation valuation;
 	
-	@Comment("The mathematical model is used for the selected mass appraisal performance.")
+	@Comment("The mathematical model is used for the mass appraisal performance.")
 	private String mathematical_model;
 
-	@Comment("Size of model sample of the selected mass appraisal performance.")
+	@Comment("Size of model sample of the mass appraisal performance.")
 	private int simple_size;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The value estimated from all mass appraisal performances.")
+	@Comment("The value estimated from the mass appraisal performance.")
 	private Double estimated_value;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
