@@ -9,8 +9,6 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,27 +28,24 @@ public class SinglePropertyAppraisal {
 	@Comment("Single Appraisal identifier.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "valuation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_valuation_id_fkey"))
+	private Valuation valuation;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of cost approach, if any.")
-    @JoinColumn(name = "cost_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_cost_approach_id_fkey"))
-    private CostMethod cost_approach;
-	
+	@JoinColumn(name = "cost_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_cost_approach_id_fkey"))
+	private CostMethod cost_approach;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of income approach, if any.")
-    @JoinColumn(name = "income_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_income_approach_id_fkey"))
-    private IncomeMethod income_approach;
-	
+	@JoinColumn(name = "income_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_income_approach_id_fkey"))
+	private IncomeMethod income_approach;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@Comment("The identifier of sales comparison approach, if any.")
-    @JoinColumn(name = "sales_comparison_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_sales_comparison_approach_id_fkey"))
-    private SalesComparisonMethod sales_comparison_approach;
-		
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "single_appraisal_id_fkey"))
-	private Valuation valuation;
-	
-	
+	@JoinColumn(name = "sales_comparison_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_sales_comparison_approach_id_fkey"))
+	private SalesComparisonMethod sales_comparison_approach;
 
 }

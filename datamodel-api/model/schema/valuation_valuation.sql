@@ -2107,22 +2107,27 @@ COMMENT ON COLUMN valuation.mass_appraisal.mathematical_model
 
 COMMENT ON COLUMN valuation.mass_appraisal.simple_size
     IS 'Size of model sample of the mass appraisal performance.';    
+
+COMMENT ON COLUMN valuation.mass_appraisal.performance_id
+    IS 'The identifier of the associated mass appraisal performance.';    
+    
 -- Table: valuation.single_appraisal
 CREATE TABLE IF NOT EXISTS valuation.single_appraisal
 (
-    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    valuation_id character varying(40) COLLATE pg_catalog."default",
     cost_approach_id character varying(40) COLLATE pg_catalog."default",
     income_approach_id character varying(40) COLLATE pg_catalog."default",
     sales_comparison_approach_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT single_appraisal_pkey PRIMARY KEY (id),
-    CONSTRAINT single_appraisal_id_fkey FOREIGN KEY (id)
+    CONSTRAINT single_appraisal_valuation_id_fkey FOREIGN KEY (valuation_id)
         REFERENCES valuation.valuation (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE NO ACTION,    
     CONSTRAINT single_appraisal_cost_approach_id_fkey FOREIGN KEY (cost_approach_id)
         REFERENCES valuation.cost_method (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,        
+        ON DELETE NO ACTION,
     CONSTRAINT single_appraisal_income_approach_id_fkey FOREIGN KEY (income_approach_id)
         REFERENCES valuation.income_method (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -2142,8 +2147,8 @@ COMMENT ON TABLE valuation.single_appraisal
     IS 'Provides information on single property appraisal for valuation unit';
 
 COMMENT ON COLUMN valuation.single_appraisal.id
-    IS 'Single Appraisal identifier.';    
-    
+    IS 'Single Appraisal identifier.';
+
 COMMENT ON COLUMN valuation.single_appraisal.cost_approach_id
     IS 'The identifier of cost approach, if any.';
 

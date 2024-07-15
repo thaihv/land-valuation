@@ -28,23 +28,23 @@ public class MassAppraisal {
 	@Comment("Mass Appraisal identifier.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "valuation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_valuation_id_fkey"))
+	@JoinColumn(name = "valuation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_valuation_id_fkey"))
 	private Valuation valuation;
-	
+
 	@Comment("The mathematical model is used for the mass appraisal performance.")
 	private String mathematical_model;
 
 	@Comment("Size of model sample of the mass appraisal performance.")
 	private int simple_size;
-	
+
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("The value estimated from the mass appraisal performance.")
 	private Double estimated_value;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "performance_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_performance_id_fkey"))
-    private MassAppraisalPerformance mass_appraisal_performance;
-		
+	@JoinColumn(name = "performance_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_performance_id_fkey"))
+	private MassAppraisalPerformance mass_appraisal_performance;
+
 }
