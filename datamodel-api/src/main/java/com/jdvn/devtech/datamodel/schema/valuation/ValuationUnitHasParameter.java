@@ -41,6 +41,7 @@ public class ValuationUnitHasParameter {
 	@Comment("The code of the technical parameter.")
 	private String parameter_code;
 
+	@Column(nullable = false)
 	@Comment("Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.")
 	private Double value;
 	
