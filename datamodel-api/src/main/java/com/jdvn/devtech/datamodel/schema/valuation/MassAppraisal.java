@@ -9,8 +9,6 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,22 +29,22 @@ public class MassAppraisal {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
-	@Comment("The mathematical model is used for mass appraisal valuation.")
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "valuation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_valuation_id_fkey"))
+	private Valuation valuation;
+	
+	@Comment("The mathematical model is used for the selected mass appraisal performance.")
 	private String mathematical_model;
+
+	@Comment("Size of model sample of the selected mass appraisal performance.")
+	private int simple_size;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The value estimated from mass appraisal process.")
+	@Comment("The value estimated from all mass appraisal performances.")
 	private Double estimated_value;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "performance_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_performance_id_fkey"))
     private MassAppraisalPerformance mass_appraisal_performance;
 		
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "id", foreignKey = @ForeignKey(name = "mass_appraisal_id_fkey"))
-	private Valuation valuation;
-	
-	
-
 }

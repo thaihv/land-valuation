@@ -46,7 +46,7 @@ public class Valuation extends DomainObject<String> {
     private Transaction transaction;
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("The final decision value of valuation unit in currency.")
+	@Comment("The final decision value of valuation unit in currency. This is the final decision one selected from all valuation methods")
 	private Double assessed_value;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
@@ -57,9 +57,9 @@ public class Valuation extends DomainObject<String> {
 	@Comment("The date that value is made for valuation.")
 	private Date valuation_date;
 	
-	@Column(length = 500)
-	@Comment("Display purpose of the valuation.")
-	private String valuation_purpose;	
+	@Column(length = 128)
+	@Comment("Display purpose of the valuation, for example ValuePerSquareMeter.") // ValuePerSquareMeter for example
+	private String display_purpose;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "approach_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_type_code_fkey"))

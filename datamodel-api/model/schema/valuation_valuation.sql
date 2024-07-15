@@ -1993,7 +1993,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     transaction_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     assessed_value numeric(20,2) NOT NULL DEFAULT 0,
-    valuation_purpose character varying(500) COLLATE pg_catalog."default",
+    display_purpose character varying(128) COLLATE pg_catalog."default",
     valuation_date timestamp(6) without time zone,
     appeal_status_code character varying(20) COLLATE pg_catalog."default",
     approach_type_code character varying(20) COLLATE pg_catalog."default",
@@ -2057,10 +2057,10 @@ COMMENT ON COLUMN valuation.valuation.vunit_id
     IS 'Identifier to valuation unit of assement activity.';
     
 COMMENT ON COLUMN valuation.valuation.assessed_value
-    IS 'The final decision value of valuation unit in currency.';
+    IS 'The final decision value of valuation unit in currency. This is the final decision one selected from all valuation methods.';
 
-COMMENT ON COLUMN valuation.valuation.valuation_purpose
-    IS 'Display purpose of the valuation.';
+COMMENT ON COLUMN valuation.valuation.display_purpose
+    IS 'Display purpose of the valuation, for example ValuePerSquareMeter.';
     
 COMMENT ON COLUMN valuation.valuation.value_type_code
     IS 'Type of value need to be valuated,  i.e., reasearchValue for survey operation, compensationValue for specific purpose, decisionValue for final mass appraisals.';
@@ -2071,17 +2071,19 @@ COMMENT ON COLUMN valuation.valuation.valuation_date
 -- Table: valuation.mass_appraisal
 CREATE TABLE IF NOT EXISTS valuation.mass_appraisal
 (
-    id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    valuation_id character varying(40) COLLATE pg_catalog."default",
     mathematical_model character varying(255) COLLATE pg_catalog."default",
+    simple_size integer NOT NULL,
     estimated_value numeric(20,2) NOT NULL DEFAULT 0,    
-    performance_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    performance_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT mass_appraisal_pkey PRIMARY KEY (id),
-    CONSTRAINT mass_appraisal_id_fkey FOREIGN KEY (id)
-        REFERENCES valuation.valuation (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
     CONSTRAINT mass_appraisal_performance_id_fkey FOREIGN KEY (performance_id)
         REFERENCES valuation.mass_appraisal_performance (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT mass_appraisal_valuation_id_fkey FOREIGN KEY (valuation_id)
+        REFERENCES valuation.valuation (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -2098,11 +2100,13 @@ COMMENT ON COLUMN valuation.mass_appraisal.id
     IS 'Mass Appraisal identifier.';
 
 COMMENT ON COLUMN valuation.mass_appraisal.estimated_value
-    IS 'The value estimated from mass appraisal process.';
+    IS 'The value estimated from all mass appraisal performances.';
 
 COMMENT ON COLUMN valuation.mass_appraisal.mathematical_model
-    IS 'The mathematical model is used for mass appraisal valuation.';
-    
+    IS 'The mathematical model is used for the selected mass appraisal performance.';
+
+COMMENT ON COLUMN valuation.mass_appraisal.simple_size
+    IS 'Size of model sample of the selected mass appraisal performance.';    
 -- Table: valuation.single_appraisal
 CREATE TABLE IF NOT EXISTS valuation.single_appraisal
 (
