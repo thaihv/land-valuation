@@ -2072,12 +2072,16 @@ COMMENT ON COLUMN valuation.valuation.valuation_date
 CREATE TABLE IF NOT EXISTS valuation.mass_appraisal
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    valuation_id character varying(40) COLLATE pg_catalog."default",
-    mathematical_model character varying(255) COLLATE pg_catalog."default",
+    valuation_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    model_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     simple_size integer NOT NULL,
     estimated_value numeric(20,2) NOT NULL DEFAULT 0,    
-    performance_id character varying(40) COLLATE pg_catalog."default",
+    performance_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT mass_appraisal_pkey PRIMARY KEY (id),
+    CONSTRAINT mass_appraisal_model_id_fkey FOREIGN KEY (model_id)
+        REFERENCES preparation.valuation_model (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,    
     CONSTRAINT mass_appraisal_performance_id_fkey FOREIGN KEY (performance_id)
         REFERENCES valuation.mass_appraisal_performance (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -2102,8 +2106,8 @@ COMMENT ON COLUMN valuation.mass_appraisal.id
 COMMENT ON COLUMN valuation.mass_appraisal.estimated_value
     IS 'The value estimated from the mass appraisal performance.';
 
-COMMENT ON COLUMN valuation.mass_appraisal.mathematical_model
-    IS 'The mathematical model is used for the mass appraisal performance.';
+COMMENT ON COLUMN valuation.mass_appraisal.model_id
+    IS 'Identifier to the mathematical model that is used for the mass appraisal performance.';
 
 COMMENT ON COLUMN valuation.mass_appraisal.simple_size
     IS 'Size of model sample of the mass appraisal performance.';    

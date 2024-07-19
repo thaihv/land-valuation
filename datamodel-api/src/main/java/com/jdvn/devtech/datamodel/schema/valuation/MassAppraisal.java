@@ -2,6 +2,8 @@ package com.jdvn.devtech.datamodel.schema.valuation;
 
 import org.hibernate.annotations.Comment;
 
+import com.jdvn.devtech.datamodel.schema.preparation.ValuationModel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,8 +35,10 @@ public class MassAppraisal {
 	@JoinColumn(name = "valuation_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_valuation_id_fkey"))
 	private Valuation valuation;
 
-	@Comment("The mathematical model is used for the mass appraisal performance.")
-	private String mathematical_model;
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "model_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "mass_appraisal_model_id_fkey"))
+	@Comment("Identifier to the mathematical model that is used for the mass appraisal performance.")
+	private ValuationModel mathematical_model;
 
 	@Comment("Size of model sample of the mass appraisal performance.")
 	private int simple_size;
