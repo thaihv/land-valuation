@@ -1,7 +1,16 @@
+-- Table: application.request_category_type
+INSERT INTO application.request_category_type (code, display_value, description, status) VALUES ('appraisalServices', 'Appraisal Services', 'Services for Mass Appraisals or Single Property Appraisal', 'a');
+INSERT INTO application.request_category_type (code, display_value, description, status) VALUES ('surveyServices', 'Survey Services', 'Survey services for plans with 4-year cycle or for appraisal of specific properties', 'a');
+INSERT INTO application.request_category_type (code, display_value, description, status) VALUES ('supportServices', 'Supporting Services', 'Services for providing valuation information or appeal handling', 'a');
+
 -- Table: application.request_type
-INSERT INTO application.request_type (code, display_value, description, status) VALUES ('appraisal', 'Appraisal Services', 'Services for Mass Appraisals or Single Property Appraisal', 'a');
-INSERT INTO application.request_type (code, display_value, description, status) VALUES ('survey', 'Survey Services', 'Survey services for plans with 4-year cycle or for appraisal of specific properties', 'a');
-INSERT INTO application.request_type (code, display_value, description, status) VALUES ('support', 'Supporting Services', 'Services for providing valuation information or appeal handling', 'a');
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('singleAgricultural', 'appraisalServices','Single Appraisal of Agricultural Parcel', 'Single Appraisal of Agricultural Lands', 'a', 10, 0.00, 0.00, 0.00);
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('massIndustry', 'appraisalServices', 'Mass Appraisal of Industry Parcels', 'Mass Appraisal of Industry Real Estates', 'a', 15, 50.00, 0.00, 0.00);
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('massResidential', 'appraisalServices', 'Mass Appraisal of Residential Parcels', 'Mass Appraisal of Residential Estates', 'a', 25, 50.00, 0.00, 0.00);
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('surveyPlan', 'surveyServices', 'Survey a Plan', 'Survey Request on Properties & Values of No-Valued Properties', 'a', 60, 0.00, 0.00, 0.00);
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('extractMap', 'supportServices', 'Extract Map', 'Extract Valuation Maps for Specific Zone or Locality', 'a', 1, 5.00, 0.00, 0.00);
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('historicExport', 'supportServices', 'Historic Export', 'Copy Historic Records of Property Values', 'a', 1, 5.00, 0.00, 0.00);
+INSERT INTO application.request_type (code, request_category_code, display_value, description, status, nr_days_to_complete, base_fee, area_base_fee, value_base_fee) VALUES ('reappraisal', 'supportServices', 'Reappraisal', 'Explain and Response with most accurated & most update value due to an appeals on Values & Taxes', 'a', 1, 5.00, 0.00, 0.00);
 
 -- Table: application.application_status_type
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('requisitioned', 'Requisitioned', 'a');
