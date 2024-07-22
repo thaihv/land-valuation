@@ -1,7 +1,7 @@
 -- Table: application.request_type
-INSERT INTO application.request_type (code, display_value, description, status) VALUES ('massAppraisals', 'Mass Appraisal Services', 'Mass Appraisal Services', 'a');
-INSERT INTO application.request_type (code, display_value, description, status) VALUES ('singleAppraisals', 'Single Appraisal Services', 'Single Appraisal Services', 'a');
-INSERT INTO application.request_type (code, display_value, description, status) VALUES ('feeIndividual', 'Payment Individual Appraisal Services', 'Payment Individual Appraisal Services', 'i');
+INSERT INTO application.request_type (code, display_value, description, status) VALUES ('appraisal', 'Appraisal Services', 'Services for Mass Appraisals or Single Property Appraisal', 'a');
+INSERT INTO application.request_type (code, display_value, description, status) VALUES ('survey', 'Survey Services', 'Survey services for plans with 4-year cycle or for appraisal of specific properties', 'a');
+INSERT INTO application.request_type (code, display_value, description, status) VALUES ('support', 'Supporting Services', 'Services for providing valuation information or appeal handling', 'a');
 
 -- Table: application.application_status_type
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('requisitioned', 'Requisitioned', 'a');
