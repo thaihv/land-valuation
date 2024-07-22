@@ -2649,7 +2649,7 @@ COMMENT ON COLUMN application.application_property.vunit_id
     IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.'; 
     
 COMMENT ON COLUMN application.application_property.area
-    IS 'The area of the property. This value should be square meters and converted into imperial acres, roods and perches values for display.';
+    IS 'The area of the property for calculating proportionate service fee. This value should be square meters and may be converted into imperial acres, roods and perches values for display.';
 
 COMMENT ON COLUMN application.application_property.assignee_id
     IS 'The identifier of the user assigned to the property for handling. Typically, this is the user in charge from application or assigned from others ';

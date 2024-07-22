@@ -55,7 +55,7 @@ public class PropertyInApplication extends DomainObject<String>{
 	private boolean verified_location;
 
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The area of the property. This value should be square meters and converted into imperial acres, roods and perches values for display.")
+    @Comment("The area of the property for calculating proportionate service fee. This value should be square meters and may be converted into imperial acres, roods and perches values for display.")
     private Double area;
     
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
