@@ -53,6 +53,18 @@ public class PropertyInApplication extends DomainObject<String>{
 	@Column(columnDefinition = "boolean NOT NULL DEFAULT false")
 	@Comment("Flag to indicate if the property details provided for the application reference an existing parcel record in the Cadastre Managemnt tables as Parcel, Buidling, UtilityNetwork.")
 	private boolean verified_location;
+
+    @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+    @Comment("The area of the property. This value should be square meters and converted into imperial acres, roods and perches values for display.")
+    private Double area;
+    
+    @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
+    @Comment("The property value on which is used for calculating proportionate service fee.")
+    private Double total_value;
+    
+	@Column(length = 40)
+	@Comment("The identifier of the user assigned to the property for handling. Typically, this is the user in charge from application or assigned from others ")
+	private String assignee_id;
 	
 	@Override
 	public String print() {

@@ -144,7 +144,7 @@ COMMENT ON COLUMN application.application.expected_completion_date
     IS 'The date the application should be completed by. This value is determined from expected completion date associated with the application.';
 	
 COMMENT ON COLUMN application.application.assignee_id
-    IS 'The identifier of the user (assessor) assigned to the application. If this value is null, then the application is unassigned.';
+    IS 'The identifier of the user (it can be an assessor for appraisal services or may be a team leader for survey services who can assign a specific property of a big plan to team members for survey operations) assigned to the application. If this value is null, then the application is unassigned.';
 
 COMMENT ON COLUMN application.application.assigned_datetime
     IS 'The date and time the application was last assigned to a user';

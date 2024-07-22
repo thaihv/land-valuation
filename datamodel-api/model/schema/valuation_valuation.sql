@@ -2591,6 +2591,9 @@ CREATE TABLE IF NOT EXISTS application.application_property
     vunit_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     verified_exists boolean NOT NULL DEFAULT false,
     verified_location boolean NOT NULL DEFAULT false,
+    area numeric(20,2) NOT NULL DEFAULT 0,
+    total_value numeric(20,2) NOT NULL DEFAULT 0,
+    assignee_id character varying(40) COLLATE pg_catalog."default",    
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,  
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
@@ -2643,8 +2646,16 @@ COMMENT ON COLUMN application.application_property.application_id
     IS 'Identifier for the application the record is associated to.';
 
 COMMENT ON COLUMN application.application_property.vunit_id
-    IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.';    
+    IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.'; 
+    
+COMMENT ON COLUMN application.application_property.area
+    IS 'The area of the property. This value should be square meters and converted into imperial acres, roods and perches values for display.';
 
+COMMENT ON COLUMN application.application_property.assignee_id
+    IS 'The identifier of the user assigned to the property for handling. Typically, this is the user in charge from application or assigned from others ';
+
+COMMENT ON COLUMN application.application_property.total_value
+    IS 'The property value on which is used for calculating proportionate service fee.';
 -- Table: valuation.valuation_appeal
 CREATE TABLE IF NOT EXISTS valuation.valuation_appeal
 (

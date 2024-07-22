@@ -68,7 +68,7 @@ public class Application extends DomainObject<String>{
 	private Date expected_completion_date;
     
 	@Column(length = 40)
-	@Comment("The identifier of the user (assessor) assigned to the application. If this value is null, then the application is unassigned.")
+	@Comment("The identifier of the user (it can be an assessor for appraisal services or may be a team leader for survey services who can assign a specific property of a big plan to team members for survey operations) assigned to the application. If this value is null, then the application is unassigned.")
 	private String assignee_id;
 	
 	@Column(columnDefinition = "timestamp without time zone")
