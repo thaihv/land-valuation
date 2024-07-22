@@ -191,15 +191,55 @@ COMMENT ON COLUMN application.application.change_user
 COMMENT ON COLUMN application.application.change_time
     IS 'The date and time the row was last modified.';
 
+-- Table: application.request_category_type
+CREATE TABLE IF NOT EXISTS application.request_category_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT request_category_type_pkey PRIMARY KEY (code),
+    CONSTRAINT request_category_type_display_value_key UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.request_category_type
+    OWNER to postgres;
+
+COMMENT ON TABLE application.request_category_type
+    IS 'Code list of request category types. Request category is used to group the different types of provided service request such as appraisal services, survey services, supporting services.';
+
+COMMENT ON COLUMN application.request_category_type.code
+    IS 'The code for the request category type.';
+
+COMMENT ON COLUMN application.request_category_type.description
+    IS 'Description of the request category type.';
+
+COMMENT ON COLUMN application.request_category_type.display_value
+    IS 'Displayed value of the request category type.';
+
+COMMENT ON COLUMN application.request_category_type.status
+    IS 'Status in active of the request category type as active (a) or inactive (i).';
+    
 -- Table: application.request_type
 CREATE TABLE IF NOT EXISTS application.request_type
 (
-    code character varying(20) COLLATE pg_catalog."default" NOT NULL,    
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    request_category_code character varying(20) COLLATE pg_catalog."default",    
     display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
-	description character varying(1000) COLLATE pg_catalog."default",
+    description character varying(1000) COLLATE pg_catalog."default",    
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    nr_days_to_complete integer NOT NULL DEFAULT 0,    
+    base_fee numeric(20,2) NOT NULL DEFAULT 0,    
+    area_base_fee numeric(20,2) NOT NULL DEFAULT 0,
+    value_base_fee numeric(20,2) NOT NULL DEFAULT 0,
     CONSTRAINT request_type_pkey PRIMARY KEY (code),
-    CONSTRAINT request_type_display_value_key UNIQUE (display_value)
+    CONSTRAINT request_type_display_value_key UNIQUE (display_value),
+    CONSTRAINT request_type_request_category_code_fkey FOREIGN KEY (request_category_code)
+        REFERENCES application.request_category_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
 
 TABLESPACE pg_default;
@@ -213,14 +253,29 @@ COMMENT ON TABLE application.request_type
 COMMENT ON COLUMN application.request_type.code
     IS 'The code for the request type.';
 
-COMMENT ON COLUMN application.request_type.display_value
-    IS 'Displayed value of the application action type.';
-	
+COMMENT ON COLUMN application.request_type.area_base_fee
+    IS 'The fee component charged for each square metre of the property or 0 if no area fee applies.';
+
+COMMENT ON COLUMN application.request_type.base_fee
+    IS 'The fixed fee component charged for the service or 0 if there is no fixed fee.';
+
 COMMENT ON COLUMN application.request_type.description
-    IS 'Description of the application action type.';	
+    IS 'Description of the request type.';
+
+COMMENT ON COLUMN application.request_type.display_value
+    IS 'Displayed value of the request type.';
+
+COMMENT ON COLUMN application.request_type.nr_days_to_complete
+    IS 'The number of days it should take for the service to be completed.';
 
 COMMENT ON COLUMN application.request_type.status
-    IS 'Status in active of the application action type as active (a) or inactive (i).';	
+    IS 'Status in active of the request type as active (a) or inactive (i).';
+
+COMMENT ON COLUMN application.request_type.value_base_fee
+    IS 'The fee component charged against the value of the property or 0 if no value fee applies.';
+
+COMMENT ON COLUMN application.request_type.request_category_code
+    IS 'The code for the request category type.';
     
 -- Table: application.service_status_type
 CREATE TABLE IF NOT EXISTS application.service_status_type
@@ -364,10 +419,10 @@ COMMENT ON COLUMN application.service.action_notes
     IS 'Optional description of the action';
 
 COMMENT ON COLUMN application.service.area_fee
-    IS 'The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application.';
+    IS 'The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application multiplied by the request_type.area_base_fee.';
 
 COMMENT ON COLUMN application.service.base_fee
-    IS 'The fixed fee charged for the service.';
+    IS 'The fixed fee charged for the service. Obtained from the base_fee value in request_type.';
 
 COMMENT ON COLUMN application.service.lodging_datetime
     IS 'The date the service was lodged on the application. Typically will match the application lodgement_datetime, but may vary if a service is added after the application is lodged.';
@@ -382,7 +437,7 @@ COMMENT ON COLUMN application.service.status_code
     IS 'Service status code.';
 
 COMMENT ON COLUMN application.service.value_fee
-    IS 'The value fee charged for the service. Calculated from the sum of all values listed for properties on the application.';
+    IS 'The value fee charged for the service. Calculated from the sum of all values listed for properties on the application multiplied by the request_type.value_base_fee.';
 
 COMMENT ON COLUMN application.service.application_id
     IS 'Identifier for the application the service is associated with.';

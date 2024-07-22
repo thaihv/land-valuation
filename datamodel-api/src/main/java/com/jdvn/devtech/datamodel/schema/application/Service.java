@@ -60,9 +60,8 @@ public class Service extends DomainObject<String>{
 	@Comment("The date the service was lodged on the application. Typically will match the application lodgement_datetime, but may vary if a service is added after the application is lodged.")
 	private Date lodging_datetime;
 	
-	@Column(columnDefinition = "integer NOT NULL DEFAULT 10")
-	@Comment("The number of days it should take for the service to be completed.")
-	private int nr_days_to_complete;
+	@Comment("Date when the service is expected to be completed by. Calculated using the service lodging_datetime and the nr_days_to_complete for the service request type.")
+	private Date expected_completion_date;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -81,15 +80,15 @@ public class Service extends DomainObject<String>{
 	private String action_notes;
 	
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The fixed fee charged for the service.")
+    @Comment("The fixed fee charged for the service. Obtained from the base_fee value in request_type.")
     private Double base_fee;
     
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application.")
+    @Comment("The area fee charged for the service. Calculated from the sum of all areas listed for properties on the application multiplied by the request_type.area_base_fee.")
     private Double area_fee;
     
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-    @Comment("The value fee charged for the service. Calculated from the sum of all values listed for properties on the application.")
+    @Comment("The value fee charged for the service. Calculated from the sum of all values listed for properties on the application multiplied by the request_type.value_base_fee.")
     private Double value_fee;
     
 	@Override
