@@ -35,8 +35,7 @@ CREATE TABLE IF NOT EXISTS transaction.transaction
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     from_service_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     status_code character varying(40) COLLATE pg_catalog."default",
-    approval_datetime timestamp without time zone,
-    is_massive_operation boolean NOT NULL DEFAULT false,    
+    approval_datetime timestamp without time zone,  
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),
@@ -78,9 +77,6 @@ COMMENT ON COLUMN transaction.transaction.rowversion
 
 COMMENT ON COLUMN transaction.transaction.approval_datetime
     IS 'The date and time the transaction is approved.';
-
-COMMENT ON COLUMN transaction.transaction.is_massive_operation
-    IS 'Flag used to indicate the transaction was created in support of a bulk operation.';
 
 COMMENT ON COLUMN transaction.transaction.from_service_id
     IS 'The identifier of the service that initiated the transaction. NULL if the transaction has been created using other means. E.g. for migration or SETL, or plan of center goverment mass appraisals.';

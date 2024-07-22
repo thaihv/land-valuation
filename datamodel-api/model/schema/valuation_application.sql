@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS application.service
     request_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
     service_order integer NOT NULL DEFAULT 0,
     lodging_datetime timestamp without time zone NOT NULL DEFAULT now(),
-    nr_days_to_complete integer NOT NULL DEFAULT 10,
+    expected_completion_date timestamp(6) without time zone,
     action_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodge'::character varying,
     status_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'lodged'::character varying,    
     action_notes character varying(255) COLLATE pg_catalog."default",
@@ -427,8 +427,8 @@ COMMENT ON COLUMN application.service.base_fee
 COMMENT ON COLUMN application.service.lodging_datetime
     IS 'The date the service was lodged on the application. Typically will match the application lodgement_datetime, but may vary if a service is added after the application is lodged.';
 
-COMMENT ON COLUMN application.service.nr_days_to_complete
-    IS 'The number of days it should take for the service to be completed.';
+COMMENT ON COLUMN application.service.expected_completion_date
+    IS 'Date when the service is expected to be completed by. Calculated using the service lodging_datetime and the nr_days_to_complete for the service request type.';
 
 COMMENT ON COLUMN application.service.service_order
     IS 'The relative order of the service within the application. Can be used to imply a workflow sequence for application related tasks.';

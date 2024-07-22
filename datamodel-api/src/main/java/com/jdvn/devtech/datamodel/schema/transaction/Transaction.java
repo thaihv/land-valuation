@@ -54,10 +54,6 @@ public class Transaction extends DomainObject<String> {
 	@Comment("The date and time the transaction is approved.")
 	private Date approval_datetime;
 	
-    @Column(columnDefinition = "boolean NOT NULL DEFAULT false")
-    @Comment("Flag used to indicate the transaction was created in support of a bulk operation.")
-    private Boolean is_massive_operation;
-	    
 	@Override
 	public String print() {
 		return id;
