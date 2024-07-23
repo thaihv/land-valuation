@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,8 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "valuation_model", schema = "preparation")
+@Table(name = "valuation_model", schema = "preparation", uniqueConstraints = {
+		@UniqueConstraint(name = "valuation_model_name_version", columnNames = { "name", "version"  }) })
 @Comment("Used to store information about valuation model. it includes attributes such as transaction, version to trace inputs and outputs of model implementation")
 public class ValuationModel {
 

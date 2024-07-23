@@ -421,10 +421,11 @@ COMMENT ON COLUMN valuation.valuation_unit.change_time
 CREATE TABLE IF NOT EXISTS preparation.valuation_model
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    name character varying(500) COLLATE pg_catalog."default",
-    transaction_id character varying(40) COLLATE pg_catalog."default",    
+    name character varying(500) COLLATE pg_catalog."default",    
     version integer NOT NULL DEFAULT 1,
+    transaction_id character varying(40) COLLATE pg_catalog."default",    
     CONSTRAINT valuation_model_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_model_name_version UNIQUE (name, version),
     CONSTRAINT valuation_model_transaction_id_fkey FOREIGN KEY (transaction_id)
         REFERENCES transaction.transaction (id) MATCH SIMPLE
         ON UPDATE NO ACTION
