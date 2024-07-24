@@ -1356,7 +1356,7 @@ CREATE TABLE IF NOT EXISTS valuation.mass_appraisal_performance
 (
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     analysis_date timestamp(6) without time zone,
-    simple_size integer NOT NULL,
+    sample_size integer NOT NULL,
     analysis_type_code character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT mass_appraisal_performance_pkey PRIMARY KEY (id),
     CONSTRAINT mass_appraisal_performance_analysis_type_code_fkey FOREIGN KEY (analysis_type_code)
@@ -1379,7 +1379,7 @@ COMMENT ON COLUMN valuation.mass_appraisal_performance.id
 COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_date
     IS 'The analysis date of mass appraisal implementation.';
 
-COMMENT ON COLUMN valuation.mass_appraisal_performance.simple_size
+COMMENT ON COLUMN valuation.mass_appraisal_performance.sample_size
     IS 'Size of mass appraisal implementation model sample.';
 
 COMMENT ON COLUMN valuation.mass_appraisal_performance.analysis_type_code
@@ -2075,7 +2075,7 @@ CREATE TABLE IF NOT EXISTS valuation.mass_appraisal
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     valuation_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     model_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    simple_size integer NOT NULL,
+    sample_size integer NOT NULL,
     estimated_value numeric(20,2) NOT NULL DEFAULT 0,    
     performance_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT mass_appraisal_pkey PRIMARY KEY (id),
@@ -2110,7 +2110,7 @@ COMMENT ON COLUMN valuation.mass_appraisal.estimated_value
 COMMENT ON COLUMN valuation.mass_appraisal.model_id
     IS 'Identifier to the mathematical model that is used for the mass appraisal performance.';
 
-COMMENT ON COLUMN valuation.mass_appraisal.simple_size
+COMMENT ON COLUMN valuation.mass_appraisal.sample_size
     IS 'Size of model sample of the mass appraisal performance.';    
 
 COMMENT ON COLUMN valuation.mass_appraisal.performance_id

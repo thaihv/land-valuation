@@ -41,7 +41,7 @@ public class MassAppraisal {
 	private ValuationModel mathematical_model;
 
 	@Comment("Size of model sample of the mass appraisal performance.")
-	private int simple_size;
+	private int sample_size;
 
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("The value estimated from the mass appraisal performance.")

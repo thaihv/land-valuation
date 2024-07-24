@@ -37,7 +37,7 @@ public class MassAppraisalPerformance {
 	private Date analysis_date;
 	
 	@Comment("Size of mass appraisal implementation model sample.")
-	private int simple_size;
+	private int sample_size;
 	
 //	@Column(columnDefinition = "numeric(20,2)")
 //	@Comment("The appraisal level for mass appraisal process implementation. The Appraisal level is an indicator that shows the overall or typical\r\n"
