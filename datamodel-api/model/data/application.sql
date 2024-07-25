@@ -14,8 +14,6 @@ INSERT INTO application.request_type (code, request_category_code, display_value
 
 -- Table: application.application_status_type
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('requisitioned', 'Requisitioned', 'a');
-INSERT INTO application.application_status_type (code, display_value, status, description) VALUES ('to-be-transferred', 'To be transferred', 'a', 'Application is marked for transfer.');
-INSERT INTO application.application_status_type (code, display_value, status, description) VALUES ('transferred', 'Transferred', 'a', 'Application is transferred.');
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('annulled', 'Annulled', 'a');
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('approved', 'Approved', 'a');
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('completed', 'Completed', 'a');
@@ -30,11 +28,9 @@ INSERT INTO application.application_action_type (code, display_value, status_to_
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('validatePassed', 'Quality Check Passes', NULL, 'a', 'Quality check passes (automatically logged when business rules are run without any critical failures)');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status) VALUES ('unAssign', 'Unassign', NULL, 'a');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('requisition', 'Requisition', 'requisitioned', 'a', 'Further information requested from applicant (action is manually logged)');
-INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('transfer', 'Transfer', 'to-be-transferred', 'a', 'Marks the application for transfer');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status) VALUES ('lapse', 'Lapse', 'annulled', 'a');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('withdraw', 'Withdraw application', 'annulled', 'a', 'Application withdrawn by Applicant (action is manually logged)');
-INSERT INTO application.application_action_type (code, display_value, status_to_set, status) VALUES ('addSpatialUnit', 'Add spatial unit', NULL, 'a');
-INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('cancel', 'Cancel application', 'annulled', 'a', 'Application cancelled by Land Office (action is automatically logged when application is cancelled)');
+INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('cancel', 'Cancel application', 'annulled', 'a', 'Application cancelled by Valuation Office (action is automatically logged when application is cancelled)');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('addDocument', 'Add document', NULL, 'a', 'Scanned Documents linked to Application (action is automatically logged when a new document is saved)');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('validate', 'Validate', NULL, 'a', 'The action validate does not leave a mark, because validateFailed and validateSucceded will be used instead when the validate is completed.');
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status, description) VALUES ('dispatch', 'Dispatch', NULL, 'a', 'Application documents and new land office products are sent or collected by applicant (action is manually logged)');
@@ -43,8 +39,8 @@ INSERT INTO application.application_action_type (code, display_value, status_to_
 -- Table: application.service_status_type
 INSERT INTO application.service_status_type (code, display_value, status) VALUES ('cancelled', 'Cancelled', 'a');
 INSERT INTO application.service_status_type (code, display_value, status) VALUES ('completed', 'Completed', 'a');
-INSERT INTO application.service_status_type (code, display_value, status, description) VALUES ('lodged', 'Lodged', 'a', 'Application for a service has been lodged and officially received by land office');
-INSERT INTO application.service_status_type (code, display_value, status) VALUES ('pending', 'Pending', 'c');
+INSERT INTO application.service_status_type (code, display_value, status, description) VALUES ('lodged', 'Lodged', 'a', 'Application for a service has been lodged and officially received by valuation office');
+INSERT INTO application.service_status_type (code, display_value, status) VALUES ('pending', 'Pending', 'a');
 
 -- Table: application.service_action_type
 INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('complete', 'Complete', 'completed', 'a', 'Application is ready for approval (action is automatically logged when service is marked as complete');
