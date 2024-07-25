@@ -452,52 +452,6 @@ COMMENT ON COLUMN preparation.valuation_model.version
 COMMENT ON COLUMN preparation.valuation_model.transaction_id
     IS 'Identifier to which transaction is on valuation activities.';
                 
--- Table: preparation.model_parameter
-CREATE TABLE IF NOT EXISTS preparation.model_parameter
-(
-    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    model_id character varying(40) COLLATE pg_catalog."default",
-    vunit_id character varying(40) COLLATE pg_catalog."default",
-    parameter_code character varying(40) COLLATE pg_catalog."default",    
-    value numeric(20,2) NOT NULL DEFAULT 0,    
-    CONSTRAINT model_parameters_pkey PRIMARY KEY (id),
-    CONSTRAINT model_parameters_model_id_fkey FOREIGN KEY (model_id)
-        REFERENCES preparation.valuation_model (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT model_parameters_parameter_code_fkey FOREIGN KEY (parameter_code)
-        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT model_parameters_vunit_id_fkey FOREIGN KEY (vunit_id)
-        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS preparation.model_parameter
-    OWNER to postgres;
-
-COMMENT ON TABLE preparation.model_parameter
-    IS 'Used to store values of parameters as independent variable collected by automation systems or mannual for each valuation unit of regression model.';
-
-COMMENT ON COLUMN preparation.model_parameter.id
-    IS 'Identifier of the parameter for model.';
-
-COMMENT ON COLUMN preparation.model_parameter.value
-    IS 'Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.';
-
-COMMENT ON COLUMN preparation.model_parameter.model_id
-    IS 'The id of the model associated.';
-
-COMMENT ON COLUMN preparation.model_parameter.parameter_code
-    IS 'The code of the technical parameter.';
-
-COMMENT ON COLUMN preparation.model_parameter.vunit_id
-    IS 'The id of the valuation unit.';
-    
 -- Table: preparation.model_coefficient
 CREATE TABLE IF NOT EXISTS preparation.model_coefficient
 (
@@ -2583,7 +2537,49 @@ COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.rowidentifier
 
 COMMENT ON COLUMN valuation.valuation_unit_contains_spatial_unit.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
-        
+
+-- Table: valuation.valuation_units_parameters_links
+CREATE TABLE IF NOT EXISTS valuation.valuation_units_parameters_links
+(
+    vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    parameter_code character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    value numeric(20,2) NOT NULL DEFAULT 0,
+    transaction_id character varying(40) COLLATE pg_catalog."default",
+    CONSTRAINT valuation_units_parameters_links_pkey PRIMARY KEY (parameter_code, vunit_id),
+    CONSTRAINT valuation_units_parameters_links_parameter_code_fkey FOREIGN KEY (parameter_code)
+        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_units_parameters_links_vunit_id_fkey FOREIGN KEY (vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_units_parameters_links_transaction_id_fkey FOREIGN KEY (transaction_id)
+        REFERENCES transaction.transaction (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS valuation.valuation_units_parameters_links
+    OWNER to postgres;
+
+COMMENT ON TABLE valuation.valuation_units_parameters_links
+    IS 'Value of parameters as independent variable for each unit for regression model.';
+
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.parameter_code
+    IS 'The code of the technical parameter.';
+
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.vunit_id
+    IS 'The id of the valuation unit.';
+
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
+    IS 'Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.';
+    
+COMMENT ON COLUMN valuation.valuation_units_parameters_links.transaction_id
+    IS 'Identifier to which transaction is on a survey activities to get parameter values.';    
+            
 -- Table: application.application_property
 CREATE TABLE IF NOT EXISTS application.application_property
 (
