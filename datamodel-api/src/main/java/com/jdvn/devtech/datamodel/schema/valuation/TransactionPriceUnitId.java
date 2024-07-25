@@ -7,7 +7,7 @@ public class TransactionPriceUnitId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String vunit_id;
-	private String transaction_id;
+	private String transaction_price_id;
 
 	public TransactionPriceUnitId() {
 
@@ -15,7 +15,7 @@ public class TransactionPriceUnitId implements Serializable {
 
 	public TransactionPriceUnitId(String vunit_id, String transaction_id) {
 		this.vunit_id = vunit_id;
-		this.transaction_id = transaction_id;
+		this.transaction_price_id = transaction_id;
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class TransactionPriceUnitId implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((vunit_id == null) ? 0 : vunit_id.hashCode());
-		result = prime * result + ((transaction_id == null) ? 0 : transaction_id.hashCode());
+		result = prime * result + ((transaction_price_id == null) ? 0 : transaction_price_id.hashCode());
 		return result;
 	}
 
@@ -41,10 +41,10 @@ public class TransactionPriceUnitId implements Serializable {
 				return false;
 		} else if (!vunit_id.equals(other.vunit_id))
 			return false;
-		if (transaction_id == null) {
-			if (other.transaction_id != null)
+		if (transaction_price_id == null) {
+			if (other.transaction_price_id != null)
 				return false;
-		} else if (!transaction_id.equals(other.transaction_id))
+		} else if (!transaction_price_id.equals(other.transaction_price_id))
 			return false;
 		return true;
 	}

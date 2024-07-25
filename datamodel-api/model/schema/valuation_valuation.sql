@@ -1663,14 +1663,14 @@ COMMENT ON COLUMN valuation.transaction_price.real_estate_agency_address_id
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_has_transaction_price
 (
     vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    transaction_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    transaction_price_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default", 
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
-    CONSTRAINT valuation_unit_has_transaction_price_pkey PRIMARY KEY (transaction_id, vunit_id),
-    CONSTRAINT valuation_unit_has_transaction_price_transaction_id_fkey FOREIGN KEY (transaction_id)
+    CONSTRAINT valuation_unit_has_transaction_price_pkey PRIMARY KEY (vunit_id, transaction_price_id),
+    CONSTRAINT valuation_unit_has_transaction_price_transaction_id_fkey FOREIGN KEY (transaction_price_id)
         REFERENCES valuation.transaction_price (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -1688,8 +1688,8 @@ ALTER TABLE IF EXISTS valuation.valuation_unit_has_transaction_price
 COMMENT ON TABLE valuation.valuation_unit_has_transaction_price
     IS 'Links the valuation unit to the its recorded transaction price.';
 
-COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.transaction_id
-    IS 'Identifier of the contract or declaration of property transaction price.';
+COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.transaction_price_id
+    IS 'Identifier of the transaction price of property or valuation unit at certain time.';
 
 COMMENT ON COLUMN valuation.valuation_unit_has_transaction_price.vunit_id
     IS 'Identifier for the valuation unit the record is associated to.';

@@ -37,7 +37,7 @@ import lombok.Setter;
 		@Index(name = "application_contact_person_id_fkey_ind", columnList = "contact_person_id"),
 		@Index(name = "application_action_code_fkey_ind", columnList = "action_code"),
 		@Index(name = "application_status_code_fkey", columnList = "status_code"),})
-@Comment("Application or Plan, to capture details and manage requests received by the valuation office for a plan.")
+@Comment("An application is to capture details and manage requests received by the valuation office for plans or serivces.")
 public class Application extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
 	@Id

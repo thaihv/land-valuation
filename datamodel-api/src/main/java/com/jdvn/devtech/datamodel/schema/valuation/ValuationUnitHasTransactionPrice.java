@@ -22,7 +22,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "valuation_unit_has_transaction_price", schema = "valuation", indexes = {
 		@Index(name = "valuation_unit_has_transaction_price_vunit_id_fkey_ind", columnList = "vunit_id"), 
-		@Index(name = "valuation_unit_has_transaction_price_transaction_id_fkey_ind", columnList = "transaction_id"),
+		@Index(name = "valuation_unit_has_transaction_price_transaction_price_id_fkey_ind", columnList = "transaction_price_id"),
 		@Index(name = "valuation_unit_has_transaction_price_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the valuation unit to the its recorded transaction price.")
 @IdClass(TransactionPriceUnitId.class)
@@ -37,8 +37,8 @@ public class ValuationUnitHasTransactionPrice extends DomainObject<String> {
 	
     @Id
 	@Column(length = 40, nullable = false)
-	@Comment("Identifier of the contract or declaration of property transaction price.")
-	private String transaction_id;
+	@Comment("Identifier of the transaction price of property or valuation unit at certain time.")
+	private String transaction_price_id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vunit_id", foreignKey = @ForeignKey(name = "valuation_unit_has_transaction_price_vunit_id_fkey"))
@@ -46,16 +46,16 @@ public class ValuationUnitHasTransactionPrice extends DomainObject<String> {
     private ValuationUnit valuation_unit;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "transaction_id", foreignKey = @ForeignKey(name = "valuation_unit_has_transaction_price_transaction_id_fkey"))
+    @JoinColumn(name = "transaction_price_id", foreignKey = @ForeignKey(name = "valuation_unit_has_transaction_price_transaction_id_fkey"))
     @Comment("Reference to a property transaction price.")
     private TransactionPrice transaction_price;
     
 	@Override
 	public String getId() {
-		return vunit_id + "_" + transaction_id;
+		return vunit_id + "_" + transaction_price_id;
 	}	
 	@Override
 	public String print() {
-		return vunit_id + "_" + transaction_id;
+		return vunit_id + "_" + transaction_price_id;
 	}
 }

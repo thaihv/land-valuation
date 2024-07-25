@@ -32,7 +32,7 @@ import lombok.Setter;
 		@Index(name = "service_request_type_code_fkey_ind", columnList = "request_type_code"),
 		@Index(name = "service_action_code_fkey_ind", columnList = "action_code"),
 		@Index(name = "service_status_code_fkey_ind", columnList = "status_code")})
-@Comment("Used to control the type of plan application as mass appraisals or single or individual appraisals.")
+@Comment("Used to control the item request types of an application such as a combination of requests of providing cetified value information, mass appraisal with a survey or specific property appraisals, etc.")
 public class Service extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
 	@Id

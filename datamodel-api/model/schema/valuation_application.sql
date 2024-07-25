@@ -123,7 +123,7 @@ ALTER TABLE IF EXISTS application.application
     OWNER to postgres;
 
 COMMENT ON TABLE application.application
-    IS 'Application or Plan, to capture details and manage requests received by the valuation office for a plan.';
+    IS 'An application is to capture details and manage requests received by the valuation office for plans or serivces.';
 
 COMMENT ON COLUMN application.application.id
     IS 'Identifier for the application.';
@@ -392,7 +392,7 @@ ALTER TABLE IF EXISTS application.service
     OWNER to postgres;
 
 COMMENT ON TABLE application.service
-    IS 'Used to control the type of plan application as mass appraisals or single or individual appraisals.';
+    IS 'Used to control the item request types of an application such as a combination of requests of providing cetified value information, mass appraisal with a survey or specific property appraisals, etc.';
 
 COMMENT ON COLUMN application.service.id
     IS 'Identifier for the service.';
