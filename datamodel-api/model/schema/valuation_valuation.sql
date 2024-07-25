@@ -2578,7 +2578,7 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
     IS 'Value of the parameter with corresponding valuation unit. This can be a discrete value or converted, classified from a continuous range.';
     
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.transaction_id
-    IS 'Identifier to which transaction is on a survey activities to get parameter values.';    
+    IS 'Identifier to which transaction is on a valuation activity to get parameter values.';    
             
 -- Table: application.application_property
 CREATE TABLE IF NOT EXISTS application.application_property

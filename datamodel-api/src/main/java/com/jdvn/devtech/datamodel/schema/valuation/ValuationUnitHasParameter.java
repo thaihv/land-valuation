@@ -52,6 +52,6 @@ public class ValuationUnitHasParameter {
     
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "transaction_id", foreignKey = @ForeignKey(name = "valuation_units_parameters_links_transaction_id_fkey"))
-	@Comment("Identifier to which transaction is on a survey activities to get parameter values.")
+	@Comment("Identifier to which transaction is on a valuation activity to get parameter values.")
 	private Transaction transaction;    
 }
