@@ -22,7 +22,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "valuation_unit_has_transaction_price", schema = "valuation", indexes = {
 		@Index(name = "valuation_unit_has_transaction_price_vunit_id_fkey_ind", columnList = "vunit_id"), 
-		@Index(name = "valuation_unit_has_transaction_price_transaction_price_id_fkey_ind", columnList = "transaction_price_id"),
+		@Index(name = "valuation_unit_has_transaction_price_tran_price_id_fkey_ind", columnList = "transaction_price_id"),
 		@Index(name = "valuation_unit_has_transaction_price_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the valuation unit to the its recorded transaction price.")
 @IdClass(TransactionPriceUnitId.class)
