@@ -58,8 +58,8 @@ public class Valuation extends DomainObject<String> {
 	private Date valuation_date;
 	
 	@Column(length = 128)
-	@Comment("Display purpose of the valuation, for example ValuePerSquareMeter.") // ValuePerSquareMeter for example
-	private String display_purpose;	
+	@Comment("Display the purpose of valuation activity.") // for example, valuation_purpose="ValuePerSquareMeter"
+	private String valuation_purpose;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "approach_type_code", referencedColumnName = "code", foreignKey = @ForeignKey(name = "valuation_approach_type_code_fkey"))

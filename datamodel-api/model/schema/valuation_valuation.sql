@@ -1948,7 +1948,7 @@ CREATE TABLE IF NOT EXISTS valuation.valuation
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     transaction_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
     assessed_value numeric(20,2) NOT NULL DEFAULT 0,
-    display_purpose character varying(128) COLLATE pg_catalog."default",
+    valuation_purpose character varying(128) COLLATE pg_catalog."default",
     valuation_date timestamp(6) without time zone,
     appeal_status_code character varying(20) COLLATE pg_catalog."default",
     approach_type_code character varying(20) COLLATE pg_catalog."default",
@@ -2014,8 +2014,8 @@ COMMENT ON COLUMN valuation.valuation.vunit_id
 COMMENT ON COLUMN valuation.valuation.assessed_value
     IS 'The final decision value of valuation unit in currency. This is the final decision one selected from all valuation methods.';
 
-COMMENT ON COLUMN valuation.valuation.display_purpose
-    IS 'Display purpose of the valuation, for example ValuePerSquareMeter.';
+COMMENT ON COLUMN valuation.valuation.valuation_purpose
+    IS 'Display the purpose of valuation activity.';
     
 COMMENT ON COLUMN valuation.valuation.value_type_code
     IS 'Type of value need to be valuated,  i.e., reasearchValue for survey operation, compensationValue for specific purpose, decisionValue for final mass appraisals.';
