@@ -17,7 +17,7 @@ INSERT INTO application.application_status_type (code, display_value, status) VA
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('annulled', 'Annulled', 'a');
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('approved', 'Approved', 'a');
 INSERT INTO application.application_status_type (code, display_value, status) VALUES ('completed', 'Completed', 'a');
-INSERT INTO application.application_status_type (code, display_value, status, description) VALUES ('lodged', 'Lodged', 'a', 'Application has been lodged and officially received by land office');
+INSERT INTO application.application_status_type (code, display_value, status, description) VALUES ('lodged', 'Lodged', 'a', 'Application has been lodged and officially received by land valuation office');
 
 -- Table: application.application_action_type
 INSERT INTO application.application_action_type (code, display_value, status_to_set, status) VALUES ('assign', 'Assign', NULL, 'a');
