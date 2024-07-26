@@ -25,7 +25,8 @@ import lombok.Setter;
 		@Index(name = "valuation_unit_uses_source_vunit_id_fkey_ind", columnList = "vunit_id"), 
 		@Index(name = "valuation_unit_uses_source_source_id_fkey_ind", columnList = "source_id"),
 		@Index(name = "valuation_unit_uses_index_source_on_rowidentifier", columnList = "rowidentifier")})
-@Comment("Links the valuation unit to the sources (documents) in valuation process.")
+@Comment("Links the valuation unit to the sources (e.g., documents, photographs, deeds, entry forms collected in the\r\n"
+		+ "on-site visits or new application submission, etc.) in valuation process.")
 @IdClass(SourceUnitId.class)
 public class ValuationUnitUsesSource extends DomainObject<String> {
 	

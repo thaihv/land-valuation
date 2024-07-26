@@ -551,7 +551,7 @@ ALTER TABLE IF EXISTS valuation.valuation_unit_uses_source
     OWNER to postgres;
 
 COMMENT ON TABLE valuation.valuation_unit_uses_source
-    IS 'Links the valuation unit to the sources (documents) in valuation process.';
+    IS 'Links the valuation unit to the sources (e.g., documents, photographs, deeds, entry forms collected in the on-site visits or new application submission, etc.) in valuation process.';
 
 COMMENT ON COLUMN valuation.valuation_unit_uses_source.source_id
     IS 'Identifier of the source associated to the application.';
