@@ -35,12 +35,12 @@ ALTER SEQUENCE system.content_id_seq
     OWNER TO postgres;
     
 CREATE TABLE IF NOT EXISTS system.content (
-    id bigint NOT NULL DEFAULT nextval('system.content_id_seq'::regclass),
+    content_id bigint NOT NULL DEFAULT nextval('system.content_id_seq'::regclass),
     title character varying(255) COLLATE pg_catalog."default",
     description character varying(500) COLLATE pg_catalog."default",
     content_data character varying(1000) COLLATE pg_catalog."default",
     language_code character varying(10) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT content_id_pkey PRIMARY KEY (id),
+    CONSTRAINT content_id_pkey PRIMARY KEY (content_id),
     CONSTRAINT content_language_code_fkey FOREIGN KEY (language_code) 
     	REFERENCES system.language(code) MATCH SIMPLE
     	ON UPDATE NO ACTION
@@ -52,7 +52,7 @@ ALTER TABLE IF EXISTS system.content
     OWNER to postgres;
 
 COMMENT ON TABLE system.content
-    IS 'List of all languages that is supported in the system';
+    IS 'List of all contents that is translated in the system';
 
 COMMENT ON COLUMN system.content.title
     IS 'Language-specific metadata for content title.';
@@ -80,19 +80,19 @@ ALTER SEQUENCE system.translation_id_seq
     OWNER TO postgres;
     
 CREATE TABLE IF NOT EXISTS system.translation (
-    id bigint NOT NULL DEFAULT nextval('system.translation_id_seq'::regclass),
+    translation_id bigint NOT NULL DEFAULT nextval('system.translation_id_seq'::regclass),
     source_content_id INT NOT NULL,
     target_content_id INT NOT NULL,
     source_language_code character varying(10) COLLATE pg_catalog."default" NOT NULL,
     target_language_code character varying(10) COLLATE pg_catalog."default" NOT NULL,
     translation_data character varying(1000) COLLATE pg_catalog."default",
-    CONSTRAINT translation_id_pkey PRIMARY KEY (id),    
+    CONSTRAINT translation_id_pkey PRIMARY KEY (translation_id),    
     CONSTRAINT translation_source_content_id_fkey FOREIGN KEY (source_content_id) 
-    	REFERENCES system.content(id) MATCH SIMPLE
+    	REFERENCES system.content(content_id) MATCH SIMPLE
     	ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT translation_target_content_id_fkey FOREIGN KEY (target_content_id) 
-    	REFERENCES system.content(id) MATCH SIMPLE
+    	REFERENCES system.content(content_id) MATCH SIMPLE
     	ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT translation_source_language_code_fkey FOREIGN KEY (source_language_code) 
