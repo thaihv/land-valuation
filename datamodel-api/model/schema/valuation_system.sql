@@ -14,7 +14,7 @@ COMMENT ON TABLE system.language
     IS 'List of all languages that is supported in the system';
     
 COMMENT ON COLUMN system.language.code
-    IS 'The code for the language.';
+    IS 'The code for the language (e.g., en for English, fr for French).';
 
 COMMENT ON COLUMN system.language.name
     IS 'The name for the language.';
@@ -103,4 +103,26 @@ CREATE TABLE IF NOT EXISTS system.translation (
     	REFERENCES system.language(code) MATCH SIMPLE
     	ON UPDATE NO ACTION
         ON DELETE NO ACTION    	
-);
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS system.translation
+    OWNER to postgres;
+
+COMMENT ON TABLE system.translation
+    IS 'List of all translations in the system';
+    
+COMMENT ON COLUMN system.translation.source_content_id
+    IS 'Identifier for the original content being translated.';
+
+COMMENT ON COLUMN system.translation.target_content_id
+    IS 'Identifier for the translated content.';
+    
+COMMENT ON COLUMN system.translation.source_language_code
+    IS 'Language code of the original content.';
+    
+COMMENT ON COLUMN system.translation.target_language_code
+    IS 'Language code of the translated content.';
+    
+COMMENT ON COLUMN system.translation.translation_data
+    IS 'Translated content data.';    
