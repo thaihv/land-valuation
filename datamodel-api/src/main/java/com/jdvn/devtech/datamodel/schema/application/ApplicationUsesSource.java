@@ -22,9 +22,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "application_uses_source", schema = "application", indexes = {
-		@Index(name = "application_uses_source_on_application_id", columnList = "application_id"), 
-		@Index(name = "application_uses_source_on_source_id", columnList = "source_id"),
-		@Index(name = "application_uses_source_on_rowidentifier", columnList = "rowidentifier")})
+		@Index(name = "application_uses_source_application_id_fkey_ind", columnList = "application_id"), 
+		@Index(name = "application_uses_source_source_id_fkey_ind", columnList = "source_id"),
+		@Index(name = "application_uses_source_index_on_rowidentifier", columnList = "rowidentifier")})
 @Comment("Links the application to the sources (documents) submitted with the application.")
 @IdClass(ApplicationSourceId.class)
 public class ApplicationUsesSource extends DomainObject<String> {

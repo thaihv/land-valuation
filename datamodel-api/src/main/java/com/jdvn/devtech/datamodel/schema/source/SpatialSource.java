@@ -28,7 +28,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "spatial_source", schema = "source", indexes = {
-		@Index(name = "spatial_source_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "spatial_source_index_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("A spatial source may be the final (sometimes formal) documents, or all documents related to a survey in valuation process.")
 public class SpatialSource extends DomainObject<String>{
 

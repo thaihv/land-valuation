@@ -7,6 +7,7 @@ import org.hibernate.annotations.Comment;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jdvn.devtech.datamodel.schema.DomainObject;
+import com.jdvn.devtech.datamodel.schema.document.Document;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -31,7 +32,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "source", schema = "source", indexes = {
-		@Index(name = "source_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "source_index_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("List of the sources in valuation process.")
 public class Source extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
@@ -51,14 +52,18 @@ public class Source extends DomainObject<String>{
 	@Comment("Content of the source.")
 	private String content;
 
-	@Column
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JoinColumn(name = "archive_id", foreignKey = @ForeignKey(name = "source_archive_id_fkey"))
 	@Comment("Archive identifier for the source.")
-	private String archive_id;
-
-	@Column
+	private Archive archive;
+		
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JoinColumn(name = "document_id", foreignKey = @ForeignKey(name = "source_document_id_fkey"))
 	@Comment("Identifier of the source to a digital document in document table.")
-	private String document_id;
-
+	private Document document;
+	
 	@Column(length = 64)
 	@Comment("Identifier of the source in an external document management system, if any.")
 	private String ext_archive_id;

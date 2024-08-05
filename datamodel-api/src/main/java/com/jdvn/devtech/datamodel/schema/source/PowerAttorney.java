@@ -24,7 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "power_of_attorney", schema = "source", indexes = {
-		@Index(name = "power_of_attorney_on_rowidentifier", columnList = "rowidentifier") })
+		@Index(name = "power_of_attorney_index_on_rowidentifier", columnList = "rowidentifier") })
 @Comment("Captures details for power of attorney documents.")
 public class PowerAttorney extends DomainObject<String>{
 

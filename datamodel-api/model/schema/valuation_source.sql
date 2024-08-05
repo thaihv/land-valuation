@@ -1,3 +1,45 @@
+-- Table: source.archive
+CREATE TABLE IF NOT EXISTS source.archive
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+	name character varying(250) COLLATE pg_catalog."default" NOT NULL,
+	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+	change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),
+    CONSTRAINT archive_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS source.archive
+    OWNER to postgres;
+
+COMMENT ON TABLE source.archive
+    IS 'Represents an archive where collections of physical documents may be kept such as a filing cabinet, library or storage unit.';
+
+COMMENT ON COLUMN source.archive.id
+    IS 'Identifier for the archive.';
+
+COMMENT ON COLUMN source.archive.name
+    IS 'Description of the archive and its location.';
+	
+COMMENT ON COLUMN source.archive.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN source.archive.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';	
+	
+COMMENT ON COLUMN source.archive.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN source.archive.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN source.archive.change_time
+    IS 'The date and time the row was last modified.';
+    
 -- Table: source.source_type
 CREATE TABLE IF NOT EXISTS source.source_type
 (    
@@ -107,8 +149,8 @@ CREATE TABLE IF NOT EXISTS source.source
 	assess_nr character varying(20) COLLATE pg_catalog."default" NOT NULL,
 	reference_nr character varying(255) COLLATE pg_catalog."default",
 	content character varying(4000) COLLATE pg_catalog."default",
-	archive_id character varying(40) COLLATE pg_catalog."default",
 	document_id character varying(40) COLLATE pg_catalog."default",
+	archive_id character varying(40) COLLATE pg_catalog."default",	
 	ext_archive_id character varying(64) COLLATE pg_catalog."default",
 	owner_name character varying(255) COLLATE pg_catalog."default",
 	version character varying(255) COLLATE pg_catalog."default",
@@ -127,6 +169,14 @@ CREATE TABLE IF NOT EXISTS source.source
 	change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),
     CONSTRAINT source_pkey PRIMARY KEY (id),
+    CONSTRAINT source_archive_id_fkey FOREIGN KEY (archive_id)
+        REFERENCES source.archive (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT source_document_id_fkey FOREIGN KEY (document_id)
+        REFERENCES document.document (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,    
     CONSTRAINT availability_status_type_fkey FOREIGN KEY (availability_status_code)
         REFERENCES source.availability_status_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -214,58 +264,6 @@ COMMENT ON COLUMN source.source.change_user
 	
 COMMENT ON COLUMN source.source.change_time
     IS 'The date and time the row was last modified.';
--- Index: source_on_rowidentifier
-CREATE INDEX IF NOT EXISTS source_on_rowidentifier
-    ON source.source USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
-	
--- Table: source.archive
-CREATE TABLE IF NOT EXISTS source.archive
-(
-    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-	name character varying(250) COLLATE pg_catalog."default" NOT NULL,
-	rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    rowversion integer NOT NULL DEFAULT 0,
-    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
-	change_user character varying(50) COLLATE pg_catalog."default",
-    change_time timestamp without time zone NOT NULL DEFAULT now(),
-    CONSTRAINT archive_pkey PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS source.archive
-    OWNER to postgres;
-
-COMMENT ON TABLE source.archive
-    IS 'Represents an archive where collections of physical documents may be kept such as a filing cabinet, library or storage unit.';
-
-COMMENT ON COLUMN source.archive.id
-    IS 'Identifier for the archive.';
-
-COMMENT ON COLUMN source.archive.name
-    IS 'Description of the archive and its location.';
-	
-COMMENT ON COLUMN source.archive.rowidentifier
-    IS 'Identifies the all change records for the row in the table.';
-
-COMMENT ON COLUMN source.archive.rowversion
-    IS 'Sequential value indicating the number of times this row has been modified.';	
-	
-COMMENT ON COLUMN source.archive.change_action
-    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
-
-COMMENT ON COLUMN source.archive.change_user
-    IS 'The user id of the last person to modify the row.';
-
-COMMENT ON COLUMN source.archive.change_time
-    IS 'The date and time the row was last modified.';
--- Index: archive_on_rowidentifier
-CREATE INDEX IF NOT EXISTS archive_on_rowidentifier
-    ON source.archive USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;	
 	
 -- Table: source.spatial_source_type
 CREATE TABLE IF NOT EXISTS source.spatial_source_type
@@ -374,11 +372,6 @@ COMMENT ON COLUMN source.spatial_source.change_user
 	
 COMMENT ON COLUMN source.spatial_source.change_time
     IS 'The date and time the row was last modified.';
--- Index: spatial_source_on_rowidentifier
-CREATE INDEX IF NOT EXISTS spatial_source_on_rowidentifier
-    ON source.spatial_source USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;	
 	
 -- Table: source.power_of_attorney
 CREATE TABLE IF NOT EXISTS source.power_of_attorney
@@ -429,11 +422,6 @@ COMMENT ON COLUMN source.power_of_attorney.attorney_name
 
 COMMENT ON COLUMN source.power_of_attorney.person_name
     IS 'The name of the person that is granting the power of attorney (a.k.a. grantor).';
--- Index: power_of_attorney_on_rowidentifier
-CREATE INDEX IF NOT EXISTS power_of_attorney_on_rowidentifier
-    ON source.power_of_attorney USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;	
 	
 -- Table: application.application_uses_source
 CREATE TABLE IF NOT EXISTS application.application_uses_source
@@ -484,22 +472,7 @@ COMMENT ON COLUMN application.application_uses_source.change_user
 	
 COMMENT ON COLUMN application.application_uses_source.change_time
     IS 'The date and time the row was last modified.';
--- Index: application_uses_source_on_application_id
-CREATE INDEX IF NOT EXISTS application_uses_source_on_application_id
-    ON application.application_uses_source USING btree
-    (application_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: application_uses_source_on_rowidentifier
-CREATE INDEX IF NOT EXISTS application_uses_source_on_rowidentifier
-    ON application.application_uses_source USING btree
-    (rowidentifier COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
--- Index: application_uses_source_on_source_id
-CREATE INDEX IF NOT EXISTS application_uses_source_on_source_id
-    ON application.application_uses_source USING btree
-    (source_id COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;	 
-    
+
 -- Table: administrative.source_describes_party
 CREATE TABLE IF NOT EXISTS administrative.source_describes_party
 (
