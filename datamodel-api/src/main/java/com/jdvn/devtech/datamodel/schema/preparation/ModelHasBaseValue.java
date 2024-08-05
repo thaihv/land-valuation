@@ -20,26 +20,26 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "model_constant", schema = "preparation")
-@Comment("Used to store the calculated coefficients of regression model.")
-public class ModelHasConstant {  
+@Table(name = "model_basevalue", schema = "preparation")
+@Comment("Used to store the calculated base values or contants of regression model.")
+public class ModelHasBaseValue {  
 
 	@Id
-	@Comment("Identifier of the parameter for model.")
+	@Comment("Identifier of the base value or constant for model.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "model_id", foreignKey = @ForeignKey(name = "model_constant_model_id_fkey"))
+    @JoinColumn(name = "model_id", foreignKey = @ForeignKey(name = "model_basevalue_model_id_fkey"))
 	@Comment("The id of the model associated.")
     private ValuationModel model;
     
 	@Column(length = 40, nullable = false)
-	@Comment("The name of model constant.")
+	@Comment("The name of model constant or base value.")
 	private String constant_name;
 
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
-	@Comment("Value of the constant name.")
+	@Comment("Value of the constant name or base value.")
 	private Double value;
     
 }

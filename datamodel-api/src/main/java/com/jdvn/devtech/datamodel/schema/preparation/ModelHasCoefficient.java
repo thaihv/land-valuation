@@ -25,7 +25,7 @@ import lombok.Setter;
 public class ModelHasCoefficient {  
 
 	@Id
-	@Comment("Identifier of the parameter for model.")
+	@Comment("Identifier of the coefficient for model.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 
