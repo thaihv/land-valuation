@@ -531,7 +531,7 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
     name character varying(60) COLLATE pg_catalog."default" NOT NULL,
     sequence integer NOT NULL,
     operation character varying(60) COLLATE pg_catalog."default" NOT NULL,    
-    coefficient_id character varying(40) COLLATE pg_catalog."default",
+    coefficient_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     base_value_id character varying(40) COLLATE pg_catalog."default",
     ceil double precision,
     floor double precision,    
