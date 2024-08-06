@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS valuation.value_type
     description character varying(1000) COLLATE pg_catalog."default",
     status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
     CONSTRAINT value_type_pkey PRIMARY KEY (code),
-    CONSTRAINT value_type_display_value_key UNIQUE (display_value)
+    CONSTRAINT value_type_display_value UNIQUE (display_value)
 )
 TABLESPACE pg_default;
 
