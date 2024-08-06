@@ -530,8 +530,7 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     name character varying(60) COLLATE pg_catalog."default" NOT NULL,
     sequence integer NOT NULL,
-    operation character varying(60) COLLATE pg_catalog."default" NOT NULL,    
-    coefficient_id character varying(40) COLLATE pg_catalog."default",
+    operation character varying(60) COLLATE pg_catalog."default" NOT NULL,
     base_value_id character varying(40) COLLATE pg_catalog."default",
     ceil double precision,
     floor double precision,    
@@ -544,10 +543,6 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
         ON DELETE NO ACTION,
     CONSTRAINT valuation_formula_base_value_id_fkey FOREIGN KEY (base_value_id)
         REFERENCES preparation.model_basevalue (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT valuation_formula_coefficient_id_fkey FOREIGN KEY (coefficient_id)
-        REFERENCES preparation.model_coefficient (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -577,9 +572,6 @@ COMMENT ON COLUMN preparation.valuation_formula.operation
 
 COMMENT ON COLUMN preparation.valuation_formula.sequence
     IS 'Sequence of the formula in relationship with its parent formula.';
-
-COMMENT ON COLUMN preparation.valuation_formula.coefficient_id
-    IS 'Identifier to the coefficient in calculation.';
 
 COMMENT ON COLUMN preparation.valuation_formula.child_formula_id
     IS 'Child formula where this formula belongs, it could be NULL as no specific child.';
