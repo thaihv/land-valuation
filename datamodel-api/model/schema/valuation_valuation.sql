@@ -535,10 +535,10 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
     base_value_id character varying(40) COLLATE pg_catalog."default",
     ceil double precision,
     floor double precision,    
-    base_formula_id character varying(40) COLLATE pg_catalog."default",
+    parent_formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT valuation_formula_pkey PRIMARY KEY (id),
-    CONSTRAINT valuation_formula_base_formula_id UNIQUE (base_value_id),
-    CONSTRAINT valuation_formula_base_formula_id_fkey FOREIGN KEY (base_formula_id)
+    CONSTRAINT valuation_formula_basevalue_id UNIQUE (base_value_id),
+    CONSTRAINT valuation_formula_parent_formula_id_fkey FOREIGN KEY (parent_formula_id)
         REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -581,8 +581,8 @@ COMMENT ON COLUMN preparation.valuation_formula.sequence
 COMMENT ON COLUMN preparation.valuation_formula.coefficient_id
     IS 'Identifier to the coefficient in calculation.';
 
-COMMENT ON COLUMN preparation.valuation_formula.base_formula_id
-    IS 'Base formula where belong to this formula, it could be NULL as no specific children.';
+COMMENT ON COLUMN preparation.valuation_formula.parent_formula_id
+    IS 'Parent formula where this formula belongs, it could be NULL as no specific parent.';
 
 COMMENT ON COLUMN preparation.valuation_formula.base_value_id
     IS 'Identifier to the base value in calculation.';
