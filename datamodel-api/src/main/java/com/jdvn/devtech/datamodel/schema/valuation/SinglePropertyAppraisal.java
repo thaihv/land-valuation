@@ -2,8 +2,6 @@ package com.jdvn.devtech.datamodel.schema.valuation;
 
 import org.hibernate.annotations.Comment;
 
-import com.jdvn.devtech.datamodel.schema.transaction.Transaction;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -50,9 +48,4 @@ public class SinglePropertyAppraisal {
 	@JoinColumn(name = "sales_comparison_approach_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_sales_comparison_approach_id_fkey"))
 	private SalesComparisonMethod sales_comparison_approach;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "transaction_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "single_appraisal_transaction_id_fkey"))
-	@Comment("Identifier to a transaction for assessment.")
-    private Transaction transaction;
-
 }
