@@ -60,9 +60,9 @@ public class ValuationFormula {
 	private Double ceil;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "parent_formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_formula_base_formula_id_fkey"))
-	@Comment("Parent formula where this formula belongs, it could be NULL as no specific parent.")
-	private ValuationFormula parent_formula;
+	@JoinColumn(name = "child_formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_formula_child_formula_id_fkey"))
+	@Comment("Child formula where this formula belongs, it could be NULL as no specific child.")
+	private ValuationFormula child_formula;
 	
 
 }
