@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.hibernate.annotations.Comment;
 
+import com.jdvn.devtech.datamodel.schema.preparation.ValuationFormula;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,7 +13,6 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -72,6 +73,8 @@ public class CostMethod {
 	@Comment("The value (in currency) estimated from cost implementation.")
 	private Double estimate_value;
 
-	@OneToOne(mappedBy = "cost_approach")
-	private SinglePropertyAppraisal single_property_appraisal;
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "cost_method_formula_id_fkey"))
+	@Comment("Identifier of the formula implementation.")
+	private ValuationFormula valuation_formula;
 }

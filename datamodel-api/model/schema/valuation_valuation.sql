@@ -1788,11 +1788,16 @@ CREATE TABLE IF NOT EXISTS valuation.sales_comparison_method
     location_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     physical_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
+    formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT sales_comparison_method_pkey PRIMARY KEY (id),
     CONSTRAINT sales_comparison_method_compared_vunit_id_fkey FOREIGN KEY (compared_vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT sales_comparison_method_formula_id_fkey FOREIGN KEY (formula_id)
+        REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
@@ -1819,7 +1824,10 @@ COMMENT ON COLUMN valuation.sales_comparison_method.physical_adjustment
     IS 'Adjustments of physical ones in value to compared valuation unit.';
 
 COMMENT ON COLUMN valuation.sales_comparison_method.time_adjustment
-    IS 'Adjustments of time in value to compared valuation unit.';    
+    IS 'Adjustments of time in value to compared valuation unit.';
+    
+COMMENT ON COLUMN valuation.sales_comparison_method.formula_id
+    IS 'Identifier of the formula implementation.';        
     
 -- Table: valuation.cost_method
 CREATE TABLE IF NOT EXISTS valuation.cost_method
@@ -1837,11 +1845,16 @@ CREATE TABLE IF NOT EXISTS valuation.cost_method
     external_obsolescence double precision,
     total_obsolescence double precision,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
+    formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT cost_method_pkey PRIMARY KEY (id),
     CONSTRAINT cost_method_cost_approach_type_code_fkey FOREIGN KEY (cost_approach_type_code)
         REFERENCES valuation.cost_approach_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT cost_method_formula_id_fkey FOREIGN KEY (formula_id)
+        REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
@@ -1887,7 +1900,10 @@ COMMENT ON COLUMN valuation.cost_method.total_cost
 
 COMMENT ON COLUMN valuation.cost_method.total_obsolescence
     IS 'The value (in currency) calculated for total obsolescence.';    
-    
+
+COMMENT ON COLUMN valuation.cost_method.formula_id
+    IS 'Identifier of the formula implementation.';
+        
 -- Table: valuation.income_method
 CREATE TABLE IF NOT EXISTS valuation.income_method
 (
