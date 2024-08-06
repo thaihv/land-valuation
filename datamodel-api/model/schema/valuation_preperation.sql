@@ -345,4 +345,50 @@ COMMENT ON COLUMN preparation.accessory_part_type.display_value
     IS 'Displayed value of the accessory part type.';
 
 COMMENT ON COLUMN preparation.accessory_part_type.status
-    IS 'Status in active of the accessory part type as active (a) or inactive (i).';    
+    IS 'Status in active of the accessory part type as active (a) or inactive (i).';
+    
+-- Table: preparation.valuation_formula
+CREATE TABLE IF NOT EXISTS preparation.valuation_formula
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    name character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    sequence integer NOT NULL,
+    operation character varying(60) COLLATE pg_catalog."default" NOT NULL,    
+    ceil double precision,
+    floor double precision,
+    base_formula_id character varying(40) COLLATE pg_catalog."default" DEFAULT uuid_generate_v1(),
+    CONSTRAINT valuation_formula_pkey PRIMARY KEY (id),
+    CONSTRAINT valuation_formula_base_formula_id_fkey FOREIGN KEY (base_formula_id)
+        REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS preparation.valuation_formula
+    OWNER to postgres;
+
+COMMENT ON TABLE preparation.valuation_formula
+    IS 'Used to store information about functions that implementated for valuation activities';
+
+COMMENT ON COLUMN preparation.valuation_formula.id
+    IS 'Identifier of the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.ceil
+    IS 'Ceil value of the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.floor
+    IS 'Floor value of the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.name
+    IS 'Display name of the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.operation
+    IS 'Name of operation for formula for example sum, subtraction, product, division, min, max, lower, greater, etc.';
+
+COMMENT ON COLUMN preparation.valuation_formula.sequence
+    IS 'Sequence of the formula in relationship with its parent formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.base_formula_id
+    IS 'Base formula where belong to this formula, it could be NULL as no specific children.';        

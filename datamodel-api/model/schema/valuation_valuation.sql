@@ -1900,8 +1900,13 @@ CREATE TABLE IF NOT EXISTS valuation.income_method
     operating_expenses double precision,    
     capitalization_rate double precision,
     discount_rate double precision,
-    estimate_value numeric(20,2) NOT NULL DEFAULT 0,    
-    CONSTRAINT income_calibration_pkey PRIMARY KEY (id)
+    estimate_value numeric(20,2) NOT NULL DEFAULT 0,
+	formula_id character varying(40) COLLATE pg_catalog."default",        
+    CONSTRAINT income_method_pkey PRIMARY KEY (id),
+    CONSTRAINT income_method_formula_id_fkey FOREIGN KEY (formula_id)
+        REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION    
 )
 
 TABLESPACE pg_default;
@@ -1940,7 +1945,10 @@ COMMENT ON COLUMN valuation.income_method.operating_expenses
     IS 'The operating_expenses (in currency) in implementation.';
 
 COMMENT ON COLUMN valuation.income_method.potential_gross_income
-    IS 'The potential gross income value(in currency) in implementation.';   
+    IS 'The potential gross income value(in currency) in implementation.';
+    
+COMMENT ON COLUMN valuation.income_method.formula_id
+    IS 'Identifier of the formula implementation.';       
     
 -- Table: valuation.valuation
 CREATE TABLE IF NOT EXISTS valuation.valuation
@@ -2078,6 +2086,7 @@ CREATE TABLE IF NOT EXISTS valuation.single_appraisal
     cost_approach_id character varying(40) COLLATE pg_catalog."default",
     income_approach_id character varying(40) COLLATE pg_catalog."default",
     sales_comparison_approach_id character varying(40) COLLATE pg_catalog."default",
+    transaction_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT single_appraisal_pkey PRIMARY KEY (id),
     CONSTRAINT single_appraisal_valuation_id_fkey FOREIGN KEY (valuation_id)
         REFERENCES valuation.valuation (id) MATCH SIMPLE
@@ -2094,7 +2103,11 @@ CREATE TABLE IF NOT EXISTS valuation.single_appraisal
     CONSTRAINT single_appraisal_sales_comparison_approach_id_fkey FOREIGN KEY (sales_comparison_approach_id)
         REFERENCES valuation.sales_comparison_method (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT single_appraisal_transaction_id_fkey FOREIGN KEY (transaction_id)
+        REFERENCES transaction.transaction (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
@@ -2116,7 +2129,10 @@ COMMENT ON COLUMN valuation.single_appraisal.income_approach_id
 
 COMMENT ON COLUMN valuation.single_appraisal.sales_comparison_approach_id
     IS 'The identifier of sales comparison approach, if any.';
-    
+
+COMMENT ON COLUMN valuation.single_appraisal.transaction_id
+    IS 'Identifier to a transaction for assessment.';
+        
 -- Table: administrative.rrr
 CREATE TABLE IF NOT EXISTS administrative.rrr
 (
