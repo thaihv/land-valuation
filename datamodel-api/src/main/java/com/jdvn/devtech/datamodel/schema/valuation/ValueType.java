@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "value_type", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "value_type_display_value_key", columnNames = { "display_value" })})
+@Table(name = "value_type", schema = "valuation", uniqueConstraints = { @UniqueConstraint(name = "value_type_display_value", columnNames = { "display_value" })})
 @Comment("Code list of value types used for valuation process.")
 public class ValueType {
 

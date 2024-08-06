@@ -4,6 +4,7 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +12,7 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +42,16 @@ public class ValuationFormula {
 	@Column(length = 60, nullable = false)
 	@Comment("Name of operation for formula for example sum, subtraction, product, division, min, max, lower, greater, etc.")
 	private String operation;
+		
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "coefficient_id", foreignKey = @ForeignKey(name = "valuation_formula_coefficient_id_fkey"))
+	@Comment("Identifier to the coefficient in calculation.")
+	private ModelHasCoefficient base_coefficient;
+
+	@OneToOne(optional = true)
+	@JoinColumn(name = "base_value_id", foreignKey = @ForeignKey(name = "valuation_formula_base_value_id_fkey"))
+	@Comment("Identifier to the base value in calculation.")
+	private ModelHasBaseValue base_value;
 	
 	@Comment("Floor value of the formula.")
 	private Double floor;
@@ -50,7 +62,7 @@ public class ValuationFormula {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "base_formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_formula_base_formula_id_fkey"))
 	@Comment("Base formula where belong to this formula, it could be NULL as no specific children.")
-	private ValuationFormula baseFormula;
+	private ValuationFormula base_formula;
 	
 
 }
