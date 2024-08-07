@@ -1,5 +1,7 @@
 package com.jdvn.devtech.datamodel.schema.preparation;
 
+import java.util.Date;
+
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -41,5 +43,11 @@ public class ModelHasBaseValue {
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("Value of the constant name or base value.")
 	private Double base_value;
+	
+	@Comment("The date that basevalue is valid.")
+	private Date valid_from;
+
+	@Comment("The date that basevalue is retired.")
+	private Date valid_to;
     
 }
