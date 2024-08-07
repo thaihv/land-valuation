@@ -576,7 +576,7 @@ COMMENT ON COLUMN preparation.valuation_formula.sequence
 COMMENT ON COLUMN preparation.valuation_formula.parent_formula_id
     IS 'Identifier of the formula where is its immediate parent, it could be NULL as no specific parent.';
 
-COMMENT ON COLUMN preparation.valuation_formula.base_value_id
+COMMENT ON COLUMN preparation.valuation_formula.use_basevalue_id
     IS 'Identifier to the base value in calculation.';
         
 -- Table: valuation.valuation_unit_uses_source
