@@ -554,14 +554,34 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     name character varying(60) COLLATE pg_catalog."default" NOT NULL,
     sequence integer NOT NULL,
+    left_coefficient_id character varying(40) COLLATE pg_catalog."default",
+    left_parameter_code character varying(40) COLLATE pg_catalog."default",    
     operation character varying(60) COLLATE pg_catalog."default" NOT NULL,
-    special_operation character varying(60) COLLATE pg_catalog."default",
+    special_operation character varying(60) COLLATE pg_catalog."default",   
+    right_coefficient_id character varying(40) COLLATE pg_catalog."default",
+    right_parameter_code character varying(40) COLLATE pg_catalog."default",
     use_basevalue_id character varying(40) COLLATE pg_catalog."default",
     ceil double precision,
-    floor double precision,    
+    floor double precision,     
     parent_formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT valuation_formula_pkey PRIMARY KEY (id),
     CONSTRAINT valuation_formula_use_basevalue_id UNIQUE (use_basevalue_id),
+    CONSTRAINT valuation_formula_left_coefficient_id_fkey FOREIGN KEY (left_coefficient_id)
+        REFERENCES preparation.model_coefficient (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_formula_left_parameter_code_fkey FOREIGN KEY (left_parameter_code)
+        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,    
+    CONSTRAINT valuation_formula_right_coefficient_id_fkey FOREIGN KEY (right_coefficient_id)
+        REFERENCES preparation.model_coefficient (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT valuation_formula_right_parameter_code_fkey FOREIGN KEY (right_parameter_code)
+        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,        
     CONSTRAINT valuation_formula_parent_formula_id_fkey FOREIGN KEY (parent_formula_id)
         REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -606,7 +626,19 @@ COMMENT ON COLUMN preparation.valuation_formula.parent_formula_id
 
 COMMENT ON COLUMN preparation.valuation_formula.use_basevalue_id
     IS 'Identifier to the base value in calculation.';
-        
+
+COMMENT ON COLUMN preparation.valuation_formula.left_coefficient_id
+    IS 'Identifier of the left coefficient in the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.left_parameter_code
+    IS 'Identifier of the left parameter in the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.right_coefficient_id
+    IS 'Identifier of the right coefficient in the formula.';
+
+COMMENT ON COLUMN preparation.valuation_formula.right_parameter_code
+    IS 'Identifier of the right parameter in the formula.';
+                    
 -- Table: valuation.valuation_unit_uses_source
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source
 (
