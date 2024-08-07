@@ -15,3 +15,15 @@ WHERE type_code = 'genericLand') AND B.is_virtual = false
 SELECT B.name, B.type, B.description, A.key, A.value
 FROM preparation.parameter_setting A, preparation.tech_parameter B 
 WHERE A.code = B.code AND B.code = 'ori_rad'
+
+-- SCRIPTS: Get formula tree recursively use Recursive Common Table Expressions (postgresql will support)  
+WITH RECURSIVE treeformula AS (
+  SELECT * 
+    FROM preparation.valuation_formula 
+   WHERE id = '1' 
+UNION ALL 
+  SELECT t.* 
+    FROM preparation.valuation_formula t 
+    JOIN treeformula
+      ON t.parent_formula_id = treeformula.id
+) SELECT * FROM treeformula;
