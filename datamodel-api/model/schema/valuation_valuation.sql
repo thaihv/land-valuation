@@ -531,17 +531,17 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
     name character varying(60) COLLATE pg_catalog."default" NOT NULL,
     sequence integer NOT NULL,
     operation character varying(60) COLLATE pg_catalog."default" NOT NULL,
-    base_value_id character varying(40) COLLATE pg_catalog."default",
+    use_basevalue_id character varying(40) COLLATE pg_catalog."default",
     ceil double precision,
     floor double precision,    
-    child_formula_id character varying(40) COLLATE pg_catalog."default",
+    parent_formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT valuation_formula_pkey PRIMARY KEY (id),
-    CONSTRAINT valuation_formula_basevalue_id UNIQUE (base_value_id),
-    CONSTRAINT valuation_formula_parent_formula_id_fkey FOREIGN KEY (child_formula_id)
+    CONSTRAINT valuation_formula_use_basevalue_id UNIQUE (use_basevalue_id),
+    CONSTRAINT valuation_formula_parent_formula_id_fkey FOREIGN KEY (parent_formula_id)
         REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT valuation_formula_base_value_id_fkey FOREIGN KEY (base_value_id)
+    CONSTRAINT valuation_formula_use_basevalue_id_fkey FOREIGN KEY (use_basevalue_id)
         REFERENCES preparation.model_basevalue (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -573,8 +573,8 @@ COMMENT ON COLUMN preparation.valuation_formula.operation
 COMMENT ON COLUMN preparation.valuation_formula.sequence
     IS 'Sequence of the formula in relationship with its parent formula.';
 
-COMMENT ON COLUMN preparation.valuation_formula.child_formula_id
-    IS 'Child formula where this formula belongs, it could be NULL as no specific child.';
+COMMENT ON COLUMN preparation.valuation_formula.parent_formula_id
+    IS 'Identifier of the formula where is its immediate parent, it could be NULL as no specific parent.';
 
 COMMENT ON COLUMN preparation.valuation_formula.base_value_id
     IS 'Identifier to the base value in calculation.';
@@ -1843,13 +1843,13 @@ CREATE TABLE IF NOT EXISTS valuation.sales_comparison_method
     location_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     physical_adjustment numeric(20,2) NOT NULL DEFAULT 0,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
-    formula_id character varying(40) COLLATE pg_catalog."default",
+    use_formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT sales_comparison_method_pkey PRIMARY KEY (id),
     CONSTRAINT sales_comparison_method_compared_vunit_id_fkey FOREIGN KEY (compared_vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT sales_comparison_method_formula_id_fkey FOREIGN KEY (formula_id)
+    CONSTRAINT sales_comparison_method_use_formula_id_fkey FOREIGN KEY (use_formula_id)
         REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION        
@@ -1881,7 +1881,7 @@ COMMENT ON COLUMN valuation.sales_comparison_method.physical_adjustment
 COMMENT ON COLUMN valuation.sales_comparison_method.time_adjustment
     IS 'Adjustments of time in value to compared valuation unit.';
     
-COMMENT ON COLUMN valuation.sales_comparison_method.formula_id
+COMMENT ON COLUMN valuation.sales_comparison_method.use_formula_id
     IS 'Identifier of the formula implementation.';        
     
 -- Table: valuation.cost_method
@@ -1900,13 +1900,13 @@ CREATE TABLE IF NOT EXISTS valuation.cost_method
     external_obsolescence double precision,
     total_obsolescence double precision,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
-    formula_id character varying(40) COLLATE pg_catalog."default",
+    use_formula_id character varying(40) COLLATE pg_catalog."default",
     CONSTRAINT cost_method_pkey PRIMARY KEY (id),
     CONSTRAINT cost_method_cost_approach_type_code_fkey FOREIGN KEY (cost_approach_type_code)
         REFERENCES valuation.cost_approach_type (code) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT cost_method_formula_id_fkey FOREIGN KEY (formula_id)
+    CONSTRAINT cost_method_use_formula_id_fkey FOREIGN KEY (use_formula_id)
         REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION        
@@ -1956,7 +1956,7 @@ COMMENT ON COLUMN valuation.cost_method.total_cost
 COMMENT ON COLUMN valuation.cost_method.total_obsolescence
     IS 'The value (in currency) calculated for total obsolescence.';    
 
-COMMENT ON COLUMN valuation.cost_method.formula_id
+COMMENT ON COLUMN valuation.cost_method.use_formula_id
     IS 'Identifier of the formula implementation.';
         
 -- Table: valuation.income_method
@@ -1972,9 +1972,9 @@ CREATE TABLE IF NOT EXISTS valuation.income_method
     capitalization_rate double precision,
     discount_rate double precision,
     estimate_value numeric(20,2) NOT NULL DEFAULT 0,
-	formula_id character varying(40) COLLATE pg_catalog."default",        
+	use_formula_id character varying(40) COLLATE pg_catalog."default",        
     CONSTRAINT income_method_pkey PRIMARY KEY (id),
-    CONSTRAINT income_method_formula_id_fkey FOREIGN KEY (formula_id)
+    CONSTRAINT income_method_use_formula_id_fkey FOREIGN KEY (use_formula_id)
         REFERENCES preparation.valuation_formula (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION    
@@ -2018,7 +2018,7 @@ COMMENT ON COLUMN valuation.income_method.operating_expenses
 COMMENT ON COLUMN valuation.income_method.potential_gross_income
     IS 'The potential gross income value(in currency) in implementation.';
     
-COMMENT ON COLUMN valuation.income_method.formula_id
+COMMENT ON COLUMN valuation.income_method.use_formula_id
     IS 'Identifier of the formula implementation.';       
     
 -- Table: valuation.valuation

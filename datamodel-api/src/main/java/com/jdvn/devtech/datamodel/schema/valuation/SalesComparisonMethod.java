@@ -57,7 +57,7 @@ public class SalesComparisonMethod {
 	private Double physical_adjustment;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "sales_comparison_method_formula_id_fkey"))
+	@JoinColumn(name = "use_formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "sales_comparison_method_use_formula_id_fkey"))
 	@Comment("Identifier of the formula implementation.")
 	private ValuationFormula valuation_formula;
 

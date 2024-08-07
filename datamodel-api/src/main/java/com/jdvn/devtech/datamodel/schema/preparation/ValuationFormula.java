@@ -52,9 +52,9 @@ public class ValuationFormula {
 	private Set<ModelHasCoefficient> coefficients;
 		
 	@OneToOne(optional = true)
-	@JoinColumn(name = "base_value_id", foreignKey = @ForeignKey(name = "valuation_formula_base_value_id_fkey"))
+	@JoinColumn(name = "use_basevalue_id", foreignKey = @ForeignKey(name = "valuation_formula_use_basevalue_id_fkey"))
 	@Comment("Identifier to the base value in calculation.")
-	private ModelHasBaseValue base_value;
+	private ModelHasBaseValue basevalue;
 	
 	@Comment("Floor value of the formula.")
 	private Double floor;
@@ -63,9 +63,9 @@ public class ValuationFormula {
 	private Double ceil;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "child_formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_formula_child_formula_id_fkey"))
-	@Comment("Child formula where this formula belongs, it could be NULL as no specific child.")
-	private ValuationFormula child_formula;
+	@JoinColumn(name = "parent_formula_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "valuation_formula_parent_formula_id_fkey"))
+	@Comment("Identifier of the formula where is its immediate parent, it could be NULL as no specific parent.")
+	private ValuationFormula parent_formula;
 	
 
 }
