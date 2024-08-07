@@ -531,6 +531,7 @@ CREATE TABLE IF NOT EXISTS preparation.valuation_formula
     name character varying(60) COLLATE pg_catalog."default" NOT NULL,
     sequence integer NOT NULL,
     operation character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    special_operation character varying(60) COLLATE pg_catalog."default",
     use_basevalue_id character varying(40) COLLATE pg_catalog."default",
     ceil double precision,
     floor double precision,    
@@ -570,6 +571,9 @@ COMMENT ON COLUMN preparation.valuation_formula.name
 COMMENT ON COLUMN preparation.valuation_formula.operation
     IS 'Name of operation for formula for example sum, subtraction, product, division, min, max, lower, greater, etc.';
 
+COMMENT ON COLUMN preparation.valuation_formula.special_operation
+    IS 'Name of special operation for formula for example logical operations as is null, not, OR, AND, equals, or user defined.';
+    
 COMMENT ON COLUMN preparation.valuation_formula.sequence
     IS 'Sequence of the formula in relationship with its parent formula.';
 

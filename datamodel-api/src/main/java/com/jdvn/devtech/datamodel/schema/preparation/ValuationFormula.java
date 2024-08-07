@@ -40,12 +40,16 @@ public class ValuationFormula {
 	private String name;
 
 	@Column(nullable = false)
-	@Comment("Sequence of the formula in relationship with its parent formula.")
+	@Comment("Sequence of the formula in relationship with its root formula.")
 	private Integer sequence;
 	
 	@Column(length = 60, nullable = false)
 	@Comment("Name of operation for formula for example sum, subtraction, product, division, min, max, lower, greater, etc.")
 	private String operation;
+	
+	@Column(length = 60, nullable = false)
+	@Comment("Name of special operation for formula for example logical operations as is null, not, OR, AND, equals, or user defined.")
+	private String special_operation;
 			
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "valuation_formulas_coefficients_links", schema = "preparation", joinColumns = @JoinColumn(name = "formula_id"), inverseJoinColumns = @JoinColumn(name = "coefficient_id"), foreignKey = @ForeignKey(name = "valuation_formulas_coefficients_links_formula_id_fkey"), inverseForeignKey = @ForeignKey(name = "valuation_formulas_coefficients_links_coefficient_id_fkey"))
