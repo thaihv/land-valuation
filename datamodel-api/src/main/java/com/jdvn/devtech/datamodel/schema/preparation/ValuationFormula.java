@@ -27,7 +27,8 @@ import lombok.Setter;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "valuation_formula", schema = "preparation")
-@Comment("Used to store information about functions that implementated for valuation activities")
+@Comment("Used to store information about functions that implementated for valuation activities. Valuation functions are used to define the actual calculation procedures by linking together\r\n"
+		+ "coefficient, technical parameters (e.g., object area) and other valuation functions.")
 public class ValuationFormula {
 
 	@Id

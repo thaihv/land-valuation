@@ -554,7 +554,7 @@ ALTER TABLE IF EXISTS preparation.valuation_formula
     OWNER to postgres;
 
 COMMENT ON TABLE preparation.valuation_formula
-    IS 'Used to store information about functions that implementated for valuation activities';
+    IS 'Used to store information about functions that implementated for valuation activities. Valuation functions are used to define the actual calculation procedures by linking together coefficient, technical parameters (e.g., object area) and other valuation functions.';
 
 COMMENT ON COLUMN preparation.valuation_formula.id
     IS 'Identifier of the formula.';
