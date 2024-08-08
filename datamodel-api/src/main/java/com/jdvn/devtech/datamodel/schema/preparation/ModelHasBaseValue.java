@@ -37,9 +37,17 @@ public class ModelHasBaseValue {
     private ValuationModel model;
     
 	@Column(length = 40, nullable = false)
-	@Comment("The name of model constant or base value.")
+	@Comment("The name of constant or base value, if any.")
 	private String constant_name;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "parameter_code", foreignKey = @ForeignKey(name = "model_basevalue_parameter_code_fkey"))
+	@Comment("The code of the technical parameter.")
+	private TechnicalParameter technical_parameter;
+
+	@Comment("The list of sub-basevalue identifiers that concatenated into a string by commas.")
+	private String child_list;
+	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("Value of the constant name or base value.")
 	private Double base_value;

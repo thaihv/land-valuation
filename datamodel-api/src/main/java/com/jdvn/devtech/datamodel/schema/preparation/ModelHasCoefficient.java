@@ -37,14 +37,20 @@ public class ModelHasCoefficient {
 	private ValuationModel model;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "parameter_code", foreignKey = @ForeignKey(name = "model_coefficients_code_fkey"))
+	@JoinColumn(name = "parameter_code", foreignKey = @ForeignKey(name = "model_coefficients_parameter_code_fkey"))
 	@Comment("The code of the technical parameter.")
 	private TechnicalParameter technical_parameter;
 
-	@Comment("Minimum value of the coefficient.")
+	@Comment("The list of sub-coefficient identifiers that concatenated into a string by commas.")
+	private String child_list;
+	
+	// For example, "Construction Year" parameter might have a its Coefficient but measurement may segmented into 0-1990; 1990-2005;
+	// So with segmentation 1990-2005 we can have a Sub-Coefficient of "Construction Year" parameter Coefficient 
+	// with range_from = 1990 and range_to = 2005
+	@Comment("Begining of bound of the paramater value. Necessary when segmenting parameter measurement into value ranges.")
 	private Double range_from;
 
-	@Comment("Maximum value of the coefficient.")
+	@Comment("End of bound of the paramater value. Necessary when segmenting parameter measurement into value ranges.")
 	private Double range_to;
 
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")

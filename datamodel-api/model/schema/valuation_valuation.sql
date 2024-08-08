@@ -463,6 +463,7 @@ CREATE TABLE IF NOT EXISTS preparation.model_coefficient
     coefficient_value numeric(20,2) NOT NULL DEFAULT 0,
     valid_from timestamp(6) without time zone,
     valid_to timestamp(6) without time zone,    
+    child_list character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT model_coefficients_pkey PRIMARY KEY (id),
     CONSTRAINT model_coefficients_code_fkey FOREIGN KEY (parameter_code)
         REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
@@ -494,11 +495,14 @@ COMMENT ON COLUMN preparation.model_coefficient.model_id
 COMMENT ON COLUMN preparation.model_coefficient.parameter_code
     IS 'The code of the technical parameter.';
 
+COMMENT ON COLUMN preparation.model_coefficient.child_list
+    IS 'The list of sub-coefficient identifiers that concatenated into a string by commas.';
+    
 COMMENT ON COLUMN preparation.model_coefficient.range_from
-    IS 'Minimum value of the coefficient.';
+    IS 'Begining of bound of the paramater value. Necessary when segmenting parameter measurement into value ranges.';
 
 COMMENT ON COLUMN preparation.model_coefficient.range_to
-    IS 'Maximum value of the coefficient.';
+    IS 'End of bound of the paramater value. Necessary when segmenting parameter measurement into value ranges.';
 
 COMMENT ON COLUMN preparation.model_coefficient.valid_from
     IS 'The date that coefficient is valid.';
@@ -512,14 +516,20 @@ CREATE TABLE IF NOT EXISTS preparation.model_basevalue
     id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
     model_id character varying(40) COLLATE pg_catalog."default",
     constant_name character varying(40) COLLATE pg_catalog."default",
+    parameter_code character varying(40) COLLATE pg_catalog."default",
     base_value numeric(20,2) NOT NULL DEFAULT 0,    
     valid_from timestamp(6) without time zone,
     valid_to timestamp(6) without time zone,    
+    child_list character varying(255) COLLATE pg_catalog."default",    
     CONSTRAINT model_basevalue_pkey PRIMARY KEY (id),
     CONSTRAINT model_basevalue_model_id_fkey FOREIGN KEY (model_id)
         REFERENCES preparation.valuation_model (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT model_basevalue_parameter_code_fkey FOREIGN KEY (parameter_code)
+        REFERENCES preparation.tech_parameter (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 )
 
 TABLESPACE pg_default;
@@ -533,8 +543,14 @@ COMMENT ON TABLE preparation.model_basevalue
 COMMENT ON COLUMN preparation.model_basevalue.id
     IS 'Identifier of the base value or constant for model.';
 
+COMMENT ON COLUMN preparation.model_basevalue.child_list
+    IS 'The list of sub-basevalue identifiers that concatenated into a string by commas.';
+
+COMMENT ON COLUMN preparation.model_basevalue.parameter_code
+    IS 'The code of the technical parameter.';
+    
 COMMENT ON COLUMN preparation.model_basevalue.constant_name
-    IS 'The name of model constant or base value.';
+    IS 'The name of constant or base value, if any.';
 
 COMMENT ON COLUMN preparation.model_basevalue.base_value
     IS 'Value of the constant name or base value.';
