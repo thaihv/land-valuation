@@ -12,13 +12,13 @@ REM from an existing SOLA database into the necessary SQL files.
 REM Configure variables to use for script
 SET current_dir=%~dp0
 REM SET psql="%current_dir%scripts\winos\bin\psql\psql.exe"
-SET psql="C:\Program Files\PostgreSQL\15\bin\psql.exe"
+SET psql="C:\PostgreSQL\16\bin\psql.exe"
 
 SET zip_exe="%current_dir%scripts\winos\bin\7z\7z.exe"
 SET data_path=%current_dir%data\
 SET BUILD_LOG="%current_dir%..\logs\datamodel.log"
 SET host=localhost
-SET port=5432
+SET port=5433
 SET dbname=laolis
 SET username=postgres
 SET pword=postgres

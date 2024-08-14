@@ -49,3 +49,12 @@ INSERT INTO application.service_action_type (code, display_value, status_to_set,
 INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('cancel', 'Cancel', 'cancelled', 'a', 'Service is cancelled by Land Valuation Office (action is automatically logged when a service is cancelled)');
 INSERT INTO application.service_action_type (code, display_value, status_to_set, status, description) VALUES ('start', 'Start', 'pending', 'a', 'Changes Made to Database as a result of application (action is automatically logged when a change is made to a valuation object)');
 
+-- Table: application.notify_relationship_type
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('contactor', 'Contact Person', 'Party to notify is a contact for an agent requesting a valuation service', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('safeguard', 'Notifiable', 'Party to notify has a recognized right or interest to be safeguarded against any action', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('rightHolder', 'Rightholder', 'Party to notify has a recognized right or interest (e.g. easement) over the land affected  by any action', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('owner', 'Owner', 'Party to notify is an owner of land affected by the job', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('other', 'Other', 'Party to notify has a general interest in the land but is not an owner, rightholder, occuiper or tenant of the land affected  by any action', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('occupier', 'Occupier', 'Party to notify is and occupier or tenant of the land affected  by any action', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('adjoiningOwner', 'Adjoining Owner', 'Party to notify is an owner of land adjoining the land affected  by any action', 'a');
+INSERT INTO application.notify_relationship_type (code, display_value, description, status) VALUES ('adjoiningOccupier', 'Adjoining Occupier', 'Party to notify is an occupier or tenant of land adjoining the land affected by any action', 'a');

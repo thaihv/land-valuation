@@ -29,7 +29,7 @@ import lombok.Setter;
 		@Index(name = "application_property_application_id_fkey_ind", columnList = "application_id"),
 		@Index(name = "application_property_vunit_id_fkey_ind", columnList = "vunit_id")})
 @Comment("Captures details of property associated to an application.")
-public class PropertyInApplication extends DomainObject<String>{
+public class ApplicationHasProperty extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")

@@ -71,7 +71,11 @@ public class RequestType{
     @Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
     @Comment("The fee component charged against the value of the property or 0 if no value fee applies.")
     private Double value_base_fee;
-    
+
+	@Column(length = 1000)
+	@Comment("Template text to use when completing the details of valuation records created by the service.")
+	private String notation_template;
+	
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "request_type")
     @JsonBackReference
     private Set<Service> services;

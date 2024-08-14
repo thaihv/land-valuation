@@ -234,6 +234,7 @@ CREATE TABLE IF NOT EXISTS application.request_type
     base_fee numeric(20,2) NOT NULL DEFAULT 0,    
     area_base_fee numeric(20,2) NOT NULL DEFAULT 0,
     value_base_fee numeric(20,2) NOT NULL DEFAULT 0,
+    notation_template character varying(1000) COLLATE pg_catalog."default",
     CONSTRAINT request_type_pkey PRIMARY KEY (code),
     CONSTRAINT request_type_display_value_key UNIQUE (display_value),
     CONSTRAINT request_type_request_category_code_fkey FOREIGN KEY (request_category_code)
@@ -274,6 +275,9 @@ COMMENT ON COLUMN application.request_type.status
 COMMENT ON COLUMN application.request_type.value_base_fee
     IS 'The fee component charged against the value of the property or 0 if no value fee applies.';
 
+COMMENT ON COLUMN application.request_type.notation_template
+    IS 'Template text to use when completing the details of valuation records created by the service.';
+    
 COMMENT ON COLUMN application.request_type.request_category_code
     IS 'The code for the request category type.';
     
@@ -444,3 +448,111 @@ COMMENT ON COLUMN application.service.application_id
 
 COMMENT ON COLUMN application.service.request_type_code
     IS 'The request type identifying the purpose of the service.';
+
+-- Table: application.notify_relationship_type
+CREATE TABLE IF NOT EXISTS application.notify_relationship_type
+(
+    code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(1000) COLLATE pg_catalog."default",
+    display_value character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,
+    CONSTRAINT notify_relationship_type_pkey PRIMARY KEY (code),
+    CONSTRAINT notify_relationship_type_display_value_key UNIQUE (display_value)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.notify_relationship_type
+    OWNER to postgres;
+
+COMMENT ON TABLE application.notify_relationship_type
+    IS 'Code list identifying the type of relationship a party has affected by a service.';
+
+COMMENT ON COLUMN application.notify_relationship_type.code
+    IS 'The code for the relationship type.';
+
+COMMENT ON COLUMN application.notify_relationship_type.description
+    IS 'Description of the relationship type.';
+
+COMMENT ON COLUMN application.notify_relationship_type.display_value
+    IS 'Displayed value of the relationship type.';
+
+COMMENT ON COLUMN application.notify_relationship_type.status
+    IS 'Status in active of the relationship type as active (a) or inactive (i).';
+    
+-- Table: application.notify
+CREATE TABLE IF NOT EXISTS application.notify
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    party_id character varying(40) COLLATE pg_catalog."default",
+    service_id character varying(40) COLLATE pg_catalog."default",
+    relationship_type_code character varying(20) COLLATE pg_catalog."default" NOT NULL DEFAULT 'contactor'::character varying,   
+    description text COLLATE pg_catalog."default",
+    notify_content text COLLATE pg_catalog."default",    
+    status character(1) COLLATE pg_catalog."default" DEFAULT 'i'::bpchar,    
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT notify_pkey PRIMARY KEY (id),
+    CONSTRAINT notify_party_id_fkey FOREIGN KEY (party_id)
+        REFERENCES administrative.party (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT notify_relationship_type_code_fkey FOREIGN KEY (relationship_type_code)
+        REFERENCES application.notify_relationship_type (code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT notify_service_id_fkey FOREIGN KEY (service_id)
+        REFERENCES application.service (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.notify
+    OWNER to postgres;
+
+COMMENT ON TABLE application.notify
+    IS 'Identifies parties to be notified in a service as well as the relationship the party has affected';
+
+COMMENT ON COLUMN application.notify.id
+    IS 'Identifier for the notification.';
+
+COMMENT ON COLUMN application.notify.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN application.notify.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN application.notify.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN application.notify.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN application.notify.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN application.notify.description
+    IS 'The description of the party to notify.';
+
+COMMENT ON COLUMN application.notify.notify_content
+    IS 'The content of notify to the party.';
+
+COMMENT ON COLUMN application.notify.status
+    IS 'Status of the notify as active (a) or inactive (i).';
+
+COMMENT ON COLUMN application.notify.party_id
+    IS 'Identifier of the party (individual or organization) that is requesting a plan.';
+
+COMMENT ON COLUMN application.notify.relationship_type_code
+    IS 'The type of relationship between the party and the land affected by the valuation services.';
+
+COMMENT ON COLUMN application.notify.service_id
+    IS 'Identifier for the service.';    
+    
+    
+    
