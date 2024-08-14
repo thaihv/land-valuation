@@ -658,17 +658,16 @@ COMMENT ON COLUMN preparation.valuation_formula.right_parameter_code
 -- Table: application.notify_property
 CREATE TABLE IF NOT EXISTS application.notify_property
 (
-    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    application_id character varying(40) COLLATE pg_catalog."default",
-    vunit_id character varying(40) COLLATE pg_catalog."default",
+    notify_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    vunit_id character varying(40) COLLATE pg_catalog."default" NOT NULL,
     rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
-    rowversion integer NOT NULL DEFAULT 0,    
+    rowversion integer NOT NULL DEFAULT 0,
     change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
-    CONSTRAINT notify_property_pkey PRIMARY KEY (id),
-    CONSTRAINT notify_property_application_id_fkey FOREIGN KEY (application_id)
-        REFERENCES application.application (id) MATCH SIMPLE
+    CONSTRAINT notify_property_pkey PRIMARY KEY (notify_id, vunit_id),
+    CONSTRAINT notify_property_notify_id_fkey FOREIGN KEY (notify_id)
+        REFERENCES application.notify (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT notify_property_vunit_id_fkey FOREIGN KEY (vunit_id)
@@ -683,10 +682,13 @@ ALTER TABLE IF EXISTS application.notify_property
     OWNER to postgres;
 
 COMMENT ON TABLE application.notify_property
-    IS 'Properties are associated to a notify.';
+    IS 'Properties are associated to a notification.';
 
-COMMENT ON COLUMN application.notify_property.id
-    IS 'Identifier for the notify property.';
+COMMENT ON COLUMN application.notify_property.notify_id
+    IS 'Identifier for the nofification.';
+
+COMMENT ON COLUMN application.notify_property.vunit_id
+    IS 'Identifier of the source associated to the notification.';
 
 COMMENT ON COLUMN application.notify_property.change_action
     IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
@@ -702,12 +704,6 @@ COMMENT ON COLUMN application.notify_property.rowidentifier
 
 COMMENT ON COLUMN application.notify_property.rowversion
     IS 'Sequential value indicating the number of times this row has been modified.';
-
-COMMENT ON COLUMN application.notify_property.application_id
-    IS 'Identifier for the application the record is associated to.';
-
-COMMENT ON COLUMN application.notify_property.vunit_id
-    IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the notification.';
     
 -- Table: valuation.valuation_unit_uses_source
 CREATE TABLE IF NOT EXISTS valuation.valuation_unit_uses_source
