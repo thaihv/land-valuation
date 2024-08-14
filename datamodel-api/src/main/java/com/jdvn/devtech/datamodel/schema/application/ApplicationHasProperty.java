@@ -6,7 +6,6 @@ import com.jdvn.devtech.datamodel.schema.DomainObject;
 import com.jdvn.devtech.datamodel.schema.valuation.ValuationUnit;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+//@Entity
 //@Table(name = "application_property", schema = "application", indexes = {
 //		@Index(name = "application_property_index_on_rowidentifier", columnList = "rowidentifier"),
 //		@Index(name = "application_property_application_id_fkey_ind", columnList = "application_id"),
