@@ -667,11 +667,11 @@ CREATE TABLE IF NOT EXISTS application.notify_property
     change_user character varying(50) COLLATE pg_catalog."default",
     change_time timestamp without time zone NOT NULL DEFAULT now(),    
     CONSTRAINT notify_property_pkey PRIMARY KEY (id),
-    CONSTRAINT application_property_application_id_fkey FOREIGN KEY (application_id)
+    CONSTRAINT notify_property_application_id_fkey FOREIGN KEY (application_id)
         REFERENCES application.application (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT application_property_vunit_id_fkey FOREIGN KEY (vunit_id)
+    CONSTRAINT notify_property_vunit_id_fkey FOREIGN KEY (vunit_id)
         REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
