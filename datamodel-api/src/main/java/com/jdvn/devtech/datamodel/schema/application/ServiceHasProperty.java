@@ -10,8 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +24,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table(name = "application_property", schema = "application", indexes = {
-//		@Index(name = "application_property_index_on_rowidentifier", columnList = "rowidentifier"),
-//		@Index(name = "application_property_application_id_fkey_ind", columnList = "application_id"),
-//		@Index(name = "application_property_vunit_id_fkey_ind", columnList = "vunit_id")})
-@Comment("Captures details of property associated to an application.")
-public class ApplicationHasProperty extends DomainObject<String>{
+@Table(name = "service_property", schema = "application", indexes = {
+		@Index(name = "service_property_index_on_rowidentifier", columnList = "rowidentifier"),
+		@Index(name = "service_property_service_id_fkey_ind", columnList = "service_id"),
+		@Index(name = "service_property_vunit_id_fkey_ind", columnList = "vunit_id")})
+@Comment("Captures details of property associated to a service.")
+public class ServiceHasProperty extends DomainObject<String>{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
@@ -35,13 +37,13 @@ public class ApplicationHasProperty extends DomainObject<String>{
 	private String id;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "application_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "application_property_application_id_fkey"))
-	@Comment("Identifier for the application the record is associated to.")
-    private Application application;	
+    @JoinColumn(name = "service_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "service_property_service_id_fkey"))
+	@Comment("Identifier for the service the record is associated to.")
+    private Service service;	
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "application_property_vunit_id_fkey"))
-	@Comment("Reference to a record in the Valuation Unit table that matches the property details provided for the application for valuation process.")
+    @JoinColumn(name = "vunit_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "service_property_vunit_id_fkey"))
+	@Comment("Reference to a record in the Valuation Unit table that matches the property details provided for the service for valuation process.")
     private ValuationUnit valuation_unit;
 	
 	@Column(columnDefinition = "boolean NOT NULL DEFAULT false")

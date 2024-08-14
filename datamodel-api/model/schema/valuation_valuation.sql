@@ -2784,7 +2784,7 @@ COMMENT ON COLUMN valuation.valuation_units_parameters_links.value
     
 COMMENT ON COLUMN valuation.valuation_units_parameters_links.transaction_id
     IS 'Identifier to which transaction is on a valuation activity to get parameter values.';    
-            
+/*            
 -- Table: application.application_property
 CREATE TABLE IF NOT EXISTS application.application_property
 (
@@ -2858,6 +2858,82 @@ COMMENT ON COLUMN application.application_property.assignee_id
 
 COMMENT ON COLUMN application.application_property.total_value
     IS 'The property value on which is used for calculating proportionate service fee.';
+*/    
+-- Table: application.service_property
+CREATE TABLE IF NOT EXISTS application.service_property
+(
+    id character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    service_id character varying(40) COLLATE pg_catalog."default",
+    vunit_id character varying(40) COLLATE pg_catalog."default",
+    verified_exists boolean NOT NULL DEFAULT false,
+    verified_location boolean NOT NULL DEFAULT false,    
+    area numeric(20,2) NOT NULL DEFAULT 0,
+    total_value numeric(20,2) NOT NULL DEFAULT 0,
+    assignee_id character varying(40) COLLATE pg_catalog."default",    
+    rowidentifier character varying(40) COLLATE pg_catalog."default" NOT NULL DEFAULT uuid_generate_v1(),
+    rowversion integer NOT NULL DEFAULT 0,
+    change_action character(1) COLLATE pg_catalog."default" NOT NULL DEFAULT 'i'::bpchar,
+    change_user character varying(50) COLLATE pg_catalog."default",
+    change_time timestamp without time zone NOT NULL DEFAULT now(),    
+    CONSTRAINT service_property_pkey PRIMARY KEY (id),
+    CONSTRAINT service_property_service_id_fkey FOREIGN KEY (service_id)
+        REFERENCES application.service (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT service_property_vunit_id_fkey FOREIGN KEY (vunit_id)
+        REFERENCES valuation.valuation_unit (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS application.service_property
+    OWNER to postgres;
+
+COMMENT ON TABLE application.service_property
+    IS 'Captures details of property associated to a service.';
+
+COMMENT ON COLUMN application.service_property.id
+    IS 'Identifier for the application property.';
+
+COMMENT ON COLUMN application.service_property.change_action
+    IS 'Indicates if the last data modification action that occurred to the row was insert (i), update (u) or delete (d).';
+
+COMMENT ON COLUMN application.service_property.change_time
+    IS 'The date and time the row was last modified.';
+
+COMMENT ON COLUMN application.service_property.change_user
+    IS 'The user id of the last person to modify the row.';
+
+COMMENT ON COLUMN application.service_property.rowidentifier
+    IS 'Identifies the all change records for the row in the table.';
+
+COMMENT ON COLUMN application.service_property.rowversion
+    IS 'Sequential value indicating the number of times this row has been modified.';
+
+COMMENT ON COLUMN application.service_property.area
+    IS 'The area of the property for calculating proportionate service fee. This value should be square meters and may be converted into imperial acres, roods and perches values for display.';
+
+COMMENT ON COLUMN application.service_property.assignee_id
+    IS 'The identifier of the user assigned to the property for handling. Typically, this is the user in charge from application or assigned from others ';
+
+COMMENT ON COLUMN application.service_property.total_value
+    IS 'The property value on which is used for calculating proportionate service fee.';
+
+COMMENT ON COLUMN application.service_property.verified_exists
+    IS 'Flag to indicate if the property details provided for the application match an existing property record in the Valuation Unit table.';
+
+COMMENT ON COLUMN application.service_property.verified_location
+    IS 'Flag to indicate if the property details provided for the application reference an existing parcel record in the Cadastre Managemnt tables as Parcel, Buidling, UtilityNetwork.';
+
+COMMENT ON COLUMN application.service_property.service_id
+    IS 'Identifier for the service the record is associated to.';
+
+COMMENT ON COLUMN application.service_property.vunit_id
+    IS 'Reference to a record in the Valuation Unit table that matches the property details provided for the service for valuation process.';    
+    
+    
 -- Table: valuation.valuation_appeal
 CREATE TABLE IF NOT EXISTS valuation.valuation_appeal
 (
