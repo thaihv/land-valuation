@@ -20,35 +20,11 @@ import { useTheme } from "@mui/material";
 
 export default function LeftBar() {
   const theme = useTheme();
-  const [propertyType, setPropertyType] = useState("Parcel");
-  const [order, setOrder] = useState("Parcel Number");
   const [isExpanded, setExpanded] = useState(false);
-  const [value, setValue] = useState(0);
   const { getCollapseProps, getToggleProps } = useCollapse({
     isExpanded,
     hasDisabledAnimation: true,
   });
-
-  const getAppBarText = () => {
-    switch (value) {
-      case 0:
-        return "Find a Property";
-      case 1:
-        return "View Statistics";
-      case 2:
-        return "See Thematic Maps";
-      default:
-        return "";
-    }
-  };
-
-  const handlePropertyTypeChange = (event) => {
-    setPropertyType(event.target.value);
-  };
-
-  const handleOrderChange = (event) => {
-    setOrder(event.target.value);
-  };
 
   function handleOnClick() {
     setExpanded(!isExpanded);
@@ -82,70 +58,60 @@ export default function LeftBar() {
                 sx={{ fontWeight: "bold", color: "#333333" }}
                 component={"span"}
               >
-                {getAppBarText()}
+                Find a Property
               </Typography>
             </Toolbar>
           </AppBar>
           <Typography component={"span"}>
-              <Stack direction="column" spacing={2}>
-                <Stack direction="row" justifyContent="space-between">
-                  <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                    <InputLabel id="property-type">Property Type:</InputLabel>
-                    <Select
-                      labelId="property-type"
-                      id="property"
-                      label="Property Type"
-                      value={propertyType}
-                      onChange={handlePropertyTypeChange}
-                    >
-                      <MenuItem value="Parcel">Parcel</MenuItem>
-                      <MenuItem value="Building">Building</MenuItem>
-                      <MenuItem value="Building Unit">Building Unit</MenuItem>
-                      <MenuItem value="Parcel & Building Unit">
-                        Parcel & Building Unit
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                    <InputLabel id="order">Order By:</InputLabel>
-                    <Select
-                      labelId="order"
-                      id="order"
-                      label="Order By"
-                      value={order}
-                      onChange={handleOrderChange}
-                    >
-                      <MenuItem value="Parcel Number">Parcel Number</MenuItem>
-                      <MenuItem value="Address">Address</MenuItem>
-                      <MenuItem value="Owner Name">Owner Name</MenuItem>
-                      <MenuItem value="Street Name">Street Name</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Stack>
-                <TextField label="Enter criteria..." variant="standard" />
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    sx={{
-                      backgroundColor: "#f2f2f2",
-                      color: "#333333",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      padding: "10px 20px",
-                      borderRadius: "25px",
-                    }}
-                    variant="contained"
-                    size="small"
+            <Stack direction="column" spacing={2}>
+              <Stack direction="row" justifyContent="space-between">
+                <FormControl variant="standard" sx={{ minWidth: 130 }}>
+                  <InputLabel id="property-type">Property Type:</InputLabel>
+                  <Select
+                    labelId="property-type"
+                    id="property"
+                    label="Property Type"
                   >
-                    Search
-                  </Button>
-                </Box>
+                    <MenuItem value="Parcel">Parcel</MenuItem>
+                    <MenuItem value="Building">Building</MenuItem>
+                    <MenuItem value="Building Unit">Building Unit</MenuItem>
+                    <MenuItem value="Parcel & Building Unit">
+                      Parcel & Building Unit
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl variant="standard" sx={{ minWidth: 130 }}>
+                  <InputLabel id="order">Order By:</InputLabel>
+                  <Select labelId="order" id="order" label="Order By">
+                    <MenuItem value="Parcel Number">Parcel Number</MenuItem>
+                    <MenuItem value="Address">Address</MenuItem>
+                    <MenuItem value="Owner Name">Owner Name</MenuItem>
+                    <MenuItem value="Street Name">Street Name</MenuItem>
+                  </Select>
+                </FormControl>
               </Stack>
-            </Typography>
+              <TextField label="Enter criteria..." variant="standard" />
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  sx={{
+                    backgroundColor: "#f2f2f2",
+                    color: "#333333",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                    borderRadius: "25px",
+                  }}
+                  variant="contained"
+                  size="small"
+                >
+                  Search
+                </Button>
+              </Box>
+            </Stack>
+          </Typography>
         </div>
       </div>
-      <Box
-        sx={{ position: "absolute", top: "50%", right: "-15px" }}
-      >
+      <Box sx={{ position: "absolute", top: "50%", right: "-15px" }}>
         <Stack
           className="interactive-button"
           sx={{
