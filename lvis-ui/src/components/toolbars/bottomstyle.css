@@ -1,0 +1,15 @@
+.collapsible .header {
+    cursor: pointer;
+}
+
+.collapsible .content {
+    width: 500px;
+}
+
+.collapsible .content-bottom {
+    width: 400px;
+}
+
+.MuiAccordionSummary-content {
+    justify-content: center;
+}
