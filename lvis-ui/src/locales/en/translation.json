@@ -7,6 +7,7 @@
   "Form": "Form",
   "Language": "Language",
   "Search": "Search",
+  "Search...": "Search...",
   "Preparation": "Preparation",
   "Data Collection": "Data Collection",
   "Assessment Activity": "Assessment Activity",
@@ -18,6 +19,20 @@
   "Add On-Site Information": "Add On-Site Information",
   "Preparing for Land Valuation": "Preparing for Land Valuation",
   "Approval Committee Evaluation" : "Approval Committee Evaluation",
-  "Establish a Business Plan": "Establish a Business Plan"
+  "Establish a Business Plan": "Establish a Business Plan",
+
+  "Property Type":"Property Type",
+  "Parcel": "Parcel",
+  "Building": "Building",
+  "Building Unit": "Building Unit",
+  "Parcel & Building Unit": "Parcel & Building Unit",
+  "Order By": "Order By",
+  "Parcel Number":"Parcel Number",
+  "Address":"Address",
+  "Owner Name": "Owner Name",
+  "Street Name":"Street Name",
+
+  "City":"City",
+  "Month":"Month"
   }
    

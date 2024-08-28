@@ -32,7 +32,6 @@ export default function LeftBar() {
   });
 
   const [searchInput, setSearchInput] = useState("");
-
   const [propertyType, setPropertyType] = useState("Parcel");
   const [order, setOrder] = useState("Parcel Number");
   const [baunitType, setBAUnitType] = useState("Vientiane");
@@ -73,7 +72,7 @@ export default function LeftBar() {
         >
           <AppBar
             position="relative"
-            sx={{ height: "40px", bgcolor: "#f2f2f2" }}
+            sx={{ height: "40px", bgcolor: theme.palette.background.default }}
           >
             <Toolbar variant="dense" sx={{ justifyContent: "center" }}>
               <Typography
@@ -89,7 +88,7 @@ export default function LeftBar() {
           <Stack direction="column" spacing={2} m="1.5rem 1.5rem 1rem 1rem">
             <Box direction="row" justifyContent="space-between">
               <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                <InputLabel id="property-type">Property Type</InputLabel>
+                <InputLabel id="property-type">{t("Property Type")}</InputLabel>
                 <Select
                   labelId="property-type"
                   id="property"
@@ -97,16 +96,14 @@ export default function LeftBar() {
                   value={propertyType}
                   onChange={handlePropertyTypeChange}
                 >
-                  <MenuItem value="Parcel">Parcel</MenuItem>
-                  <MenuItem value="Building">Building</MenuItem>
-                  <MenuItem value="Building Unit">Building Unit</MenuItem>
-                  <MenuItem value="Parcel & Building Unit">
-                    Parcel & Building Unit
-                  </MenuItem>
+                  <MenuItem value="Parcel">{t("Parcel")}</MenuItem>
+                  <MenuItem value="Building">{t("Building")}</MenuItem>
+                  <MenuItem value="Building Unit">{t("Building Unit")}</MenuItem>
+                  <MenuItem value="Parcel & Building Unit">{t("Parcel & Building Unit")}</MenuItem>
                 </Select>
               </FormControl>
               <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                <InputLabel id="order">Order By</InputLabel>
+                <InputLabel id="order">{t("Order By")}</InputLabel>
                 <Select
                   labelId="order"
                   id="order"
@@ -114,14 +111,14 @@ export default function LeftBar() {
                   value={order}
                   onChange={handleOrderChange}
                 >
-                  <MenuItem value="Parcel Number">Parcel Number</MenuItem>
-                  <MenuItem value="Address">Address</MenuItem>
-                  <MenuItem value="Owner Name">Owner Name</MenuItem>
-                  <MenuItem value="Street Name">Street Name</MenuItem>
+                  <MenuItem value="Parcel Number">{t("Parcel Number")}</MenuItem>
+                  <MenuItem value="Address">{t("Address")}</MenuItem>
+                  <MenuItem value="Owner Name">{t("Owner Name")}</MenuItem>
+                  <MenuItem value="Street Name">{t("Street Name")}</MenuItem>
                 </Select>
               </FormControl>
               <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                <InputLabel id="baunit-type">City</InputLabel>
+                <InputLabel id="baunit-type">{t("City")}</InputLabel>
                 <Select
                   labelId="baunit"
                   id="baunit"
@@ -135,7 +132,7 @@ export default function LeftBar() {
                 </Select>
               </FormControl>
               <FormControl variant="standard" sx={{ minWidth: 130 }}>
-                <InputLabel id="time-type">Month</InputLabel>
+                <InputLabel id="time-type">{t("Month")}</InputLabel>
                 <Select
                   labelId="time-type"
                   id="month"
@@ -159,7 +156,7 @@ export default function LeftBar() {
               </FormControl>
             </Box>
             <TextField
-              label="Search..."
+              label={t("Search...")}
               onChange={(e) => setSearchInput(e.target.value)}
               value={searchInput}
               sx={{ mb: "0.5rem" }}
@@ -183,7 +180,7 @@ export default function LeftBar() {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Button
                 sx={{
-                  backgroundColor: "#f2f2f2",
+                  backgroundColor: theme.palette.background.default,
                   color: "#333333",
                   fontSize: "12px",
                   fontWeight: "bold",

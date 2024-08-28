@@ -7,6 +7,7 @@
     "Form": "양식",
     "Language": "언어",
     "Search": "검색",
+    "Search...": "검색...",    
     "Preparation": "준비",
     "Data Collection": "데이터수집",
     "Assessment Activity": "평가지도 및 평가표",
@@ -18,6 +19,20 @@
     "Add On-Site Information": "현장조사 정보 추가",
     "Preparing for Land Valuation": "지가산정 준비",
     "Approval Committee Evaluation": "평가위원회 승인",
-    "Establish a Business Plan": "업무계획 수립"
+    "Establish a Business Plan": "업무계획 수립",
+
+    "Property Type":"부동산 유형",
+    "Parcel": "소포",
+    "Building": "건물",
+    "Building Unit": "건물 단위",
+    "Parcel & Building Unit": "소포 및 건물 단위",
+    "Order By": "주문 기준",
+    "Parcel Number":"소포 번호",
+    "Address":"주소",
+    "Owner Name": "소유자 이름",
+    "Street Name":"거리 이름",
+
+    "City":"도시",
+    "Month":"월"
 }
   

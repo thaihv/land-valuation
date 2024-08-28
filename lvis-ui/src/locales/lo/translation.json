@@ -6,6 +6,7 @@
     "Breakdown": "ການແບ່ງແຍກ",
     "Form": "ພູມສາດ",
     "Search": "ຊອກຫາ",
+    "Search...": "ຊອກຫາ...",
     "Preparation": "ການກະກຽມ",
     "Data Collection": "ການ​ເກັບ​ກໍາ​ຂໍ້​ມູນ​",
     "Assessment Activity": "ກິດ​ຈະ​ກໍາ​ການ​ປະ​ເມີນ​ຜົນ​",
@@ -17,6 +18,20 @@
     "Add On-Site Information": "ເພີ່ມຂໍ້ມູນການສືບສວນພາກສະຫນາມ",
     "Preparing for Land Valuation": "ການກະກຽມການຄິດໄລ່ລາຄາທີ່ດິນ",
     "Approval Committee Evaluation" : "ການອະນຸມັດຂອງຄະນະກໍາມະການປະເມີນຜົນ",
-    "Establish a Business Plan":"ການສ້າງແຜນການເຮັດວຽກ"
+    "Establish a Business Plan":"ການສ້າງແຜນການເຮັດວຽກ",
+    
+    "Property Type":"ປະເພດຊັບສິນ",
+    "Parcel": "ພັດສະດຸ",
+    "Building": "ອາຄານ",
+    "Building Unit": "ໜ່ວຍງານກໍ່ສ້າງ",
+    "Parcel & Building Unit": "ຫນ່ວຍບໍລິການພັດສະດຸ ແລະອາຄານ",
+    "Order By": "ສັ່ງໂດຍ",
+    "Parcel Number":"ໝາຍເລກພັດສະດຸ",
+    "Address":"ທີ່ຢູ່",
+    "Owner Name": "ຊື່ເຈົ້າຂອງ",
+    "Street Name":"ຊື່ຖະໜົນ",
+
+    "City":"ເມືອງ",
+    "Month":"ເດືອນ"    
 }
   
