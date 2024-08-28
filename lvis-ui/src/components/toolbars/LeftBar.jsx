@@ -34,14 +34,14 @@ export default function LeftBar() {
 
   return (
     <Stack
-    className="collapsible"
-    sx={{
-      display: "flex",
-      position: "absolute",
-      justifyContent: "flex-start",
-      height: "100vh",
-      zIndex: "drawer",
-    }}
+      className="collapsible"
+      sx={{
+        display: "flex",
+        position: "absolute",
+        justifyContent: "flex-start",
+        height: "100vh",
+        zIndex: "drawer",
+      }}
     >
       <div {...getCollapseProps()}>
         <div
@@ -61,7 +61,7 @@ export default function LeftBar() {
                 sx={{ fontWeight: "bold", color: "#333333" }}
                 component={"span"}
               >
-                {t("Land Value Assessment Table")}                
+                {t("Land Value Assessment Table")}
               </Typography>
             </Toolbar>
           </AppBar>
@@ -107,7 +107,7 @@ export default function LeftBar() {
                   variant="contained"
                   size="small"
                 >
-                  {t("Search")}                   
+                  {t("Search")}
                 </Button>
               </Box>
             </Stack>
