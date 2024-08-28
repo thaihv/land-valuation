@@ -129,7 +129,7 @@ export default function LeftBar() {
             sx={{
               height: "60px",
               width: "5px",
-              color: "#333333",
+              color: theme.palette.greenAccent.main,
             }}
             {...getToggleProps({ onClick: handleOnClick })}
           >
