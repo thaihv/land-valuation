@@ -35,7 +35,6 @@ export default function LeftBar() {
       className="collapsible"
       sx={{
         display: "flex",
-        flexDirection: "row",
         position: "absolute",
         zIndex: "drawer",
       }}
