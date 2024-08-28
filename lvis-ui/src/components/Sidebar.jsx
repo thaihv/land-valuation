@@ -98,9 +98,21 @@ const Sidebar = ({
         >
           <Typography component={"span"}>
             <Box width="100%">
-              <Box m="2.25rem 2rem 2.25rem 1.5rem">
+              <Box  
+                onClick={() => {navigate(`/`);}}
+                sx={{
+                  color: theme.palette.background.alt,
+                  "&:hover": {
+                    color: theme.palette.greenAccent.main,
+                    bgcolor: theme.palette.background.alt,
+                  },
+                }}>
                 <FlexBetween>
-                  <Box display="flex" alignItems="center" onClick={() => {navigate(`/`);}}>
+                  <Box 
+                      m="2.25rem 2rem 2.25rem 1.5rem"
+                      display="flex" 
+                      alignItems="center" 
+                  >
                     <Typography variant="h5" fontWeight= "bold">
                       LVIS
                     </Typography>
