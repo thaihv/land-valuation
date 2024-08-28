@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 export default function LeftBar() {
   const theme = useTheme();
   const { t } = useTranslation();
-  const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(true);
   const { getCollapseProps, getToggleProps } = useCollapse({
     isExpanded,
     hasDisabledAnimation: true,
@@ -34,13 +34,14 @@ export default function LeftBar() {
 
   return (
     <Stack
-      className="collapsible"
-      sx={{
-        display: "flex",
-        //position: "absolute",
-        position: "relative",
-        zIndex: "drawer",
-      }}
+    className="collapsible"
+    sx={{
+      display: "flex",
+      position: "absolute",
+      justifyContent: "flex-start",
+      height: "100vh",
+      zIndex: "drawer",
+    }}
     >
       <div {...getCollapseProps()}>
         <div
@@ -117,7 +118,7 @@ export default function LeftBar() {
         <Stack
           className="interactive-button"
           sx={{
-            bgcolor: "#f2f2f2",
+            bgcolor: theme.palette.background.alt,
             "&:hover": {
               bgcolor: theme.palette.secondary.main,
             },
