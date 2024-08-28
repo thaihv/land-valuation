@@ -8,7 +8,7 @@ const Overview = () => {
 
   return (
     <Box height="75vh" border={`1px solid ${theme.palette.secondary[200]}`}>
-      <FormControl sx={{ mt: "1rem" }}>
+      <FormControl sx={{ mt: "1rem", ml: "0.5rem" }}>
         <InputLabel>View</InputLabel>
         <Select
           value={view}

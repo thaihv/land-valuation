@@ -18,8 +18,8 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <FlexBetween gap="1.5rem">
-      <FormControl variant="filled" sx={{ minWidth: 120 }}>
+    <FlexBetween m="1rem 2rem 2.25rem 0.5rem">
+      <FormControl sx={{ minWidth: 120 }}  >
       <InputLabel id="language-type">
         <Typography
           variant="h4"
