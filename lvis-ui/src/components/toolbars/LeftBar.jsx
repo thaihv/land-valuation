@@ -196,7 +196,7 @@ export default function LeftBar() {
           </Stack>
         </div>
       </div>
-      <Box sx={{ position: "absolute", top: "50%", right: "-15px" }}>
+      <Box sx={{ position: "absolute", top: "50%", right: "-12px" }}>
         <Stack
           className="interactive-button"
           sx={{
@@ -211,7 +211,8 @@ export default function LeftBar() {
             disableRipple
             sx={{
               height: "80px",
-              width: "5px",              
+              width: "12px", 
+              padding: "0px", //width + padding => right postition above            
               color: theme.palette.greenAccent.main,
             }}
             {...getToggleProps({ onClick: handleOnClick })}
