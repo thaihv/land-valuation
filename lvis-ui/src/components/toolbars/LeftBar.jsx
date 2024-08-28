@@ -78,7 +78,7 @@ export default function LeftBar() {
               <Typography
                 variant="h6"
                 gutterBottom
-                sx={{ fontWeight: "bold", color: "#333333" }}
+                sx={{ fontWeight: "bold", color: theme.palette.neutral.main }}
                 component={"span"}
               >
                 {t("Land Value Assessment Table")}
@@ -181,11 +181,14 @@ export default function LeftBar() {
               <Button
                 sx={{
                   backgroundColor: theme.palette.background.default,
-                  color: "#333333",
+                  color: theme.palette.neutral.main,
                   fontSize: "12px",
                   fontWeight: "bold",
                   padding: "10px 20px",
                   borderRadius: "25px",
+                  "&:hover": {
+                    bgcolor: theme.palette.secondary.main,
+                  },
                 }}
                 variant="contained"
                 size="small"

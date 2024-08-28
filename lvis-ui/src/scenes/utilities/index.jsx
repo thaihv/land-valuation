@@ -116,8 +116,8 @@ const Utilities = () => {
           <Box
             display="grid"
             gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-            gridAutoRows="160px"
-            gap="20px"
+            gridAutoRows="180px"
+            gap="30px"
             sx={{
               "& > div": {
                 gridColumn: isNonMediumScreens ? undefined : "span 12",
@@ -136,7 +136,7 @@ const Utilities = () => {
                   sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
                 />
                 <Typography
-                  variant="h4"
+                  variant="h5"
                   fontWeight="bold"
                   color={theme.palette.secondary[100]}
                 >
@@ -157,7 +157,7 @@ const Utilities = () => {
                   sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
                 />
                 <Typography
-                  variant="h4"
+                  variant="h5"
                   fontWeight="bold"
                   color={theme.palette.secondary[100]}
                 >

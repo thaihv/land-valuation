@@ -2,7 +2,7 @@ import { Box, Button, TextField, useTheme } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
+
 
 const UserForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -28,7 +28,7 @@ const UserForm = () => {
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
-            gap="25px"
+            gap="15px"
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
@@ -116,15 +116,17 @@ const UserForm = () => {
           <Box display="flex" justifyContent="end" mt="20px">
             <Button type="submit"
               sx={{
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.background.alt,
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.neutral.main,
                 fontSize: "14px",
                 fontWeight: "bold",
                 padding: "10px 20px",
-                borderRadius: "25px"
+                borderRadius: "25px",
+                "&:hover": {
+                  bgcolor: theme.palette.secondary.main,
+                },
               }}
             >
-              <PersonAddAltOutlinedIcon sx={{ mr: "10px" }} />
               Create
             </Button>
           </Box>
