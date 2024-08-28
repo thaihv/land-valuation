@@ -200,6 +200,7 @@ export default function LeftBar() {
         <Stack
           className="interactive-button"
           sx={{
+            borderRadius: "0 5px 5px 0", // top-left top-right bottom-right bottom-left.
             bgcolor: theme.palette.background.alt,
             "&:hover": {
               bgcolor: theme.palette.secondary.main,
@@ -209,8 +210,8 @@ export default function LeftBar() {
           <IconButton
             disableRipple
             sx={{
-              height: "60px",
-              width: "5px",
+              height: "80px",
+              width: "5px",              
               color: theme.palette.greenAccent.main,
             }}
             {...getToggleProps({ onClick: handleOnClick })}
