@@ -17,9 +17,11 @@ import {
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function LeftBar() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({
     isExpanded,
@@ -35,7 +37,8 @@ export default function LeftBar() {
       className="collapsible"
       sx={{
         display: "flex",
-        position: "absolute",
+        //position: "absolute",
+        position: "relative",
         zIndex: "drawer",
       }}
     >
@@ -57,7 +60,7 @@ export default function LeftBar() {
                 sx={{ fontWeight: "bold", color: "#333333" }}
                 component={"span"}
               >
-                Find a Property
+                {t("Land Value Assessment Table")}                
               </Typography>
             </Toolbar>
           </AppBar>
@@ -103,7 +106,7 @@ export default function LeftBar() {
                   variant="contained"
                   size="small"
                 >
-                  Search
+                  {t("Search")}                   
                 </Button>
               </Box>
             </Stack>
