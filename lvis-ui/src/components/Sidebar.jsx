@@ -144,6 +144,7 @@ const Sidebar = ({
                               ? theme.palette.greenAccent.main
                               : theme.palette.background.alt,
                           "&:hover": {
+                            color: theme.palette.greenAccent.main,
                             bgcolor: theme.palette.background.alt,
                           },
                           flexDirection: 'column',
