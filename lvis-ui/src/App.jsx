@@ -22,6 +22,7 @@ import UserForm from "./scenes/form/users";
 import Calendar from "./scenes/calendar";
 import Team from "./scenes/team";
 import Utilities from "./scenes/utilities";
+import LoginPage from "./scenes/loginPage";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -53,31 +54,36 @@ i18n.use(initReactI18next).init({
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const isAuth = Boolean(useSelector((state) => state.global.token));
   return (
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route
+              path="/home"
+              element={isAuth ? <Dashboard /> : <Navigate to="/" />}
+            />
             <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/customers" element={<Customers />} />
-              <Route path="/survey" element={<SurveyMap />} />
-              <Route path="/search" element={<BaseMap />} />
-              <Route path="/users" element={<UserForm />} />
-              <Route path="/myteam" element={<Team />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/tasks" element={<Utilities />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/geography" element={<Geography />} />
-              <Route path="/overview" element={<Overview />} />
-              <Route path="/daily" element={<Daily />} />
-              <Route path="/monthly" element={<Monthly />} />
-              <Route path="/breakdown" element={<Breakdown />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/performance" element={<Performance />} />
+              <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
+              <Route path="/products" element={isAuth ? <Products /> : <Navigate to="/" />} />
+              <Route path="/customers" element={isAuth ? <Customers /> : <Navigate to="/" />} />
+              <Route path="/survey" element={isAuth ? <SurveyMap /> : <Navigate to="/" />} />
+              <Route path="/search" element={isAuth ? <BaseMap /> : <Navigate to="/" /> } />
+              <Route path="/users" element={isAuth ? <UserForm /> : <Navigate to="/" />} />
+              <Route path="/myteam" element={isAuth ? <Team /> : <Navigate to="/" />} />
+              <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/" />} />
+              <Route path="/tasks" element={isAuth ? <Utilities /> : <Navigate to="/" />} />
+              <Route path="/transactions" element={isAuth ? <Transactions /> : <Navigate to="/" />} />
+              <Route path="/geography" element={isAuth ? <Geography /> : <Navigate to="/" />} />
+              <Route path="/overview" element={isAuth ? <Overview /> : <Navigate to="/" />} />
+              <Route path="/daily" element={isAuth ? <Daily /> : <Navigate to="/" />} />
+              <Route path="/monthly" element={isAuth ? <Monthly /> : <Navigate to="/" />} />
+              <Route path="/breakdown" element={isAuth ? <Breakdown /> : <Navigate to="/" />} />
+              <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/" />} />
+              <Route path="/performance" element={isAuth ? <Performance /> : <Navigate to="/" />} />
             </Route>
           </Routes>
         </ThemeProvider>
