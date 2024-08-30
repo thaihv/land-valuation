@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import UserWidget from "../widgets/UserWidget";
+import AdvertWidget from "../widgets/AdvertWidget";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -10,6 +12,8 @@ const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const data = useSelector((state) => state.global.user);
+  const { _id, picturePath } = useSelector((state) => state.global.user);
+
   return (
     <Box>
       <Navbar 
@@ -54,6 +58,14 @@ const HomePage = () => {
             Products
           </Typography>
         </Box>
+        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+          <UserWidget userId={_id} picturePath={picturePath} />
+        </Box>
+        {isNonMobileScreens && (
+          <Box flexBasis="26%">
+            <AdvertWidget />
+          </Box>
+        )}
       </Box>
     </Box>
   );

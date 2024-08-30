@@ -162,7 +162,7 @@ export const themeSettings = (mode) => {
             },                       
             neutral: {
               ...tokensLight.grey,
-              main: tokensDark.grey[200],
+              main: tokensDark.grey[300],
             },
             background: {
               default: tokensDark.grey[100],

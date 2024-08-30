@@ -24,7 +24,6 @@ import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
-import profileImage from "../assets/profile.jpeg";
 import { useTranslation } from "react-i18next";
 
 const navItems = [
@@ -178,7 +177,7 @@ const Sidebar = ({
                 <Box
                   component="img"
                   alt="profile"
-                  src={profileImage}
+                  src={`http://localhost:9000/assets/${user.picturePath}`}
                   height="30px"
                   width="30px"
                   borderRadius="50%"
