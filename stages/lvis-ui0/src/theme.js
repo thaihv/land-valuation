@@ -152,8 +152,8 @@ export const themeSettings = (mode) => {
             },                
             greenAccent: {
               ...tokensLight.greenAccent,
-              main: tokensDark.greenAccent[600],
-              light: tokensDark.greenAccent[600],
+              main: tokensDark.greenAccent[500],
+              light: tokensDark.greenAccent[200],
             },            
             blueAccent: {
               ...tokensLight.blueAccent,
@@ -162,10 +162,10 @@ export const themeSettings = (mode) => {
             },                       
             neutral: {
               ...tokensLight.grey,
-              main: tokensDark.grey[700],
+              main: tokensDark.grey[200],
             },
             background: {
-              default: tokensDark.grey[50],
+              default: tokensDark.grey[100],
               alt: tokensDark.grey[0],
             },           
           }),

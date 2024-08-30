@@ -7,6 +7,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import Dropzone from "react-dropzone";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,7 @@ const registerSchema = yup.object().shape({
   city: yup.string().required("required"),
   phoneNumber: yup.string().required("required"),
   occupation: yup.string().required("required"),
+  picture: yup.string().required("required"),
 
 });
 
@@ -35,6 +37,7 @@ const initialValuesRegister = {
   city: "",
   phoneNumber: "",
   occupation: "",
+  picture: "",
 };
 
 const initialValuesLogin = {
@@ -50,6 +53,7 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+  const theme = useTheme();
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -57,7 +61,7 @@ const Form = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-
+    formData.append("picturePath", values.picture.name);
     const savedUserResponse = await fetch(
       "http://localhost:9000/auth/register",
       {
@@ -166,7 +170,40 @@ const Form = () => {
                   }
                   helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 4" }}
-                />                
+                />
+                <Box
+                  gridColumn="span 4"
+                  border={`1px solid ${theme.palette.neutral.main}`}
+                  borderRadius="5px"
+                  p="1rem"
+                >
+                  <Dropzone
+                    acceptedFiles=".jpg,.jpeg,.png"
+                    multiple={false}
+                    onDrop={(acceptedFiles) =>
+                      setFieldValue("picture", acceptedFiles[0])
+                    }
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
+                        {...getRootProps()}
+                        border={`2px dashed ${theme.palette.background.alt}`}
+                        p="1rem"
+                        sx={{ "&:hover": { cursor: "pointer" } }}
+                      >
+                        <input {...getInputProps()} />
+                        {!values.picture ? (
+                          <p>Add Picture Here</p>
+                        ) : (
+                          <FlexBetween>
+                            <Typography>{values.picture.name}</Typography>
+                            <EditOutlinedIcon />
+                          </FlexBetween>
+                        )}
+                      </Box>
+                    )}
+                  </Dropzone>
+                </Box>                                
               </>
             )}
 
@@ -201,9 +238,9 @@ const Form = () => {
               sx={{
                 m: "2rem 0",
                 p: "1rem",
-                backgroundColor: "#00D5FA",
-                color: palette.background.alt,
-                "&:hover": { color: palette.primary.main },
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.neutral.main,
+                "&:hover": { color: theme.palette.secondary.main },
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
@@ -215,10 +252,10 @@ const Form = () => {
               }}
               sx={{
                 textDecoration: "underline",
-                color: "#00D5FA",
+                color: theme.palette.neutral.main,
                 "&:hover": {
                   cursor: "pointer",
-                  color: palette.primary.light,
+                  color: theme.palette.secondary.main,
                 },
               }}
             >
