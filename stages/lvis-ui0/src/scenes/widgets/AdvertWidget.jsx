@@ -7,7 +7,6 @@ const AdvertWidget = () => {
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-  const adslink = `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/info4.jpeg`;
 
   return (
     <WidgetWrapper>
@@ -21,12 +20,12 @@ const AdvertWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-        src={adslink}
+        src={`${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/info4.jpeg`}
         style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
       />
       <FlexBetween>
-        <Typography color={main}>MikaCosmetics</Typography>
-        <Typography color={medium}>mikacosmetics.com</Typography>
+        <Typography color={main}>Cosmetics</Typography>
+        <Typography color={medium}>searchmenow.com</Typography>
       </FlexBetween>
       <Typography color={medium} m="0.5rem 0">
         Your pathway to stunning and immaculate beauty and made sure your skin
