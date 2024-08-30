@@ -13,6 +13,8 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
+import FlexBetween from "../../components/FlexBetween";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("required"),
@@ -47,7 +49,6 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
-  const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -114,6 +115,7 @@ const Form = () => {
         handleBlur,
         handleChange,
         handleSubmit,
+        setFieldValue,
         resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
