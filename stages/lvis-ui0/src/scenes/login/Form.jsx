@@ -55,7 +55,6 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
   const theme = useTheme();
-  const baseUrl= import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -65,7 +64,7 @@ const Form = () => {
     }
     formData.append("picturePath", values.picture.name);
     const savedUserResponse = await fetch(
-      `${baseUrl}/auth/register`,
+      `${import.meta.env.VITE_REACT_APP_BASE_URL}/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -80,7 +79,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch(`${baseUrl}/auth/login`, {
+    const loggedInResponse = await fetch(`${import.meta.env.VITE_REACT_APP_BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -196,7 +195,7 @@ const Form = () => {
                       >
                         <input {...getInputProps()} />
                         {!values.picture ? (
-                          <p>Add Picture Here</p>
+                          <p>Add Profile Picture Here</p>
                         ) : (
                           <FlexBetween>
                             <Typography>{values.picture.name}</Typography>
