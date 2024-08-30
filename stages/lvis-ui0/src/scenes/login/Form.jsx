@@ -121,7 +121,7 @@ const Form = () => {
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
-            gap="30px"
+            gap="20px"
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
@@ -159,7 +159,7 @@ const Form = () => {
                     Boolean(touched.phoneNumber) && Boolean(errors.phoneNumber)
                   }
                   helperText={touched.phoneNumber && errors.phoneNumber}
-                  sx={{ gridColumn: "span 4" }}
+                  sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
                   label="Occupation"
@@ -171,7 +171,7 @@ const Form = () => {
                     Boolean(touched.occupation) && Boolean(errors.occupation)
                   }
                   helperText={touched.occupation && errors.occupation}
-                  sx={{ gridColumn: "span 4" }}
+                  sx={{ gridColumn: "span 2" }}
                 />
                 <Box
                   gridColumn="span 4"
