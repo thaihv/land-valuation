@@ -22,8 +22,8 @@ import UserForm from "./scenes/form/users";
 import Calendar from "./scenes/calendar";
 import Team from "./scenes/team";
 import Utilities from "./scenes/utilities";
-import LoginPage from "./scenes/loginPage";
-import HomePage from "./scenes/HomePage";
+import LoginPage from "./scenes/login";
+import HomePage from "./scenes/home";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
