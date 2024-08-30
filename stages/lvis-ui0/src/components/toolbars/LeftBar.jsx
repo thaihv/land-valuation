@@ -181,7 +181,7 @@ export default function LeftBar() {
               <Button
                 sx={{
                   backgroundColor: theme.palette.background.default,
-                  color: theme.palette.neutral.main,
+                  color: theme.palette.neutral.dark,
                   fontSize: "12px",
                   fontWeight: "bold",
                   padding: "10px 20px",

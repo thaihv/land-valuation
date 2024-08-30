@@ -242,7 +242,7 @@ const Form = () => {
                 m: "2rem 0",
                 p: "1rem",
                 backgroundColor: theme.palette.background.default,
-                color: theme.palette.neutral.main,
+                color: theme.palette.neutral.dark,
                 "&:hover": { color: theme.palette.secondary.main },
               }}
             >
