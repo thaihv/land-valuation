@@ -21,6 +21,7 @@ import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
+import DvrOutlinedIcon from '@mui/icons-material/DvrOutlined';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
@@ -58,7 +59,11 @@ const navItems = [
     link: "Tasks",
     icon: <BackupTableOutlinedIcon />,
   },
-
+  {
+    text: "Performance",
+    link: "Performance",
+    icon: <DvrOutlinedIcon />,
+  },
 ];
 
 const Sidebar = ({

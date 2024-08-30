@@ -22922,7 +22922,7 @@ export const dataUser = [
     _id: "63701cc1f03239d40b000044",
     name: "Hoang Vinh Thai",
     email: "thaihv@gmail.com",
-    password: "PJyCrk",
+    password: "$2b$10$bp35mIKzPMToRaE/RRKZ6OTwbRDf3yVwqt0XM3lUI4lKLzKzWfEVi",
     city: "Ha Noi",
     state: null,
     country: "ID",
