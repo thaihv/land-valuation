@@ -23,6 +23,7 @@ import Calendar from "./scenes/calendar";
 import Team from "./scenes/team";
 import Utilities from "./scenes/utilities";
 import LoginPage from "./scenes/loginPage";
+import HomePage from "./scenes/HomePage";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -61,10 +62,10 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={isAuth ? <Navigate to="/home" /> : <LoginPage />}/>
             <Route
               path="/home"
-              element={isAuth ? <Dashboard /> : <Navigate to="/" />}
+              element={isAuth ? <HomePage /> : <Navigate to="/" />}
             />
             <Route element={<Layout />}>
               <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />

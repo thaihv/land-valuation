@@ -13,6 +13,7 @@ export const register = async (req, res) => {
       state,
       country,
       phoneNumber,
+      occupation,
       transactions,
       role,
     } = req.body;
@@ -28,6 +29,7 @@ export const register = async (req, res) => {
       state,
       country,
       phoneNumber,
+      occupation,
       transactions,
       role,
     });
