@@ -8,7 +8,10 @@ const UserImage = ({ image, size = "60px" }) => {
         width={size}
         height={size}
         alt="user"
-        src={`${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${image}`}
+        src={
+          image === ""
+          ? `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/profile.jpeg`
+          : `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${image}`}
       />
     </Box>
   );

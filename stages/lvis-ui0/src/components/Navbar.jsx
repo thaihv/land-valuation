@@ -85,7 +85,10 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               <Box
                 component="img"
                 alt="profile"
-                src={`${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${user.picturePath}`}
+                src={ 
+                  user.picturePath === ""
+                  ? `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/profile.jpeg`
+                  : `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${user.picturePath}`}
                 height="32px"
                 width="32px"
                 borderRadius="50%"

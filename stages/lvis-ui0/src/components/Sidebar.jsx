@@ -177,7 +177,10 @@ const Sidebar = ({
                 <Box
                   component="img"
                   alt="profile"
-                  src={`${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${user.picturePath}`}
+                  src={
+                    user.picturePath === ""
+                    ? `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/profile.jpeg`
+                    : `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${user.picturePath}`}
                   height="30px"
                   width="30px"
                   borderRadius="50%"
