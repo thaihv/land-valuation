@@ -17,13 +17,16 @@ import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 const registerSchema = yup.object().shape({
-  name: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
+  name: yup.string()
+    .min(2, 'Too Short!')
+    .max(60, 'Too Long!')
+    .required("Name is required"),
+  email: yup.string().email("invalid email").required("Email is required"),
   password: yup.string().required("required"),
   city: yup.string().required("required"),
   phoneNumber: yup.string().required("required"),
   occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  picture: yup.string().notRequired(),
 
 });
 
@@ -62,7 +65,9 @@ const Form = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
+    if (values.picture){
+      formData.append("picturePath", values.picture.name);
+    }
     const savedUserResponse = await fetch(
       `${import.meta.env.VITE_REACT_APP_BASE_URL}/auth/register`,
       {
@@ -133,7 +138,7 @@ const Form = () => {
                   label="Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.name}
+                  value={values.name || ''}
                   name="name"
                   error={Boolean(touched.name) && Boolean(errors.name)}
                   helperText={touched.name && errors.name}
@@ -143,7 +148,7 @@ const Form = () => {
                   label="City"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.city}
+                  value={values.city || ''}
                   name="city"
                   error={Boolean(touched.city) && Boolean(errors.city)}
                   helperText={touched.city && errors.city}
@@ -153,7 +158,7 @@ const Form = () => {
                   label="Phone Number"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.phoneNumber}
+                  value={values.phoneNumber || ''}
                   name="phoneNumber"
                   error={
                     Boolean(touched.phoneNumber) && Boolean(errors.phoneNumber)
@@ -165,7 +170,7 @@ const Form = () => {
                   label="Occupation"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.occupation}
+                  value={values.occupation || ''}
                   name="occupation"
                   error={
                     Boolean(touched.occupation) && Boolean(errors.occupation)
@@ -189,7 +194,7 @@ const Form = () => {
                     {({ getRootProps, getInputProps }) => (
                       <Box
                         {...getRootProps()}
-                        border={`2px dashed ${theme.palette.background.alt}`}
+                        border={`2px dashed ${theme.palette.neutral.dark}`}
                         p="1rem"
                         sx={{ "&:hover": { cursor: "pointer" } }}
                       >
@@ -213,7 +218,7 @@ const Form = () => {
               label="Email"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.email}
+              value={values.email || ''}
               name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
@@ -224,7 +229,7 @@ const Form = () => {
               type="password"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.password}
+              value={values.password || ''}
               name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
