@@ -3,11 +3,11 @@ import FlexBetween from "../../components/FlexBetween";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import { useNavigate } from "react-router-dom";
 
-const MenuItemWidget = ({ image, title, description, link }) => {
-  const { palette } = useTheme();
+const ChooserWidget = ({ image, title, description, link }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
-  const dark = palette.neutral.dark;
-  const medium = palette.neutral.medium;
+  const dark = theme.palette.neutral.dark;
+  const medium = theme.palette.neutral.medium;
 
   return (
     <WidgetWrapper 
@@ -16,8 +16,6 @@ const MenuItemWidget = ({ image, title, description, link }) => {
       display="flex" 
       flexDirection="column" 
       alignItems="center"
-      bgcolor="#ffffff"
-      opacity= "0.56"
     >
       <Box 
         sx={{
@@ -25,7 +23,6 @@ const MenuItemWidget = ({ image, title, description, link }) => {
           width: "170px",
           height: "170px",
           padding: "2px 2px 2px 2px", 
-          border: "1px solid #797979",  
           opacity: "0.8",
           bgcolor: "#002868",
           borderRadius: "50%",
@@ -36,18 +33,33 @@ const MenuItemWidget = ({ image, title, description, link }) => {
             boxSizing: "border-box"
           },
         }}
+        onClick={() => navigate(`/${link}`)}
       >
         <img
           width="80px"
           height="80px"
           alt="menu"
-          src={image}
-          onClick={() => navigate(`/${link}`)}
+          src={image} 
+          sx={{ objectFit: "cover" }}         
         />
       </Box>
 
       <FlexBetween>
-        <Typography variant="h3" fontWeight= "bold" mt="20px" color={medium}>{title}</Typography>
+        <Typography 
+          sx={{
+            color: medium,
+            fontSize: "32px",
+            fontWeight: "bold",
+            mt: "10px",
+            "&:hover": {
+              color: theme.palette.greenAccent.main,
+              bgcolor: theme.palette.background.alt,
+            },
+          }}
+          onClick={() => navigate(`/${link}`)}
+        >
+          {title}
+        </Typography>
       </FlexBetween>
       <Typography fontSize="14px" color={medium} m="1.5rem 0" align="center">
         {description}
@@ -55,4 +67,4 @@ const MenuItemWidget = ({ image, title, description, link }) => {
     </WidgetWrapper>
   );
 };
-export default MenuItemWidget;
+export default ChooserWidget;
