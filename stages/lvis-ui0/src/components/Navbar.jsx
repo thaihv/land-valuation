@@ -5,6 +5,7 @@ import {
   Menu as MenuIcon,
   Search,
   SettingsOutlined,
+  Notifications,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
@@ -71,6 +72,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
           <IconButton>
             <SettingsOutlined sx={{ fontSize: "25px" }} />
           </IconButton>
+          <Notifications sx={{ fontSize: "25px" }} />
           <FlexBetween>
             <Button
               onClick={handleClick}
