@@ -78,7 +78,7 @@ const Sidebar = ({
 
   return (
     <Box component="nav">
-      {isSidebarOpen && (
+      {isSidebarOpen && isNonMobile && (
         <Drawer
           open={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
@@ -104,7 +104,8 @@ const Sidebar = ({
                     color: theme.palette.greenAccent.main,
                     bgcolor: theme.palette.background.alt,
                   },
-                }}>
+                }}
+              >
                 <FlexBetween>
                   <Box 
                       m="2.25rem 2rem 2.25rem 1.5rem"
@@ -115,11 +116,11 @@ const Sidebar = ({
                       LVIS
                     </Typography>
                   </Box>
-                  {!isNonMobile && (
+                  {/* {!isNonMobile && (
                     <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                       <ChevronLeft />
                     </IconButton>
-                  )}
+                  )} */}
                 </FlexBetween>
               </Box>
               <List>

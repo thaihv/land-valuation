@@ -87,7 +87,7 @@ export default function LeftBar() {
           </AppBar>
           <Stack direction="column" spacing={2} m="1.5rem 1.5rem 1rem 1rem">
             <Box direction="row" justifyContent="space-between">
-              <FormControl variant="standard" sx={{ minWidth: 130 }}>
+              <FormControl variant="standard">
                 <InputLabel id="property-type">{t("Property Type")}</InputLabel>
                 <Select
                   labelId="property-type"
@@ -102,7 +102,7 @@ export default function LeftBar() {
                   <MenuItem value="Parcel & Building Unit">{t("Parcel & Building Unit")}</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl variant="standard" sx={{ minWidth: 130 }}>
+              <FormControl variant="standard">
                 <InputLabel id="order">{t("Order By")}</InputLabel>
                 <Select
                   labelId="order"
@@ -117,7 +117,7 @@ export default function LeftBar() {
                   <MenuItem value="Street Name">{t("Street Name")}</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl variant="standard" sx={{ minWidth: 130 }}>
+              <FormControl variant="standard">
                 <InputLabel id="baunit-type">{t("City")}</InputLabel>
                 <Select
                   labelId="baunit"
@@ -131,7 +131,7 @@ export default function LeftBar() {
                   <MenuItem value="Savannakhet">Savannakhet</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl variant="standard" sx={{ minWidth: 130 }}>
+              <FormControl variant="standard">
                 <InputLabel id="time-type">{t("Month")}</InputLabel>
                 <Select
                   labelId="time-type"
