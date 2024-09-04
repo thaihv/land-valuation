@@ -1,24 +1,115 @@
-import { Box, useMediaQuery} from "@mui/material";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import HomeNavbar from "./HomeNavbar";
 import ChooserWidget from "../widgets/ChooserWidget";
+import {
+  AppBar,
+  Box,
+  Typography,
+  IconButton,
+  InputBase,
+  Toolbar,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import {
+  Menu as MenuIcon,
+  Search,
+} from "@mui/icons-material";
+import FlexBetween from "../../components/FlexBetween";
+import LanguageSwitcher from "../../components/LanguageSwitcher";
+
+const Top = () => {
+  return (
+    <AppBar
+      sx={{
+        position: "static",
+        background: "none",
+        boxShadow: "none",
+      }}
+    >
+      <Toolbar sx={{ justifyContent: "space-between" }}>
+        {/* LEFT SIDE */}
+        <FlexBetween>
+          <img
+            width="65px"
+            height="43px"
+            alt="flag"
+            src="lao_flag.png" 
+            sx={{ objectFit: "cover" }}         
+          />
+        </FlexBetween>
+
+        {/* RIGHT SIDE */}
+        <FlexBetween gap="1.5rem">
+          <FlexBetween>
+            <LanguageSwitcher />
+            <IconButton>
+                <MenuIcon />
+            </IconButton>
+          </FlexBetween>
+        </FlexBetween>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+const Middle = () => {
+  const theme = useTheme();
+  return (
+    <Box
+      width="100%"
+      display="flex"
+      gap="0.5rem"
+      flexDirection="column" 
+      alignItems="center"
+    >
+      <Typography fontSize="18px" fontWeight="bold" color={theme.palette.neutral.medium}>          
+        LVIS(Land Value Information System)
+      </Typography>     
+      <Typography 
+            sx={{
+              color: theme.palette.neutral.medium,
+              fontSize: "72px",
+              fontWeight: "bold",
+            }} 
+          >            
+            지가정보시스템
+      </Typography>      
+      <FlexBetween
+          backgroundColor={theme.palette.background.alt}
+          borderRadius="30px"
+          gap="3rem"
+          p="0.1rem 1.5rem"
+          width="620px" 
+          height="50px"
+        >
+        <InputBase placeholder="검색어(지역명, 마을명, 코드 등)을 입력해주세요." />
+        <IconButton>
+          <Search />
+        </IconButton>
+      </FlexBetween>
+      <Box
+        sx={{
+          width: "100%",
+          height: "21px",
+          padding: "2px 2px 2px 2px", 
+          bgcolor: "#002868",
+          opacity: "0.5",
+          mt: "5rem",
+        }}     
+      >
+      </Box>
+    </Box>
+  );
+};
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const data = useSelector((state) => state.global.user);
-
   return (
     <Box>
-      <HomeNavbar 
-          user={data || {}}
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-      /> 
+      <Top /> 
+      <Middle />
       <Box
         width="100%"
-        padding="2rem 6%"
+        padding="1rem 6%"
         display={isNonMobileScreens ? "flex" : "block"}
         gap="0.5rem"
         justifyContent="space-between"
