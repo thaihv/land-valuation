@@ -111,7 +111,7 @@ const Middle = () => {
       alignItems="center"
     >
       <Typography fontSize="18px" fontWeight="bold" color={theme.palette.neutral.medium}>          
-        LVIS(Land Value Information System)
+        LVIS(Land Valuation Information System)
       </Typography>     
       <Typography 
             sx={{
