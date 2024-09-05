@@ -23,7 +23,7 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
           display: "flex",
           width: "170px",
           height: "170px",
-          padding: "2px 2px 2px 2px", 
+//          padding: "2px 2px 2px 2px", 
           opacity: "0.8",
           bgcolor: "#002868",
           borderRadius: "50%",
@@ -62,7 +62,7 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
           {title}
         </Typography>
       </FlexBetween>
-      <Typography fontSize="14px" color={medium} m="1.5rem 0" align="center">
+      <Typography fontSize="14px" color={medium} m="0.5rem 0" align="center">
         {description}
       </Typography>
     </WidgetWrapper>

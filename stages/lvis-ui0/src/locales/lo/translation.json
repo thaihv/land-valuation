@@ -32,6 +32,22 @@
     "Street Name":"ຊື່ຖະໜົນ",
 
     "City":"ເມືອງ",
-    "Month":"ເດືອນ"    
+    "Month":"ເດືອນ",
+
+    "_comment": "----HOME PAGE-----",
+    "Sign Out": "ອອກຈາກລະບົບ",
+    "Land Value Information System": "ລະບົບມູນຄ່າທີ່ດິນ",
+    "Please enter a search term (region name, town name, code, etc.).": "ກະລຸນາໃສ່ຄໍາຄົ້ນຫາ (ຊື່ພາກພື້ນ, ຊື່ເມືອງ, ລະຫັດ, ແລະອື່ນໆ).",
+    "Land Value Inquiry": "ສອບຖາມ",
+    "Check easily land value information by region":"ກວດເບິ່ງຂໍ້ມູນມູນຄ່າທີ່ດິນຕາມພາກພື້ນໄດ້ຢ່າງງ່າຍດາຍ",
+    "Manage Valuation Business":"ທຸລະກິດ",
+    "Support to manage various businesses of land valuation process":"ສະຫນັບສະຫນູນການຄຸ້ມຄອງທຸລະກິດຕ່າງໆຂອງຂະບວນການປະເມີນມູນຄ່າທີ່ດິນ",
+    "Land Valuation":"ກິດ​ຈະ​ກໍາ​",
+    "Calculate, analyze and compare land value by region":"ການ​ຄິດ​ໄລ່​, ວິ​ເຄາະ​ແລະ​ສົມ​ທຽບ​ມູນ​ຄ່າ​ທີ່​ດິນ​ຕາມ​ພາກ​ພື້ນ​",
+    "Statistical Information":"ຂໍ້ມູນສະຖິຕິ",  
+    "Provides visualized and statistical analysis based on land value":"ສະຫນອງການວິເຄາະພາບແລະສະຖິຕິໂດຍອີງໃສ່ມູນຄ່າທີ່ດິນ",
+    "System Administration":"ບໍລິຫານ",
+    "Manages requirements for operation, such as user and permission":"ຈັດການຄວາມຕ້ອງການສໍາລັບການປະຕິບັດງານ, ເຊັ່ນ: ຜູ້ໃຊ້ແລະການອະນຸຍາດ"    
+
 }
   

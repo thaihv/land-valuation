@@ -33,6 +33,21 @@
     "Street Name":"거리 이름",
 
     "City":"도시",
-    "Month":"월"
+    "Month":"월",
+
+    "_comment": "----HOME PAGE-----",
+    "Sign Out": "로그아웃",
+    "Land Value Information System": "지가정보시스템",
+    "Please enter a search term (region name, town name, code, etc.).": "검색어(지역명, 마을명, 코드 등)을 입력해주세요.",
+    "Land Value Inquiry": "지가 조회",
+    "Check easily land value information by region":"지역별 토지 가격 정보를 손쉽게 조회합니다",
+    "Manage Valuation Business":"지가 업무 관리",
+    "Support to manage various businesses of land valuation process":"지가산정을 위한 다양한 업무 자료 관리를 지원합니다",
+    "Land Valuation":"지가 산정",
+    "Calculate, analyze and compare land value by region":"지역별 토지 비교가격을 평가 및 분석하여 산정합니다",
+    "Statistical Information":"통계정보",  
+    "Provides visualized and statistical analysis based on land value":"지가정보를 기반으로 다양한 통계분석 정보를 시각화하여 제공합니다",
+    "System Administration":"시스템 관리",
+    "Manages requirements for operation, such as user and permission":"사용자 관리, 권한 관리 등 시스템 운영에 필요한 내용을 관리합니다"   
 }
   

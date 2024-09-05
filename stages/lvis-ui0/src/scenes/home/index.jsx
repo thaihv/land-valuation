@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ChooserWidget from "../widgets/ChooserWidget";
 import {
   AppBar,
   Box,
@@ -13,23 +12,25 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import {
-  Menu as MenuIcon,
-  Search,
-} from "@mui/icons-material";
+import {Menu as MenuIcon, Search} from "@mui/icons-material";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import FlexBetween from "../../components/FlexBetween";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import ChooserWidget from "../widgets/ChooserWidget";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../state";
+import { useTranslation } from "react-i18next";
 
 const Top = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  const { t } = useTranslation();
   return (
     <AppBar
       sx={{
@@ -47,6 +48,7 @@ const Top = () => {
             alt="flag"
             src="lao_flag.png" 
             sx={{ objectFit: "cover" }}         
+            onClick={() => {navigate(`/`);}}
           />
         </FlexBetween>
 
@@ -85,8 +87,8 @@ const Top = () => {
                 }}            
               >
                 <LogoutOutlinedIcon/>
-                <Typography>
-                  Sign Out
+                <Typography>                  
+                  {t("Sign Out")}
                 </Typography>            
               </FlexBetween>
             </MenuItem>
@@ -99,6 +101,7 @@ const Top = () => {
 
 const Middle = () => {
   const theme = useTheme();
+  const { t } = useTranslation();  
   return (
     <Box
       width="100%"
@@ -117,7 +120,7 @@ const Middle = () => {
               fontWeight: "bold",
             }} 
           >            
-            지가정보시스템
+            {t("Land Value Information System")}
       </Typography>      
       <FlexBetween
           backgroundColor={theme.palette.background.alt}
@@ -130,7 +133,7 @@ const Middle = () => {
         >
         <InputBase       
           fullWidth 
-          placeholder="검색어(지역명, 마을명, 코드 등)을 입력해주세요." />
+          placeholder={t("Please enter a search term (region name, town name, code, etc.).")} />
         <IconButton>
           <Search />
         </IconButton>
@@ -151,6 +154,7 @@ const Middle = () => {
 };
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   return (
     <Box>
@@ -167,40 +171,40 @@ const HomePage = () => {
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <ChooserWidget 
             image="u29.png" 
-            title="지가 조회" 
-            description="지역별 토지 가격 정보를 손쉽게 조회합니다" 
-            link="Products"
+            title={t("Land Value Inquiry")}
+            description={t("Check easily land value information by region")}
+            link="Survey"
           />
         </Box>
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <ChooserWidget 
             image="u25.png" 
-            title="지가 업무 관리" 
-            description="지가산정을 위한 다양한 업무 자료 관리를 지원합니다" 
+            title={t("Manage Valuation Business")} 
+            description={t("Support to manage various businesses of land valuation process")} 
             link="Transactions"
           />
         </Box>
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <ChooserWidget 
             image="u26.png" 
-            title="지가 산정" 
-            description="지역별 토지 비교가격을 평가 및 분석하여 산정합니다" 
-            link="Survey"
+            title={t("Land Valuation")}
+            description={t("Calculate, analyze and compare land value by region")} 
+            link="Products"
           />
         </Box>                
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <ChooserWidget 
             image="u27.png" 
-            title="통계정보" 
-            description="사용자 관리, 권한 관리 등 시스템 운영에 필요한 내용을 관리합니다" 
+            title={t("Statistical Information")} 
+            description={t("Provides visualized and statistical analysis based on land value")}  
             link="Dashboard"
           />
         </Box>  
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <ChooserWidget 
             image="u28.png" 
-            title="시스템 관리" 
-            description="사용자 관리, 권한 관리 등 시스템 운영에 필요한 내용을 관리합니다" 
+            title={t("System Administration")}
+            description={t("Manages requirements for operation, such as user and permission")} 
             link="MyTeam"
           />
         </Box>                  

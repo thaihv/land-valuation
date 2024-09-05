@@ -33,6 +33,21 @@
   "Street Name":"Street Name",
 
   "City":"City",
-  "Month":"Month"
+  "Month":"Month",
+
+  "_comment": "----HOME PAGE-----",
+  "Sign Out": "Sign Out",
+  "Land Value Information System": "Land Valuation",
+  "Please enter a search term (region name, town name, code, etc.).": "Please enter a search term (region name, town name, code, etc.).",
+  "Land Value Inquiry": "Inquiry",
+  "Check easily land value information by region":"Check easily land value information by region",
+  "Manage Valuation Business":"Business       ",
+  "Support to manage various businesses of land valuation process":"Support to manage various businesses of land valuation process",
+  "Land Valuation":"Valuation",
+  "Calculate, analyze and compare land value by region":"Calculate, analyze and compare land value by region",
+  "Statistical Information":"Statistics",  
+  "Provides visualized and statistical analysis based on land value":"Provides visualized and statistical analysis based on land value",
+  "System Administration":"Administration",
+  "Manages requirements for operation, such as user and permission":"Manages requirements for operation, such as user and permission"
   }
    
