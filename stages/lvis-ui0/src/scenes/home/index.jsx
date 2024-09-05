@@ -81,7 +81,9 @@ const Middle = () => {
           width="620px" 
           height="50px"
         >
-        <InputBase placeholder="검색어(지역명, 마을명, 코드 등)을 입력해주세요." />
+        <InputBase       
+          fullWidth 
+          placeholder="검색어(지역명, 마을명, 코드 등)을 입력해주세요." />
         <IconButton>
           <Search />
         </IconButton>
