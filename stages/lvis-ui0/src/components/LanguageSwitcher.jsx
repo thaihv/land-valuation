@@ -4,7 +4,7 @@ import {
   FormControl,
   Select,
   MenuItem,
-  InputLabel,
+  InputBase,
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material";
@@ -18,26 +18,36 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <FlexBetween m="1rem 2rem 2.25rem 0.5rem">
-      <FormControl sx={{ minWidth: 120 }}  >
-      <InputLabel id="language-type">
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: theme.palette.secondary.main }}
-          component={"span"}
-        >
-          Language
-        </Typography>
-      </InputLabel>
+    <FlexBetween>
+      <FormControl variant="standard">
         <Select
           label="Select"
           value={i18n.language}
           onChange={handleLanguageChange}
+          sx={{
+            backgroundColor: theme.palette.background.default,
+            width: "120px",
+            borderRadius: "0.25rem",
+            p: "0.25rem 1rem",
+            "& .MuiSvgIcon-root": {
+              pr: "0.25rem",
+              width: "3rem",
+            },
+            "& .MuiSelect-select:focus": {
+              backgroundColor: theme.palette.background.alt,
+            },
+          }}
+          input={<InputBase />}
         >
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="ko">한국인</MenuItem>
-          <MenuItem value="lo">ພາສາລາວ</MenuItem>
+          <MenuItem value="en">
+            <Typography>English</Typography>
+          </MenuItem>
+          <MenuItem value="ko">
+            <Typography>한국인</Typography>
+          </MenuItem>
+          <MenuItem value="lo">
+            <Typography>ພາສາລາວ</Typography>
+          </MenuItem>
         </Select>
       </FormControl>
     </FlexBetween>

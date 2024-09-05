@@ -1,7 +1,11 @@
+import React, { useState } from "react";
 import ChooserWidget from "../widgets/ChooserWidget";
 import {
   AppBar,
   Box,
+  Button,
+  Menu,
+  MenuItem,
   Typography,
   IconButton,
   InputBase,
@@ -13,10 +17,19 @@ import {
   Menu as MenuIcon,
   Search,
 } from "@mui/icons-material";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import FlexBetween from "../../components/FlexBetween";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import { useDispatch } from "react-redux";
+import { setLogout } from "../../state";
 
 const Top = () => {
+  const theme = useTheme();
+  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isOpen = Boolean(anchorEl);
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
   return (
     <AppBar
       sx={{
@@ -38,13 +51,46 @@ const Top = () => {
         </FlexBetween>
 
         {/* RIGHT SIDE */}
-        <FlexBetween gap="1.5rem">
-          <FlexBetween>
-            <LanguageSwitcher />
-            <IconButton>
-                <MenuIcon />
-            </IconButton>
-          </FlexBetween>
+        <FlexBetween>
+          <LanguageSwitcher />
+          <Button
+              onClick={handleClick}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                textTransform: "none",
+                gap: "1rem",
+                color: "#000000",
+              }}
+          >
+            <MenuIcon />
+          </Button>    
+          <Menu
+            anchorEl={anchorEl}
+            open={isOpen}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <MenuItem>
+              <FlexBetween
+                onClick={() => dispatch(setLogout())}
+                sx={{
+                  color: "#000000",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    color: theme.palette.greenAccent.main,
+                  },
+                }}            
+              >
+                <LogoutOutlinedIcon/>
+                <Typography>
+                  Sign Out
+                </Typography>            
+              </FlexBetween>
+            </MenuItem>
+          </Menu>
         </FlexBetween>
       </Toolbar>
     </AppBar>
