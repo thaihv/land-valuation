@@ -3,7 +3,7 @@ import FlexBetween from "../../components/FlexBetween";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import { useNavigate } from "react-router-dom";
 
-const ChooserWidget = ({ image, title, description, link }) => {
+const ChooserWidget = ({ image, title, description, link, width="260px", height="355px" }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dark = theme.palette.neutral.dark;
@@ -11,11 +11,12 @@ const ChooserWidget = ({ image, title, description, link }) => {
 
   return (
     <WidgetWrapper 
-      width="260px" 
-      height="355px" 
+      width = {width} 
+      height = {height} 
       display="flex" 
       flexDirection="column" 
       alignItems="center"
+      sx={{ minWidth: 260, minHeight: 355 }}
     >
       <Box 
         sx={{

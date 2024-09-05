@@ -80,8 +80,7 @@ const Middle = () => {
           p="0.1rem 1.5rem"
           width="620px" 
           height="50px"
-          border="1px solid"
-          color="#999999"
+          border="1px solid #999999"
         >
         <InputBase       
           fullWidth 
@@ -111,6 +110,7 @@ const HomePage = () => {
     <Box>
       <Top /> 
       <Middle />
+      {/* MENU CHOOSER */}
       <Box
         width="100%"
         padding="1rem 6%"
