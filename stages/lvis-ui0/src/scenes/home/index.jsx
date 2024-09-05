@@ -110,26 +110,38 @@ const Middle = () => {
       flexDirection="column" 
       alignItems="center"
     >
-      <Typography fontSize="18px" fontWeight="bold" color={theme.palette.neutral.medium}>          
-        LVIS(Land Valuation Information System)
-      </Typography>     
-      <Typography 
-            sx={{
-              color: theme.palette.neutral.medium,
-              fontSize: "72px",
-              fontWeight: "bold",
-            }} 
-          >            
-            {t("Land Value Information System")}
-      </Typography>      
+      <Box 
+        display="flex" 
+        flexDirection="column"
+        alignItems="flex-start"
+        sx={{
+          "& .MuiTypography-root ": {
+            lineHeight: '1.25',           
+          },
+        }} 
+      >
+        <Typography fontSize="18px" fontWeight="bold" color={theme.palette.neutral.medium}>          
+          LVIS(Land Valuation Information System)
+        </Typography>     
+        <Typography 
+              sx={{
+                color: theme.palette.neutral.medium,
+                fontSize: "72px",
+                fontWeight: "bold",
+              }} 
+            >            
+              {t("Land Value Information System")}
+        </Typography>
+      </Box>      
       <FlexBetween
           backgroundColor={theme.palette.background.alt}
           borderRadius="30px"
           gap="3rem"
           p="0.1rem 1.5rem"
-          width="620px" 
+          width="38%" 
           height="50px"
           border="1px solid #999999"
+          mt="3rem"
         >
         <InputBase       
           fullWidth 
@@ -145,7 +157,7 @@ const Middle = () => {
           padding: "2px 2px 2px 2px", 
           bgcolor: "#002868",
           opacity: "0.5",
-          mt: "5rem",
+          mt: "3rem",
         }}     
       >
       </Box>
@@ -155,7 +167,7 @@ const Middle = () => {
 
 const HomePage = () => {
   const { t } = useTranslation();
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const isNonMobileScreens = useMediaQuery("(min-width:600px)");
   return (
     <Box>
       <Top /> 
@@ -164,11 +176,13 @@ const HomePage = () => {
       <Box
         width="100%"
         padding="1rem 6%"
-        display={isNonMobileScreens ? "flex" : "block"}
+        display="flex"
+        flexWrap= 'wrap'
         gap="0.5rem"
-        justifyContent="space-between"
+        justifyContent='center'
+        alignItems='center'
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box>
           <ChooserWidget 
             image="u29.png" 
             title={t("Land Value Inquiry")}
@@ -176,7 +190,7 @@ const HomePage = () => {
             link="Survey"
           />
         </Box>
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box>
           <ChooserWidget 
             image="u25.png" 
             title={t("Manage Valuation Business")} 
@@ -184,7 +198,7 @@ const HomePage = () => {
             link="Transactions"
           />
         </Box>
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box>
           <ChooserWidget 
             image="u26.png" 
             title={t("Land Valuation")}
@@ -192,7 +206,7 @@ const HomePage = () => {
             link="Products"
           />
         </Box>                
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box>
           <ChooserWidget 
             image="u27.png" 
             title={t("Statistical Information")} 
@@ -200,7 +214,7 @@ const HomePage = () => {
             link="Dashboard"
           />
         </Box>  
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box>
           <ChooserWidget 
             image="u28.png" 
             title={t("System Administration")}
