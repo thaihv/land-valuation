@@ -80,6 +80,8 @@ const Middle = () => {
           p="0.1rem 1.5rem"
           width="620px" 
           height="50px"
+          border="1px solid"
+          color="#999999"
         >
         <InputBase       
           fullWidth 
