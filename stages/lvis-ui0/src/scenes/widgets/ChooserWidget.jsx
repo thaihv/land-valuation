@@ -22,8 +22,7 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
         sx={{
           display: "flex",
           width: "170px",
-          height: "170px",
-//          padding: "2px 2px 2px 2px", 
+          height: "170px", 
           opacity: "0.8",
           bgcolor: "#002868",
           borderRadius: "50%",
