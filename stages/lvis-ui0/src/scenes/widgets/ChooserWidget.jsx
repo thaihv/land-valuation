@@ -16,7 +16,15 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
       display="flex" 
       flexDirection="column" 
       alignItems="center"
-      sx={{ minWidth: 260, minHeight: 355 }}
+      sx={{ 
+        minWidth: 260, 
+        minHeight: 355,
+        transition: "all 0.3s",
+        "&:hover": {
+          bgcolor: theme.palette.background.default,
+          transform: 'translate(0%,-2%)',
+        }, 
+      }}
     >
       <Box 
         sx={{
@@ -28,9 +36,11 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
           borderRadius: "50%",
           justifyContent: "center",
           alignItems: "center",
+          transition: "all 0.3s",
           "&:hover": {
             bgcolor: dark,
-            boxSizing: "border-box"
+            boxSizing: "border-box",
+            transform: 'translate(-5%,0%)',
           },
         }}
         onClick={() => navigate(`/${link}`)}
@@ -51,9 +61,10 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
             fontSize: "32px",
             fontWeight: "bold",
             mt: "10px",
+            transition: "all 0.3s",
             "&:hover": {
               color: theme.palette.greenAccent.main,
-              bgcolor: theme.palette.background.alt,
+              transform: 'translate(-5%,0%)',
             },
           }}
           onClick={() => navigate(`/${link}`)}
@@ -61,7 +72,20 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
           {title}
         </Typography>
       </FlexBetween>
-      <Typography fontSize="14px" color={medium} m="0.5rem 0" align="center">
+      <Typography
+        align="center" 
+        sx={{
+          color: medium,
+          fontSize: "14px",
+          m: "0.5rem 0",          
+          transition: "all 1s ease-out",
+          "&:hover": {
+            visibility: 'visible',
+            fontWeight: 'bold',
+            width: '100%',
+          },
+        }}      
+      >
         {description}
       </Typography>
     </WidgetWrapper>
