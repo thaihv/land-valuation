@@ -3,7 +3,6 @@ import {
   Box,
   Divider,
   Drawer,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -12,9 +11,6 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import {
-  ChevronLeft,
-} from "@mui/icons-material";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AirplayOutlinedIcon from '@mui/icons-material/AirplayOutlined';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
@@ -116,11 +112,6 @@ const Sidebar = ({
                       LVIS
                     </Typography>
                   </Box>
-                  {/* {!isNonMobile && (
-                    <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                      <ChevronLeft />
-                    </IconButton>
-                  )} */}
                 </FlexBetween>
               </Box>
               <List>
