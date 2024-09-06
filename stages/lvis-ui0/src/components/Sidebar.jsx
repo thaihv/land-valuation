@@ -97,8 +97,7 @@ const Sidebar = ({
                 sx={{
                   color: theme.palette.background.alt,
                   "&:hover": {
-                    color: theme.palette.greenAccent.main,
-                    bgcolor: theme.palette.background.alt,
+                    bgcolor: theme.palette.secondary.main,
                   },
                 }}
               >
@@ -125,18 +124,18 @@ const Sidebar = ({
                           setActive(ref);
                         }}                       
                         sx={{  
-                          height: "10vh",                        
+                          height: "10vh",
+                          transition: "all 0.3s ease-out",                        
                           backgroundColor:
                             active === ref
-                              ? theme.palette.background.alt
+                              ? theme.palette.background.default
                               : "transparent",
                           color:
                             active === ref
                               ? theme.palette.greenAccent.main
                               : theme.palette.background.alt,
                           "&:hover": {
-                            color: theme.palette.greenAccent.main,
-                            bgcolor: theme.palette.background.alt,
+                            bgcolor: theme.palette.secondary.main,
                           },
                           flexDirection: 'column',
                         }}
@@ -166,7 +165,7 @@ const Sidebar = ({
 
             <Box>
               <Divider sx={{ m: "3rem 0rem 1rem 0rem" }}/>
-              <FlexBetween textTransform="none" gap="1rem" flexDirection="column">
+              <FlexBetween textTransform="none" gap="1rem" flexDirection="column" overflow="auto">
                 <Box
                   component="img"
                   alt="profile"
