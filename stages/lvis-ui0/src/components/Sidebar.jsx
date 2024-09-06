@@ -80,7 +80,7 @@ const Sidebar = ({
           onClose={() => setIsSidebarOpen(false)}
           variant="persistent"
           anchor="left"
-          sx={{
+          sx={{            
             width: drawerWidth,
             "& .MuiDrawer-paper": {
               color: theme.palette.background.alt,
@@ -92,11 +92,14 @@ const Sidebar = ({
         >
           <Typography component={"span"}>
             <Box width="100%">
-              <Box  
+              <Box
                 onClick={() => {navigate(`/`);}}
                 sx={{
+                  borderRadius: "10%",
                   color: theme.palette.background.alt,
+                  transition: "all 0.3s ease-in-out",
                   "&:hover": {
+                    color:theme.palette.secondary[100],
                     bgcolor: theme.palette.secondary.main,
                   },
                 }}
@@ -105,7 +108,7 @@ const Sidebar = ({
                   <Box 
                       m="2.25rem 2rem 2.25rem 1.5rem"
                       display="flex" 
-                      alignItems="center" 
+                      alignItems="center"                       
                   >
                     <Typography variant="h5" fontWeight= "bold">
                       LVIS
@@ -123,19 +126,22 @@ const Sidebar = ({
                           navigate(`/${ref}`);
                           setActive(ref);
                         }}                       
-                        sx={{  
+                        sx={{ 
+                          borderRadius: "10%", 
                           height: "10vh",
-                          transition: "all 0.3s ease-out",                        
+                          mb: "1px",
+                          transition: "all 0.3s ease-in-out",                        
                           backgroundColor:
                             active === ref
                               ? theme.palette.background.default
                               : "transparent",
                           color:
                             active === ref
-                              ? theme.palette.greenAccent.main
+                              ? theme.palette.secondary[300] //theme.palette.greenAccent.main
                               : theme.palette.background.alt,
                           "&:hover": {
                             bgcolor: theme.palette.secondary.main,
+                            transform: "perspective(75rem) rotateY(45deg) scale3d(1.05, 1.05, 1.05)",
                           },
                           flexDirection: 'column',
                         }}
@@ -145,7 +151,7 @@ const Sidebar = ({
                             ml: "2rem",
                             color:
                               active === ref
-                                ? theme.palette.greenAccent.main
+                                ? theme.palette.secondary[300] //theme.palette.greenAccent.main
                                 : theme.palette.background.alt,
                           }}
                         >
