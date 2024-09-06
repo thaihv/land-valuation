@@ -8,7 +8,7 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
   const navigate = useNavigate();
   const dark = theme.palette.neutral.dark;
   const medium = theme.palette.neutral.medium;
-
+  const ref = link.toLowerCase();
   return (
     <WidgetWrapper 
       width = {width} 
@@ -43,7 +43,7 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
             transform: 'translate(-5%,0%)',
           },
         }}
-        onClick={() => navigate(`/${link}`)}
+        onClick={() => navigate(`/${ref}`)}
       >
         <img
           width="80px"
@@ -67,7 +67,7 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
               transform: 'translate(-5%,0%)',
             },
           }}
-          onClick={() => navigate(`/${link}`)}
+          onClick={() => navigate(`/${ref}`)}
         >
           {title}
         </Typography>

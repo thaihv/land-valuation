@@ -185,7 +185,7 @@ const HomePage = () => {
             image="u29.png" 
             title={t("Land Value Inquiry")}
             description={t("Check easily land value information by region")}
-            link="search"
+            link="Search"
           />
         </Box>
         <Box>
@@ -193,7 +193,7 @@ const HomePage = () => {
             image="u25.png" 
             title={t("Manage Valuation Business")} 
             description={t("Support to manage various businesses of land valuation process")} 
-            link="transactions"
+            link="Transactions"
           />
         </Box>
         <Box>
@@ -201,7 +201,7 @@ const HomePage = () => {
             image="u26.png" 
             title={t("Land Valuation")}
             description={t("Calculate, analyze and compare land value by region")} 
-            link="products"
+            link="Products"
           />
         </Box>                
         <Box>
@@ -209,7 +209,7 @@ const HomePage = () => {
             image="u27.png" 
             title={t("Statistical Information")} 
             description={t("Provides visualized and statistical analysis based on land value")}  
-            link="dashboard"
+            link="Dashboard"
           />
         </Box>  
         <Box>
@@ -217,7 +217,7 @@ const HomePage = () => {
             image="u28.png" 
             title={t("System Administration")}
             description={t("Manages requirements for operation, such as user and permission")} 
-            link="survey"
+            link="Survey"
           />
         </Box>                  
       </Box>
