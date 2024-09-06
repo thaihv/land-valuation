@@ -49,7 +49,7 @@ const navItems = [
     icon: <AssignmentOutlinedIcon />,
   },  
   {
-    text: "Announcement",
+    text: "Publish",
     link: "Tasks",
     icon: <BackupTableOutlinedIcon />,
   },
@@ -123,8 +123,9 @@ const Sidebar = ({
                         onClick={() => {
                           navigate(`/${ref}`);
                           setActive(ref);
-                        }}
-                        sx={{
+                        }}                       
+                        sx={{  
+                          height: "10vh",                        
                           backgroundColor:
                             active === ref
                               ? theme.palette.background.alt
@@ -164,8 +165,8 @@ const Sidebar = ({
             </Box>
 
             <Box>
-              <Divider sx={{ m: "5.55rem 0rem 1rem 0rem" }}/>
-              <FlexBetween textTransform="none" gap="1rem" m="2.25rem 0rem 1rem 0rem" flexDirection="column">
+              <Divider sx={{ m: "3rem 0rem 1rem 0rem" }}/>
+              <FlexBetween textTransform="none" gap="1rem" flexDirection="column">
                 <Box
                   component="img"
                   alt="profile"
