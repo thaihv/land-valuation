@@ -101,6 +101,7 @@ const Sidebar = ({
                   "&:hover": {
                     color:theme.palette.secondary[100],
                     bgcolor: theme.palette.secondary.main,
+                    //transform: "perspective(75rem) rotateY(45deg)",
                   },
                 }}
               >
@@ -141,7 +142,7 @@ const Sidebar = ({
                               : theme.palette.background.alt,
                           "&:hover": {
                             bgcolor: theme.palette.secondary.main,
-                            transform: "perspective(75rem) rotateY(45deg) scale3d(1.05, 1.05, 1.05)",
+                            transform: "scale3d(1.05, 1.05, 1.05) perspective(75rem) rotateY(45deg)",
                           },
                           flexDirection: 'column',
                         }}
