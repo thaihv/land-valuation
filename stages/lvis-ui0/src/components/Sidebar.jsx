@@ -180,7 +180,7 @@ const Sidebar = ({
                   alt="profile"
                   src={
                     user.picturePath === ""
-                    ? `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/profile.jpeg`
+                    ? "profile.svg"
                     : `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${user.picturePath}`}
                   height="30px"
                   width="30px"
