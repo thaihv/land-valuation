@@ -187,7 +187,7 @@ const HomePage = () => {
             image="u29.png" 
             title={t("Land Value Inquiry")}
             description={t("Check easily land value information by region")}
-            link="Survey"
+            link="Search"
           />
         </Box>
         <Box>
@@ -219,7 +219,7 @@ const HomePage = () => {
             image="u28.png" 
             title={t("System Administration")}
             description={t("Manages requirements for operation, such as user and permission")} 
-            link="MyTeam"
+            link="Survey"
           />
         </Box>                  
       </Box>
