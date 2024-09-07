@@ -1,104 +1,14 @@
 import { 
   Box, 
-  AppBar, 
-  Button, 
-  Toolbar,   
-  Menu,
-  MenuItem,
-  Typography,
   useMediaQuery, 
-  useTheme } from "@mui/material";
-import {Menu as MenuIcon, Search} from "@mui/icons-material";
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import FlexBetween from "../../components/FlexBetween";
-import LanguageSwitcher from "../../components/LanguageSwitcher";
+} from "@mui/material";
+import TopBox from "../../components/TopBox";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import UserWidget from "../widgets/UserWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setLogout } from "../../state";
-import { useTranslation } from "react-i18next";
 
-
-const Top = () => {
-  const theme = useTheme();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const isOpen = Boolean(anchorEl);
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
-  const { t } = useTranslation();
-  return (
-    <AppBar
-      sx={{
-        position: "static",
-        background: "none",
-        boxShadow: "none",
-      }}
-    >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        {/* LEFT SIDE */}
-        <FlexBetween>
-          <img
-            width="65px"
-            height="43px"
-            alt="flag"
-            src="../lao_flag.png" 
-            sx={{ objectFit: "cover" }}         
-            onClick={() => {navigate(`/`);}}
-          />
-        </FlexBetween>
-
-        {/* RIGHT SIDE */}
-        <FlexBetween>
-          <LanguageSwitcher />
-          <Button
-              onClick={handleClick}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                textTransform: "none",
-                gap: "1rem",
-                color: "#000000",
-              }}
-          >
-            <MenuIcon />
-          </Button>    
-          <Menu
-            anchorEl={anchorEl}
-            open={isOpen}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          >
-            <MenuItem>
-              <FlexBetween
-                onClick={() => dispatch(setLogout())}
-                sx={{
-                  color: "#000000",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    color: theme.palette.greenAccent.main,
-                  },
-                }}            
-              >
-                <LogoutOutlinedIcon/>
-                <Typography>                  
-                  {t("Sign Out")}
-                </Typography>            
-              </FlexBetween>
-            </MenuItem>
-          </Menu>
-        </FlexBetween>
-      </Toolbar>
-    </AppBar>
-  );
-};
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -123,7 +33,7 @@ const Profile = () => {
 
   return (
     <Box>
-      <Top /> 
+      <TopBox /> 
       <Box
         width="100%"
         padding="2rem 6%"
