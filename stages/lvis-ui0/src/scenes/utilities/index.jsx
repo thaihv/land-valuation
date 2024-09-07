@@ -10,12 +10,9 @@ import Overview from "../charts/overview";
 import Geography from "../charts/geography";
 import Daily from "../charts/daily";
 import Monthly from "../charts/monthly";
-import UserForm from "../form/users";
 import FileUpload from "../form/FileUpload";
 import FlexBetween from "../../components/FlexBetween";
-import { PersonAdd } from "@mui/icons-material";
 import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 function CustomTabPanel(props) {
@@ -125,29 +122,8 @@ const Utilities = () => {
             }}
           >
             <Box
-              gridColumn="span 7"
-              gridRow="span 3"
-              backgroundColor={theme.palette.background.alt}
-              border={`1px solid ${theme.palette.secondary[200]}`}
-              p="1rem"
-            >
-              <FlexBetween sx={{ mb: "20px" }}>
-                <PersonAdd
-                  sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
-                />
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={theme.palette.secondary[100]}
-                >
-                  Add new a user
-                </Typography>
-              </FlexBetween>
-              <UserForm />
-            </Box>
-            <Box
-              gridColumn="span 5"
-              gridRow="span 3"
+              gridColumn="span 4"
+              gridRow="span 2"
               backgroundColor={theme.palette.background.alt}
               border={`1px solid ${theme.palette.secondary[200]}`}
               p="1rem"

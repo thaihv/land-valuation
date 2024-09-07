@@ -18,7 +18,6 @@ import Admin from "./scenes/admin";
 import Performance from "./scenes/performance";
 import BaseMap from "./scenes/maps/base";
 import SurveyMap from "./scenes/maps/survey";
-import UserForm from "./scenes/form/users";
 import Calendar from "./scenes/calendar";
 import Team from "./scenes/team";
 import Profile from "./scenes/profile";
@@ -73,7 +72,6 @@ function App() {
               <Route path="/customers" element={isAuth ? <Customers /> : <Navigate to="/" />} />
               <Route path="/survey" element={isAuth ? <SurveyMap /> : <Navigate to="/" />} />
               <Route path="/search" element={isAuth ? <BaseMap /> : <Navigate to="/" /> } />
-              <Route path="/users" element={isAuth ? <UserForm /> : <Navigate to="/" />} />
               <Route path="/myteam" element={isAuth ? <Team /> : <Navigate to="/" />} />
               <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/" />} />
               <Route path="/tasks" element={isAuth ? <Utilities /> : <Navigate to="/" />} />
