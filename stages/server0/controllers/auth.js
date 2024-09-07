@@ -63,11 +63,11 @@ export const update_register = async (req, res) => {
     user.city = city;
     user.phoneNumber = phoneNumber;
     user.occupation  = occupation;
-//    user.picturePath = picturePath;
+    // user.picturePath = picturePath;
 
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-    user.password = passwordHash;
+    // const salt = await bcrypt.genSalt();
+    // const passwordHash = await bcrypt.hash(password, salt);
+    // user.password = passwordHash;
 
     user.save(function(err) {
       if (err)
