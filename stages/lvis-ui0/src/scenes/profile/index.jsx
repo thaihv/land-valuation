@@ -6,9 +6,9 @@ import TopBox from "../../components/TopBox";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import RegistryWidget from "../widgets/RegistryWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
 import UserWidget from "../widgets/UserWidget";
+import UpdateUser from "../form/UpdateUser";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -56,7 +56,7 @@ const Profile = () => {
           <UserWidget userId={id} picturePath={user.picturePath} />
         </Box>
         <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
-          <RegistryWidget user={user} />
+          <UpdateUser user={user} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "26%" : undefined}
