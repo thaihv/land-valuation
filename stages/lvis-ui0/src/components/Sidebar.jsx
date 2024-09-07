@@ -130,7 +130,7 @@ const Sidebar = ({
                         sx={{ 
                           borderRadius: "10%", 
                           height: "10vh",
-                          mb: "1px",
+                          m: "1px 0 1px 0",
                           transition: "all 0.3s ease-in-out",                        
                           backgroundColor:
                             active === ref
@@ -143,7 +143,7 @@ const Sidebar = ({
                           "&:hover": {
                             color: theme.palette.greenAccent.main,
                             bgcolor: theme.palette.secondary.main,
-                            transform: "scale3d(1.05, 1.05, 1.05)",
+                            //transform: "scale3d(1.05, 1.05, 1.05)",
                             "& .MuiListItemIcon-root": {
                               color: theme.palette.greenAccent.main,
                             }
@@ -178,7 +178,7 @@ const Sidebar = ({
               <Divider sx={{ m: "3rem 0rem 1rem 0rem" }}/>
               <FlexBetween 
                 textTransform="none" 
-                gap="1rem" 
+//              gap="1rem" 
                 flexDirection="column" 
                 overflow="auto"
               >
