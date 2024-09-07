@@ -138,11 +138,15 @@ const Sidebar = ({
                               : "transparent",
                           color:
                             active === ref
-                              ? theme.palette.secondary[300] //theme.palette.greenAccent.main
+                              ? theme.palette.secondary[300]
                               : theme.palette.background.alt,
                           "&:hover": {
+                            color: theme.palette.greenAccent.main,
                             bgcolor: theme.palette.secondary.main,
-                            transform: "scale3d(1.05, 1.05, 1.05) perspective(75rem) rotateY(45deg)",
+                            transform: "scale3d(1.05, 1.05, 1.05)",
+                            "& .MuiListItemIcon-root": {
+                              color: theme.palette.greenAccent.main,
+                            }
                           },
                           flexDirection: 'column',
                         }}
@@ -152,7 +156,7 @@ const Sidebar = ({
                             ml: "2rem",
                             color:
                               active === ref
-                                ? theme.palette.secondary[300] //theme.palette.greenAccent.main
+                                ? theme.palette.secondary[300]
                                 : theme.palette.background.alt,
                           }}
                         >
