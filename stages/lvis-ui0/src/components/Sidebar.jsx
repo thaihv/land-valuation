@@ -176,7 +176,12 @@ const Sidebar = ({
 
             <Box>
               <Divider sx={{ m: "3rem 0rem 1rem 0rem" }}/>
-              <FlexBetween textTransform="none" gap="1rem" flexDirection="column" overflow="auto">
+              <FlexBetween 
+                textTransform="none" 
+                gap="1rem" 
+                flexDirection="column" 
+                overflow="auto"
+              >
                 <Box
                   component="img"
                   alt="profile"
@@ -187,7 +192,13 @@ const Sidebar = ({
                   height="30px"
                   width="30px"
                   borderRadius="50%"
-                  sx={{ objectFit: "cover" }}
+                  onClick={() => navigate(`/profile/${user._id}`)}
+                  sx={{ 
+                    objectFit: "cover",
+                    "&:hover": {
+                      transform: "scale3d(1.25, 1.25, 1.25)",
+                    }, 
+                  }}
                 />
                 <Box textAlign="center">
                   <Typography

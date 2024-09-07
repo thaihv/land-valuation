@@ -21,6 +21,7 @@ import SurveyMap from "./scenes/maps/survey";
 import UserForm from "./scenes/form/users";
 import Calendar from "./scenes/calendar";
 import Team from "./scenes/team";
+import Profile from "./scenes/profile";
 import Utilities from "./scenes/utilities";
 import LoginPage from "./scenes/login";
 import HomePage from "./scenes/home";
@@ -85,6 +86,7 @@ function App() {
               <Route path="/breakdown" element={isAuth ? <Breakdown /> : <Navigate to="/" />} />
               <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/" />} />
               <Route path="/performance" element={isAuth ? <Performance /> : <Navigate to="/" />} />
+              <Route path="/profile/:id" element={isAuth ? <Profile /> : <Navigate to="/" />} />
             </Route>
           </Routes>
         </ThemeProvider>
