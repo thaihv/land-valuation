@@ -11,7 +11,7 @@ const UserImage = ({ image, size = "60px" }) => {
         src={
           image === ""
           ? "profile.svg"
-          : `${import.meta.env.VITE_REACT_APP_BASE_URL}/assets/${image}`}
+          : `${import.meta.env.VITE_REACT_APP_BASE_URL}/profiles/${image}`}
       />
     </Box>
   );

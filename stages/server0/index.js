@@ -43,12 +43,12 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+app.use("/profiles", express.static(path.join(__dirname, "public/profiles")));
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/assets");
+    cb(null, "public/profiles");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
