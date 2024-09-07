@@ -6,9 +6,9 @@ import TopBox from "../../components/TopBox";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import UserWidget from "../widgets/UserWidget";
+import RegistryWidget from "../widgets/RegistryWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
-
+import UserWidget from "../widgets/UserWidget";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -52,13 +52,15 @@ const Profile = () => {
         gap="2rem"
         justifyContent="center"
       >
-        <Box flexBasis={isNonMobileScreens ? "50%" : undefined}>
+        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <UserWidget userId={id} picturePath={user.picturePath} />
+        </Box>
+        <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
+          <RegistryWidget user={user} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "26%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
-          ml={isNonMobileScreens ? "5rem" : undefined}
         >
           <AdvertWidget />
         </Box>
