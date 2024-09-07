@@ -41,7 +41,46 @@ export const register = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+export const update_register = async (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    city,
+    state,
+    country,
+    phoneNumber,
+    picturePath,
+    occupation,
+    transactions,
+    role,
+  } = req.body;
 
+  const user = await User.findOne({ email: email });
+
+  if (user) {
+    user.name = name;
+    user.city = city;
+    user.phoneNumber = phoneNumber;
+    user.occupation  = occupation;
+//    user.picturePath = picturePath;
+
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+    user.password = passwordHash;
+
+    user.save(function(err) {
+      if (err)
+        { res.status(500).json({ error: err.message }); }
+      else
+        { res.status(201).json(user); }
+    });
+  }
+  else {
+    res.status(500).json({ error: "Could not load Document" });
+  }
+
+};
 /* LOGGING IN */
 export const login = async (req, res) => {
   try {

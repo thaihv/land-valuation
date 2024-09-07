@@ -49,7 +49,7 @@ const UpdateUser = ({user}) => {
     onSubmitProps.resetForm();
 
     if (savedUser) {
-      setPageType("login");
+      console.log('update ok!');
     }
   };
 
