@@ -35,18 +35,30 @@ const Profile = () => {
     <Box>
       <TopBox /> 
       <Box
+        sx={{
+          width: "100%",
+          height: "21px",
+          padding: "2px 2px 2px 2px", 
+          bgcolor: "#002868",
+          opacity: "0.5",
+          mt: "3rem",
+        }}     
+      >
+      </Box>
+      <Box
         width="100%"
         padding="2rem 6%"
         display={isNonMobileScreens ? "flex" : "block"}
         gap="2rem"
         justifyContent="center"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box flexBasis={isNonMobileScreens ? "50%" : undefined}>
           <UserWidget userId={id} picturePath={user.picturePath} />
         </Box>
         <Box
-          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          flexBasis={isNonMobileScreens ? "26%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
+          ml={isNonMobileScreens ? "5rem" : undefined}
         >
           <AdvertWidget />
         </Box>
