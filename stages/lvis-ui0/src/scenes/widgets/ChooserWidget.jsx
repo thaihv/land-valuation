@@ -19,10 +19,11 @@ const ChooserWidget = ({ image, title, description, link, width="260px", height=
       sx={{ 
         minWidth: 260, 
         minHeight: 355,
-        transition: "all 0.3s",
+        transition: "all 0.5s",
         "&:hover": {
           bgcolor: theme.palette.background.default,
-          transform: 'translate(0%,-2%)',
+          //transform: 'translate(0%,-2%)',
+          transform: "perspective(75rem) rotateY(45deg) translate(0%,-2%)",
         }, 
       }}
     >
