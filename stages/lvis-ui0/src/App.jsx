@@ -64,10 +64,9 @@ function App() {
           <CssBaseline />
           <Routes>
             <Route path="/" element={isAuth ? <Navigate to="/home" /> : <LoginPage />}/>
-            <Route
-              path="/home"
-              element={isAuth ? <HomePage /> : <Navigate to="/" />}
-            />
+            <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/" />} />
+            <Route path="/profile/:id" element={isAuth ? <Profile /> : <Navigate to="/" />} />
+            
             <Route element={<Layout />}>
               <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
               <Route path="/products" element={isAuth ? <Products /> : <Navigate to="/" />} />
@@ -85,8 +84,7 @@ function App() {
               <Route path="/monthly" element={isAuth ? <Monthly /> : <Navigate to="/" />} />
               <Route path="/breakdown" element={isAuth ? <Breakdown /> : <Navigate to="/" />} />
               <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/" />} />
-              <Route path="/performance" element={isAuth ? <Performance /> : <Navigate to="/" />} />
-              <Route path="/profile/:id" element={isAuth ? <Profile /> : <Navigate to="/" />} />
+              <Route path="/performance" element={isAuth ? <Performance /> : <Navigate to="/" />} />              
             </Route>
           </Routes>
         </ThemeProvider>
