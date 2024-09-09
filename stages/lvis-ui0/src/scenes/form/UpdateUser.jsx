@@ -1,6 +1,9 @@
+import React, { useState} from "react";
 import {
   Box,
   Button,
+  Checkbox,
+  FormControlLabel, 
   TextField,
   useMediaQuery,
   Typography,
@@ -18,7 +21,8 @@ const registerSchema = yup.object().shape({
     .max(60, 'Too Long!')
     .required("Name is required"),
   email: yup.string().email("invalid email").required("Email is required"),
-  password: yup.string().required("required"),
+  password: yup.string().notRequired(),
+  changepassword: yup.boolean(),
   city: yup.string().required("required"),
   phoneNumber: yup.string().required("required"),
   occupation: yup.string().required("required"),
@@ -30,6 +34,7 @@ const UpdateUser = ({user}) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
   const update_register = async (values, onSubmitProps) => {
+    console.log(values);
     // this allows us to send form info with image
     const formData = new FormData();
     for (let value in values) {
@@ -183,13 +188,26 @@ const UpdateUser = ({user}) => {
               <TextField
                 label="Password"
                 type="password"
+                disabled={values.changepassword ? false : true}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password || ''}
                 name="password"
                 error={Boolean(touched.password) && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 3" }}
+              />
+              <FormControlLabel 
+                control={
+                  <Checkbox 
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    name="changepassword"
+                    value={values.changepassword || ''}
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />} 
+                label="Change Password" 
+                sx={{ gridColumn: "span 1" }} 
               />
             </Box>
 

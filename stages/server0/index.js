@@ -45,13 +45,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use("/profiles", express.static(path.join(__dirname, "public/profiles")));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 /* FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/profiles");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, Date.now() + '_' + file.originalname);
   },
 });
 const upload = multer({ storage });

@@ -46,6 +46,7 @@ export const update_register = async (req, res) => {
     name,
     email,
     password,
+    changepassword,
     city,
     phoneNumber,
     picturePath,
@@ -61,13 +62,16 @@ export const update_register = async (req, res) => {
     user.occupation  = occupation;
     user.picturePath = picturePath;
     user.picture     = req.picture;
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch && (user.role!=="superadmin")) {
-      const salt = await bcrypt.genSalt();
-      const passwordHash = await bcrypt.hash(password, salt);
-      user.password = passwordHash;
-    }
 
+    if (changepassword){
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch && (user.role!=="superadmin")) {
+        const salt = await bcrypt.genSalt();
+        const passwordHash = await bcrypt.hash(password, salt);
+        user.password = passwordHash;
+      }
+      console.log('changed password is ok!');
+    }
     user.save(function(err) {
       if (err)
         { res.status(500).json({ error: err.message }); }
