@@ -65,10 +65,12 @@ export const update_register = async (req, res) => {
     user.occupation  = occupation;
     user.picturePath = picturePath;
     user.picture     = req.picture;
-    
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-    user.password = passwordHash;
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(password, salt);
+      user.password = passwordHash;
+    }
 
     user.save(function(err) {
       if (err)

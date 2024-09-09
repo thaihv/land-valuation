@@ -22927,7 +22927,7 @@ export const dataUser = [
     state: null,
     country: "ID",
     occupation: "Land Valuation Officer",
-    phoneNumber: "5043493141",
+    phoneNumber: "0975798640",
     transactions: [
       "63701d74f03239b913000040",
       "63701d74f03239db6900015a",
@@ -22937,7 +22937,7 @@ export const dataUser = [
       "63701d74f03239c72c0001bc",
       "63701d74f03239d59100032d",
     ],
-    role: "user",
+    role: "superadmin",
   },
   {
     _id: "63701cc1f03239d40b000045",
