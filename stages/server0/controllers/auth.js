@@ -63,7 +63,8 @@ export const update_register = async (req, res) => {
     user.picturePath = picturePath;
     user.picture     = req.picture;
 
-    if (changepassword){
+    console.log(changepassword);
+    if (changepassword === 'true'){
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch && (user.role!=="superadmin")) {
         const salt = await bcrypt.genSalt();
