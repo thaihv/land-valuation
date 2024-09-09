@@ -36,6 +36,7 @@ const UpdateUser = ({user}) => {
       formData.append(value, values[value]);
     }
     if (values.picture){
+      formData.delete("picturePath", "");
       formData.append("picturePath", values.picture.name);
     }
     const savedUserResponse = await fetch(
