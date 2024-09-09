@@ -47,13 +47,9 @@ export const update_register = async (req, res) => {
     email,
     password,
     city,
-    state,
-    country,
     phoneNumber,
     picturePath,
     occupation,
-    transactions,
-    role,
   } = req.body;
 
   const user = await User.findOne({ email: email });
@@ -66,7 +62,7 @@ export const update_register = async (req, res) => {
     user.picturePath = picturePath;
     user.picture     = req.picture;
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    if (!isMatch && (user.role!=="superadmin")) {
       const salt = await bcrypt.genSalt();
       const passwordHash = await bcrypt.hash(password, salt);
       user.password = passwordHash;
@@ -80,7 +76,7 @@ export const update_register = async (req, res) => {
     });
   }
   else {
-    res.status(500).json({ error: "Could not load Document" });
+    res.status(500).json({ error: "Could not load user" });
   }
 
 };
