@@ -188,7 +188,7 @@ const Sidebar = ({
                   src={
                     user.picturePath === ""
                     ? "profile.svg"
-                    : `${import.meta.env.VITE_REACT_APP_BASE_URL}/profiles/${user.picturePath}`}
+                    : `${import.meta.env.VITE_REACT_APP_BASE_URL}/profiles/${user.email}_${user.picturePath}`}
                   height="30px"
                   width="30px"
                   borderRadius="50%"

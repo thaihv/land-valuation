@@ -52,7 +52,7 @@ const storage = multer.diskStorage({
     cb(null, "public/profiles");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '_' + file.originalname);
+    cb(null, req.body.email + '_' + file.originalname);
   },
 });
 const upload = multer({ storage });

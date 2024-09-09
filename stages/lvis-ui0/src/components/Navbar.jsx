@@ -90,7 +90,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 src={ 
                   user.picturePath === ""
                   ? "profile.svg"
-                  : `${import.meta.env.VITE_REACT_APP_BASE_URL}/profiles/${user.picturePath}`}
+                  : `${import.meta.env.VITE_REACT_APP_BASE_URL}/profiles/${user.email}_${user.picturePath}`}
                 height="32px"
                 width="32px"
                 borderRadius="50%"
