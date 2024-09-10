@@ -14,17 +14,17 @@ const StyledPop = styled(Popup)(({ theme }) => ({
     paddingTop: "20px",
     borderRadius: "5%",
     backgroundColor: theme.palette.secondary.alt,
-    border: "2.5px solid rgb(4, 112, 34)",
+    border: "2.5px solid",
+    borderColor: theme.palette.success.main
   },
   "& .leaflet-popup-content": {
-    borderRadius: "5%",
     margin: "0px 0px 0px 0px",
   },  
   "& .leaflet-popup-tip-container": {
     left: "15%",
   },
   "& .leaflet-popup-tip": {
-    backgroundColor: "rgb(4, 112, 34)",
+    backgroundColor: theme.palette.success.main,
   },
 })
 );
