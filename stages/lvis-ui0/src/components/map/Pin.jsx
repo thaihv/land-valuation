@@ -2,14 +2,19 @@ import { Marker, Popup } from "react-leaflet";
 import "./pin.scss";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/system";
+import {
+  useTheme,
+} from "@mui/material";
 
-const StyledPop = styled(Popup)({
+const StyledPop = styled(Popup)(({ theme }) => ({
+  
   backgroundColor: "red",
   borderRadius: "5%",
   "& .leaflet-popup-content-wrapper": {
-    padding: "2px",
+    paddingTop: "20px",
     borderRadius: "5%",
-    border: "2.5px solid green",
+    backgroundColor: theme.palette.secondary.alt,
+    border: "2.5px solid rgb(4, 112, 34)",
   },
   "& .leaflet-popup-content": {
     borderRadius: "5%",
@@ -19,14 +24,16 @@ const StyledPop = styled(Popup)({
     left: "15%",
   },
   "& .leaflet-popup-tip": {
-    backgroundColor: "green",
+    backgroundColor: "rgb(4, 112, 34)",
   },
-});
+})
+);
 
 function Pin({ item }) {
+  const theme = useTheme();
   return (
     <Marker position={[item.latitude, item.longitude]}>
-      <StyledPop>
+      <StyledPop theme = {theme}>
         <div className="popupContainer">
           <img src={item.images[0]} alt="" />
           <div className="textContainer">
