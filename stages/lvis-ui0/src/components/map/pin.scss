@@ -1,3 +1,14 @@
+.leaflet-popup {
+  left: -30px !important;
+
+  .leaflet-popup-content {
+    margin: 0px 0px 0px 0px,
+  }  
+
+  .leaflet-popup-tip-container {
+    left: 15%,
+  }
+}
 .popupContainer{
   display: flex;
   gap: 20px;

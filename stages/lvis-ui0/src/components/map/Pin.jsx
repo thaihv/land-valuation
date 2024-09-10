@@ -7,21 +7,14 @@ import {
 } from "@mui/material";
 
 const StyledPop = styled(Popup)(({ theme }) => ({
-  
-  backgroundColor: "red",
-  borderRadius: "5%",
+  // backgroundColor: "red",
+  // borderRadius: "5%",
   "& .leaflet-popup-content-wrapper": {
     paddingTop: "20px",
     borderRadius: "5%",
     backgroundColor: theme.palette.secondary.alt,
     border: "2.5px solid",
     borderColor: theme.palette.success.main
-  },
-  "& .leaflet-popup-content": {
-    margin: "0px 0px 0px 0px",
-  },  
-  "& .leaflet-popup-tip-container": {
-    left: "15%",
   },
   "& .leaflet-popup-tip": {
     backgroundColor: theme.palette.success.main,
