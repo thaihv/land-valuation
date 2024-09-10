@@ -1,3 +1,7 @@
+
+$base-color:rgb(240, 244, 243);
+$content-main: rgba($base-color, 0.88);
+
 .leaflet-popup {
   left: -30px !important;
 
@@ -12,7 +16,7 @@
 .popupContainer{
   display: flex;
   gap: 20px;
-  background-color: rgb(240, 244, 243);
+  background-color: $content-main;
 
 
   img{
