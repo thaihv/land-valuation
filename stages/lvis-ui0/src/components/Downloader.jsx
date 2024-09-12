@@ -123,7 +123,7 @@ const CustomCard = styled(Card)(({ theme }) => ({
 }));
 
 const CustomCardHeader = styled(CardHeader)(({ theme }) => ({
-  color: "#fff",
+  color: theme.palette.background.atl,
   backgroundColor: theme.palette.secondary.main,
 }));
 
