@@ -1,6 +1,58 @@
 import React, { useState, useRef } from "react";
 import axios, { CancelToken, isCancel } from "axios";
-import { Container, Typography, Grid, LinearProgress, Box, Button, useTheme } from "@mui/material";
+import { Container, Typography, Grid, LinearProgress, CircularProgress, Box, Button, useTheme } from "@mui/material";
+import PropTypes from 'prop-types';
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  value: PropTypes.number.isRequired,
+};
+
+function CircularProgressWithLabel(props) {
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography
+          variant="caption"
+          component="div"
+          sx={{ color: 'text.secondary' }}
+        >
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
+CircularProgressWithLabel.propTypes = {
+  value: PropTypes.number.isRequired,
+};
 
 const FileUpload = () => {
     const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -63,10 +115,30 @@ const FileUpload = () => {
               style={{ margin: '20px 0', display: 'block' }}
             />
             {uploadPercentage > 0 && (
-              <Box mt={3}>
-                <LinearProgress variant="determinate" value={uploadPercentage} />
+              <Box mt={3}>                               
                 <Grid container alignItems="center" mt={1}>
                   <Grid item xs>
+                    <LinearProgressWithLabel variant="determinate" color="success" value={uploadPercentage} />
+                  </Grid>
+                  <Grid item>
+                    <Button color="success" onClick={cancelUpload}>
+                      Cancel
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid container alignItems="center" mt={1}>
+                  <Grid item xs>
+                    <CircularProgressWithLabel variant="determinate" color="inherit" value={uploadPercentage} />
+                  </Grid>
+                  <Grid item>
+                    <Button color="success" onClick={cancelUpload}>
+                      Cancel
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid container alignItems="center" mt={1}>
+                  <Grid item xs>
+                    <CircularProgress variant="determinate" color="inherit" value={uploadPercentage} />
                     <Typography variant="body2" color={theme.palette.secondary.main}>
                       {uploadPercentage}%
                     </Typography>
@@ -75,8 +147,8 @@ const FileUpload = () => {
                     <Button color="success" onClick={cancelUpload}>
                       Cancel
                     </Button>
-                  </Grid>
-                </Grid>
+                  </Grid>                  
+                </Grid>                
               </Box>
             )}
           </Grid>
