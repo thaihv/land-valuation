@@ -72,7 +72,7 @@ const DownloadItem = ({ name, file, filename, removeFile }) => {
         <Typography variant="body1" fontWeight="bold" noWrap>
           {name}
         </Typography>
-        <Box ml={2}>
+        <Box ml={5}>
           <Typography variant="caption">
             {downloadInfo.loaded > 0 ? (
               <>
@@ -82,11 +82,11 @@ const DownloadItem = ({ name, file, filename, removeFile }) => {
                 / {formatBytes(downloadInfo.total)}
               </>
             ) : (
-              <>Initializing...</>
+              <>Download Initializing...</>
             )}
           </Typography>
         </Box>
-        <Box ml="auto">
+        <Box ml={20}>
           {downloadInfo.completed && (
             <Chip
               label="Completed"
@@ -124,7 +124,7 @@ const CustomCard = styled(Card)(({ theme }) => ({
 
 const CustomCardHeader = styled(CardHeader)(({ theme }) => ({
   color: "#fff",
-  backgroundColor: "rgba(93, 11, 11, 0.92)",
+  backgroundColor: theme.palette.secondary.main,
 }));
 
 const CustomList = styled(List)(({ theme }) => ({
