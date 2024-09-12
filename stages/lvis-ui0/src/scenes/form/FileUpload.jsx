@@ -180,7 +180,7 @@ const FileUpload = () => {
   return (
     <Container>
       <Grid container justifyContent="center" alignItems="center" spacing={2}>
-        <Grid item xs={12} md={6} textAlign="center">
+        <Grid item xs={9} md={12} textAlign="center">
           <input
             type="file"
             onChange={uploadFile}
