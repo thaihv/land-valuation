@@ -47,19 +47,35 @@ app.use("/profiles", express.static(path.join(__dirname, "public/profiles")));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 /* FILE STORAGE */
-const storage = multer.diskStorage({
+const storage_profiles = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/profiles");
+    cb(null, "./public/profiles");
   },
   filename: function (req, file, cb) {
     cb(null, req.body.email + '_' + file.originalname);
   },
 });
-const upload = multer({ storage });
+const storage_uploads = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const profiles_upload = multer({ storage: storage_profiles });
+const data_upload = multer({ storage: storage_uploads });
 
 /* ROUTES WITH FILES */
-app.post("/auth/register", upload.single("picture"), register);
-app.put("/auth/register", upload.single("picture"), update_register);
+// For upload profiles
+app.post("/auth/register", profiles_upload.single("picture"), register);
+app.put("/auth/register", profiles_upload.single("picture"), update_register);
+// For upload any data into uploads folder
+app.post('/uploads', data_upload.single('file'), (req, res) => {
+  console.log('body', req.file)
+  // here you can do anything that you want for the file such as you want to save it to database here
+  res.json({ success: true })
+})
 
 /* ROUTES */
 app.use("/auth", authRoutes);
