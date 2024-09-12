@@ -1,8 +1,27 @@
 import React, { useState, useRef } from "react";
 import axios, { CancelToken, isCancel } from "axios";
-import { Container, Typography, Grid, LinearProgress, CircularProgress, Box, Button, useTheme } from "@mui/material";
+import { Container, Typography, Grid, CircularProgress, Box, Button, useTheme } from "@mui/material";
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
 
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[200],
+    ...theme.applyStyles('dark', {
+      backgroundColor: theme.palette.grey[800],
+    }),
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor: theme.palette.secondary.main,
+    ...theme.applyStyles('dark', {
+      backgroundColor: '#308fe8',
+    }),
+  },
+}));
 function LinearProgressWithLabel(props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -148,7 +167,21 @@ const FileUpload = () => {
                       Cancel
                     </Button>
                   </Grid>                  
-                </Grid>                
+                </Grid>             
+
+                <Grid container alignItems="center" mt={1}>
+                  <Grid item xs>
+                    <BorderLinearProgress theme = {theme} variant="determinate" value={uploadPercentage} />
+                    <Typography variant="body2" color={theme.palette.secondary.main}>
+                      {uploadPercentage}%
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button color="success" onClick={cancelUpload}>
+                      Cancel
+                    </Button>
+                  </Grid>                  
+                </Grid>                       
               </Box>
             )}
           </Grid>
