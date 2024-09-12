@@ -1,17 +1,15 @@
 import React, { useState, useRef } from "react";
 import axios, { CancelToken, isCancel } from "axios";
-import { Box, Button, TextField, useTheme } from "@mui/material";
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
+import { Container, Typography, Grid, LinearProgress, Box, Button, useTheme } from "@mui/material";
+
 const FileUpload = () => {
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const cancelFileUpload = useRef(null);
-    const [filename, setFilename] = useState("");
-
+    const theme = useTheme();
     const uploadFile = ({ target: { files } }) => {
         let data = new FormData();
         data.append("file", files[0]);
         const { name } = files[0];
-        setFilename(name);
         const options = {
             onUploadProgress: progressEvent => {
                 const { loaded, total } = progressEvent;
@@ -57,22 +55,34 @@ const FileUpload = () => {
     };
 
     return (
-        <>
-            <Button 
-                variant="contained" 
-                component="label"
-                startIcon={<UploadFileOutlinedIcon />}
-                sx={{ marginRight: "1rem" }}
-            >
-                Upload File
-                <input
-                    type="file"
-                    hidden
-                    onChange={uploadFile}
-                />
-            </Button>
-            <Box>{filename}</Box>
-        </>
+        <Container>
+        <Grid container justifyContent="center" alignItems="center" spacing={2}>
+          <Grid item xs={12} md={6} textAlign="center">
+            <input
+              type="file"
+              onChange={uploadFile}
+              style={{ margin: '20px 0', display: 'block' }}
+            />
+            {uploadPercentage > 0 && (
+              <Box mt={3}>
+                <LinearProgress variant="determinate" value={uploadPercentage} />
+                <Grid container alignItems="center" mt={1}>
+                  <Grid item xs>
+                    <Typography variant="body2" color={theme.palette.secondary.main}>
+                      {uploadPercentage}%
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Button color="success" onClick={cancelUpload}>
+                      Cancel
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            )}
+          </Grid>
+        </Grid>
+      </Container>
     );
 };
 
