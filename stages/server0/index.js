@@ -60,7 +60,7 @@ const storage_uploads = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null,  Date.now() + '-' +  file.originalname);
   },
 });
 const profiles_upload = multer({ storage: storage_profiles });

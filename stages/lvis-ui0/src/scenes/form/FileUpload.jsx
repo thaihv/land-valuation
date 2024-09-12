@@ -8,8 +8,7 @@ const FileUpload = () => {
     const theme = useTheme();
     const uploadFile = ({ target: { files } }) => {
         let data = new FormData();
-        data.append("file", files[0]);
-        const { name } = files[0];
+        data.append("file", files[0].name);
         const options = {
             onUploadProgress: progressEvent => {
                 const { loaded, total } = progressEvent;
