@@ -11,8 +11,10 @@ import Geography from "../charts/geography";
 import Daily from "../charts/daily";
 import Monthly from "../charts/monthly";
 import FileUpload from "../form/FileUpload";
+import FileDownloader from "../form/FileDownload"
 import FlexBetween from "../../components/FlexBetween";
-import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined";
+import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
+import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 function CustomTabPanel(props) {
@@ -129,7 +131,7 @@ const Utilities = () => {
               p="1rem"
             >
               <FlexBetween sx={{ mb: "20px" }}>
-                <BackupOutlinedIcon
+                <UploadFileOutlinedIcon
                   sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
                 />
                 <Typography
@@ -137,11 +139,32 @@ const Utilities = () => {
                   fontWeight="bold"
                   color={theme.palette.secondary[100]}
                 >
-                  Upload your file sources
+                  Uploader
                 </Typography>
               </FlexBetween>
               <FileUpload />
             </Box>
+            <Box
+              gridColumn="span 8"
+              gridRow="span 2"
+              backgroundColor={theme.palette.background.alt}
+              border={`1px solid ${theme.palette.secondary[200]}`}
+              p="1rem"
+            >
+              <FlexBetween sx={{ mb: "20px" }}>              
+                <DownloadForOfflineOutlinedIcon
+                  sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+                />
+                <Typography
+                  variant="h5"
+                  fontWeight="bold"
+                  color={theme.palette.secondary[100]}
+                >
+                  Downloader
+                </Typography>
+              </FlexBetween>
+              <FileDownloader />
+            </Box>            
           </Box>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={6}>
