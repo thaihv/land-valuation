@@ -3,7 +3,7 @@ import CircularProgress, {
   circularProgressClasses,
 } from "@mui/material/CircularProgress";
 
-function IndeterminateCircularProgress(props) {
+function IndeterminateCircularBar(props) {
   return (
     <Box sx={{ position: "relative" }}>
       <CircularProgress
@@ -28,4 +28,4 @@ function IndeterminateCircularProgress(props) {
     </Box>
   );
 }
-export default IndeterminateCircularProgress;
+export default IndeterminateCircularBar;

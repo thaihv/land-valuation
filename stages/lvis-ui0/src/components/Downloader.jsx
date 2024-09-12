@@ -9,7 +9,7 @@ import {
   Box,
   Chip
 } from "@mui/material";
-import LinearProgressWithLabel from "../components/progessbars/LinearProgressWithLabel"
+import LinearProgressBar from "../components/progessbars/LinearProgressBar"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Axios from "axios";
 
@@ -98,7 +98,7 @@ const DownloadItem = ({ name, file, filename, removeFile }) => {
         </Box>
       </Box>
       <Box mt={2}>
-        <LinearProgressWithLabel
+        <LinearProgressBar
           variant="determinate"
           value={downloadInfo.progress}
           sx={{ height: 10, borderRadius: 5 }}

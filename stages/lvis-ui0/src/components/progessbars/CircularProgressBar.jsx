@@ -21,7 +21,7 @@ function DeterminateCircularProgress(props) {
     </Box>
   );
 }
-function CircularProgressWithLabel(props) {
+function CircularProgressBar(props) {
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
       <DeterminateCircularProgress variant="determinate" {...props} />
@@ -49,7 +49,7 @@ function CircularProgressWithLabel(props) {
   );
 }
 
-CircularProgressWithLabel.propTypes = {
+CircularProgressBar.propTypes = {
   value: PropTypes.number.isRequired,
 };
-export default CircularProgressWithLabel;
+export default CircularProgressBar;

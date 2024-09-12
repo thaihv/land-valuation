@@ -2,15 +2,14 @@ import React, { useState, useRef } from "react";
 import axios, { CancelToken, isCancel } from "axios";
 import {
   Container,
-  Typography,
   Grid,
   Box,
   Button,
   useTheme,
 } from "@mui/material";
-import LinearProgressWithLabel from "../../components/progessbars/LinearProgressWithLabel"
-// import CircularProgressWithLabel from "../../components/progessbars/CircularProgressWithLabel"
-// import IndeterminateCircularProgress from "../../components/progessbars/IndeterminateCircularProgress"
+import LinearProgressBar from "../../components/progessbars/LinearProgressBar"
+// import CircularProgressBar from "../../components/progessbars/CircularProgressBar"
+// import IndeterminateCircularBar from "../../components/progessbars/IndeterminateCircularBar"
 
 const FileUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -72,7 +71,7 @@ const FileUpload = () => {
             <Box mt={3}>
               <Grid container alignItems="center" mt={1}>
                 <Grid item xs>
-                  <LinearProgressWithLabel
+                  <LinearProgressBar
                     theme={theme}
                     variant="determinate"
                     value={uploadPercentage}

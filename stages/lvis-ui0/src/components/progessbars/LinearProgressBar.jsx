@@ -22,7 +22,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     }),
   },
 }));
-function LinearProgressWithLabel(props) {
+function LinearProgressBar(props) {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
@@ -37,7 +37,7 @@ function LinearProgressWithLabel(props) {
   );
 }
 
-LinearProgressWithLabel.propTypes = {
+LinearProgressBar.propTypes = {
   value: PropTypes.number.isRequired,
 };
-export default LinearProgressWithLabel;
+export default LinearProgressBar;
