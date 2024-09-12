@@ -85,7 +85,7 @@ const Utilities = () => {
             <Tab label={t("Monthly")} {...a11yProps(2)} />
             <Tab label={t("Geography")} {...a11yProps(3)} />
             <Tab label={t("Breakdown")} {...a11yProps(4)} />
-            <Tab label={t("Form")} {...a11yProps(5)} />
+            <Tab label={t("Upload")} {...a11yProps(5)} />
             <Tab
               // icon={<LanguageOutlinedIcon />}
               // iconPosition="start"
