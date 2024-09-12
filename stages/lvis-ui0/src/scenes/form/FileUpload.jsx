@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import axios, { CancelToken, isCancel } from "axios";
-import { Container, Typography, Grid, CircularProgress, Box, Button, useTheme } from "@mui/material";
+import { Container, Typography, Grid, Box, Button, useTheme } from "@mui/material";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import CircularProgress, {circularProgressClasses} from '@mui/material/CircularProgress';
+
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 
@@ -26,7 +28,7 @@ function LinearProgressWithLabel(props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
+        <BorderLinearProgress variant="determinate" {...props} />
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -41,10 +43,54 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
+function DeterminateCircularProgress(props) {
+  return (
+    <Box sx={{ position: 'relative' }}>
+      <CircularProgress
+        variant="determinate"
+        sx={(theme) => ({
+          color: theme.palette.secondary.main,
+          ...theme.applyStyles('dark', {
+            color: theme.palette.grey[800],
+          }),
+        })}
+        size={40}
+        thickness={4}
+        {...props}
+        value={100}
+      />
+    </Box>
+  );
+}
+function IndeterminateCircularProgress(props) {
+  return (
+    <Box sx={{ position: 'relative' }}>
+      <CircularProgress
+        variant="indeterminate"
+        disableShrink
+        sx={(theme) => ({
+          color: theme.palette.secondary.main,
+          animationDuration: '550ms',
+          position: 'absolute',
+          left: 0,
+          [`& .${circularProgressClasses.circle}`]: {
+            strokeLinecap: 'round',
+          },
+          ...theme.applyStyles('dark', {
+            color: '#308fe8',
+          }),
+        })}
+        size={40}
+        thickness={4}
+        {...props}
+      />
+    </Box>
+  );
+}
 function CircularProgressWithLabel(props) {
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant="determinate" {...props} />
+      <DeterminateCircularProgress variant="determinate" {...props} />
       <Box
         sx={{
           top: 0,
@@ -144,44 +190,7 @@ const FileUpload = () => {
                       Cancel
                     </Button>
                   </Grid>
-                </Grid>
-                <Grid container alignItems="center" mt={1}>
-                  <Grid item xs>
-                    <CircularProgressWithLabel variant="determinate" color="inherit" value={uploadPercentage} />
-                  </Grid>
-                  <Grid item>
-                    <Button color="success" onClick={cancelUpload}>
-                      Cancel
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Grid container alignItems="center" mt={1}>
-                  <Grid item xs>
-                    <CircularProgress variant="determinate" color="inherit" value={uploadPercentage} />
-                    <Typography variant="body2" color={theme.palette.secondary.main}>
-                      {uploadPercentage}%
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button color="success" onClick={cancelUpload}>
-                      Cancel
-                    </Button>
-                  </Grid>                  
-                </Grid>             
-
-                <Grid container alignItems="center" mt={1}>
-                  <Grid item xs>
-                    <BorderLinearProgress theme = {theme} variant="determinate" value={uploadPercentage} />
-                    <Typography variant="body2" color={theme.palette.secondary.main}>
-                      {uploadPercentage}%
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button color="success" onClick={cancelUpload}>
-                      Cancel
-                    </Button>
-                  </Grid>                  
-                </Grid>                       
+                </Grid>                                       
               </Box>
             )}
           </Grid>
