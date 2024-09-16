@@ -9,8 +9,8 @@ const CustomButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   padding: "10px 20px",
   borderRadius: "15px",
-  "&:hover": {
-    bgcolor: theme.palette.secondary.main,
-  },
+  '&:hover': {
+    backgroundColor: theme.palette.secondary[300],
+  }
 }));
 export default CustomButton;
