@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Card, CardContent, Typography, Button} from '@mui/material';
+import { Container, Grid, Card, CardContent, Typography, Button, useTheme} from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import useFileDownloader from "../../hooks/useFileDownloader";
 
@@ -35,7 +35,7 @@ const files = [
 
 const FileDownloader = () => {
   const [downloadFile, downloaderComponentUI] = useFileDownloader();
-
+  const theme = useTheme();
   const download = (file) => downloadFile(file);
 
   return (
@@ -54,8 +54,19 @@ const FileDownloader = () => {
                   {file.name}
                 </Typography>
                 <Button
+                  sx={{
+                    backgroundColor: theme.palette.background.default,
+                    color: theme.palette.neutral.dark,
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                    borderRadius: "25px",
+                    "&:hover": {
+                      bgcolor: theme.palette.secondary.main,
+                    },
+                  }}
                   variant="contained"
-                  color="primary"
+                  size="small"                  
                   onClick={() => download(file)}
                   endIcon={<DownloadIcon />}
                 >
