@@ -78,7 +78,7 @@ const Utilities = () => {
               "& .MuiTab-root.Mui-selected": {
                 backgroundColor: theme.palette.secondary.main,
                 color: theme.palette.background.alt,
-                borderRadius: "25px",
+                borderRadius: "15px",
               },
             }}
           >

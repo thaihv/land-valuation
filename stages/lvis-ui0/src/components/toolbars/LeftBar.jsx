@@ -12,10 +12,10 @@ import {
   InputLabel,
   MenuItem,
   TextField,
-  Button,
   InputAdornment,
   FormHelperText,
 } from "@mui/material";
+import CustomButton from "../custom/CustomButton"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Search } from "@mui/icons-material";
@@ -178,23 +178,12 @@ export default function LeftBar() {
             />
             <FormHelperText>Select criteria to filter</FormHelperText>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                sx={{
-                  backgroundColor: theme.palette.background.default,
-                  color: theme.palette.neutral.dark,
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  padding: "10px 20px",
-                  borderRadius: "25px",
-                  "&:hover": {
-                    bgcolor: theme.palette.secondary.main,
-                  },
-                }}
+              <CustomButton
                 variant="contained"
                 size="small"
               >
                 {t("Search")}
-              </Button>
+              </CustomButton>
             </Box>
           </Stack>
         </div>

@@ -1,7 +1,6 @@
 import React, { useState} from "react";
 import {
   Box,
-  Button,
   Checkbox,
   FormControlLabel, 
   TextField,
@@ -9,6 +8,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import CustomButton from "../../components/custom/CustomButton"
 import Dropzone from "react-dropzone";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -213,7 +213,7 @@ const UpdateUser = ({user}) => {
 
             {/* BUTTONS */}
             <Box>
-              <Button
+              <CustomButton
                 fullWidth
                 type="submit"
                 sx={{
@@ -225,7 +225,7 @@ const UpdateUser = ({user}) => {
                 }}
               >
                 Update
-              </Button>
+              </CustomButton>
             </Box>
           </Box>
         </form>
