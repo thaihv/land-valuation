@@ -8,8 +8,6 @@ import {
   useTheme,
 } from "@mui/material";
 import LinearProgressBar from "../../components/progessbars/LinearProgressBar"
-// import CircularProgressBar from "../../components/progessbars/CircularProgressBar"
-// import IndeterminateCircularBar from "../../components/progessbars/IndeterminateCircularBar"
 
 const FileUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0);
