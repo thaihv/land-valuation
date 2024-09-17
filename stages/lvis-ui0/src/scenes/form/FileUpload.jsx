@@ -13,15 +13,14 @@ const FileUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const cancelFileUpload = useRef(null);
   const theme = useTheme();
-  const uploadFile = ({ target: { files } }) => {
+  const uploadFile = (e) => {
     let data = new FormData();
-    data.append("file", files[0]);
+    data.append("file", e.target.files[0]);
+
     const options = {
       onUploadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
-
         let percent = Math.floor((loaded * 100) / total);
-
         if (percent < 100) {
           setUploadPercentage(percent);
         }
@@ -30,7 +29,6 @@ const FileUpload = () => {
         (cancel) => (cancelFileUpload.current = cancel)
       ),
     };
-
     axios
       .post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/uploads`, data, options)
       .then((res) => {
@@ -39,6 +37,7 @@ const FileUpload = () => {
 
         setTimeout(() => {
           setUploadPercentage(0);
+          e.target.value = '' // to clear the current file
         }, 1000);
       })
       .catch((err) => {
@@ -48,7 +47,8 @@ const FileUpload = () => {
           alert(err.message);
         }
         setUploadPercentage(0);
-      });
+        e.target.value = '' // to clear the current file
+      });      
   };
 
   const cancelUpload = () => {
