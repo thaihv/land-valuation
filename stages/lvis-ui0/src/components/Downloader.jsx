@@ -21,7 +21,9 @@ const DownloadItem = ({ name, file, filename, removeFile }) => {
     loaded: 0,
   });
 
-  useEffect(() => {
+  // useEffect will make Axios.get fire twice in React.StrictMode of dev mode
+  // but not happen in production mode
+  useEffect(() => {  
     const options = {
       onDownloadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
