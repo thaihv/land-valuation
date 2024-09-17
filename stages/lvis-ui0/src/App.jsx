@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import { themeSettings } from "./theme";
 import Layout from "./scenes/layout";
 import Dashboard from "./scenes/dashboard";
@@ -24,6 +24,7 @@ import Profile from "./scenes/profile";
 import Utilities from "./scenes/utilities";
 import LoginPage from "./scenes/login";
 import HomePage from "./scenes/home";
+import PageNotFound from "./scenes/pagenotfound"
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -84,6 +85,8 @@ function App() {
               <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/" />} />
               <Route path="/performance" element={isAuth ? <Performance /> : <Navigate to="/" />} />              
             </Route>
+            <Route path='*' element={<PageNotFound />}/>
+
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
