@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid, Card, CardContent, Typography} from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
-import useFileDownloader from "../../hooks/useFileDownloader";
+import useFileDownloader from "../../hooks/useFileDownloader.js";
 import CustomButton from "../../components/custom/CustomButton"
 const files = [
   {
