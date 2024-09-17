@@ -7,7 +7,7 @@ import {
   ListItem,
   Typography,
   Box,
-  Chip
+  Chip,
 } from "@mui/material";
 import LinearProgressBar from "../components/progessbars/LinearProgressBar"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -137,7 +137,11 @@ const Downloader = ({ files = [], remove }) => {
   return (
     <DownloaderContainer>
       <CustomCard>
-        <CustomCardHeader title="File Downloader" />
+        <CustomCardHeader 
+          title="File Downloader"
+          subheader={new Date().toLocaleString() + ""}
+        >
+        </CustomCardHeader>        
         <CustomList>
           {files.map((file, idx) => (
             <ListItem key={idx}>
