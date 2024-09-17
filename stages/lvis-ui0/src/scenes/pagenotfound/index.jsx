@@ -17,9 +17,9 @@ const PageNotFound = () => {
       <Typography
         fontSize="18px"
         fontWeight="bold"
-        color={theme.palette.neutral.main}
+        color={theme.palette.redAccent[500]}
       >
-        Land Valuation Information System [404]
+        [404] Land Valuation Information System 
       </Typography>
       <Typography
         sx={{
