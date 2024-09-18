@@ -9,7 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      VERSION: '0.0.1'
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js
@@ -18,15 +19,35 @@ jobs:
         node-version: 20.16.0
         cache-dependency-path: './stages/server0/package-lock.json'
         cache: 'npm'
+    - name: Docker Login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD        
     - name: Install node_modules for server0
       working-directory: ./stages/server0
       run: npm i --legacy-peer-deps
     - name: Build server0
       working-directory: ./stages/server0
       run: npm run build --if-present
+      
+    - name: Build lvis-server0 Image
+      working-directory: ./stages/server0
+      run: docker build . --file Dockerfile --tag thaihv/lvis-server0:$VERSION      
+    - name: Docker Push lvis-server0    
+      run: docker push thaihv/lvis-server0:$VERSION
+      
     - name: Install node_modules for lvis-ui0
       working-directory: ./stages/lvis-ui0
       run: npm i
     - name: Build lvis-ui0
       working-directory: ./stages/lvis-ui0
       run: npm run build --if-present
+
+    - name: Build lvis-ui0 Image
+      working-directory: ./stages/lvis-ui0
+      run: docker build . --file Dockerfile --tag thaihv/lvis-ui0:$VERSION      
+    - name: Docker Push lvis-server0    
+      run: docker push thaihv/lvis-lvis-ui0:$VERSION
+      
