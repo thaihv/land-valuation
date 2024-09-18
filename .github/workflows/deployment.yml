@@ -47,6 +47,6 @@ jobs:
     - name: Build lvis-ui0 Image
       working-directory: ./stages/lvis-ui0
       run: docker build . --file Dockerfile --tag thaihv/lvis-ui0:$VERSION      
-    - name: Docker Push lvis-server0    
-      run: docker push thaihv/lvis-lvis-ui0:$VERSION
+    - name: Docker Push lvis-ui0    
+      run: docker push thaihv/lvis-ui0:$VERSION
       
