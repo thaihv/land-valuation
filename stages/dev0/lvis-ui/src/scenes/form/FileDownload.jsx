@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Grid, Card, CardContent, Typography} from '@mui/material';
+import { Container, Card, CardContent, Typography} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import DownloadIcon from '@mui/icons-material/Download';
 import useFileDownloader from "../../hooks/useFileDownloader";
 import CustomButton from "../../components/custom/CustomButton"
@@ -33,6 +34,7 @@ const files = [
   },
 ];
 
+
 const FileDownloader = () => {
   const [downloadFile, downloaderComponentUI] = useFileDownloader();
   const download = (file) => downloadFile(file);
@@ -41,7 +43,7 @@ const FileDownloader = () => {
     <Container>
       <Grid container spacing={3}>
         {files.map((file, idx) => (
-          <Grid item xs={12} sm={6} md={4} key={idx}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx}>
             <Card>
               <CardContent>
                 <img

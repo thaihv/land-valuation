@@ -1,10 +1,7 @@
 import { Marker, Popup } from "react-leaflet";
 import "./pin.scss";
 import { Link } from "react-router-dom";
-import { styled } from "@mui/system";
-import {
-  useTheme,
-} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const StyledPop = styled(Popup)(({ theme }) => ({
   // backgroundColor: "red",
@@ -23,10 +20,9 @@ const StyledPop = styled(Popup)(({ theme }) => ({
 );
 
 function Pin({ item }) {
-  const theme = useTheme();
   return (
     <Marker position={[item.latitude, item.longitude]}>
-      <StyledPop theme = {theme}>
+      <StyledPop>
         <div className="popupContainer">
           <img src={item.images[0]} alt="" />
           <div className="textContainer">

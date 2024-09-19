@@ -2,17 +2,16 @@ import React, { useState, useRef } from "react";
 import axios, { CancelToken, isCancel } from "axios";
 import {
   Container,
-  Grid,
   Box,
   Button,
-  useTheme,
 } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import LinearProgressBar from "../../components/progessbars/LinearProgressBar"
+
 
 const FileUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const cancelFileUpload = useRef(null);
-  const theme = useTheme();
   const uploadFile = (e) => {
     let data = new FormData();
     data.append("file", e.target.files[0]);
@@ -59,31 +58,30 @@ const FileUpload = () => {
   return (
     <Container>
       <Grid container justifyContent="center" alignItems="center" spacing={2}>
-        <Grid item xs={9} md={12} textAlign="center">
+        <Grid size={{ xs: 9, md: 12 }} textAlign="center">
           <input
             type="file" multiple
             onChange={uploadFile}
             style={{ margin: "20px 0", display: "block" }}
           />
-          {uploadPercentage > 0 && (
-            <Box mt={3}>
-              <Grid container alignItems="center" mt={1}>
-                <Grid item xs>
-                  <LinearProgressBar
-                    theme={theme}
-                    variant="determinate"
-                    value={uploadPercentage}
-                  />
-                </Grid>
-                <Grid item>
-                  <Button color="success" onClick={cancelUpload}>
-                    Cancel
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          )}
         </Grid>
+        {uploadPercentage > 0 && (
+          <Box sx={{ flexGrow: 1 }} mt={3}>
+            <Grid container alignItems="center" mt={1}>
+              <Grid size={{ xs: 9, md: 10 }}>
+                <LinearProgressBar
+                  variant="determinate"
+                  value={uploadPercentage}
+                />
+              </Grid>
+              <Grid size={{ xs: 3, md: 2 }}>
+                <Button color="success" onClick={cancelUpload}>
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
       </Grid>
     </Container>
   );
