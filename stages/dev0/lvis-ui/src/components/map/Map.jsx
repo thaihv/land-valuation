@@ -29,16 +29,42 @@ function Map({ items }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <LayersControl position="topright">
-        <LayersControl.Overlay checked name="Province">
-          <WMSTileLayer
-            layers={"lvis:province"}
-            url={import.meta.env.VITE_GEOMAP_WMS_URL}
-            maxZoom={20}
-            transparent={true}
-            format="image/png"
-            opacity={0.8}
-          />
+        <LayersControl.Overlay checked name="Provinces">
+          <LayerGroup>
+            <WMSTileLayer
+              layers={"lvis:province"}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              maxZoom={20}
+              transparent={true}
+              format="image/png"
+              opacity={0.6}
+            />
+          </LayerGroup>  
         </LayersControl.Overlay>
+        <LayersControl.Overlay checked name="Roads">
+          <LayerGroup>
+            <WMSTileLayer
+              layers={"lvis:roads"}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              maxZoom={20}
+              transparent={true}
+              format="image/png"
+              opacity={0.8}
+            />
+          </LayerGroup>  
+        </LayersControl.Overlay>
+        <LayersControl.Overlay checked name="Villages">
+          <LayerGroup>
+            <WMSTileLayer
+              layers={"lvis:village"}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              maxZoom={20}
+              transparent={true}
+              format="image/png"
+              opacity={0.85}
+            />
+          </LayerGroup>  
+        </LayersControl.Overlay>                
         <LayersControl.Overlay name="Research Place">
           {items.map((item) => (
             <Pin item={item} key={item.id} />
