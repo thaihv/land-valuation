@@ -1,0 +1,34 @@
+
+$base-color:rgb(240, 244, 243);
+$content-main: rgba($base-color, 0.88);
+
+.leaflet-popup {
+  left: -30px !important;
+
+  .leaflet-popup-content {
+    margin: 0px 0px 0px 0px,
+  }  
+
+  .leaflet-popup-tip-container {
+    left: 15%,
+  }
+}
+.popupContainer{
+  display: flex;
+  gap: 20px;
+  background-color: $content-main;
+
+
+  img{
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .textContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
