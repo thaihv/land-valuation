@@ -115,7 +115,7 @@ const Utilities = () => {
           <Box
             display="grid"
             gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-            gridAutoRows="180px"
+            gridAutoRows="190px"
             gap="30px"
             sx={{
               "& > div": {
