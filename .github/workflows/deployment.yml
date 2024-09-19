@@ -39,7 +39,7 @@ jobs:
       
     - name: Install modules for lvis-ui
       working-directory: ./stages/dev0/lvis-ui
-      run: npm i
+      run: npm i --legacy-peer-deps
     - name: Build lvis-ui
       working-directory: ./stages/dev0/lvis-ui
       run: npm run build --if-present
