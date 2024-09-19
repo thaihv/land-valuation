@@ -1,4 +1,4 @@
-name: Build & Deployment MERN Stack for UI Prototype
+name: Build & Deployment LVIS UI Prototype using MERN Stack
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20.16.0
-        cache-dependency-path: './stages/server0/package-lock.json'
+        cache-dependency-path: './stages/dev0/server/package-lock.json'
         cache: 'npm'
     - name: Docker Login
       env:
@@ -24,29 +24,29 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD        
-    - name: Install node_modules for server0
-      working-directory: ./stages/server0
+    - name: Install modules for server
+      working-directory: ./stages/dev0/server
       run: npm i --legacy-peer-deps
-    - name: Build server0
-      working-directory: ./stages/server0
+    - name: Build server
+      working-directory: ./stages/dev0/server
       run: npm run build --if-present
       
-    - name: Build lvis-server0 Image
-      working-directory: ./stages/server0
+    - name: Build lvis-server Image
+      working-directory: ./stages/dev0/server
       run: docker build . --file Dockerfile --tag thaihv/lvis-server0:$VERSION      
-    - name: Docker Push lvis-server0    
+    - name: Docker Push lvis-server    
       run: docker push thaihv/lvis-server0:$VERSION
       
-    - name: Install node_modules for lvis-ui0
-      working-directory: ./stages/lvis-ui0
+    - name: Install modules for lvis-ui
+      working-directory: ./stages/dev0/lvis-ui
       run: npm i
-    - name: Build lvis-ui0
-      working-directory: ./stages/lvis-ui0
+    - name: Build lvis-ui
+      working-directory: ./stages/dev0/lvis-ui
       run: npm run build --if-present
 
-    - name: Build lvis-ui0 Image
-      working-directory: ./stages/lvis-ui0
+    - name: Build lvis-ui Image
+      working-directory: ./stages/dev0/lvis-ui
       run: docker build . --file Dockerfile --tag thaihv/lvis-ui0:$VERSION      
-    - name: Docker Push lvis-ui0    
+    - name: Docker Push lvis-ui    
       run: docker push thaihv/lvis-ui0:$VERSION
       
