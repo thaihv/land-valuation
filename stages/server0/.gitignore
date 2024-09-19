@@ -1,3 +1,4 @@
 /node_modules
-/public/profiles
-/uploads
+/public/profiles/*
+/uploads/*
+.env
