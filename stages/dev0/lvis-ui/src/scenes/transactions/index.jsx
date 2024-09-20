@@ -42,13 +42,15 @@ const Transactions = () => {
       field: "products",
       headerName: "# of Products",
       flex: 0.5,
-      sortable: false,
+      sortable: false,      
+      description: 'This column has a description on product and is sortable.',
       renderCell: (params) => params.value.length,
     },
     {
       field: "cost",
       headerName: "Cost",
-      flex: 1,
+      width: 190,
+      editable: true,
       renderCell: (params) => `$${Number(params.value).toFixed(2)}`,
     },
   ];
@@ -59,14 +61,8 @@ const Transactions = () => {
       <Box
         height="80vh"
         sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.secondary[200]} !important`,
             color: theme.palette.secondary[100],
             borderBottom: "none",
           },
@@ -74,13 +70,16 @@ const Transactions = () => {
             backgroundColor: theme.palette.primary.light,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.secondary[200],
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
           },
+          "& .MuiCheckbox-root": {
+            color: `${theme.palette.secondary[200]} !important`,
+          },          
         }}
       >
         <DataGrid
@@ -98,6 +97,18 @@ const Transactions = () => {
           onPageChange={(newPage) => setPage(newPage)}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+          
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+
           slots={{ toolbar: DataGridCustomToolbar }}
           componentsProps={{
             toolbar: { searchInput, setSearchInput, setSearch },

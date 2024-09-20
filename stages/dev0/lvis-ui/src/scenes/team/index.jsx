@@ -74,25 +74,18 @@ const Team = () => {
         mt="40px"
         height="75vh"
         sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-
-          },
           "& .name-column--cell": {
             color: theme.palette.secondary.light,
           },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.secondary[200]} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: theme.palette.primary.light,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.secondary[200],
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
