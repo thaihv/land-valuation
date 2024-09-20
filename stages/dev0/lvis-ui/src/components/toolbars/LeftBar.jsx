@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 export default function LeftBar() {
   const theme = useTheme();
   const { t } = useTranslation();
-  const [isExpanded, setExpanded] = useState(true);
+  const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({
     isExpanded,
     hasDisabledAnimation: true,

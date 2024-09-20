@@ -38,7 +38,7 @@ function Map({ items }) {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <LayersControl position="topright">
-              <LayersControl.Overlay checked name="Provinces">
+              <LayersControl.Overlay checked name="Province">
                 <WMSTileLayer
                   layers={"lvis:province"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -49,7 +49,7 @@ function Map({ items }) {
                   opacity={0.6}
                 /> 
               </LayersControl.Overlay>
-              <LayersControl.Overlay name="Districts">
+              <LayersControl.Overlay name="District">
                 <WMSTileLayer
                   layers={"lvis:district"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -60,7 +60,7 @@ function Map({ items }) {
                   opacity={0.8}
                 />  
               </LayersControl.Overlay>         
-              <LayersControl.Overlay name="Villages">
+              <LayersControl.Overlay name="Village">
                 <WMSTileLayer
                   layers={"lvis:village"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -71,7 +71,7 @@ function Map({ items }) {
                   opacity={0.85}
                 />
               </LayersControl.Overlay>         
-              <LayersControl.Overlay name="Roads">
+              <LayersControl.Overlay name="Road">
                 <WMSTileLayer
                   layers={"lvis:roads"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
