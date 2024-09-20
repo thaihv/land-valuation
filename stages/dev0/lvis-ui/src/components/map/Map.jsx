@@ -30,40 +30,48 @@ function Map({ items }) {
       />
       <LayersControl position="topright">
         <LayersControl.Overlay checked name="Provinces">
-          <LayerGroup>
-            <WMSTileLayer
-              layers={"lvis:province"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
-              maxZoom={20}
-              transparent={true}
-              format="image/png"
-              opacity={0.6}
-            />
-          </LayerGroup>  
+          <WMSTileLayer
+            layers={"lvis:province"}
+            url={import.meta.env.VITE_GEOMAP_WMS_URL}
+            maxZoom={20}
+            transparent={true}
+            styles="provinces"
+            format="image/png"
+            opacity={0.6}
+          /> 
         </LayersControl.Overlay>
+        <LayersControl.Overlay name="Districts">
+          <WMSTileLayer
+            layers={"lvis:district"}
+            url={import.meta.env.VITE_GEOMAP_WMS_URL}
+            maxZoom={20}
+            transparent={true}
+            styles="districts"
+            format="image/png"
+            opacity={0.8}
+          />  
+        </LayersControl.Overlay>         
         <LayersControl.Overlay name="Villages">
-          <LayerGroup>
-            <WMSTileLayer
-              layers={"lvis:village"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
-              maxZoom={20}
-              transparent={true}
-              format="image/png"
-              opacity={0.85}
-            />
-          </LayerGroup>  
+          <WMSTileLayer
+            layers={"lvis:village"}
+            url={import.meta.env.VITE_GEOMAP_WMS_URL}
+            maxZoom={20}
+            transparent={true}
+            styles="villages"
+            format="image/png"
+            opacity={0.85}
+          />
         </LayersControl.Overlay>         
         <LayersControl.Overlay name="Roads">
-          <LayerGroup>
-            <WMSTileLayer
-              layers={"lvis:roads"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
-              maxZoom={20}
-              transparent={true}
-              format="image/png"
-              opacity={0.8}
-            />
-          </LayerGroup>  
+          <WMSTileLayer
+            layers={"lvis:roads"}
+            url={import.meta.env.VITE_GEOMAP_WMS_URL}
+            maxZoom={20}
+            transparent={true}
+            styles="roads"
+            format="image/png"
+            opacity={1}
+          />
         </LayersControl.Overlay>               
         <LayersControl.Overlay name="Research Place">
           {items.map((item) => (
