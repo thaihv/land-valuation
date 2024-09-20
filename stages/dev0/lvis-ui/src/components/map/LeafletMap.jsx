@@ -15,6 +15,10 @@ export default function LeafletMap() {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     });
+    const openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+    });
     const provinces = L.tileLayer.wms(`${import.meta.env.VITE_GEOMAP_WMS_URL}`, {
       maxZoom: 20,
       layers: 'lvis:province',
@@ -47,7 +51,7 @@ export default function LeafletMap() {
       layers: [osm, provinces]
     });
     var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map.current);
-    
+    layerControl.addBaseLayer(openTopoMap, "OpenTopoMap");
   }, [center.lng, center.lat, zoom]);
 
 
