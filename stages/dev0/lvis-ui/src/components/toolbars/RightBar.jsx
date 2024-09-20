@@ -16,8 +16,8 @@ export default function RightBar() {
         display: "flex",
         flexDirection: "row",
         position: "absolute",
-    //  top: "200px",
-        right: "0.25rem",
+        top: "200px",
+        right: "2.25rem",
         zIndex: "drawer",
       }}
     >
