@@ -62,7 +62,7 @@ const Transactions = () => {
         height="80vh"
         sx={{
           "& .MuiDataGrid-container--top [role=row]": {
-            backgroundColor: `${theme.palette.secondary[200]} !important`,
+            backgroundColor: `${theme.palette.background.alt} !important`,
             color: theme.palette.secondary[100],
             borderBottom: "none",
           },
@@ -70,7 +70,7 @@ const Transactions = () => {
             backgroundColor: theme.palette.primary.light,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.secondary[200],
+            backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },

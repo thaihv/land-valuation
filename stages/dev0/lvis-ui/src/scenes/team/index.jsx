@@ -78,14 +78,14 @@ const Team = () => {
             color: theme.palette.secondary.light,
           },
           "& .MuiDataGrid-container--top [role=row]": {
-            backgroundColor: `${theme.palette.secondary[200]} !important`,
+            backgroundColor: `${theme.palette.background.alt} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: theme.palette.primary.light,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.secondary[200],
+            backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
