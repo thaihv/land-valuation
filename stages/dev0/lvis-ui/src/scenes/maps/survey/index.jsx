@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import LeftBar from "../../../components/toolbars/LeftBar";
-import CustomMap from "../../../components/map/CustomMap";
+import LeafletMap from "../../../components/map/LeafletMap";
 
 const SurveyMap = () => {
   return (
@@ -21,7 +21,7 @@ const SurveyMap = () => {
           <LeftBar />
         </Box>
         <Box sx={{ gridArea: "1/1/3/5" }}>
-          <CustomMap />
+          <LeafletMap />
         </Box>
       </Box>
     </Box>
