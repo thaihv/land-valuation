@@ -11,6 +11,35 @@ export default function LeafletMap() {
   useEffect(() => {
     if (map.current) return; // stops map from intializing more than once
 
+    var grid = new L.GridLayer();
+		grid.createTile = function(coords) {
+		  var tile = L.DomUtil.create('canvas', 'leaflet-tile');
+		  var ctx = tile.getContext('2d');
+		  var size = this.getTileSize()
+		  tile.width = size.x
+		  tile.height = size.y
+		  
+		  // calculate projection coordinates of top left tile pixel
+		  var nwPoint = coords.scaleBy(size)
+		  
+		  // calculate geographic coordinates of top left tile pixel
+		  var nw = map.current.unproject(nwPoint, coords.z)
+		  ctx.fillStyle = 'white';
+		  ctx.fillRect(0, 0, size.x, 50);
+		  ctx.fillStyle = 'black';
+		  ctx.fillText('x: ' + coords.x + ', y: ' + coords.y + ', zoom: ' + coords.z, 20, 20);
+		  ctx.fillText('lat: ' + nw.lat + ', lon: ' + nw.lng, 20, 40);
+		  ctx.strokeStyle = 'red';
+		  ctx.beginPath();
+		  ctx.moveTo(0, 0);
+		  ctx.lineTo(size.x-1, 0);
+		  ctx.lineTo(size.x-1, size.y-1);
+		  ctx.lineTo(0, size.y-1);
+		  ctx.closePath();
+		  ctx.stroke();
+		  return tile;
+		}	
+
     const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -43,6 +72,7 @@ export default function LeafletMap() {
     var overlayMaps = {
       "Provinces": provinces,
       "Districts": districts,
+      "Grid Cells":  grid,
     };
 
     map.current = new L.Map(mapContainer.current, {
