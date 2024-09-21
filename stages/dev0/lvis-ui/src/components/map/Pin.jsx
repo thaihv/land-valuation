@@ -8,7 +8,7 @@ const StyledPop = styled(Popup)(({ theme }) => ({
   // borderRadius: "5%",
   "& .leaflet-popup-content-wrapper": {
     paddingTop: "20px",
-    borderRadius: "5%",
+    borderRadius: "10px",
     backgroundColor: theme.palette.secondary.alt,
     border: "2.5px solid",
     borderColor: theme.palette.success.main

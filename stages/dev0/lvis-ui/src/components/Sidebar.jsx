@@ -73,7 +73,7 @@ const Sidebar = ({
   }, [pathname]);
 
   return (
-    <Box component="nav">
+    <Box component="nav" display="flex">
       {isSidebarOpen && isNonMobile && (
         <Drawer
           open={isSidebarOpen}
@@ -81,11 +81,11 @@ const Sidebar = ({
           variant="persistent"
           anchor="left"
           sx={{            
-            width: drawerWidth,
+            width: drawerWidth,            
             "& .MuiDrawer-paper": {
               color: theme.palette.background.alt,
               backgroundImage: "linear-gradient(-183.41658819177138deg, #002868 14.848712496895075%, #002868 70.24578650224022%)",
-              boxSixing: "border-box",
+              borderRadius: "10px", 
               width: drawerWidth,
             },
           }}
@@ -95,7 +95,7 @@ const Sidebar = ({
               <Box
                 onClick={() => {navigate(`/`);}}
                 sx={{
-                  borderRadius: "10%",
+                  borderRadius: "10px",
                   color: theme.palette.background.alt,
                   transition: "all 0.3s ease-in-out",
                   "&:hover": {
@@ -128,7 +128,7 @@ const Sidebar = ({
                           setActive(ref);
                         }}                       
                         sx={{ 
-                          borderRadius: "10%", 
+                          borderRadius: "10px", 
                           height: "10vh",
                           m: "1px 0 1px 0",
                           transition: "all 0.3s ease-in-out",                        
