@@ -77,7 +77,7 @@ const TopBox = () => {
                   fontSize: "16px",
                   fontWeight: "bold",
                   "&:hover": {
-                    color: theme.palette.greenAccent.main,
+                    color: theme.palette.secondary[200],
                   },
                 }}            
               >

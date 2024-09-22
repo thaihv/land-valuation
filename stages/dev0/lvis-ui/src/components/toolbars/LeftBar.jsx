@@ -205,7 +205,7 @@ export default function LeftBar() {
               height: "80px",
               width: "12px", 
               padding: "0px", //width + padding => right postition above            
-              color: theme.palette.greenAccent.main,
+              color: theme.palette.secondary[200],
             }}
             {...getToggleProps({ onClick: handleOnClick })}
           >

@@ -99,7 +99,6 @@ const Sidebar = ({
               <Box
                 onClick={() => {navigate(`/`);}}
                 sx={{
-                  borderRadius: "10px",
                   color: theme.palette.background.alt,
                   transition: "all 0.3s ease-in-out",
                   "&:hover": {
@@ -132,10 +131,9 @@ const Sidebar = ({
                           setActive(ref);
                         }}                       
                         sx={{ 
-                          borderRadius: "10px", 
                           height: "10vh",
                           m: "1px 0 1px 0",
-//                          transition: "all 0.3s ease-in-out",                        
+                          //transition: "all 0.3s ease-in-out",                        
                           backgroundColor:
                             active === ref
                               ? theme.palette.background.default
@@ -145,24 +143,22 @@ const Sidebar = ({
                               ? theme.palette.secondary[300]
                               : theme.palette.background.alt,
                           "&:hover": {
-                            color: theme.palette.greenAccent.main,
+                            color: theme.palette.secondary[200],
                             bgcolor: theme.palette.secondary.main,
                             "& .MuiListItemIcon-root": {
-                              color: theme.palette.greenAccent.main,
+                              color: theme.palette.secondary[200],
                             }
                           },
-//                           "&:hover": {
-//                             content: '""',
-//                             position: "absolute",
-//                             right: "0",
-//                             top: "-50px",
-//                             width: "50px",
-//                             height: "10vh",
-//                             backgroundColor: "transparent",
-//                             borderRadius: "50%",
-//                             boxShadow: "35px 35px 0 10px #fff",
-// //                            pointerEvents: "none",
-//                           },
+                          // "&:hover": {
+                          //   position: "absolute",
+                          //   right: "0",
+                          //   top: "-50px",
+                          //   width: "50px",
+                          //   height: "10vh",
+                          //   bgcolor: "transparent",
+                          //   borderRadius: "50%",
+                          //   boxShadow: "35px 35px 0 10px #fff",
+                          // },
                           flexDirection: 'column',
                         }}
                       >
@@ -202,7 +198,7 @@ const Sidebar = ({
             </Box>
 
             <Box>
-              <Divider sx={{ m: "3.5rem 1rem 1rem 1rem", borderColor: theme.palette.background.alt}}/>
+              <Divider sx={{ m: "4.5rem 1rem 1rem 1rem", borderColor: theme.palette.background.alt}}/>
               <FlexBetween 
                 textTransform="none"
                 flexDirection="column" 
