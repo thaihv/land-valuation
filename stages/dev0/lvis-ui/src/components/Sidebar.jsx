@@ -138,51 +138,75 @@ const Sidebar = ({
                         onClick={() => {
                           navigate(`/${ref}`);
                           setActive(ref);
-                        }}                      
+                        }}      
+                        selected={active === ref}                
                         sx={{
                           height: "70px",
                           //m: "2px 0 2px 0",
                           borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
-                          //transition: "all 0.1s ease-in-out",                        
-                          backgroundColor:
-                            active === ref
-                              ? theme.palette.background.default
-                              : "transparent",
                           color:
                             active === ref
                               ? theme.palette.secondary[200]
-                              : "white",
-                          "&:hover": {
+                              : "white",                              
+                          "&:hover, &.Mui-selected:hover": {
                             color: theme.palette.secondary[200],
                             bgcolor: theme.palette.secondary.main,
                             "& .MuiListItemIcon-root": {
                               color: theme.palette.secondary[200],                                
                             },
-                            // "&::before": {
-                            //   content: '""',
-                            //   position: "absolute",
-                            //   right: "0",
-                            //   top: "-50px",
-                            //   width: "50px",
-                            //   height: "50px",
-                            //   bgcolor: "transparent",
-                            //   borderRadius: "50%",
-                            //   boxShadow: `35px 35px 0 10px ${theme.palette.secondary.main}`,
-                            //   pointerEvents: "none"
-                            // },
-                            // "&::after": {
-                            //   content: '""',
-                            //   position: "absolute",
-                            //   right: "0",
-                            //   bottom: "-50px",
-                            //   width: "50px",
-                            //   height: "50px",
-                            //   bgcolor: "transparent",
-                            //   borderRadius: "50%",
-                            //   boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
-                            //   pointerEvents: "none"
-                            // },                                                                                                                      
-                          },                                                                                       
+                            "&::before": {
+                              content: '""',
+                              position: "absolute",
+                              right: "0",
+                              top: "-50px",
+                              width: "50px",
+                              height: "50px",
+                              bgcolor: "transparent",
+                              borderRadius: "50%",
+                              boxShadow: `35px 35px 0 10px ${theme.palette.secondary.main}`,
+                              pointerEvents: "none"
+                            },
+                            "&::after": {
+                              content: '""',
+                              position: "absolute",
+                              right: "0",
+                              bottom: "-50px",
+                              width: "50px",
+                              height: "50px",
+                              bgcolor: "transparent",
+                              borderRadius: "50%",
+                              boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
+                              pointerEvents: "none",
+                              zIndex: "1000"
+                            },                                                                                                                      
+                          },
+                          "&.Mui-selected": {
+                            backgroundColor: theme.palette.background.default,
+                            "&::before": {                           
+                              content: '""',
+                              position: "absolute",
+                              right: "0",
+                              top: "-50px",
+                              width: "50px",
+                              height: "50px",
+                              bgcolor: "transparent",
+                              borderRadius: "50%",
+                              boxShadow: `35px 35px 0 10px ${theme.palette.background.default}`,
+                              pointerEvents: "none"
+                            },
+                            "&::after": {
+                              content: '""',
+                              position: "absolute",
+                              right: "0",
+                              bottom: "-50px",
+                              width: "50px",
+                              height: "50px",
+                              bgcolor: "transparent",
+                              borderRadius: "50%",
+                              boxShadow: `35px -35px 0 10px ${theme.palette.background.default}`,
+                              pointerEvents: "none"
+                            }, 
+                          },                                                                                                                 
                           flexDirection: 'column',
                         }}
                       >
