@@ -114,13 +114,21 @@ const Sidebar = ({
                       display="flex" 
                       alignItems="center"                 
                   >
-                    <Typography variant="h5" fontWeight= "bold">
+                    <Typography 
+                      //variant="h3" fontWeight= "bold" fontStyle={}
+                      sx={{
+                        fontFamily: "Georgia, serif",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        color: "white",
+                      }}
+                    >
                       LVIS
                     </Typography>
                   </Box>
                 </FlexBetween>
               </Box>
-              {/* <Divider sx={{ m: "0.5rem 1rem 1rem 1rem", borderColor: theme.palette.background.alt}}/> */}
+              <Divider sx={{ m: "0 0.5rem 3rem 0.5rem"}}/>
               <List>
                 {navItems.map(({ text, link, icon }) => {
                   const ref = link.toLowerCase();
@@ -133,7 +141,7 @@ const Sidebar = ({
                         }}                      
                         sx={{
                           height: "70px",
-                          m: "2px 0 2px 0",
+                          //m: "2px 0 2px 0",
                           borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
                           //transition: "all 0.1s ease-in-out",                        
                           backgroundColor:
@@ -143,7 +151,7 @@ const Sidebar = ({
                           color:
                             active === ref
                               ? theme.palette.secondary[200]
-                              : theme.palette.secondary[300],                                                                                                                             
+                              : "white",
                           "&:hover": {
                             color: theme.palette.secondary[200],
                             bgcolor: theme.palette.secondary.main,
@@ -187,7 +195,7 @@ const Sidebar = ({
                             color:
                               active === ref
                                 ? theme.palette.secondary[200]
-                                : theme.palette.secondary[300],
+                                : "white",
                           }}
                         >
                           {icon}
