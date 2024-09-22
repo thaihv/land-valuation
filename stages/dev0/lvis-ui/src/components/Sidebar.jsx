@@ -99,10 +99,10 @@ const Sidebar = ({
               <Box
                 onClick={() => {navigate(`/`);}}
                 sx={{
-                  color: theme.palette.background.alt,
+                  color: theme.palette.secondary[300],
                   transition: "all 0.3s ease-in-out",
                   "&:hover": {
-                    color:theme.palette.secondary[100],
+                    color:theme.palette.secondary[200],
                     bgcolor: theme.palette.secondary.main,
                   },
                 }}
@@ -140,8 +140,8 @@ const Sidebar = ({
                               : "transparent",
                           color:
                             active === ref
-                              ? theme.palette.secondary[300]
-                              : theme.palette.background.alt,
+                              ? theme.palette.secondary[200]
+                              : theme.palette.secondary[300],
                           "&:hover": {
                             color: theme.palette.secondary[200],
                             bgcolor: theme.palette.secondary.main,
@@ -170,8 +170,8 @@ const Sidebar = ({
                             fontSize: "1.75rem",
                             color:
                               active === ref
-                                ? theme.palette.secondary[300]
-                                : theme.palette.background.alt,
+                                ? theme.palette.secondary[200]
+                                : theme.palette.secondary[300],
                           }}
                         >
                           {icon}
@@ -226,7 +226,7 @@ const Sidebar = ({
                   <Typography
                     fontWeight="bold"
                     fontSize="0.7rem"
-                    sx={{ color: theme.palette.background.alt }}
+                    sx={{ color: theme.palette.secondary[300] }}
                   >
                     {user.name}
                   </Typography>

@@ -47,7 +47,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
-          <FlexBetween
+          {/* <FlexBetween
             backgroundColor={theme.palette.background.alt}
             borderRadius="9px"
             gap="3rem"
@@ -57,7 +57,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             <IconButton>
               <Search />
             </IconButton>
-          </FlexBetween>
+          </FlexBetween> */}
         </FlexBetween>
 
         {/* RIGHT SIDE */}
