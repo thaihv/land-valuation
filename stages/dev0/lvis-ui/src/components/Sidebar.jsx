@@ -197,7 +197,7 @@ const Sidebar = ({
               </List>
             </Box>
 
-            <Box>
+            {/* <Box>
               <Divider sx={{ m: "4.5rem 1rem 1rem 1rem", borderColor: theme.palette.background.alt}}/>
               <FlexBetween 
                 textTransform="none"
@@ -238,7 +238,7 @@ const Sidebar = ({
                   </Typography>                  
                 </Box>
               </FlexBetween>
-            </Box>
+            </Box> */}
           </Typography>
         </Drawer>
       )}

@@ -8,9 +8,12 @@ import {
   Notifications,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import FlexBetween from "./FlexBetween";
 import { useDispatch } from "react-redux";
+import {useNavigate } from "react-router-dom";
 import { setMode, setLogout } from "../state";
+import { useTranslation } from "react-i18next";
 import {
   AppBar,
   Button,
@@ -27,7 +30,8 @@ import {
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
@@ -94,7 +98,13 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 height="32px"
                 width="32px"
                 borderRadius="50%"
-                sx={{ objectFit: "cover" }}
+                onClick={() => navigate(`/profile/${user._id}`)}
+                sx={{ 
+                  objectFit: "cover",
+                  "&:hover": {
+                    transform: "scale3d(1.25, 1.25, 1.25)",
+                  }, 
+                }}
               />
               <Box textAlign="left">
                 <Typography
@@ -121,7 +131,24 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem>
+                <FlexBetween
+                  onClick={() => dispatch(setLogout())}
+                  sx={{
+                    color: "#000000",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      color: theme.palette.secondary[200],
+                    },
+                  }}            
+                >
+                  <LogoutOutlinedIcon/>
+                  <Typography>                  
+                    {t("Sign Out")}
+                  </Typography>            
+                </FlexBetween>
+              </MenuItem>
             </Menu>
           </FlexBetween>
         </FlexBetween>
