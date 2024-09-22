@@ -32,7 +32,7 @@ function Map({ items }) {
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        backgroundColor="#fff"
+        backgroundColor= {theme.palette.background.default}
         borderRadius="4px"
         gap="0.25rem"
         sx={{
@@ -44,14 +44,14 @@ function Map({ items }) {
         <FlexBetween
           onClick={onClick}
           sx={{
+            color: theme.palette.secondary[100],
             "&:hover": {
-              color: theme.palette.greenAccent.main,
               bgcolor: theme.palette.secondary.main,
             },
           }}
         >
           <AdjustOutlinedIcon />
-          <Typography color={theme.palette.secondary[100]} sx={{ ml: "5px" }}>
+          <Typography sx={{ ml: "5px" }}>
             Center
           </Typography>
         </FlexBetween>
@@ -59,13 +59,12 @@ function Map({ items }) {
           onClick={onLocation}
           sx={{
             "&:hover": {
-              color: theme.palette.greenAccent.main,
               bgcolor: theme.palette.secondary.main,
             },
           }}
         >
           <MyLocationIcon />
-          <Typography color={theme.palette.secondary[100]} sx={{ ml: "5px" }}>
+          <Typography sx={{ ml: "5px" }}>
             Location
           </Typography>
         </FlexBetween>
