@@ -85,9 +85,10 @@ const Sidebar = ({
             "& .MuiDrawer-paper": {
               color: theme.palette.background.alt,
               backgroundImage: "linear-gradient(-183.41658819177138deg, #002868 14.848712496895075%, #002868 70.24578650224022%)",
-              borderLeft: "10px solid linear-gradient(-183.41658819177138deg, #002868 14.848712496895075%, #002868 70.24578650224022%)",
-              borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
+              //borderLeft: "5px solid #2a2185",
+              borderLeft: "0",              
               borderRight: "0",
+              borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
               transition: "0.5s",
               overflow: "hidden",              
               width: drawerWidth,
@@ -99,12 +100,12 @@ const Sidebar = ({
               <Box
                 onClick={() => {navigate(`/`);}}
                 sx={{
-                  color: theme.palette.secondary[300],
+                  color: theme.palette.greenAccent.main,
                   transition: "all 0.3s ease-in-out",
                   "&:hover": {
                     color:theme.palette.secondary[200],
                     bgcolor: theme.palette.secondary.main,
-                  },
+                  },         
                 }}
               >
                 <FlexBetween>
@@ -129,11 +130,12 @@ const Sidebar = ({
                         onClick={() => {
                           navigate(`/${ref}`);
                           setActive(ref);
-                        }}                       
-                        sx={{ 
-                          height: "10vh",
-                          m: "1px 0 1px 0",
-                          //transition: "all 0.3s ease-in-out",                        
+                        }}                      
+                        sx={{
+                          height: "70px",
+                          m: "2px 0 2px 0",
+                          borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
+                          //transition: "all 0.1s ease-in-out",                        
                           backgroundColor:
                             active === ref
                               ? theme.palette.background.default
@@ -141,24 +143,38 @@ const Sidebar = ({
                           color:
                             active === ref
                               ? theme.palette.secondary[200]
-                              : theme.palette.secondary[300],
+                              : theme.palette.secondary[300],                                                                                                                             
                           "&:hover": {
                             color: theme.palette.secondary[200],
                             bgcolor: theme.palette.secondary.main,
                             "& .MuiListItemIcon-root": {
-                              color: theme.palette.secondary[200],
-                            }
-                          },
-                          // "&:hover": {
-                          //   position: "absolute",
-                          //   right: "0",
-                          //   top: "-50px",
-                          //   width: "50px",
-                          //   height: "10vh",
-                          //   bgcolor: "transparent",
-                          //   borderRadius: "50%",
-                          //   boxShadow: "35px 35px 0 10px #fff",
-                          // },
+                              color: theme.palette.secondary[200],                                
+                            },
+                            // "&::before": {
+                            //   content: '""',
+                            //   position: "absolute",
+                            //   right: "0",
+                            //   top: "-50px",
+                            //   width: "50px",
+                            //   height: "50px",
+                            //   bgcolor: "transparent",
+                            //   borderRadius: "50%",
+                            //   boxShadow: `35px 35px 0 10px ${theme.palette.secondary.main}`,
+                            //   pointerEvents: "none"
+                            // },
+                            // "&::after": {
+                            //   content: '""',
+                            //   position: "absolute",
+                            //   right: "0",
+                            //   bottom: "-50px",
+                            //   width: "50px",
+                            //   height: "50px",
+                            //   bgcolor: "transparent",
+                            //   borderRadius: "50%",
+                            //   boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
+                            //   pointerEvents: "none"
+                            // },                                                                                                                      
+                          },                                                                                       
                           flexDirection: 'column',
                         }}
                       >
