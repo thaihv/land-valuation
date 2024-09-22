@@ -73,7 +73,7 @@ const Sidebar = ({
   }, [pathname]);
 
   return (
-    <Box component="nav" display="flex">
+    <Box component="nav">
       {isSidebarOpen && isNonMobile && (
         <Drawer
           open={isSidebarOpen}
@@ -85,7 +85,11 @@ const Sidebar = ({
             "& .MuiDrawer-paper": {
               color: theme.palette.background.alt,
               backgroundImage: "linear-gradient(-183.41658819177138deg, #002868 14.848712496895075%, #002868 70.24578650224022%)",
-              borderRadius: "10px", 
+              borderLeft: "10px solid linear-gradient(-183.41658819177138deg, #002868 14.848712496895075%, #002868 70.24578650224022%)",
+              borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
+              borderRight: "0",
+              transition: "0.5s",
+              overflow: "hidden",              
               width: drawerWidth,
             },
           }}
@@ -101,7 +105,6 @@ const Sidebar = ({
                   "&:hover": {
                     color:theme.palette.secondary[100],
                     bgcolor: theme.palette.secondary.main,
-                    //transform: "perspective(75rem) rotateY(45deg)",
                   },
                 }}
               >
@@ -109,7 +112,7 @@ const Sidebar = ({
                   <Box 
                       m="2.25rem 2rem 2.25rem 1.5rem"
                       display="flex" 
-                      alignItems="center"                       
+                      alignItems="center"                 
                   >
                     <Typography variant="h5" fontWeight= "bold">
                       LVIS
@@ -117,6 +120,7 @@ const Sidebar = ({
                   </Box>
                 </FlexBetween>
               </Box>
+              {/* <Divider sx={{ m: "0.5rem 1rem 1rem 1rem", borderColor: theme.palette.background.alt}}/> */}
               <List>
                 {navItems.map(({ text, link, icon }) => {
                   const ref = link.toLowerCase();
@@ -131,7 +135,7 @@ const Sidebar = ({
                           borderRadius: "10px", 
                           height: "10vh",
                           m: "1px 0 1px 0",
-                          transition: "all 0.3s ease-in-out",                        
+//                          transition: "all 0.3s ease-in-out",                        
                           backgroundColor:
                             active === ref
                               ? theme.palette.background.default
@@ -143,17 +147,31 @@ const Sidebar = ({
                           "&:hover": {
                             color: theme.palette.greenAccent.main,
                             bgcolor: theme.palette.secondary.main,
-                            //transform: "scale3d(1.05, 1.05, 1.05)",
                             "& .MuiListItemIcon-root": {
                               color: theme.palette.greenAccent.main,
                             }
                           },
+//                           "&:hover": {
+//                             content: '""',
+//                             position: "absolute",
+//                             right: "0",
+//                             top: "-50px",
+//                             width: "50px",
+//                             height: "10vh",
+//                             backgroundColor: "transparent",
+//                             borderRadius: "50%",
+//                             boxShadow: "35px 35px 0 10px #fff",
+// //                            pointerEvents: "none",
+//                           },
                           flexDirection: 'column',
                         }}
                       >
                         <ListItemIcon
                           sx={{
                             ml: "2rem",
+                            minWidth:"60px",
+                            height: "20px",
+                            fontSize: "1.75rem",
                             color:
                               active === ref
                                 ? theme.palette.secondary[300]
@@ -163,8 +181,17 @@ const Sidebar = ({
                           {icon}
                         </ListItemIcon>
                         <ListItemText>
-                          <Box textAlign="center">
-                            <Typography variant="h7">{t(text)}</Typography>
+                          <Box 
+                            sx={{
+                              lineHeight: "20px",
+                              textAlign: "center"
+                            }} 
+                          >
+                            <Typography 
+                              variant="h7"
+                            >
+                              {t(text)}
+                            </Typography>
                           </Box>                            
                         </ListItemText>
                       </ListItemButton>
@@ -175,10 +202,9 @@ const Sidebar = ({
             </Box>
 
             <Box>
-              <Divider sx={{ m: "3rem 0rem 1rem 0rem" }}/>
+              <Divider sx={{ m: "3.5rem 1rem 1rem 1rem", borderColor: theme.palette.background.alt}}/>
               <FlexBetween 
-                textTransform="none" 
-//              gap="1rem" 
+                textTransform="none"
                 flexDirection="column" 
                 overflow="auto"
               >

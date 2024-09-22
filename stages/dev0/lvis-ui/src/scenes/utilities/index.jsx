@@ -60,7 +60,7 @@ const Utilities = () => {
       <FlexBetween>
         <Header title="ACTIVITIES"/>
       </FlexBetween>
-      <Box height="75vh">
+      <Box >
         <Box sx={{ borderBottom: 0 }}>
           <Tabs
             value={value}
