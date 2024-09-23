@@ -193,7 +193,7 @@ export default function LeftBar() {
           className="interactive-button"
           sx={{
             borderRadius: "0 5px 5px 0", // top-left top-right bottom-right bottom-left.
-            bgcolor: theme.palette.background.alt,
+            bgcolor: theme.palette.background.default,
             "&:hover": {
               bgcolor: theme.palette.secondary.main,
             },

@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import LeftBar from "../../../components/toolbars/LeftBar";
 import LeafletMap from "../../../components/map/LeafletMap";
 import Sidebar from "../../../components/Sidebar";
 
 const SurveyMap = () => {
-  const isNonMobile = useMediaQuery("(min-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const data = useSelector((state) => state.global.user);
 
   return (
-    <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">
+    <Box display="flex" width="100%" height="100%">
       <Sidebar
         user={data || {}}
-        isNonMobile={isNonMobile}
+        isNonMobile="true"
         drawerWidth="88px"
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
