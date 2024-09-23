@@ -141,7 +141,7 @@ const Sidebar = ({
                         }}      
                         selected={active === ref}                
                         sx={{
-                          height: "70px",
+                          height: "10vh",
                           //m: "2px 0 2px 0",
                           borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
                           color:
