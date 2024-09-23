@@ -3,10 +3,12 @@ import {
   LightModeOutlined,
   DarkModeOutlined,
   Menu as MenuIcon,
-  Search,
   SettingsOutlined,
   Notifications,
   ArrowDropDownOutlined,
+  Message,
+  Help,
+  Close,
 } from "@mui/icons-material";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import FlexBetween from "./FlexBetween";
@@ -24,7 +26,10 @@ import {
   Toolbar,
   Menu,
   MenuItem,
+  FormControl,
+  Select,
   useTheme,
+  useMediaQuery
 } from "@mui/material";
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
@@ -36,7 +41,15 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
-
+  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const isNonMobileScreens = useMediaQuery("(min-width: 600px)");
+  const handleResponsiveMenu = () => {
+    if (isNonMobileScreens)
+      setIsSidebarOpen(!isSidebarOpen);
+    else
+      setIsMobileMenuToggled(!isMobileMenuToggled);       
+  }
+  const fullName = `${user.name}`;
   return (
     <AppBar
       sx={{
@@ -48,20 +61,45 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
         <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+          <IconButton onClick={handleResponsiveMenu}>
             <MenuIcon />
           </IconButton>
-          {/* <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius="9px"
-            gap="3rem"
-            p="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween> */}
+          {!isNonMobileScreens && isMobileMenuToggled && (
+            <Box
+              position="fixed"
+              left="0"
+              bottom="0"
+              height="100%"
+              zIndex="1001"
+              maxWidth="500px"
+              minWidth="300px"
+              backgroundColor={theme.palette.background.default}
+            >
+              {/* CLOSE ICON */}
+              <Box display="flex" justifyContent="flex-start" p="1rem">
+                <IconButton
+                  onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+                >
+                  <Close />
+                </IconButton>
+              </Box>
+              {/* MENU ITEMS */}
+              <FlexBetween
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                gap="3rem"
+              >
+                <Message sx={{ fontSize: "25px" }} />
+                <Notifications sx={{ fontSize: "25px" }} />
+                <Help sx={{ fontSize: "25px" }} />
+                <MenuItem onClick={() => dispatch(setLogout())}>
+                  Log Out
+                </MenuItem>
+              </FlexBetween>
+            </Box>
+          )}
         </FlexBetween>
 
         {/* RIGHT SIDE */}

@@ -63,6 +63,8 @@ const Profile = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <AdvertWidget />
+          <Box m="2rem 0" />
+          <AdvertWidget />
         </Box>
       </Box>
     </Box>
