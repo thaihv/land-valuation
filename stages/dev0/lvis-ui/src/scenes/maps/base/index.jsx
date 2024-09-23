@@ -9,7 +9,7 @@ const BaseMap = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="SURVEY VALUES FOR NEW PLAN" subtitle="Find your properties to input model information." />
+      <Header title="SEARCH VALUES" subtitle="Find price of your properties." />
       <Box
         mt="40px"
         height="75vh"
