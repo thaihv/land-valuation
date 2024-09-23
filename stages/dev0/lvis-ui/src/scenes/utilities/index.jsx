@@ -49,7 +49,7 @@ function a11yProps(index) {
 const Utilities = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const isNonMediumScreens = useMediaQuery("(min-width: 1000px)");
   const { t } = useTranslation();
 
   const handleChange = (event, newValue) => {
@@ -63,6 +63,9 @@ const Utilities = () => {
       <Box >
         <Box sx={{ borderBottom: 0 }}>
           <Tabs
+            variant= {!isNonMediumScreens ? "scrollable" : "standard"}
+            scrollButtons
+            allowScrollButtonsMobile
             value={value}
             onChange={handleChange}
             aria-label="Activity Tabs"
@@ -88,12 +91,7 @@ const Utilities = () => {
             <Tab label={t("Geography")} {...a11yProps(3)} />
             <Tab label={t("Breakdown")} {...a11yProps(4)} />
             <Tab label={t("Upload")} {...a11yProps(5)} />
-            <Tab
-              // icon={<LanguageOutlinedIcon />}
-              // iconPosition="start"
-              label={t("Language")}
-              {...a11yProps(6)}
-            />
+            <Tab label={t("Language")} {...a11yProps(6)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>

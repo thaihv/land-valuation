@@ -59,6 +59,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
           <IconButton onClick={handleResponsiveMenu}>
             <MenuIcon />
           </IconButton>
+          {/* MOBILE NAV */}
           {!isNonMobileScreens && isMobileMenuToggled && (
             <Box
               position="fixed"
