@@ -26,10 +26,10 @@ const PageNotFound = () => {
             />
           </Grid>
           <Grid xs={8}>
-            <Typography variant="h1">
-              404
+            <Typography variant="h5" fontWeight="bold" color="#1E88E5">
+              [LVIS] Land Valuation Information System
             </Typography>
-            <Typography variant="h5">
+            <Typography variant="h4">
               The page you’re looking for doesn’t exist.
             </Typography>
             <CustomButton variant="outlined" onClick={() => navigate("/home")}>
