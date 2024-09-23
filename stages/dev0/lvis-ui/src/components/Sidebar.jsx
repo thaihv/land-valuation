@@ -11,49 +11,12 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import AirplayOutlinedIcon from '@mui/icons-material/AirplayOutlined';
-import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
-import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import { navItems } from "./menu/navItems";
 import { useTranslation } from "react-i18next";
 
-const navItems = [
-  {
-    text: "Search",
-    link: "Search",
-    icon: <SearchOutlinedIcon />,
-  },
-  {
-    text: "Preparation",
-    link: "Myteam",
-    icon: <AirplayOutlinedIcon/>,
-  },
-  {
-    text: "Data Collection",
-    link: "Products",
-    icon: <RoomOutlinedIcon />,
-  },  
-  {
-    text: "Assessment Activity",
-    link: "Survey",
-    icon: <CommentOutlinedIcon />,
-  },
-  {
-    text: "Approval",
-    link: "Transactions",
-    icon: <AssignmentOutlinedIcon />,
-  },  
-  {
-    text: "Publish",
-    link: "Tasks",
-    icon: <BackupTableOutlinedIcon />,
-  },
-];
 
 const Sidebar = ({
   user,

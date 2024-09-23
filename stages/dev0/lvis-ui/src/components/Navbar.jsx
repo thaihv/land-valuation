@@ -16,18 +16,16 @@ import { useDispatch } from "react-redux";
 import {useNavigate } from "react-router-dom";
 import { setMode, setLogout } from "../state";
 import { useTranslation } from "react-i18next";
+import { navItems } from "./menu/navItems";
 import {
   AppBar,
   Button,
   Box,
   Typography,
   IconButton,
-  InputBase,
   Toolbar,
   Menu,
   MenuItem,
-  FormControl,
-  Select,
   useTheme,
   useMediaQuery
 } from "@mui/material";
@@ -43,13 +41,10 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const handleClose = () => setAnchorEl(null);
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const isNonMobileScreens = useMediaQuery("(min-width: 600px)");
-  const handleResponsiveMenu = () => {
-    if (isNonMobileScreens)
-      setIsSidebarOpen(!isSidebarOpen);
-    else
-      setIsMobileMenuToggled(!isMobileMenuToggled);       
+  const handleResponsiveMenu = () => {     
+      isNonMobileScreens ? setIsSidebarOpen(!isSidebarOpen) : setIsMobileMenuToggled(!isMobileMenuToggled);
   }
-  const fullName = `${user.name}`;
+
   return (
     <AppBar
       sx={{
@@ -84,20 +79,41 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 </IconButton>
               </Box>
               {/* MENU ITEMS */}
-              <FlexBetween
+              <Box
                 display="flex"
                 flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                gap="3rem"
+                justifyContent= "space-between"
+                alignItems= "start"
+                p="1rem"
               >
-                <Message sx={{ fontSize: "25px" }} />
-                <Notifications sx={{ fontSize: "25px" }} />
-                <Help sx={{ fontSize: "25px" }} />
-                <MenuItem onClick={() => dispatch(setLogout())}>
-                  Log Out
-                </MenuItem>
-              </FlexBetween>
+                <MenuItem 
+                  onClick={() => {navigate(`/`);}}
+                  sx={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}>
+                  LVIS
+                </MenuItem> 
+
+                {navItems.map(({ text, link, icon }) => {
+                  const ref = link.toLowerCase();
+                  return (
+                    <FlexBetween key={t(text)}>
+                      <IconButton>
+                        {icon}
+                      </IconButton>                      
+                      <MenuItem 
+                        onClick={() => {
+                        navigate(`/${ref}`);
+                        setIsMobileMenuToggled(!isMobileMenuToggled);
+                      }}>
+                        {t(text)}
+                      </MenuItem>                        
+                    </FlexBetween>                    
+                  );
+                })}                
+              </Box>
             </Box>
           )}
         </FlexBetween>
