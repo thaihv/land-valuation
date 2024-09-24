@@ -78,15 +78,18 @@ const Sidebar = ({
                         fontSize: "20px",
                         fontWeight: "bold",
                         color: "white",    
-                        "&::before ": {
-                          content: "url('monre.svg')",
+                        "&::before ": { 
                           position: "absolute",
-                          display: "inline-block",
-                          top: "-30px",
-                          left: "-20px",
-                          width: "10px",
-                          height: "10x",
-                          zIndex: "-1"                          
+                          display:"inline-block",
+                          height: "30px",
+                          width: "30px",
+                          top: "-15px",
+                          left: "-10px",
+                          content: '""',
+                          background: "url(./monre.svg) left top no-repeat",
+                          backgroundSize: "30px 30px",
+                          zIndex: "-1"
+                                                    
                         },                        
                         "&::after": {
                           content: '""',
