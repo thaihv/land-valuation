@@ -9,6 +9,7 @@ import {
   ListItemText,
   Typography,
   useTheme,
+  useMediaQuery
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -30,6 +31,7 @@ const Sidebar = ({
   const navigate = useNavigate();
   const { t } = useTranslation();
   const theme = useTheme();
+  const isNonPortraitMode = useMediaQuery("(min-height: 600px)");
 
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -60,17 +62,7 @@ const Sidebar = ({
         >
           <Typography component={"span"}>
             <Box width="100%">
-              <Box
-                onClick={() => {navigate(`/`);}}
-                sx={{
-                  color: theme.palette.greenAccent.main,
-                  transition: "all 0.3s ease-in-out",
-                  "&:hover": {
-                    color:theme.palette.secondary[200],
-                    bgcolor: theme.palette.secondary.main,
-                  },         
-                }}
-              >
+              <Box onClick={() => {navigate(`/`);}}>
                 <FlexBetween>
                   <Box 
                       m="2.25rem 2rem 2.25rem 1.5rem"
@@ -78,12 +70,43 @@ const Sidebar = ({
                       alignItems="center"                 
                   >
                     <Typography 
-                      //variant="h3" fontWeight= "bold" fontStyle={}
                       sx={{
+                        display: "inline-block",
+                        position: "relative", 
+
                         fontFamily: "Georgia, serif",
                         fontSize: "20px",
                         fontWeight: "bold",
-                        color: "white",
+                        color: "white",    
+                        "&::before ": {
+                          content: "url('monre.svg')",
+                          position: "absolute",
+                          display: "inline-block",
+                          top: "-25px",
+                          left: "-25px",
+                          width: "3px",
+                          height: "3px",
+                          zIndex: "-1"                          
+                        },                        
+                        "&::after": {
+                          content: '""',
+                          position: "absolute",
+                          bottom: "0",
+                          width: "100%",
+                          height: "3px",
+                          left: "0",
+                          backgroundColor: theme.palette.secondary[200],
+                          transform: "scaleX(0)",
+                          transformOrigin: "bottom right",
+                          transition: "transform 0.25s ease-out"
+                        },
+                        "&:hover": {
+                          color: theme.palette.background.default
+                        },
+                        "&:hover::after": {
+                          transform: "scaleX(1)",
+                          transformOrigin: "bottom left",
+                        },                        
                       }}
                     >
                       LVIS
@@ -118,20 +141,23 @@ const Sidebar = ({
                         >
                           {icon}
                         </ListItemIcon>
-                        <ListItemText>
-                          <Box 
-                            sx={{
-                              lineHeight: "20px",
-                              textAlign: "center"
-                            }} 
-                          >
-                            <Typography 
-                              variant="h7"
+                        {isNonPortraitMode && (
+                          <ListItemText>
+                            <Box 
+                              sx={{
+                                lineHeight: "20px",
+                                textAlign: "center"
+                              }} 
                             >
-                              {t(text)}
-                            </Typography>
-                          </Box>                            
-                        </ListItemText>
+                              <Typography 
+                                variant="h7"
+                              >
+                                {t(text)}
+                              </Typography>
+                            </Box>                            
+                          </ListItemText>
+                        )}
+
                       </StyledListItemButton>
                     </ListItem>
                   );
