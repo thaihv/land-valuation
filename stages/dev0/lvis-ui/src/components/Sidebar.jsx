@@ -82,10 +82,10 @@ const Sidebar = ({
                           content: "url('monre.svg')",
                           position: "absolute",
                           display: "inline-block",
-                          top: "-36px",
-                          left: "-26px",
-                          width: "20px",
-                          height: "20x",
+                          top: "-30px",
+                          left: "-20px",
+                          width: "10px",
+                          height: "10x",
                           zIndex: "-1"                          
                         },                        
                         "&::after": {
