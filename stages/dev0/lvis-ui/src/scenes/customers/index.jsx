@@ -63,9 +63,8 @@ const Customers = () => {
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.background.alt} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -86,6 +85,12 @@ const Customers = () => {
           getRowId={(row) => row._id}
           rows={data || []}
           columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 10, page: 0 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 25]}
         />
       </Box>
     </Box>

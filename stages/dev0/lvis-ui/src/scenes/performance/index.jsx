@@ -4,7 +4,7 @@ import { useGetUserPerformanceQuery } from "../../state/api";
 import { useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import CustomColumnMenu from "../../components/DataGridCustomColumnMenu";
+
 
 const Performance = () => {
   const theme = useTheme();
@@ -58,9 +58,8 @@ const Performance = () => {
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.background.alt} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -81,9 +80,12 @@ const Performance = () => {
           getRowId={(row) => row._id}
           rows={(data && data.sales) || []}
           columns={columns}
-          components={{
-            ColumnMenu: CustomColumnMenu,
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 5, page: 0 },
+            },
           }}
+          pageSizeOptions={[5, 10, 25]}
         />
       </Box>
     </Box>

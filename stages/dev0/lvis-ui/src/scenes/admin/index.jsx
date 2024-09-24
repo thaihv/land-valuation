@@ -3,7 +3,6 @@ import { Box, useTheme } from "@mui/material";
 import { useGetAdminsQuery } from "../../state/api";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import CustomColumnMenu from "../../components/DataGridCustomColumnMenu";
 
 const Admin = () => {
   const theme = useTheme();
@@ -63,9 +62,8 @@ const Admin = () => {
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.background.alt} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -86,9 +84,12 @@ const Admin = () => {
           getRowId={(row) => row._id}
           rows={data || []}
           columns={columns}
-          components={{
-            ColumnMenu: CustomColumnMenu,
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 40, page: 0 },
+            },
           }}
+          pageSizeOptions={[25, 40, 65]}
         />
       </Box>
     </Box>
