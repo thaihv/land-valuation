@@ -31,7 +31,7 @@ const Sidebar = ({
   const navigate = useNavigate();
   const { t } = useTranslation();
   const theme = useTheme();
-  const isNonPortraitMode = useMediaQuery("(min-height: 700px)");
+  const isNonPortraitMode = useMediaQuery("(min-height: 600px)");
 
   useEffect(() => {
     setActive(pathname.substring(1));
