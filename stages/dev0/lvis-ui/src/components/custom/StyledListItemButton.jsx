@@ -1,10 +1,10 @@
 import { ListItemButton } from "@mui/material";
+import zIndex from "@mui/material/styles/zIndex";
 import { styled } from "@mui/system";
 
 
 const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({     
   height: "10vh",
-  //m: "2px 0 2px 0",
   borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
   color:
     selected
@@ -41,6 +41,11 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
       pointerEvents: "none"
     },                                                                                                                      
   },
+  "&:hover": {
+    "&::after": {
+      zIndex: "1000",
+    }, 
+  },         
   "&.Mui-selected": {
     backgroundColor: theme.palette.background.default,
     "&::before": {                           
