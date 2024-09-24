@@ -9,18 +9,19 @@ const Transactions = () => {
   const theme = useTheme();
 
   // values to be sent to the backend
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-
   const [searchInput, setSearchInput] = useState("");
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 20,
+  });
   const { data, isLoading } = useGetTransactionsQuery({
-    page,
-    pageSize,
+    page: paginationModel.page,
+    pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
     search,
-  });
+  });  
 
   const columns = [
     {
@@ -87,28 +88,18 @@ const Transactions = () => {
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
           columns={columns}
-          rowCount={(data && data.total) || 0}
-          rowsPerPageOptions={[20, 50, 100]}
-          pagination
-          page={page}
-          pageSize={pageSize}
-          paginationMode="server"
+          rowCount={-1}  //Unknown row count case
           sortingMode="server"
-          onPageChange={(newPage) => setPage(newPage)}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
+
+          pagination
+          paginationMode="server"          
+          pageSizeOptions={[10, 20, 50]}
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newPaginationModel) => setPaginationModel(newPaginationModel) }
+
           checkboxSelection
           disableRowSelectionOnClick
-
           slots={{ toolbar: DataGridCustomToolbar }}
           componentsProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
