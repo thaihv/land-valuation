@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 
-const CustomButton = styled(Button)(({ theme }) => ({     
+const StyledButton = styled(Button)(({ theme }) => ({     
   backgroundColor: theme.palette.background.default,
   color: theme.palette.neutral.dark,
   fontSize: "12px",
@@ -13,4 +13,4 @@ const CustomButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.secondary[300],
   }
 }));
-export default CustomButton;
+export default StyledButton;

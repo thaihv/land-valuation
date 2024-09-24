@@ -5,7 +5,6 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
@@ -16,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
 import { navItems } from "./menu/navItems";
 import { useTranslation } from "react-i18next";
+import StyledListItemButton from "./custom/StyledListItemButton";
 
 
 const Sidebar = ({
@@ -97,81 +97,12 @@ const Sidebar = ({
                   const ref = link.toLowerCase();
                   return (
                     <ListItem key={t(text)} disablePadding>
-                      <ListItemButton
+                      <StyledListItemButton
                         onClick={() => {
                           navigate(`/${ref}`);
                           setActive(ref);
                         }}      
                         selected={active === ref}                
-                        sx={{
-                          height: "10vh",
-                          //m: "2px 0 2px 0",
-                          borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
-                          color:
-                            active === ref
-                              ? theme.palette.secondary[200]
-                              : "white",                              
-                          "&:hover, &.Mui-selected:hover": {
-                            color: theme.palette.secondary[200],
-                            bgcolor: theme.palette.secondary.main,
-                            "& .MuiListItemIcon-root": {
-                              color: theme.palette.secondary[200],                                
-                            },
-                            "&::before": {
-                              content: '""',
-                              position: "absolute",
-                              right: "0",
-                              top: "-50px",
-                              width: "50px",
-                              height: "50px",
-                              bgcolor: "transparent",
-                              borderRadius: "50%",
-                              boxShadow: `35px 35px 0 10px ${theme.palette.secondary.main}`,
-                              pointerEvents: "none"
-                            },
-                            "&::after": {
-                              content: '""',
-                              position: "absolute",
-                              right: "0",
-                              bottom: "-50px",
-                              width: "50px",
-                              height: "50px",
-                              bgcolor: "transparent",
-                              borderRadius: "50%",
-                              boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
-                              pointerEvents: "none",
-                              zIndex: "1000"
-                            },                                                                                                                      
-                          },
-                          "&.Mui-selected": {
-                            backgroundColor: theme.palette.background.default,
-                            "&::before": {                           
-                              content: '""',
-                              position: "absolute",
-                              right: "0",
-                              top: "-50px",
-                              width: "50px",
-                              height: "50px",
-                              bgcolor: "transparent",
-                              borderRadius: "50%",
-                              boxShadow: `35px 35px 0 10px ${theme.palette.background.default}`,
-                              pointerEvents: "none"
-                            },
-                            "&::after": {
-                              content: '""',
-                              position: "absolute",
-                              right: "0",
-                              bottom: "-50px",
-                              width: "50px",
-                              height: "50px",
-                              bgcolor: "transparent",
-                              borderRadius: "50%",
-                              boxShadow: `35px -35px 0 10px ${theme.palette.background.default}`,
-                              pointerEvents: "none"
-                            }, 
-                          },                                                                                                                 
-                          flexDirection: 'column',
-                        }}
                       >
                         <ListItemIcon
                           sx={{
@@ -201,7 +132,7 @@ const Sidebar = ({
                             </Typography>
                           </Box>                            
                         </ListItemText>
-                      </ListItemButton>
+                      </StyledListItemButton>
                     </ListItem>
                   );
                 })}

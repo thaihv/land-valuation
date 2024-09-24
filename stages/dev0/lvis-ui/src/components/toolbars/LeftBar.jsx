@@ -15,7 +15,7 @@ import {
   InputAdornment,
   FormHelperText,
 } from "@mui/material";
-import CustomButton from "../custom/CustomButton"
+import StyledButton from "../custom/StyledButton"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Search } from "@mui/icons-material";
@@ -178,12 +178,12 @@ export default function LeftBar() {
             />
             <FormHelperText>Select criteria to filter</FormHelperText>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <CustomButton
+              <StyledButton
                 variant="contained"
                 size="small"
               >
                 {t("Search")}
-              </CustomButton>
+              </StyledButton>
             </Box>
           </Stack>
         </div>

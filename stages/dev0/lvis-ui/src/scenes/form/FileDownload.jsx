@@ -3,7 +3,7 @@ import { Container, Card, CardContent, Typography} from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import DownloadIcon from '@mui/icons-material/Download';
 import useFileDownloader from "../../hooks/useFileDownloader";
-import CustomButton from "../../components/custom/CustomButton"
+import StyledButton from "../../components/custom/StyledButton"
 const files = [
   {
     name: "Photo 1",
@@ -54,14 +54,14 @@ const FileDownloader = () => {
                 <Typography variant="h5" gutterBottom>
                   {file.name}
                 </Typography>
-                <CustomButton
+                <StyledButton
                   variant="contained"
                   size="small"                  
                   onClick={() => download(file)}
                   endIcon={<DownloadIcon />}
                 >
                   Download
-                </CustomButton>
+                </StyledButton>
               </CardContent>
             </Card>
           </Grid>

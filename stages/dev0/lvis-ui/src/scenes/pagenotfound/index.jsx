@@ -1,6 +1,6 @@
 import { Typography, Box, Container, useTheme } from "@mui/material";
 import Grid from '@mui/material/Grid2';
-import CustomButton from "../../components/custom/CustomButton";
+import StyledButton from "../../components/custom/StyledButton";
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {
@@ -32,9 +32,9 @@ const PageNotFound = () => {
             <Typography variant="h4">
               The page you’re looking for doesn’t exist.
             </Typography>
-            <CustomButton variant="outlined" onClick={() => navigate("/home")}>
+            <StyledButton variant="outlined" onClick={() => navigate("/home")}>
               Go to Home Page
-            </CustomButton>
+            </StyledButton>
           </Grid>          
         </Grid>
       </Container>

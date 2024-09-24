@@ -2,7 +2,7 @@ import { Paper } from "@mui/material";
 import { styled } from "@mui/system";
 
 
-const Item = styled(Paper)(({ theme }) => ({
+const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
 //  padding: theme.spacing(1),
@@ -13,4 +13,4 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-export default Item;
+export default StyledPaper;
