@@ -31,7 +31,7 @@ const Sidebar = ({
   const navigate = useNavigate();
   const { t } = useTranslation();
   const theme = useTheme();
-  const isNonPortraitMode = useMediaQuery("(min-height: 600px)");
+  const isNonPortraitMode = useMediaQuery("(min-height: 700px)");
 
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -81,13 +81,14 @@ const Sidebar = ({
                         "&::before ": { 
                           position: "absolute",
                           display:"inline-block",
-                          height: "30px",
-                          width: "30px",
-                          top: "-15px",
-                          left: "-10px",
+                          top: "-25px",
+                          left: "-15px",
                           content: '""',
                           background: "url(./monre.svg) left top no-repeat",
-                          backgroundSize: "30px 30px",
+                          // Sizing needed
+                          height: "40px",
+                          width: "40px",
+                          backgroundSize: "40px 40px",
                           zIndex: "-1"
                                                     
                         },                        
