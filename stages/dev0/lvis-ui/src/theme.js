@@ -176,18 +176,14 @@ export const themeSettings = (mode) => {
     },
     typography: {
       fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
         '"Helvetica Neue"',
-        'Arial',
         'sans-serif',
-        '"Apple Color Emoji"',
+        'Roboto',                
+        'Arial',
+        '"Segoe UI"',
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
         '"Noto Sans KR Medium"',
-        '"Noto Sans KR"',
         '"Noto Sans KR"'
       ].join(','),
       fontSize: 12,
@@ -212,11 +208,11 @@ export const themeSettings = (mode) => {
         fontSize: 16,
       },
       h6: {
-        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","Noto Sans KR","sans-serif"].join(","),
+        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","sans-serif"].join(","),
         fontSize: 14,
       },
       h7: {
-        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","Noto Sans KR","sans-serif"].join(","),
+        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","sans-serif"].join(","),
         fontSize: 12,
       },      
     },
