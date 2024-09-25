@@ -65,7 +65,7 @@ const Sidebar = ({
               <Box onClick={() => {navigate(`/`);}}>
                 <FlexBetween>
                   <Box 
-                      m="2.25rem 2rem 2.25rem 1.5rem"
+                      m="3.5rem 2rem 2rem 1rem"
                       display="flex" 
                       alignItems="center"                 
                   >
@@ -76,19 +76,18 @@ const Sidebar = ({
                         fontFamily: "Georgia, serif",
                         fontSize: "20px",
                         fontWeight: "bold",
-                        color: "white",    
+                        color: theme.palette.secondary[500],
                         "&::before ": { 
                           position: "absolute",
                           display:"inline-block",
-                          //top: "-25px",
-                          left: "-15px",
-                          bottom: "10px",
+                          top: "-2.75rem",
+                          left: "0.15rem",
                           content: '""',
                           background: "url(./monre.svg) left top no-repeat",
                           // Sizing needed
-                          height: "40px",
-                          width: "40px",
-                          backgroundSize: "40px 40px",
+                          height: "45px",
+                          width: "45px",
+                          backgroundSize: "45px 45px",
                           zIndex: "-1"
                                                     
                         },                        
@@ -118,7 +117,7 @@ const Sidebar = ({
                   </Box>
                 </FlexBetween>
               </Box>
-              <Divider sx={{ m: "0 0.5rem 3rem 0.5rem"}}/>
+              <Divider sx={{ m: "0 0.5rem 1rem 0.5rem"}}/>
               <List>
                 {navItems.map(({ text, link, icon }) => {
                   const ref = link.toLowerCase();
@@ -149,7 +148,7 @@ const Sidebar = ({
                           <ListItemText>
                             <Box 
                               sx={{
-                                lineHeight: "20px",
+                                lineHeight: "15px",
                                 textAlign: "center"
                               }} 
                             >
