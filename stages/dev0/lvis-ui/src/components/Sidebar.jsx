@@ -76,7 +76,7 @@ const Sidebar = ({
                         fontSize: "20px",
                         fontWeight: "bold",
                         color: theme.palette.secondary[500],
-                        "&::before ": { 
+                        "&::before": { 
                           position: "absolute",
                           display:"inline-block",
                           top: "-2.75rem",
@@ -87,8 +87,7 @@ const Sidebar = ({
                           height: "45px",
                           width: "45px",
                           backgroundSize: "45px 45px",
-                          zIndex: "-1"
-                                                    
+                          zIndex: "-1"                                                    
                         },                        
                         "&::after": {
                           content: '""',
@@ -108,7 +107,7 @@ const Sidebar = ({
                         "&:hover::after": {
                           transform: "scaleX(1)",
                           transformOrigin: "bottom left",
-                        },                        
+                        },                                                   
                       }}
                     >
                       LVIS
