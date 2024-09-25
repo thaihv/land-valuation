@@ -151,8 +151,9 @@ const Sidebar = ({
                             >
                               <Typography 
                                 variant="h7"
-                                //fontWeight="bold"
-                                // fontSize="0.85rem"
+                                // fontFamily="Aclonica, sans-serif"
+                                // fontStyle="normal"
+                                // fontWeight="400"
                               >
                                 {t(text)}
                               </Typography>

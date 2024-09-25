@@ -177,17 +177,7 @@ export const themeSettings = (mode) => {
           }),
     },
     typography: {
-      fontFamily: [
-        '"Helvetica Neue"',
-        'sans-serif',
-        'Roboto',                
-        'Arial',
-        '"Segoe UI"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-        '"Noto Sans KR Medium"',
-        '"Noto Sans KR"'
-      ].join(','),
+      fontFamily: ["Inter", "sans-serif"].join(","),
       fontSize: 12,
       h1: {
         fontFamily: ["Helvetica","sans-serif"].join(","),
@@ -210,11 +200,11 @@ export const themeSettings = (mode) => {
         fontSize: 16,
       },
       h6: {
-        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","sans-serif"].join(","),
+        fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: 14,
       },
       h7: {
-        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","sans-serif"].join(","),
+        fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: 12,
       },      
     },
