@@ -131,9 +131,8 @@ const Sidebar = ({
                       >
                         <ListItemIcon
                           sx={{
-                            ml: "2rem",
                             minWidth:"60px",
-                            height: "20px",
+                            //height: "20px",
                             fontSize: "1.75rem",
                             color:
                               active === ref
@@ -153,6 +152,8 @@ const Sidebar = ({
                             >
                               <Typography 
                                 variant="h7"
+                                //fontWeight="bold"
+                                // fontSize="0.85rem"
                               >
                                 {t(text)}
                               </Typography>

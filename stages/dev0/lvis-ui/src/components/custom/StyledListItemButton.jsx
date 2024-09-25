@@ -54,6 +54,10 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
       boxShadow: `35px -35px 0 10px ${theme.palette.background.default}`,
     }, 
   },                                                                                                                 
-  flexDirection: 'column'
+  flexDirection: 'column',
+  "& .MuiListItemIcon-root": {
+    justifyContent: 'center',
+    alignItems: 'center'                             
+  },  
 }));
 export default StyledListItemButton;
