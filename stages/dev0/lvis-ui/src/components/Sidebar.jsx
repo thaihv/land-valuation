@@ -72,8 +72,7 @@ const Sidebar = ({
                     <Typography 
                       sx={{
                         display: "inline-block",
-                        position: "relative", 
-
+                        position: "relative",
                         fontFamily: "Georgia, serif",
                         fontSize: "20px",
                         fontWeight: "bold",
@@ -81,8 +80,9 @@ const Sidebar = ({
                         "&::before ": { 
                           position: "absolute",
                           display:"inline-block",
-                          top: "-25px",
+                          //top: "-25px",
                           left: "-15px",
+                          bottom: "10px",
                           content: '""',
                           background: "url(./monre.svg) left top no-repeat",
                           // Sizing needed
