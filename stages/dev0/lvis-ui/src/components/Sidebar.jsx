@@ -49,8 +49,7 @@ const Sidebar = ({
             width: drawerWidth,            
             "& .MuiDrawer-paper": {
               color: theme.palette.background.alt,
-              backgroundImage: "linear-gradient(-183.41658819177138deg, #002868 14.848712496895075%, #002868 70.24578650224022%)",
-              //borderLeft: "5px solid #2a2185",
+              backgroundImage: theme.palette.primary.gradient,
               borderLeft: "0",              
               borderRight: "0",
               borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
