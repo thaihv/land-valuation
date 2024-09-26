@@ -55,7 +55,13 @@ const Admin = () => {
       <Box
         mt="40px"
         height="75vh"
+        display="grid"
+        gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+        justifyContent="space-between"
+        rowGap="20px"
+        columnGap="1.33%"
         sx={{
+          "& > div": { gridColumn: "span 12" },
           "& .MuiDataGrid-root": {
             border: "none",
           },
@@ -76,8 +82,8 @@ const Admin = () => {
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
-          },
-        }}
+          },          
+        }}        
       >
         <DataGrid
           loading={isLoading || !data}

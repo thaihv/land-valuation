@@ -65,7 +65,17 @@ const Utilities = () => {
       <FlexBetween>
         <Header title="ACTIVITIES" />
       </FlexBetween>
-      <Box>
+      <Box
+          //mt="20px"
+          display="grid"
+          gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+          justifyContent="space-between"
+          rowGap="20px"
+          columnGap="1.33%"
+          sx={{
+            "& > div": { gridColumn: "span 12" },
+          }}      
+      >
         <Box sx={{ borderBottom: 0 }}>
           <Tabs
             variant={!isNonMediumScreens ? "scrollable" : "standard"}
@@ -171,7 +181,7 @@ const Utilities = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={6}>
           <Box
-            height="75vh"
+            height="70vh"
             border={`1px solid ${theme.palette.secondary[200]}`}
           >
             <LanguageSwitcher />

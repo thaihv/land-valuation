@@ -7,7 +7,6 @@ import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar
 
 const Transactions = () => {
   const theme = useTheme();
-
   // values to be sent to the backend
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
@@ -63,7 +62,13 @@ const Transactions = () => {
       <Header title="TRANSACTIONS" subtitle="Entire list of transactions" />
       <Box
         height="80vh"
+        display="grid"
+        gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+        justifyContent="space-between"
+        rowGap="20px"
+        columnGap="1.33%"
         sx={{
+          "& > div": { gridColumn: "span 12" },
           "& .MuiDataGrid-container--top [role=row]": {
             backgroundColor: `${theme.palette.neutral.main} !important`,
             color: theme.palette.secondary[100],
@@ -83,7 +88,7 @@ const Transactions = () => {
           "& .MuiCheckbox-root": {
             color: `${theme.palette.secondary[200]} !important`,
           },          
-        }}
+        }}        
       >
         <DataGrid
           editMode="row"

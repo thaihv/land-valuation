@@ -10,7 +10,7 @@ const Geography = () => {
 
   return (
     <Box
-      height="75vh"
+      height="70vh"
       border={`1px solid ${theme.palette.secondary[200]}`}
       borderRadius="4px"
     >
