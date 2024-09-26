@@ -64,14 +64,14 @@ const Customers = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-container--top [role=row]": {
-            backgroundColor: `${theme.palette.background.alt} !important`,
+            backgroundColor: `${theme.palette.neutral.main} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.background.alt,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.neutral.main,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },

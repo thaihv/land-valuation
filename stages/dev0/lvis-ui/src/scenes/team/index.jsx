@@ -48,17 +48,17 @@ const Team = () => {
             justifyContent="center"
             backgroundColor={
               access === "admin"
-                ? theme.palette.secondary[300]
+                ? theme.palette.redAccent.light
                 : access === "manager"
-                ? theme.palette.secondary[500]
-                : theme.palette.secondary[500]
+                ? theme.palette.blueAccent.light
+                : theme.palette.greenAccent.light
             }
             borderRadius="4px"
           >
             {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
             {access === "manager" && <SecurityOutlinedIcon />}
             {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={theme.palette.secondary[100]} sx={{ ml: "5px" }}>
+            <Typography color={theme.palette.primary.light} sx={{ ml: "5px" }}>
               {access}
             </Typography>
           </Box>
@@ -85,14 +85,14 @@ const Team = () => {
             color: theme.palette.secondary.light,
           },
           "& .MuiDataGrid-container--top [role=row]": {
-            backgroundColor: `${theme.palette.background.alt} !important`,
+            backgroundColor: `${theme.palette.neutral.main} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.background.alt,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.neutral.main,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },

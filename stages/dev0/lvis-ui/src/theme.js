@@ -113,17 +113,17 @@ export const themeSettings = (mode) => {
             redAccent: {
               ...tokensDark.redAccent,
               main: tokensDark.redAccent[800],
-              light: tokensDark.redAccent[800],
+              light: tokensDark.redAccent[300],
             },
             greenAccent: {
               ...tokensDark.greenAccent,
               main: tokensDark.greenAccent[600],
-              light: tokensDark.greenAccent[600],
+              light: tokensDark.greenAccent[300],
             },         
             blueAccent: {
               ...tokensDark.blueAccent,
               main: tokensDark.blueAccent[900],
-              light: tokensDark.blueAccent[800],
+              light: tokensDark.blueAccent[300],
             },                                
             neutral: {
               ...tokensDark.grey,
@@ -151,18 +151,18 @@ export const themeSettings = (mode) => {
             }, 
             redAccent: {
               ...tokensLight.redAccent,
-              main: tokensDark.redAccent[100],
-              light: tokensDark.redAccent[200],
+              main: tokensDark.redAccent[500],
+              light: tokensDark.redAccent[300],
             },                
             greenAccent: {
               ...tokensLight.greenAccent,
               main: tokensDark.greenAccent[700],
-              light: tokensDark.greenAccent[200],
+              light: tokensDark.greenAccent[300],
             },            
             blueAccent: {
               ...tokensLight.blueAccent,
               main: tokensDark.blueAccent[100],
-              light: tokensDark.blueAccent[200],
+              light: tokensDark.blueAccent[300],
             },                       
             neutral: {
               ...tokensLight.grey,
