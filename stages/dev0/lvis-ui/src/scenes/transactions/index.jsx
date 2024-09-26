@@ -104,6 +104,17 @@ const Transactions = () => {
           slotProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
           }}
+          sx={{
+            '@media print': {
+              '.MuiDataGrid-main': {
+                width: 'fit-content',
+                fontSize: '10px',
+                height: 'fit-content',
+                overflow: 'visible',
+              },
+              marginBottom: 100,
+            },
+          }}
         />
       </Box>
     </Box>
