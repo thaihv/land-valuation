@@ -1,4 +1,3 @@
-import * as React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -17,6 +16,8 @@ import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -48,7 +49,7 @@ function a11yProps(index) {
 
 const Utilities = () => {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const isNonMediumScreens = useMediaQuery("(min-width: 1000px)");
   const { t } = useTranslation();
 
