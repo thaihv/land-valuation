@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { Typography, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Typography,
+  Tabs,
+  Tab,
+  Box,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import Header from "../../components/Header";
 import Breakdown from "../charts/breakdown";
 import Overview from "../charts/overview";
@@ -10,10 +14,10 @@ import Geography from "../charts/geography";
 import Daily from "../charts/daily";
 import Monthly from "../charts/monthly";
 import FileUpload from "../form/FileUpload";
-import FileDownloader from "../form/FileDownload"
+import FileDownloader from "../form/FileDownload";
 import FlexBetween from "../../components/FlexBetween";
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
-import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+import DownloadForOfflineOutlinedIcon from "@mui/icons-material/DownloadForOfflineOutlined";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -59,12 +63,12 @@ const Utilities = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="ACTIVITIES"/>
+        <Header title="ACTIVITIES" />
       </FlexBetween>
-      <Box >
+      <Box>
         <Box sx={{ borderBottom: 0 }}>
           <Tabs
-            variant= {!isNonMediumScreens ? "scrollable" : "standard"}
+            variant={!isNonMediumScreens ? "scrollable" : "standard"}
             scrollButtons
             allowScrollButtonsMobile
             value={value}
@@ -77,7 +81,7 @@ const Utilities = () => {
               "& .MuiButtonBase-root.MuiTab-root": {
                 color: theme.palette.secondary[300],
                 fontWeight: "bold",
-                variant:"h5",
+                variant: "h5",
               },
               "& .MuiTab-root.Mui-selected": {
                 backgroundColor: theme.palette.background.alt,
@@ -149,7 +153,7 @@ const Utilities = () => {
               border={`1px solid ${theme.palette.secondary[200]}`}
               p="1rem"
             >
-              <FlexBetween sx={{ mb: "20px" }}>              
+              <FlexBetween sx={{ mb: "20px" }}>
                 <DownloadForOfflineOutlinedIcon
                   sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
                 />
@@ -162,13 +166,16 @@ const Utilities = () => {
                 </Typography>
               </FlexBetween>
               <FileDownloader />
-            </Box>            
+            </Box>
           </Box>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={6}>
-          <Box height="75vh" border={`1px solid ${theme.palette.secondary[200]}`}>
+          <Box
+            height="75vh"
+            border={`1px solid ${theme.palette.secondary[200]}`}
+          >
             <LanguageSwitcher />
-          </Box>          
+          </Box>
         </CustomTabPanel>
       </Box>
     </Box>
