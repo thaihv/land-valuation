@@ -103,7 +103,7 @@ export const themeSettings = (mode) => {
             primary: {
               ...tokensDark.primary,
               main: tokensDark.primary[400],
-              light: tokensDark.primary[400],
+              light: tokensDark.primary[100],
               gradient: "linear-gradient(-90deg, #2a2185 14.848712496895075%, #002868 70.24578650224022%)",
             },
             secondary: {

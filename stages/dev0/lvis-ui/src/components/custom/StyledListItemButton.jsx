@@ -7,8 +7,8 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
   borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
   color:
     selected
-      ? theme.palette.secondary[200]
-      : "white",                              
+    ? theme.palette.primary[600]
+    : theme.palette.primary.light, //theme.palette.secondary[500],                           
   "&:hover, &.Mui-selected, &.Mui-selected:hover": {
     color: theme.palette.secondary[200],
     backgroundColor: theme.palette.secondary.main,

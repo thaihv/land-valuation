@@ -75,7 +75,7 @@ const Sidebar = ({
                         fontFamily: "Georgia, serif",
                         fontSize: "20px",
                         fontWeight: "bold",
-                        color: theme.palette.secondary[500],
+                        color: theme.palette.primary.light, //theme.palette.secondary[500],
                         "&::before": { 
                           position: "absolute",
                           display:"inline-block",
@@ -130,13 +130,10 @@ const Sidebar = ({
                       >
                         <ListItemIcon
                           sx={{
-                            minWidth:"60px",
-                            //height: "20px",
-                            fontSize: "1.75rem",
                             color:
                               active === ref
-                                ? theme.palette.secondary[200]
-                                : "white",
+                              ? theme.palette.primary[600]
+                              : theme.palette.primary.light, //theme.palette.secondary[500],
                           }}
                         >
                           {icon}
@@ -150,7 +147,7 @@ const Sidebar = ({
                               }} 
                             >
                               <Typography 
-                                variant="h7"
+                                // variant="h7"
                                 // fontFamily="Aclonica, sans-serif"
                                 // fontStyle="normal"
                                 // fontWeight="400"
@@ -160,7 +157,6 @@ const Sidebar = ({
                             </Box>                            
                           </ListItemText>
                         )}
-
                       </StyledListItemButton>
                     </ListItem>
                   );
