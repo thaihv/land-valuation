@@ -105,6 +105,12 @@ const Transactions = () => {
             toolbar: { searchInput, setSearchInput, setSearch },
           }}
           sx={{
+            // boxShadow: 2,
+            // border: 2,
+            // borderColor: theme.palette.secondary[100],
+            '& .MuiDataGrid-cell:hover': {
+              color: theme.palette.secondary[200],
+            },
             '@media print': {
               '.MuiDataGrid-main': {
                 width: 'fit-content',
