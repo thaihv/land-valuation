@@ -32,12 +32,14 @@ const Transactions = () => {
     {
       field: "userId",
       headerName: "User ID",
+      editable: true,
       flex: 1,
     },
     {
       field: "createdAt",
-      headerName: "CreatedAt",
-      flex: 1,
+      headerName: "CreatedAt", 
+      editable: true,
+      flex: 1,    
     },
     {
       field: "products",
@@ -84,6 +86,7 @@ const Transactions = () => {
         }}
       >
         <DataGrid
+          editMode="row"
           loading={isLoading || !data}
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
@@ -103,7 +106,16 @@ const Transactions = () => {
           slots={{ toolbar: CustomDataGridToolbar }}
           slotProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
+            loadingOverlay: {
+              variant: 'skeleton',
+              noRowsVariant: 'skeleton',
+            },
           }}
+          initialState={{
+            pinnedColumns: {
+              left: ['_id'],
+            },
+          }}          
           sx={{
             // boxShadow: 2,
             // border: 2,
