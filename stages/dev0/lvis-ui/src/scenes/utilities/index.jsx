@@ -80,8 +80,8 @@ const Utilities = () => {
                 variant:"h5",
               },
               "& .MuiTab-root.Mui-selected": {
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.background.alt,
+                backgroundColor: theme.palette.background.alt,
+                //backgroundImage: theme.palette.primary.gradient,
                 borderRadius: "15px",
               },
             }}
@@ -114,7 +114,6 @@ const Utilities = () => {
           <Box
             display="grid"
             gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-            gridAutoRows="190px"
             gap="30px"
             sx={{
               "& > div": {
