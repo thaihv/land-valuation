@@ -132,6 +132,17 @@ function Map({ items }) {
                   opacity={1}
                 />
               </LayersControl.Overlay>
+              <LayersControl.Overlay name="Valuation Object">
+                <WMSTileLayer
+                  layers={"lvis:parcel_tech"}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL}
+                  maxZoom={20}
+                  transparent={true}
+                  styles="parcel_tech"
+                  format="image/png"
+                  opacity={0.6}
+                />
+              </LayersControl.Overlay>              
               <LayersControl.Overlay name="Research Place">
                 {items.map((item) => (
                   <Pin item={item} key={item.id} />
