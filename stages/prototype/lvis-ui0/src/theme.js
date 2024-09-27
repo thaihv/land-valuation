@@ -103,7 +103,8 @@ export const themeSettings = (mode) => {
             primary: {
               ...tokensDark.primary,
               main: tokensDark.primary[400],
-              light: tokensDark.primary[400],
+              light: tokensDark.primary[100],
+              gradient: "linear-gradient(-90deg, #2a2185 14.848712496895075%, #002868 70.24578650224022%)",
             },
             secondary: {
               ...tokensDark.secondary,
@@ -112,17 +113,17 @@ export const themeSettings = (mode) => {
             redAccent: {
               ...tokensDark.redAccent,
               main: tokensDark.redAccent[800],
-              light: tokensDark.redAccent[800],
+              light: tokensDark.redAccent[300],
             },
             greenAccent: {
               ...tokensDark.greenAccent,
               main: tokensDark.greenAccent[600],
-              light: tokensDark.greenAccent[600],
+              light: tokensDark.greenAccent[300],
             },         
             blueAccent: {
               ...tokensDark.blueAccent,
               main: tokensDark.blueAccent[900],
-              light: tokensDark.blueAccent[800],
+              light: tokensDark.blueAccent[300],
             },                                
             neutral: {
               ...tokensDark.grey,
@@ -141,6 +142,7 @@ export const themeSettings = (mode) => {
               ...tokensLight.primary,
               main: tokensDark.grey[50],
               light: tokensDark.grey[100],
+              gradient: "linear-gradient(180deg, #2a2185 18%, #002868 80%)",
             },
             secondary: {
               ...tokensLight.secondary,
@@ -149,22 +151,22 @@ export const themeSettings = (mode) => {
             }, 
             redAccent: {
               ...tokensLight.redAccent,
-              main: tokensDark.redAccent[100],
-              light: tokensDark.redAccent[200],
+              main: tokensDark.redAccent[500],
+              light: tokensDark.redAccent[300],
             },                
             greenAccent: {
               ...tokensLight.greenAccent,
-              main: tokensDark.greenAccent[500],
-              light: tokensDark.greenAccent[200],
+              main: tokensDark.greenAccent[700],
+              light: tokensDark.greenAccent[300],
             },            
             blueAccent: {
               ...tokensLight.blueAccent,
               main: tokensDark.blueAccent[100],
-              light: tokensDark.blueAccent[200],
+              light: tokensDark.blueAccent[300],
             },                       
             neutral: {
               ...tokensLight.grey,
-              main: tokensDark.grey[400],
+              main: tokensDark.grey[200],
               dark: tokensDark.grey[800],
               medium: tokensDark.grey[600],
             },
@@ -175,21 +177,7 @@ export const themeSettings = (mode) => {
           }),
     },
     typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-        '"Noto Sans KR Medium"',
-        '"Noto Sans KR"',
-        '"Noto Sans KR"'
-      ].join(','),
+      fontFamily: ["Inter", "sans-serif"].join(","),
       fontSize: 12,
       h1: {
         fontFamily: ["Helvetica","sans-serif"].join(","),
@@ -212,11 +200,11 @@ export const themeSettings = (mode) => {
         fontSize: 16,
       },
       h6: {
-        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","Noto Sans KR","sans-serif"].join(","),
+        fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: 14,
       },
       h7: {
-        fontFamily: ["Noto Sans KR Medium", "Noto Sans KR","Noto Sans KR","sans-serif"].join(","),
+        fontFamily: ["Inter", "sans-serif"].join(","),
         fontSize: 12,
       },      
     },

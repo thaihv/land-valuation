@@ -3,24 +3,24 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "../../state/api";
 import Header from "../../components/Header";
-import DataGridCustomToolbar from "../../components/DataGridCustomToolbar";
+import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar";
 
 const Transactions = () => {
   const theme = useTheme();
-
   // values to be sent to the backend
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-
   const [searchInput, setSearchInput] = useState("");
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 20,
+  });
   const { data, isLoading } = useGetTransactionsQuery({
-    page,
-    pageSize,
+    page: paginationModel.page,
+    pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
     search,
-  });
+  });  
 
   const columns = [
     {
@@ -31,24 +31,28 @@ const Transactions = () => {
     {
       field: "userId",
       headerName: "User ID",
+      editable: true,
       flex: 1,
     },
     {
       field: "createdAt",
-      headerName: "CreatedAt",
-      flex: 1,
+      headerName: "CreatedAt", 
+      editable: true,
+      flex: 1,    
     },
     {
       field: "products",
       headerName: "# of Products",
       flex: 0.5,
-      sortable: false,
+      sortable: false,      
+      description: 'This column has a description on product and is sortable.',
       renderCell: (params) => params.value.length,
     },
     {
       field: "cost",
       headerName: "Cost",
-      flex: 1,
+      width: 190,
+      editable: true,
       renderCell: (params) => `$${Number(params.value).toFixed(2)}`,
     },
   ];
@@ -58,49 +62,81 @@ const Transactions = () => {
       <Header title="TRANSACTIONS" subtitle="Entire list of transactions" />
       <Box
         height="80vh"
+        display="grid"
+        gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+        justifyContent="space-between"
+        rowGap="20px"
+        columnGap="1.33%"
         sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
+          "& > div": { gridColumn: "span 12" },
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.neutral.main} !important`,
             color: theme.palette.secondary[100],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.background.alt,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.neutral.main,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
           },
-        }}
+          "& .MuiCheckbox-root": {
+            color: `${theme.palette.secondary[200]} !important`,
+          },          
+        }}        
       >
         <DataGrid
+          editMode="row"
           loading={isLoading || !data}
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
           columns={columns}
-          rowCount={(data && data.total) || 0}
-          rowsPerPageOptions={[20, 50, 100]}
-          pagination
-          page={page}
-          pageSize={pageSize}
-          paginationMode="server"
+          rowCount={-1}  //Unknown row count case
           sortingMode="server"
-          onPageChange={(newPage) => setPage(newPage)}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          components={{ Toolbar: DataGridCustomToolbar }}
-          componentsProps={{
+
+          pagination
+          paginationMode="server"          
+          pageSizeOptions={[10, 20, 50]}
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newPaginationModel) => setPaginationModel(newPaginationModel) }
+
+          checkboxSelection
+          disableRowSelectionOnClick
+          slots={{ toolbar: CustomDataGridToolbar }}
+          slotProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
+            loadingOverlay: {
+              variant: 'skeleton',
+              noRowsVariant: 'skeleton',
+            },
+          }}
+          initialState={{
+            pinnedColumns: {
+              left: ['_id'],
+            },
+          }}          
+          sx={{
+            // boxShadow: 2,
+            // border: 2,
+            // borderColor: theme.palette.secondary[100],
+            '& .MuiDataGrid-cell:hover': {
+              color: theme.palette.secondary[200],
+            },
+            '@media print': {
+              '.MuiDataGrid-main': {
+                width: 'fit-content',
+                fontSize: '10px',
+                height: 'fit-content',
+                overflow: 'visible',
+              },
+              marginBottom: 100,
+            },
           }}
         />
       </Box>

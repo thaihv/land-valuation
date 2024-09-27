@@ -17,10 +17,15 @@ const interactionOptions = {
 
 const StaticMap = () => {
   return (
-    <MapContainer center={marker} zoom={12} className="map" {...interactionOptions}>
-    <TileLayer url={osm.maptiler.url} />
-    <Marker position={[marker.lat, marker.lng]}></Marker>
-  </MapContainer>
+    <MapContainer
+      center={marker}
+      zoom={12}
+      className="map"
+      {...interactionOptions}
+    >
+      <TileLayer url={osm.maptiler.url} />
+      <Marker position={[marker.lat, marker.lng]}></Marker>
+    </MapContainer>
   );
 };
 

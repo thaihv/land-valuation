@@ -48,17 +48,17 @@ const Team = () => {
             justifyContent="center"
             backgroundColor={
               access === "admin"
-                ? theme.palette.secondary[300]
+                ? theme.palette.redAccent.light
                 : access === "manager"
-                ? theme.palette.secondary[500]
-                : theme.palette.secondary[500]
+                ? theme.palette.blueAccent.light
+                : theme.palette.greenAccent.light
             }
             borderRadius="4px"
           >
             {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
             {access === "manager" && <SecurityOutlinedIcon />}
             {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={theme.palette.secondary[100]} sx={{ ml: "5px" }}>
+            <Typography color={theme.palette.primary.light} sx={{ ml: "5px" }}>
               {access}
             </Typography>
           </Box>
@@ -73,35 +73,52 @@ const Team = () => {
       <Box
         mt="40px"
         height="75vh"
+        display="grid"
+        gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+        justifyContent="space-between"
+        rowGap="20px"
+        columnGap="1.33%"
         sx={{
+          "& > div": { gridColumn: "span 12" },
           "& .MuiDataGrid-root": {
             border: "none",
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
-
-          },
+            padding: "10px !important"
+          },          
           "& .name-column--cell": {
             color: theme.palette.secondary.light,
           },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
+          "& .MuiDataGrid-container--top [role=row]": {
+            backgroundColor: `${theme.palette.neutral.main} !important`,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.background.alt,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.neutral.main,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
           "& .MuiCheckbox-root": {
             color: `${theme.palette.secondary[200]} !important`,
-          },
+          },          
         }}
+
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid 
+          checkboxSelection 
+          rows={mockDataTeam} 
+          columns={columns} 
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 10, page: 0 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 25]}
+      />
       </Box>
     </Box>
   );

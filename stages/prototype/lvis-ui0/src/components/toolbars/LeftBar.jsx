@@ -15,7 +15,7 @@ import {
   InputAdornment,
   FormHelperText,
 } from "@mui/material";
-import CustomButton from "../custom/CustomButton"
+import StyledButton from "../custom/StyledButton"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Search } from "@mui/icons-material";
@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 export default function LeftBar() {
   const theme = useTheme();
   const { t } = useTranslation();
-  const [isExpanded, setExpanded] = useState(true);
+  const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({
     isExpanded,
     hasDisabledAnimation: true,
@@ -178,12 +178,12 @@ export default function LeftBar() {
             />
             <FormHelperText>Select criteria to filter</FormHelperText>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <CustomButton
+              <StyledButton
                 variant="contained"
                 size="small"
               >
                 {t("Search")}
-              </CustomButton>
+              </StyledButton>
             </Box>
           </Stack>
         </div>
@@ -193,7 +193,7 @@ export default function LeftBar() {
           className="interactive-button"
           sx={{
             borderRadius: "0 5px 5px 0", // top-left top-right bottom-right bottom-left.
-            bgcolor: theme.palette.background.alt,
+            bgcolor: theme.palette.background.default,
             "&:hover": {
               bgcolor: theme.palette.secondary.main,
             },
@@ -205,7 +205,7 @@ export default function LeftBar() {
               height: "80px",
               width: "12px", 
               padding: "0px", //width + padding => right postition above            
-              color: theme.palette.greenAccent.main,
+              color: theme.palette.secondary[200],
             }}
             {...getToggleProps({ onClick: handleOnClick })}
           >

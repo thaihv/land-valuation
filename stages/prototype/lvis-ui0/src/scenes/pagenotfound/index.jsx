@@ -1,38 +1,43 @@
-import { Typography, Box, Button, useTheme } from "@mui/material";
-import CustomButton from "../../components/custom/CustomButton";
+import { Typography, Box, Container, useTheme } from "@mui/material";
+import Grid from '@mui/material/Grid2';
+import StyledButton from "../../components/custom/StyledButton";
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   return (
+
     <Box
-      width="100%"
-      display="flex"
-      gap="0.5rem"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}
     >
-      <Typography
-        fontSize="18px"
-        fontWeight="bold"
-        color={theme.palette.redAccent[500]}
-      >
-        [404] Land Valuation Information System 
-      </Typography>
-      <Typography
-        sx={{
-          color: theme.palette.neutral.medium,
-          fontSize: "40px",
-          fontWeight: "bold",
-        }}
-      >
-        Page you're trying to access is not available
-      </Typography>
-      <CustomButton variant="outlined" onClick={() => navigate("/home")}>
-        Go to Home Page
-      </CustomButton>
+      <Container maxWidth="md">
+        <Grid container spacing={2}>
+          <Grid xs={4}>
+            <img
+              src="./404.jpg"
+              alt=""
+              width={256} height={256}
+            />
+          </Grid>
+          <Grid xs={8}>
+            <Typography variant="h5" fontWeight="bold" color="#1E88E5">
+              [LVIS] Land Valuation Information System
+            </Typography>
+            <Typography variant="h4">
+              The page you’re looking for doesn’t exist.
+            </Typography>
+            <StyledButton variant="outlined" onClick={() => navigate("/home")}>
+              Go to Home Page
+            </StyledButton>
+          </Grid>          
+        </Grid>
+      </Container>
     </Box>
   );
 };

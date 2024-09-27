@@ -1,9 +1,12 @@
-import * as React from "react";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { Typography, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Typography,
+  Tabs,
+  Tab,
+  Box,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import Header from "../../components/Header";
 import Breakdown from "../charts/breakdown";
 import Overview from "../charts/overview";
@@ -11,12 +14,14 @@ import Geography from "../charts/geography";
 import Daily from "../charts/daily";
 import Monthly from "../charts/monthly";
 import FileUpload from "../form/FileUpload";
-import FileDownloader from "../form/FileDownload"
+import FileDownloader from "../form/FileDownload";
 import FlexBetween from "../../components/FlexBetween";
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
-import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+import DownloadForOfflineOutlinedIcon from "@mui/icons-material/DownloadForOfflineOutlined";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -48,8 +53,8 @@ function a11yProps(index) {
 
 const Utilities = () => {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-  const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const [value, setValue] = useState(0);
+  const isNonMediumScreens = useMediaQuery("(min-width: 1000px)");
   const { t } = useTranslation();
 
   const handleChange = (event, newValue) => {
@@ -58,11 +63,24 @@ const Utilities = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="ACTIVITIES"/>
+        <Header title="ACTIVITIES" />
       </FlexBetween>
-      <Box height="75vh">
+      <Box
+          //mt="20px"
+          display="grid"
+          gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+          justifyContent="space-between"
+          rowGap="20px"
+          columnGap="1.33%"
+          sx={{
+            "& > div": { gridColumn: "span 12" },
+          }}      
+      >
         <Box sx={{ borderBottom: 0 }}>
           <Tabs
+            variant={!isNonMediumScreens ? "scrollable" : "standard"}
+            scrollButtons
+            allowScrollButtonsMobile
             value={value}
             onChange={handleChange}
             aria-label="Activity Tabs"
@@ -73,11 +91,11 @@ const Utilities = () => {
               "& .MuiButtonBase-root.MuiTab-root": {
                 color: theme.palette.secondary[300],
                 fontWeight: "bold",
-                variant:"h5",
+                variant: "h5",
               },
               "& .MuiTab-root.Mui-selected": {
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.background.alt,
+                backgroundColor: theme.palette.background.alt,
+                //backgroundImage: theme.palette.primary.gradient,
                 borderRadius: "15px",
               },
             }}
@@ -88,12 +106,7 @@ const Utilities = () => {
             <Tab label={t("Geography")} {...a11yProps(3)} />
             <Tab label={t("Breakdown")} {...a11yProps(4)} />
             <Tab label={t("Upload")} {...a11yProps(5)} />
-            <Tab
-              // icon={<LanguageOutlinedIcon />}
-              // iconPosition="start"
-              label={t("Language")}
-              {...a11yProps(6)}
-            />
+            <Tab label={t("Language")} {...a11yProps(6)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -115,7 +128,6 @@ const Utilities = () => {
           <Box
             display="grid"
             gridTemplateColumns="repeat(12, minmax(0, 1fr))"
-            gridAutoRows="180px"
             gap="30px"
             sx={{
               "& > div": {
@@ -151,7 +163,7 @@ const Utilities = () => {
               border={`1px solid ${theme.palette.secondary[200]}`}
               p="1rem"
             >
-              <FlexBetween sx={{ mb: "20px" }}>              
+              <FlexBetween sx={{ mb: "20px" }}>
                 <DownloadForOfflineOutlinedIcon
                   sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
                 />
@@ -164,13 +176,16 @@ const Utilities = () => {
                 </Typography>
               </FlexBetween>
               <FileDownloader />
-            </Box>            
+            </Box>
           </Box>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={6}>
-          <Box height="75vh" border={`1px solid ${theme.palette.secondary[200]}`}>
+          <Box
+            height="70vh"
+            border={`1px solid ${theme.palette.secondary[200]}`}
+          >
             <LanguageSwitcher />
-          </Box>          
+          </Box>
         </CustomTabPanel>
       </Box>
     </Box>

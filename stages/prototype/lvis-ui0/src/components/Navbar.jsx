@@ -3,35 +3,47 @@ import {
   LightModeOutlined,
   DarkModeOutlined,
   Menu as MenuIcon,
-  Search,
   SettingsOutlined,
   Notifications,
   ArrowDropDownOutlined,
+  Message,
+  Help,
+  Close,
 } from "@mui/icons-material";
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import FlexBetween from "./FlexBetween";
 import { useDispatch } from "react-redux";
+import {useNavigate } from "react-router-dom";
 import { setMode, setLogout } from "../state";
+import { useTranslation } from "react-i18next";
+import { navItems } from "./menu/navItems";
 import {
   AppBar,
   Button,
   Box,
   Typography,
   IconButton,
-  InputBase,
   Toolbar,
   Menu,
   MenuItem,
   useTheme,
+  useMediaQuery
 } from "@mui/material";
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const isNonMobileScreens = useMediaQuery("(min-width: 600px)");
+  const handleResponsiveMenu = () => {     
+      isNonMobileScreens ? setIsSidebarOpen(!isSidebarOpen) : setIsMobileMenuToggled(!isMobileMenuToggled);
+  }
 
   return (
     <AppBar
@@ -44,20 +56,67 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
         <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+          <IconButton onClick={handleResponsiveMenu}>
             <MenuIcon />
           </IconButton>
-          <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius="9px"
-            gap="3rem"
-            p="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
+          {/* MOBILE NAV */}
+          {!isNonMobileScreens && isMobileMenuToggled && (
+            <Box
+              position="fixed"
+              left="0"
+              bottom="0"
+              height="100%"
+              zIndex="1001"
+              maxWidth="500px"
+              minWidth="300px"
+              backgroundColor={theme.palette.background.default}
+            >
+              {/* CLOSE ICON */}
+              <Box display="flex" justifyContent="flex-start" p="1rem">
+                <IconButton
+                  onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
+                >
+                  <Close />
+                </IconButton>
+              </Box>
+              {/* MENU ITEMS */}
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent= "space-between"
+                alignItems= "start"
+                p="1rem"
+              >
+                <MenuItem 
+                  onClick={() => {navigate(`/`);}}
+                  sx={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}>
+                  LVIS
+                </MenuItem> 
+
+                {navItems.map(({ text, link, icon }) => {
+                  const ref = link.toLowerCase();
+                  return (
+                    <FlexBetween key={t(text)}>
+                      <IconButton>
+                        {icon}
+                      </IconButton>                      
+                      <MenuItem 
+                        onClick={() => {
+                        navigate(`/${ref}`);
+                        setIsMobileMenuToggled(!isMobileMenuToggled);
+                      }}>
+                        {t(text)}
+                      </MenuItem>                        
+                    </FlexBetween>                    
+                  );
+                })}                
+              </Box>
+            </Box>
+          )}
         </FlexBetween>
 
         {/* RIGHT SIDE */}
@@ -94,7 +153,13 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 height="32px"
                 width="32px"
                 borderRadius="50%"
-                sx={{ objectFit: "cover" }}
+                onClick={() => navigate(`/profile/${user._id}`)}
+                sx={{ 
+                  objectFit: "cover",
+                  "&:hover": {
+                    transform: "scale3d(1.25, 1.25, 1.25)",
+                  }, 
+                }}
               />
               <Box textAlign="left">
                 <Typography
@@ -121,7 +186,24 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem>
+                <FlexBetween
+                  onClick={() => dispatch(setLogout())}
+                  sx={{
+                    color: "#000000",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      color: theme.palette.secondary[200],
+                    },
+                  }}            
+                >
+                  <LogoutOutlinedIcon/>
+                  <Typography>                  
+                    {t("Sign Out")}
+                  </Typography>            
+                </FlexBetween>
+              </MenuItem>
             </Menu>
           </FlexBetween>
         </FlexBetween>

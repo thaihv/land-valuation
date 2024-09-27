@@ -52,17 +52,35 @@ const Profile = () => {
         gap="2rem"
         justifyContent="center"
       >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+        <Box 
+          flexBasis={isNonMobileScreens ? "26%" : undefined}
+          mt={isNonMobileScreens ? undefined : "2rem"}
+        >
           <UserWidget userId={id} picturePath={user.picturePath} />
         </Box>
-        <Box flexBasis={isNonMobileScreens ? "42%" : undefined}>
+        <Box 
+          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          mt={isNonMobileScreens ? undefined : "2rem"}
+        >
           <UpdateUser user={user} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "26%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <AdvertWidget />
+          <AdvertWidget 
+            category="Cosmetics" 
+            homelink="searchmenow.com" 
+            picture="info3.jpeg"
+            description="1488A High pigment cosmetics all in one Ladies Makeup kit box for professional full cosmetic makeup vanity cosmetic box set." 
+          />
+          <Box m="2rem 0" />
+          <AdvertWidget 
+            category="Foods" 
+            homelink="mykfc.com" 
+            picture="info2.jpeg"
+            description="Yummy Food Steak Hamburger Salmon Art Prints Kitchen Poster Wall Home Decoration." 
+          />
         </Box>
       </Box>
     </Box>

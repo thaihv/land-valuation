@@ -47,7 +47,7 @@ const Daily = () => {
   }, [data, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Box height="75vh" border={`1px solid ${theme.palette.secondary[200]}`}>
+    <Box height="70vh" border={`1px solid ${theme.palette.secondary[200]}`}>
       <Box display="flex" justifyContent="flex-end">
         <Box>
           <DatePicker

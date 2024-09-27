@@ -8,6 +8,7 @@ import {
   Typography,
   Box,
   Chip,
+  useMediaQuery
 } from "@mui/material";
 import LinearProgressBar from "../components/progessbars/LinearProgressBar"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -110,8 +111,11 @@ const DownloadItem = ({ name, file, filename, removeFile }) => {
   );
 };
 
-const DownloaderContainer = styled("div")(({ theme }) => ({
-  width: 500,
+const DownloaderContainer = styled("div")(({ theme , isNonMobile}) => ({
+  width: 
+    isNonMobile 
+    ? 500
+    : 300,
   minHeight: 128,
   position: "fixed",
   right: theme.spacing(2),
@@ -136,8 +140,9 @@ const CustomList = styled(List)(({ theme }) => ({
 }));
 
 const Downloader = ({ files = [], remove }) => {
+  const isNonMobile = useMediaQuery("(min-width: 600px)");
   return (
-    <DownloaderContainer>
+    <DownloaderContainer isNonMobile={isNonMobile}>
       <CustomCard>
         <CustomCardHeader 
           title="File Downloader"
