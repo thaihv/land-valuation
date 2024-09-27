@@ -94,7 +94,7 @@ function Map({ items }) {
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="provinces"
+                  styles="province"
                   format="image/png"
                   opacity={0.6}
                 />
@@ -105,7 +105,7 @@ function Map({ items }) {
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="districts"
+                  styles="district"
                   format="image/png"
                   opacity={0.8}
                 />
@@ -116,18 +116,18 @@ function Map({ items }) {
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="villages"
+                  styles="village"
                   format="image/png"
                   opacity={0.85}
                 />
               </LayersControl.Overlay>
               <LayersControl.Overlay name="Road">
                 <WMSTileLayer
-                  layers={"lvis:roads"}
+                  layers={"lvis:road"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="roads"
+                  styles="road"
                   format="image/png"
                   opacity={1}
                 />
