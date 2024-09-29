@@ -20,7 +20,7 @@ const Transactions = () => {
     pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
     search,
-  });  
+  });
 
   const columns = [
     {
@@ -36,16 +36,16 @@ const Transactions = () => {
     },
     {
       field: "createdAt",
-      headerName: "CreatedAt", 
+      headerName: "CreatedAt",
       editable: true,
-      flex: 1,    
+      flex: 1,
     },
     {
       field: "products",
       headerName: "# of Products",
       flex: 0.5,
-      sortable: false,      
-      description: 'This column has a description on product and is sortable.',
+      sortable: false,
+      description: "This column has a description on product and is sortable.",
       renderCell: (params) => params.value.length,
     },
     {
@@ -87,8 +87,8 @@ const Transactions = () => {
           },
           "& .MuiCheckbox-root": {
             color: `${theme.palette.secondary[200]} !important`,
-          },          
-        }}        
+          },
+        }}
       >
         <DataGrid
           editMode="row"
@@ -96,44 +96,44 @@ const Transactions = () => {
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
           columns={columns}
-          rowCount={-1}  //Unknown row count case
+          rowCount={-1} //Unknown row count case
           sortingMode="server"
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-
           pagination
-          paginationMode="server"          
+          paginationMode="server"
           pageSizeOptions={[10, 20, 50]}
           paginationModel={paginationModel}
-          onPaginationModelChange={(newPaginationModel) => setPaginationModel(newPaginationModel) }
-
+          onPaginationModelChange={(newPaginationModel) =>
+            setPaginationModel(newPaginationModel)
+          }
           checkboxSelection
           disableRowSelectionOnClick
           slots={{ toolbar: CustomDataGridToolbar }}
           slotProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
             loadingOverlay: {
-              variant: 'skeleton',
-              noRowsVariant: 'skeleton',
+              variant: "skeleton",
+              noRowsVariant: "skeleton",
             },
           }}
           initialState={{
             pinnedColumns: {
-              left: ['_id'],
+              left: ["_id"],
             },
-          }}          
+          }}
           sx={{
             // boxShadow: 2,
             // border: 2,
             // borderColor: theme.palette.secondary[100],
-            '& .MuiDataGrid-cell:hover': {
+            "& .MuiDataGrid-cell:hover": {
               color: theme.palette.secondary[200],
             },
-            '@media print': {
-              '.MuiDataGrid-main': {
-                width: 'fit-content',
-                fontSize: '10px',
-                height: 'fit-content',
-                overflow: 'visible',
+            "@media print": {
+              ".MuiDataGrid-main": {
+                width: "fit-content",
+                fontSize: "10px",
+                height: "fit-content",
+                overflow: "visible",
               },
               marginBottom: 100,
             },
