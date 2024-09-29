@@ -149,6 +149,7 @@ function Map({ items }) {
                   maxZoom={20}
                   transparent={true}
                   styles="parcel_tech"
+                  tiled={true}
                   format="image/png"
                   opacity={0.6}
                 />
