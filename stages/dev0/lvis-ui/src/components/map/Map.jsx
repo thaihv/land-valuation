@@ -32,7 +32,7 @@ function Map({ items }) {
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        backgroundColor= {theme.palette.background.default}
+        backgroundColor={theme.palette.background.default}
         borderRadius="4px"
         gap="0.25rem"
         sx={{
@@ -51,9 +51,7 @@ function Map({ items }) {
           }}
         >
           <AdjustOutlinedIcon />
-          <Typography sx={{ ml: "5px" }}>
-            Center
-          </Typography>
+          <Typography sx={{ ml: "5px" }}>Center</Typography>
         </FlexBetween>
         <FlexBetween
           onClick={onLocation}
@@ -64,9 +62,7 @@ function Map({ items }) {
           }}
         >
           <MyLocationIcon />
-          <Typography sx={{ ml: "5px" }}>
-            Location
-          </Typography>
+          <Typography sx={{ ml: "5px" }}>Location</Typography>
         </FlexBetween>
       </Box>
     );
@@ -141,7 +137,7 @@ function Map({ items }) {
                   format="image/png"
                   opacity={0.6}
                 />
-              </LayersControl.Overlay>              
+              </LayersControl.Overlay>
               <LayersControl.Overlay name="Valuation Object">
                 <WMSTileLayer
                   layers={"lvis:parcel_tech"}
@@ -153,7 +149,7 @@ function Map({ items }) {
                   format="image/png"
                   opacity={0.6}
                 />
-              </LayersControl.Overlay>              
+              </LayersControl.Overlay>
               <LayersControl.Overlay name="Research Place">
                 {items.map((item) => (
                   <Pin item={item} key={item.id} />
