@@ -14,7 +14,7 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
     height: "50px",
     backgroundColor: "transparent",
     borderRadius: "50%",
-    pointerEvents: "none",
+    pointerEvents: "none",    
   },
   "&::after": {
     content: '""',
@@ -30,22 +30,20 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
   "&:hover, &.Mui-selected:hover": {
     color: theme.palette.secondary[200],
     backgroundColor: theme.palette.secondary.main,
+    zIndex: "1000",
     "& .MuiListItemIcon-root": {
       color: theme.palette.secondary[200],
     },
     "&::before": {
       boxShadow: `35px 35px 0 10px ${theme.palette.secondary.main}`,
-      zIndex: "1000",
     },
     "&::after": {
       boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
-      zIndex: "1000",
     },
+    '&:active:before, &:active:after, &:focus:before, &:focus:after': {
+      zIndex: "-1000"
+    },          
   },
-  // '&:active': {
-  //   backgroundColor: "red",
-  //   zIndex: "1000"
-  // },
   "&.Mui-selected": {
     backgroundColor: theme.palette.background.default,
     color: theme.palette.secondary[200],
