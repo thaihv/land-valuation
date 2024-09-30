@@ -30,7 +30,7 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
   "&:hover, &.Mui-selected:hover": {
     color: theme.palette.secondary[200],
     backgroundColor: theme.palette.secondary.main,
-    zIndex: "1000",
+    zIndex: "1",
     "& .MuiListItemIcon-root": {
       color: theme.palette.secondary[200],
     },
@@ -41,7 +41,7 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
       boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
     },
     '&:active:before, &:active:after, &:focus:before, &:focus:after': {
-      zIndex: "-1000"
+      zIndex: "-1"
     },          
   },
   "&.Mui-selected": {
