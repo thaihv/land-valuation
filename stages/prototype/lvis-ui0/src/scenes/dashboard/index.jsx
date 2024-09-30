@@ -154,8 +154,8 @@ const Dashboard = () => {
             "& .MuiDataGrid-cell": {
               borderBottom: "none",
             },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.alt,
+            "& .MuiDataGrid-container--top [role=row]": {
+              backgroundColor: `${theme.palette.background.alt} !important`,
               color: theme.palette.secondary[100],
               borderBottom: "none",
             },
