@@ -155,7 +155,7 @@ const Dashboard = () => {
               borderBottom: "none",
             },
             "& .MuiDataGrid-container--top [role=row]": {
-              backgroundColor: `${theme.palette.neutral.main} !important`,
+              backgroundColor: `${theme.palette.background.alt} !important`,
               color: theme.palette.secondary[100],
               borderBottom: "none",
             },
