@@ -6,7 +6,6 @@ import FlexBetween from "./FlexBetween";
 const StatBox = ({ title, value, increase, icon, description }) => {
   const theme = useTheme();
   const percentage = value * 0.00001;
-  console.log(percentage);
   return (
     <Box
       gridColumn="span 2"
