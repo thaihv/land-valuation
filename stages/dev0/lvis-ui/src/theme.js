@@ -95,6 +95,31 @@ export const tokensLight = reverseTokens(tokensDark);
 // mui theme settings
 export const themeSettings = (mode) => {
   return {
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          html: {
+            '& ::-webkit-scrollbar': {
+              backgroundColor: tokensDark.grey[100],
+            },
+            '& ::-webkit-scrollbar-track': {
+              backgroundColor: tokensDark.grey[100],
+            },
+            '& ::-webkit-scrollbar-thumb': {
+              borderRadius: 8,
+              border: "none",
+              backgroundColor: tokensDark.grey[0],
+            },
+            '& ::-webkit-scrollbar-track:hover': {
+              backgroundColor: tokensDark.grey[100],
+            },            
+            '& ::-webkit-scrollbar-thumb:hover': {
+              backgroundColor: tokensDark.secondary[600],
+            },
+          },
+        },
+      },
+    },    
     palette: {
       mode: mode,
       ...(mode === "dark"
