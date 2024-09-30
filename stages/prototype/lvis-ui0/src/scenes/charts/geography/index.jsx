@@ -2,7 +2,7 @@ import React from "react";
 import { Box, useTheme } from "@mui/material";
 import { useGetGeographyQuery } from "../../../state/api";
 import { ResponsiveChoropleth } from "@nivo/geo";
-import { geoData } from "../../../state/geoData";
+import { geoData } from "../../../data/geoData";
 
 const Geography = () => {
   const theme = useTheme();
@@ -46,7 +46,7 @@ const Geography = () => {
             },
             tooltip: {
               container: {
-                color: theme.palette.primary.main,
+                color: theme.palette.secondary[500],
               },
             },
           }}

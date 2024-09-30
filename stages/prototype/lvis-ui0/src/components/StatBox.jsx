@@ -1,9 +1,11 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
+import ProgressCircle from "./ProgressCircle";
 import FlexBetween from "./FlexBetween";
 
 const StatBox = ({ title, value, increase, icon, description }) => {
   const theme = useTheme();
+  const percentage = value * 0.00001;
   return (
     <Box
       gridColumn="span 2"
@@ -22,14 +24,16 @@ const StatBox = ({ title, value, increase, icon, description }) => {
         </Typography>
         {icon}
       </FlexBetween>
-
-      <Typography
-        variant="h3"
-        fontWeight="600"
-        sx={{ color: theme.palette.secondary[200] }}
-      >
-        {value}
-      </Typography>
+      <FlexBetween gap="1rem">
+        <Typography
+          variant="h3"
+          fontWeight="600"
+          sx={{ color: theme.palette.secondary[200] }}
+        >
+          {value}
+        </Typography>
+        <ProgressCircle progress={percentage} size="35" />
+      </FlexBetween> 
       <FlexBetween gap="1rem">
         <Typography
           variant="h5"

@@ -32,7 +32,7 @@ function Map({ items }) {
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        backgroundColor= {theme.palette.background.default}
+        backgroundColor={theme.palette.background.default}
         borderRadius="4px"
         gap="0.25rem"
         sx={{
@@ -51,9 +51,7 @@ function Map({ items }) {
           }}
         >
           <AdjustOutlinedIcon />
-          <Typography sx={{ ml: "5px" }}>
-            Center
-          </Typography>
+          <Typography sx={{ ml: "5px" }}>Center</Typography>
         </FlexBetween>
         <FlexBetween
           onClick={onLocation}
@@ -64,9 +62,7 @@ function Map({ items }) {
           }}
         >
           <MyLocationIcon />
-          <Typography sx={{ ml: "5px" }}>
-            Location
-          </Typography>
+          <Typography sx={{ ml: "5px" }}>Location</Typography>
         </FlexBetween>
       </Box>
     );
@@ -94,7 +90,7 @@ function Map({ items }) {
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="provinces"
+                  styles="province"
                   format="image/png"
                   opacity={0.6}
                 />
@@ -105,7 +101,7 @@ function Map({ items }) {
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="districts"
+                  styles="district"
                   format="image/png"
                   opacity={0.8}
                 />
@@ -116,20 +112,42 @@ function Map({ items }) {
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="villages"
+                  styles="village"
                   format="image/png"
                   opacity={0.85}
                 />
               </LayersControl.Overlay>
               <LayersControl.Overlay name="Road">
                 <WMSTileLayer
-                  layers={"lvis:roads"}
+                  layers={"lvis:road"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
                   maxZoom={20}
                   transparent={true}
-                  styles="roads"
+                  styles="road"
                   format="image/png"
                   opacity={1}
+                />
+              </LayersControl.Overlay>
+              <LayersControl.Overlay name="Parcel">
+                <WMSTileLayer
+                  layers={"lvis:parcel_re"}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
+                  maxZoom={20}
+                  transparent={true}
+                  format="image/png"
+                  opacity={0.6}
+                />
+              </LayersControl.Overlay>
+              <LayersControl.Overlay name="Valuation Object">
+                <WMSTileLayer
+                  layers={"lvis:parcel_tech"}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
+                  maxZoom={20}
+                  transparent={true}
+                  styles="parcel_tech"
+                  tiled={true}
+                  format="image/png"
+                  opacity={0.6}
                 />
               </LayersControl.Overlay>
               <LayersControl.Overlay name="Research Place">

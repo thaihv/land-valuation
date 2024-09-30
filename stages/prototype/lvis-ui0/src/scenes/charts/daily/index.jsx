@@ -102,7 +102,7 @@ const Daily = () => {
             },
             tooltip: {
               container: {
-                color: theme.palette.primary.main,
+                color: theme.palette.secondary[500],
               },
             },
           }}
