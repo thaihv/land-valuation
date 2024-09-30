@@ -117,7 +117,7 @@ const Dashboard = () => {
           p="1rem"
           borderRadius="0.55rem"
         >
-          <OverviewChart view="sales" isDashboard={true} />
+          <OverviewChart view="sales" isDashboard={true} />          
         </Box>
         <StatBox
           title="Monthly Sales"
@@ -149,7 +149,7 @@ const Dashboard = () => {
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
-              borderRadius: "5rem",
+              borderRadius: "0.55rem",
             },
             "& .MuiDataGrid-cell": {
               borderBottom: "none",
@@ -197,7 +197,7 @@ const Dashboard = () => {
           >
             Breakdown of real states and information via category for revenue
             made for this year and total sales.
-          </Typography>
+          </Typography>          
         </Box>
       </Box>
     </Box>
