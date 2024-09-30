@@ -1,14 +1,10 @@
 import { ListItemButton } from "@mui/material";
 import { styled } from "@mui/system";
 
-
-const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({     
+const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
   height: "10vh",
   borderRadius: "20px 0 0 20px", // top-left top-right bottom-right bottom-left.
-  color:
-    selected
-    ? theme.palette.primary[600]
-    : theme.palette.primary.light, //theme.palette.secondary[500],
+  color: selected ? theme.palette.primary[600] : theme.palette.primary.light, //theme.palette.secondary[500],
   "&::before": {
     content: '""',
     position: "absolute",
@@ -18,7 +14,7 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
     height: "50px",
     backgroundColor: "transparent",
     borderRadius: "50%",
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
   "&::after": {
     content: '""',
@@ -29,43 +25,44 @@ const StyledListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
     height: "50px",
     backgroundColor: "transparent",
     borderRadius: "50%",
-    pointerEvents: "none"
-  },      
+    pointerEvents: "none",
+  },
   "&:hover, &.Mui-selected:hover": {
     color: theme.palette.secondary[200],
     backgroundColor: theme.palette.secondary.main,
     "& .MuiListItemIcon-root": {
-      color: theme.palette.secondary[200],                                
+      color: theme.palette.secondary[200],
     },
     "&::before": {
       boxShadow: `35px 35px 0 10px ${theme.palette.secondary.main}`,
+      zIndex: "1000",
     },
     "&::after": {
       boxShadow: `35px -35px 0 10px ${theme.palette.secondary.main}`,
-    }                                                                                                                         
-  },
-  "&:hover": {
-    "&::after": {
       zIndex: "1000",
-    }, 
-  },   
+    },
+  },
+  // '&:active': {
+  //   backgroundColor: "red",
+  //   zIndex: "1000"
+  // },
   "&.Mui-selected": {
     backgroundColor: theme.palette.background.default,
     color: theme.palette.secondary[200],
     "& .MuiListItemIcon-root": {
-      color: theme.palette.secondary[200],                                
+      color: theme.palette.secondary[200],
     },
-    "&::before": {                           
+    "&::before": {
       boxShadow: `35px 35px 0 10px ${theme.palette.background.default}`,
     },
     "&::after": {
       boxShadow: `35px -35px 0 10px ${theme.palette.background.default}`,
-    }, 
-  },                                                                                                                   
-  flexDirection: 'column',
+    },
+  },
+  flexDirection: "column",
   "& .MuiListItemIcon-root": {
-    justifyContent: 'center',
-    alignItems: 'center'                             
-  },  
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 export default StyledListItemButton;
