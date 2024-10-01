@@ -26,7 +26,7 @@ const PageNotFound = () => {
             />
           </Grid>
           <Grid xs={8}>
-            <Typography variant="h4" fontWeight="bold" color={theme.palette.blueAccent[400]}>
+            <Typography variant="h4" fontWeight="bold">
               Land Valuation Information System
             </Typography>
             <Typography variant="h5" color={theme.palette.redAccent[400]}> 
