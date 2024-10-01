@@ -96,8 +96,7 @@ const Transactions = () => {
           // },
         }}
       >
-        <DataGrid
-          editMode="row"
+        <DataGrid    
           loading={isLoading || !data}
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
@@ -123,20 +122,17 @@ const Transactions = () => {
             },
           }}
           sx={{
-            // boxShadow: 2,
-            // border: 2,
-            // borderColor: theme.palette.secondary[100],
-            "& .MuiDataGrid-cell:hover": {
+            '& .MuiDataGrid-cell:hover': {
               color: theme.palette.secondary[200],
             },
-            "@media print": {
-              ".MuiDataGrid-main": {
+            '@media print': {
+              '.MuiDataGrid-main': {
                 width: "fit-content",
-                fontSize: "10px",
+                fontSize: "14px",
                 height: "fit-content",
                 overflow: "visible",
               },
-              marginBottom: 100,
+              marginBottom: "20px",
             },
           }}
         />

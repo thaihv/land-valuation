@@ -182,7 +182,7 @@ export const themeSettings = (mode) => {
             greenAccent: {
               ...tokensLight.greenAccent,
               main: tokensDark.greenAccent[700],
-              light: tokensDark.greenAccent[300],
+              light: tokensDark.greenAccent[100],
             },            
             blueAccent: {
               ...tokensLight.blueAccent,

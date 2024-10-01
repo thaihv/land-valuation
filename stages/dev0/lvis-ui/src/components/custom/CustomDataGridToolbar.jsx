@@ -86,7 +86,7 @@ const csvOptions = {
 const printOptions = {
   hideFooter: true,
   hideToolbar: true,
-  includeCheckboxes: true,
+  includeCheckboxes: false,
 };
 
 function CustomExportButton(props) {

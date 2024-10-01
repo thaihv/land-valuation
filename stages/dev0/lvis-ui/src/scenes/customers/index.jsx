@@ -31,16 +31,19 @@ const Customers = () => {
     {
       field: "name",
       headerName: "Name",
+      editable: true,
       flex: 0.5,
     },
     {
       field: "email",
       headerName: "Email",
+      editable: true,
       flex: 1,
     },
     {
       field: "phoneNumber",
       headerName: "Phone Number",
+      editable: true,
       flex: 0.5,
       renderCell: (params) => {
         return params.value.replace(/^(\d{3})(\d{3})(\d{4})/, "($1)$2-$3");
@@ -54,6 +57,7 @@ const Customers = () => {
     {
       field: "occupation",
       headerName: "Occupation",
+      editable: true,
       flex: 1,
     },
     {
@@ -100,6 +104,7 @@ const Customers = () => {
         }}         
       >
         <DataGrid
+          editMode="row"
           loading={isLoading || !data}
           getRowId={(row) => row._id}
           rows={(data && data.customers) || []}
@@ -124,6 +129,17 @@ const Customers = () => {
           }} 
           checkboxSelection
           disableRowSelectionOnClick
+          sx={{
+            '& .MuiDataGrid-cell:hover': {
+              color: theme.palette.secondary[200],
+            },
+            '& .MuiDataGrid-cell--editable': {
+              bgcolor: "#f0f0f0",
+              ...theme.applyStyles('dark', {
+                bgcolor: "#191F45",
+              }),
+            },
+          }}
         />
       </Box>
     </Box>
