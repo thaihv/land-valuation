@@ -28,8 +28,45 @@ export const getProducts = async (req, res) => {
 
 export const getCustomers = async (req, res) => {
   try {
-    const customers = await User.find({ role: "user" }).select("-password");
-    res.status(200).json(customers);
+    // sort should look like this: { "field": "userId", "sort": "desc"}
+    const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
+
+    // formatted sort should look like { userId: -1 }
+    const generateSort = () => {
+      const sortParsed = JSON.parse(sort);
+      const sortFormatted = {
+        [sortParsed.field]: (sortParsed.sort = "asc" ? 1 : -1),
+      };
+
+      return sortFormatted;
+    };
+    const sortFormatted = Boolean(sort) ? generateSort() : {};
+
+    const customers = await User.find({
+      $or: [
+        { name: { $regex: new RegExp(search, "i") } },
+        { email: { $regex: new RegExp(search, "i") } },
+        { phoneNumber: { $regex: new RegExp(search, "i") } },
+        { country: { $regex: new RegExp(search, "i") } },
+        { occupation: { $regex: new RegExp(search, "i") } },
+      ],
+    })
+      .select("-password")
+      .sort(sortFormatted)
+      .skip(page * pageSize)
+      .limit(pageSize);
+      
+    let total = await User.countDocuments();  
+    if (search){
+      if (customers.length < pageSize)
+        total = customers.length;
+      else
+        total = -1;
+    }      
+    res.status(200).json({
+      customers,
+      total,
+    });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

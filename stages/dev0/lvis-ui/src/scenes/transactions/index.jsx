@@ -69,6 +69,12 @@ const Transactions = () => {
         columnGap="1.33%"
         sx={{
           "& > div": { gridColumn: "span 12" },
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },          
           "& .MuiDataGrid-container--top [role=row]": {
             backgroundColor: `${theme.palette.neutral.main} !important`,
             color: theme.palette.secondary[100],
@@ -85,9 +91,9 @@ const Transactions = () => {
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
           },
-          "& .MuiCheckbox-root": {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
+          // "& .MuiCheckbox-root": {
+          //   color: `${theme.palette.secondary[200]} !important`,
+          // },
         }}
       >
         <DataGrid
@@ -114,11 +120,6 @@ const Transactions = () => {
             loadingOverlay: {
               variant: "skeleton",
               noRowsVariant: "skeleton",
-            },
-          }}
-          initialState={{
-            pinnedColumns: {
-              left: ["_id"],
             },
           }}
           sx={{

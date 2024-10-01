@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { useGetCustomersQuery } from "../../state/api";
 import Header from "../../components/Header";
@@ -7,8 +7,20 @@ import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar
 
 const Customers = () => {
   const theme = useTheme();
-  const { data, isLoading } = useGetCustomersQuery();
-  console.log("data", data);
+  // values to be sent to the backend
+  const [sort, setSort] = useState({});
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 20,
+  });
+  const { data, isLoading } = useGetCustomersQuery({
+    page: paginationModel.page,
+    pageSize: paginationModel.pageSize,
+    sort: JSON.stringify(sort),
+    search,
+  });
 
   const columns = [
     {
@@ -90,22 +102,28 @@ const Customers = () => {
         <DataGrid
           loading={isLoading || !data}
           getRowId={(row) => row._id}
-          rows={data || []}
+          rows={(data && data.customers) || []}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 10, page: 0 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 25]}
+          rowCount={(data && data.total) || 0} //in case of Unknown row count set it -1
+          sortingMode="server"
+          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+          pagination
+          paginationMode="server"
+          pageSizeOptions={[10, 20, 50]}
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newPaginationModel) =>
+            setPaginationModel(newPaginationModel)
+          }
           slots={{ toolbar: CustomDataGridToolbar }}
           slotProps={{
-            //toolbar: { searchInput, setSearchInput, setSearch },
+            toolbar: { searchInput, setSearchInput, setSearch },
             loadingOverlay: {
               variant: "skeleton",
               noRowsVariant: "skeleton",
             },
-          }}          
+          }} 
+          checkboxSelection
+          disableRowSelectionOnClick
         />
       </Box>
     </Box>
