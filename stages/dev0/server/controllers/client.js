@@ -43,12 +43,17 @@ export const getCustomers = async (req, res) => {
     const sortFormatted = Boolean(sort) ? generateSort() : {};
 
     const customers = await User.find({
-      $or: [
-        { name: { $regex: new RegExp(search, "i") } },
-        { email: { $regex: new RegExp(search, "i") } },
-        { phoneNumber: { $regex: new RegExp(search, "i") } },
-        { country: { $regex: new RegExp(search, "i") } },
-        { occupation: { $regex: new RegExp(search, "i") } },
+      $and: [
+        { role: "user" },
+        {       
+          $or: [
+            { name: { $regex: new RegExp(search, "i") } },
+            { email: { $regex: new RegExp(search, "i") } },
+            { phoneNumber: { $regex: new RegExp(search, "i") } },
+            { country: { $regex: new RegExp(search, "i") } },
+            { occupation: { $regex: new RegExp(search, "i") } },
+          ], 
+      }
       ],
     })
       .select("-password")
@@ -56,12 +61,22 @@ export const getCustomers = async (req, res) => {
       .skip(page * pageSize)
       .limit(pageSize);
       
-    let total = await User.countDocuments();  
+    let total = await User.find({ role: "user" }).countDocuments();  
     if (search){
-      if (customers.length < pageSize)
-        total = customers.length;
-      else
-        total = -1;
+      total = await User.find({
+        $and: [
+          { role: "user" },
+          {       
+            $or: [
+              { name: { $regex: new RegExp(search, "i") } },
+              { email: { $regex: new RegExp(search, "i") } },
+              { phoneNumber: { $regex: new RegExp(search, "i") } },
+              { country: { $regex: new RegExp(search, "i") } },
+              { occupation: { $regex: new RegExp(search, "i") } },
+            ], 
+        }
+        ],
+      }).countDocuments();    
     }      
     res.status(200).json({
       customers,
@@ -87,7 +102,6 @@ export const getTransactions = async (req, res) => {
       return sortFormatted;
     };
     const sortFormatted = Boolean(sort) ? generateSort() : {};
-
     const transactions = await Transaction.find({
       $or: [
         { cost: { $regex: new RegExp(search, "i") } },
@@ -100,10 +114,12 @@ export const getTransactions = async (req, res) => {
       
     let total = await Transaction.countDocuments();  
     if (search){
-      if (transactions.length < pageSize)
-        total = transactions.length;
-      else
-        total = -1;
+      total = await Transaction.find({
+        $or: [
+          { cost: { $regex: new RegExp(search, "i") } },
+          { userId: { $regex: new RegExp(search, "i") } },
+        ],
+      }).countDocuments();
     }      
     res.status(200).json({
       transactions,
