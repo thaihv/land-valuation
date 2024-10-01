@@ -96,7 +96,7 @@ const Transactions = () => {
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
           columns={columns}
-          rowCount={-1} //Unknown row count case
+          rowCount={(data && data.total) || 0} //in case of Unknown row count set it -1
           sortingMode="server"
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
           pagination
