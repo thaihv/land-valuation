@@ -25,9 +25,11 @@ import {
 import FlexBetween from "../FlexBetween";
 import { createSvgIcon } from "@mui/material/utils";
 
-const getRowsFromCurrentPage = ({ apiRef }) => gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
+const getRowsFromCurrentPage = ({ apiRef }) =>
+  gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
 const getUnfilteredRows = ({ apiRef }) => gridSortedRowIdsSelector(apiRef);
-const getFilteredRows = ({ apiRef }) => gridExpandedSortedRowIdsSelector(apiRef);
+const getFilteredRows = ({ apiRef }) =>
+  gridExpandedSortedRowIdsSelector(apiRef);
 
 const getJson = (apiRef) => {
   // Select rows and columns
@@ -117,6 +119,11 @@ const ExportIcon = createSvgIcon(
 const CustomDataGridToolbar = ({ searchInput, setSearchInput, setSearch }) => {
   const apiRef = useGridApiContext();
   const handleExport = (options) => apiRef.current.exportDataAsCsv(options);
+  const handleKeyPress = (e) => {
+    if (e.keyCode == 13) {
+      setSearch(searchInput);
+    }
+  };
   const buttonBaseProps = {
     color: "primary",
     size: "small",
@@ -141,6 +148,7 @@ const CustomDataGridToolbar = ({ searchInput, setSearchInput, setSearch }) => {
         <TextField
           label="Search..."
           sx={{ mb: "0.5rem", width: "15rem" }}
+          onKeyDown={handleKeyPress}
           onChange={(e) => setSearchInput(e.target.value)}
           value={searchInput}
           variant="standard"
