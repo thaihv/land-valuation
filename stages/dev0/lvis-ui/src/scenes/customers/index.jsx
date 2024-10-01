@@ -3,6 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { useGetCustomersQuery } from "../../state/api";
 import Header from "../../components/Header";
 import { DataGrid } from "@mui/x-data-grid";
+import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar";
 
 const Customers = () => {
   const theme = useTheme();
@@ -54,31 +55,6 @@ const Customers = () => {
     <Box m="1.5rem 2.5rem">
       <Header title="CUSTOMERS" subtitle="List of Customers" />
       <Box
-        // mt="40px"
-        // height="75vh"
-        // sx={{
-        //   "& .MuiDataGrid-root": {
-        //     border: "none",
-        //   },
-        //   "& .MuiDataGrid-cell": {
-        //     borderBottom: "none",
-        //   },
-        //   "& .MuiDataGrid-container--top [role=row]": {
-        //     backgroundColor: `${theme.palette.neutral.main} !important`,
-        //     borderBottom: "none",
-        //   },
-        //   "& .MuiDataGrid-virtualScroller": {
-        //     backgroundColor: theme.palette.background.alt,
-        //   },
-        //   "& .MuiDataGrid-footerContainer": {
-        //     backgroundColor: theme.palette.neutral.main,
-        //     color: theme.palette.secondary[100],
-        //     borderTop: "none",
-        //   },
-        //   "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-        //     color: `${theme.palette.secondary[200]} !important`,
-        //   },
-        // }}
         mt="40px"
         height="75vh"
         display="grid"
@@ -122,6 +98,14 @@ const Customers = () => {
             },
           }}
           pageSizeOptions={[5, 10, 25]}
+          slots={{ toolbar: CustomDataGridToolbar }}
+          slotProps={{
+            //toolbar: { searchInput, setSearchInput, setSearch },
+            loadingOverlay: {
+              variant: "skeleton",
+              noRowsVariant: "skeleton",
+            },
+          }}          
         />
       </Box>
     </Box>

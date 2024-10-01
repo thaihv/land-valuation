@@ -10,7 +10,6 @@ import {
 import {
   GridToolbarDensitySelector,
   GridToolbarContainer,
-  GridToolbarExport,
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
   GridToolbarExportContainer,
@@ -18,6 +17,7 @@ import {
   GridPrintExportMenuItem,
   gridExpandedSortedRowIdsSelector,
   gridFilteredSortedRowIdsSelector,
+  gridSortedRowIdsSelector,
   gridPaginatedVisibleSortedGridRowIdsSelector,
   gridVisibleColumnFieldsSelector,
   useGridApiContext,
@@ -25,13 +25,9 @@ import {
 import FlexBetween from "../FlexBetween";
 import { createSvgIcon } from "@mui/material/utils";
 
-const getRowsFromCurrentPage = ({ apiRef }) =>
-  gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
-
+const getRowsFromCurrentPage = ({ apiRef }) => gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
 const getUnfilteredRows = ({ apiRef }) => gridSortedRowIdsSelector(apiRef);
-
-const getFilteredRows = ({ apiRef }) =>
-  gridExpandedSortedRowIdsSelector(apiRef);
+const getFilteredRows = ({ apiRef }) => gridExpandedSortedRowIdsSelector(apiRef);
 
 const getJson = (apiRef) => {
   // Select rows and columns
@@ -45,19 +41,16 @@ const getJson = (apiRef) => {
     });
     return row;
   });
-
   return JSON.stringify(data, null, 2);
 };
 
 const exportBlob = (blob, filename) => {
   // Save the blob in a json file
   const url = URL.createObjectURL(blob);
-
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;
   a.click();
-
   setTimeout(() => {
     URL.revokeObjectURL(url);
   });
@@ -65,9 +58,7 @@ const exportBlob = (blob, filename) => {
 
 function JsonExportMenuItem(props) {
   const apiRef = useGridApiContext();
-
   const { hideMenu } = props;
-
   return (
     <MenuItem
       onClick={() => {
@@ -85,15 +76,15 @@ function JsonExportMenuItem(props) {
     </MenuItem>
   );
 }
-const csvOptions = { 
-  fileName: 'lvis_datagrid',
-  delimiter: ";", 
+const csvOptions = {
+  fileName: "lvis_datagrid",
+  delimiter: ";",
   utf8WithBom: true,
 };
 const printOptions = {
   hideFooter: true,
   hideToolbar: true,
-  includeCheckboxes: true
+  includeCheckboxes: true,
 };
 
 function CustomExportButton(props) {
@@ -108,20 +99,24 @@ function CustomExportButton(props) {
 
 const ExportIcon = createSvgIcon(
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    height="24px"
-    viewBox="0 -960 960 960"
-    width="24px"
+    width="24"
+    height="24"
+    viewBox="0 0 32 32"
     fill="#997d3d"
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+    <circle cx="16.0003" cy="16" r="9.33333" stroke="#997d3d" />
+    <circle cx="15.9997" cy="16" r="2.66667" fill="white" stroke="white" />
+    <path d="M16 6.66667V4" stroke="white" strokeLinecap="round" />
+    <path d="M25.3333 16L28 16" stroke="white" strokeLinecap="round" />
+    <path d="M16 28L16 25.3333" stroke="white" strokeLinecap="round" />
+    <path d="M4.00032 16H6.66699" stroke="white" strokeLinecap="round" />
   </svg>
 );
 
 const CustomDataGridToolbar = ({ searchInput, setSearchInput, setSearch }) => {
   const apiRef = useGridApiContext();
   const handleExport = (options) => apiRef.current.exportDataAsCsv(options);
-
   const buttonBaseProps = {
     color: "primary",
     size: "small",
@@ -140,7 +135,7 @@ const CustomDataGridToolbar = ({ searchInput, setSearchInput, setSearch }) => {
             {...buttonBaseProps}
             onClick={() => handleExport({ getRowsToExport: getFilteredRows })}
           >
-            Custom
+            MyOne
           </Button>
         </FlexBetween>
         <TextField
