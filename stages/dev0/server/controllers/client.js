@@ -60,11 +60,14 @@ export const getTransactions = async (req, res) => {
       .sort(sortFormatted)
       .skip(page * pageSize)
       .limit(pageSize);
-
+      
     let total = await Transaction.countDocuments();  
-    if (search)
-      total = transactions.length;
-
+    if (search){
+      if (transactions.length < pageSize)
+        total = transactions.length;
+      else
+        total = -1;
+    }      
     res.status(200).json({
       transactions,
       total,
