@@ -1,13 +1,50 @@
 import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
-import { useGetCustomersQuery } from "../../state/api";
+import { Box, Button, useTheme } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
 import Header from "../../components/Header";
-import { DataGrid } from "@mui/x-data-grid";
-import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar";
+import { useGetCustomersQuery } from "../../state/api";
+import {
+  GridRowModes,
+  DataGrid,
+  GridToolbarContainer,
+  GridActionsCellItem,
+  GridRowEditStopReasons,
+} from '@mui/x-data-grid';
+import {
+  randomId
+} from '@mui/x-data-grid-generator';
+
+
+function EditToolbar(props) {
+  const { setRows, setRowModesModel } = props;
+
+  const handleClick = () => {
+    const _id = randomId();
+    setRows((oldRows) => [
+      ...oldRows,
+      { _id, name: '', email: '', phoneNumber: '', country: '', occupation: '', isNew: true },
+    ]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [_id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+    }));
+  };
+
+  return (
+    <GridToolbarContainer>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        Add record
+      </Button>
+    </GridToolbarContainer>
+  );
+}
 
 const Customers = () => {
   const theme = useTheme();
-  // values to be sent to the backend
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -20,8 +57,60 @@ const Customers = () => {
     pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
     search,
-  });
+  }); 
+  const [rows, setRows] = useState([]);
+  const [total, setTotal] = useState(-1);
+  const [rowModesModel, setRowModesModel] = useState({});
 
+
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
+  };
+
+  const handleEditClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
+  const handleDeleteClick = (id) => () => {
+    setRows(rows.filter((row) => row._id !== id));
+  };
+
+  const handleCancelClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row._id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row._id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row._id === newRow._id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
+
+  const handleStateChange = () => {
+    if (data){
+      if (!rows || rows.length == 0){
+        setRows(data.customers);
+        setTotal(data.total)
+      }
+    }
+  }
   const columns = [
     {
       field: "_id",
@@ -52,6 +141,7 @@ const Customers = () => {
     {
       field: "country",
       headerName: "Country",
+      editable: true,
       flex: 0.4,
     },
     {
@@ -65,13 +155,59 @@ const Customers = () => {
       headerName: "Role",
       flex: 0.5,
     },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: theme.palette.secondary[200],
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
   ];
 
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="CUSTOMERS" subtitle="List of Customers" />
       <Box
-        mt="40px"
+        mt="20px"
         height="75vh"
         display="grid"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
@@ -80,6 +216,13 @@ const Customers = () => {
         columnGap="1.33%"
         sx={{
           "& > div": { gridColumn: "span 12" },
+          width: '100%',
+          '& .actions': {
+            color: theme.palette.secondary[200],
+          },
+          '& .textPrimary': {
+            color: theme.palette.secondary[200],
+          },          
           "& .MuiDataGrid-root": {
             border: "none",
           },
@@ -100,35 +243,42 @@ const Customers = () => {
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
-          },          
+          },             
         }}         
       >
         <DataGrid
-          editMode="row"
           loading={isLoading || !data}
+          onStateChange={handleStateChange}
           getRowId={(row) => row._id}
-          rows={(data && data.customers) || []}
+          rows={rows}
           columns={columns}
-          rowCount={(data && data.total) || 0} //in case of Unknown row count set it -1
+          editMode="row"
+          rowModesModel={rowModesModel}
+          rowCount={total}
           sortingMode="server"
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
           pagination
           paginationMode="server"
           pageSizeOptions={[10, 20, 50]}
           paginationModel={paginationModel}
-          onPaginationModelChange={(newPaginationModel) =>
-            setPaginationModel(newPaginationModel)
-          }
-          slots={{ toolbar: CustomDataGridToolbar }}
+          onPaginationModelChange={(newPaginationModel) => {
+            setPaginationModel(newPaginationModel);
+            setRows(data.customers);
+            setTotal(data.total);
+          }}          
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          slots={{
+            toolbar: EditToolbar,
+          }}
           slotProps={{
-            toolbar: { searchInput, setSearchInput, setSearch },
+            toolbar: { setRows, setRowModesModel },
             loadingOverlay: {
               variant: "skeleton",
               noRowsVariant: "skeleton",
-            },
-          }} 
-          checkboxSelection
-          disableRowSelectionOnClick
+            },            
+          }}
           sx={{
             '& .MuiDataGrid-cell:hover': {
               color: theme.palette.secondary[200],
@@ -139,7 +289,7 @@ const Customers = () => {
                 bgcolor: "#191F45",
               }),
             },
-          }}
+          }}          
         />
       </Box>
     </Box>
