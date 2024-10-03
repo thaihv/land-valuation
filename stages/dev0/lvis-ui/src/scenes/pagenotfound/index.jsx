@@ -32,7 +32,7 @@ const PageNotFound = () => {
             <Typography variant="h5" color={theme.palette.redAccent[400]}> 
               The page you’re looking for doesn’t exist.
             </Typography>
-            <StyledButton variant="outlined" onClick={() => navigate("/home")}>
+            <StyledButton sx={{border: `2px solid ${theme.palette.neutral.dark}`}} variant="outlined" onClick={() => navigate("/home")}>
               Go to Home Page
             </StyledButton>
           </Grid>          
