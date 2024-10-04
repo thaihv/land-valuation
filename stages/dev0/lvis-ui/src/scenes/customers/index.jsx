@@ -148,7 +148,7 @@ const Customers = () => {
     },
     {
       field: "occupation",
-      headerlabel: "Occupation",
+      headerName: "Occupation",
       editable: true,
       flex: 1,
     },
