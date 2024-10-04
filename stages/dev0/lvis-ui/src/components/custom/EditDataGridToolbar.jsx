@@ -89,14 +89,10 @@ function CustomExportButton(props) {
 const AddIcon = createSvgIcon(
   <svg
     fill="#997d3d"
-    version="1.1"
-    id="Capa_1"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
     width="800px"
     height="800px"
     viewBox="0 0 885.389 885.389"
-    xml:space="preserve"
+
   >
     <g>
       <path

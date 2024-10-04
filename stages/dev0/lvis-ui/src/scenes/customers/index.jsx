@@ -44,8 +44,9 @@ const Customers = () => {
         name: "",
         email: "",
         phoneNumber: "",
-        country: "",
+        country: "VN",
         occupation: "",
+        role: "user",
         isNew: true,
       },
     ]);
@@ -66,10 +67,12 @@ const Customers = () => {
   };
 
   const handleSaveClick = (id) => () => {
+    console.log(`saved ${id}`);
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id) => () => {
+    console.log(`delete ${id}`);
     setRows(rows.filter((row) => row._id !== id));
   };
 
@@ -85,11 +88,15 @@ const Customers = () => {
     }
   };
 
-  const processRowUpdate = (newRow) => {
+  const processRowUpdate = (newRow, originalRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row._id === newRow._id ? updatedRow : row)));
     return updatedRow;
   };
+
+  const handleProcessRowUpdateError = () =>{
+    console.log('handle error here');
+  }
 
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
@@ -269,6 +276,7 @@ const Customers = () => {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+          onProcessRowUpdateError={handleProcessRowUpdateError}
           slots={{
             toolbar: EditDataGridToolbar,
           }}
