@@ -3,7 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "../../state/api";
 import Header from "../../components/Header";
-import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar";
+import BasicDataGridToolbar from "../../components/custom/BasicDataGridToolbar";
 
 const Transactions = () => {
   const theme = useTheme();
@@ -113,7 +113,7 @@ const Transactions = () => {
           }
           checkboxSelection
           disableRowSelectionOnClick
-          slots={{ toolbar: CustomDataGridToolbar }}
+          slots={{ toolbar: BasicDataGridToolbar }}
           slotProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
             loadingOverlay: {

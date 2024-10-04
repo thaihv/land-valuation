@@ -1,47 +1,20 @@
 import React, { useState } from "react";
-import { Box, Button, useTheme } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+import { Box, useTheme } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 import Header from "../../components/Header";
 import { useGetCustomersQuery } from "../../state/api";
+import EditDataGridToolbar from "../../components/custom/EditDataGridToolbar";
 import {
   GridRowModes,
   DataGrid,
-  GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
-} from '@mui/x-data-grid';
-import {
-  randomId
-} from '@mui/x-data-grid-generator';
+} from "@mui/x-data-grid";
+import { randomId } from "@mui/x-data-grid-generator";
 import { countryData } from "../../data/mockData";
-
-function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const _id = randomId();
-    setRows((oldRows) => [
-      ...oldRows,
-      { _id, name: '', email: '', phoneNumber: '', country: '', occupation: '', isNew: true },
-    ]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [_id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    }));
-  };
-
-  return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
-      </Button>
-    </GridToolbarContainer>
-  );
-}
 
 const Customers = () => {
   const theme = useTheme();
@@ -57,11 +30,30 @@ const Customers = () => {
     pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
     search,
-  }); 
+  });
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(-1);
   const [rowModesModel, setRowModesModel] = useState({});
 
+  const handleAddNew = () => {
+    const _id = randomId();
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        _id,
+        name: "",
+        email: "",
+        phoneNumber: "",
+        country: "",
+        occupation: "",
+        isNew: true,
+      },
+    ]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [_id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+    }));
+  };
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -104,13 +96,13 @@ const Customers = () => {
   };
 
   const handleStateChange = () => {
-    if (data){
-      if (!rows || rows.length == 0){
+    if (data) {
+      if (!rows || rows.length == 0) {
         setRows(data.customers);
-        setTotal(data.total)
+        setTotal(data.total);
       }
     }
-  }
+  };
   const columns = [
     {
       field: "_id",
@@ -143,7 +135,7 @@ const Customers = () => {
       headerName: "Country",
       editable: true,
       flex: 0.4,
-      type: 'singleSelect',
+      type: "singleSelect",
       valueOptions: countryData,
     },
     {
@@ -157,15 +149,18 @@ const Customers = () => {
       headerName: "Role",
       flex: 0.5,
       editable: true,
-      type: 'singleSelect',
-      valueOptions: [{ value: 'user', label: 'User' },{ value: 'admin', label: 'Admin' }],
+      type: "singleSelect",
+      valueOptions: [
+        { value: "user", label: "User" },
+        { value: "admin", label: "Admin" },
+      ],
     },
     {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
       width: 100,
-      cellClassName: 'actions',
+      cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
@@ -221,13 +216,13 @@ const Customers = () => {
         columnGap="1.33%"
         sx={{
           "& > div": { gridColumn: "span 12" },
-          width: '100%',
-          '& .actions': {
+          width: "100%",
+          "& .actions": {
             color: theme.palette.secondary[200],
           },
-          '& .textPrimary': {
+          "& .textPrimary": {
             color: theme.palette.secondary[200],
-          },          
+          },
           "& .MuiDataGrid-root": {
             border: "none",
           },
@@ -248,8 +243,8 @@ const Customers = () => {
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
-          },             
-        }}         
+          },
+        }}
       >
         <DataGrid
           loading={isLoading || !data}
@@ -270,31 +265,31 @@ const Customers = () => {
             setPaginationModel(newPaginationModel);
             setRows(data.customers);
             setTotal(data.total);
-          }}          
+          }}
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
           slots={{
-            toolbar: EditToolbar,
+            toolbar: EditDataGridToolbar,
           }}
           slotProps={{
-            toolbar: { setRows, setRowModesModel },
+            toolbar: { searchInput, setSearchInput, setSearch, handleAddNew },
             loadingOverlay: {
               variant: "skeleton",
               noRowsVariant: "skeleton",
-            },            
+            },
           }}
           sx={{
-            '& .MuiDataGrid-cell:hover': {
+            "& .MuiDataGrid-cell:hover": {
               color: theme.palette.secondary[200],
             },
-            '& .MuiDataGrid-cell--editable': {
+            "& .MuiDataGrid-cell--editable": {
               bgcolor: "#f0f0f0",
-              ...theme.applyStyles('dark', {
+              ...theme.applyStyles("dark", {
                 bgcolor: "#191F45",
               }),
             },
-          }}          
+          }}
         />
       </Box>
     </Box>
