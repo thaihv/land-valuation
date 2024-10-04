@@ -17,7 +17,7 @@ import {
 import {
   randomId
 } from '@mui/x-data-grid-generator';
-
+import { countryData } from "../../data/mockData";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -143,10 +143,12 @@ const Customers = () => {
       headerName: "Country",
       editable: true,
       flex: 0.4,
+      type: 'singleSelect',
+      valueOptions: countryData,
     },
     {
       field: "occupation",
-      headerName: "Occupation",
+      headerlabel: "Occupation",
       editable: true,
       flex: 1,
     },
@@ -154,6 +156,9 @@ const Customers = () => {
       field: "role",
       headerName: "Role",
       flex: 0.5,
+      editable: true,
+      type: 'singleSelect',
+      valueOptions: [{ value: 'user', label: 'User' },{ value: 'admin', label: 'Admin' }],
     },
     {
       field: 'actions',
