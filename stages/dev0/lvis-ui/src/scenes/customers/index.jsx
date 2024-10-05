@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Close";
+import { Box, Button, TextField, useTheme } from "@mui/material";
 import Header from "../../components/Header";
-import { useGetCustomersQuery } from "../../state/api";
-import EditDataGridToolbar from "../../components/custom/EditDataGridToolbar";
 import {
-  GridRowModes,
-  DataGrid,
-  GridActionsCellItem,
-  GridRowEditStopReasons,
-} from "@mui/x-data-grid";
-import { randomId } from "@mui/x-data-grid-generator";
+  useGetCustomersQuery,
+  useAddCustomerMutation,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,
+} from "../../state/api";
+import { DataGrid } from "@mui/x-data-grid";
 import { countryData } from "../../data/mockData";
 
 const Customers = () => {
@@ -25,7 +19,7 @@ const Customers = () => {
     page: 0,
     pageSize: 20,
   });
-  const { data, isLoading } = useGetCustomersQuery({
+  const { data, refetch } = useGetCustomersQuery({
     page: paginationModel.page,
     pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
@@ -35,81 +29,41 @@ const Customers = () => {
   const [total, setTotal] = useState(-1);
   const [rowModesModel, setRowModesModel] = useState({});
 
-  const handleAddNew = () => {
-    const _id = randomId();
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        _id,
-        name: "",
-        email: "",
-        phoneNumber: "",
-        country: "VN",
-        occupation: "",
-        role: "user",
-        isNew: true,
-      },
-    ]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [_id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-    }));
-  };
+  const [addCustomer] = useAddCustomerMutation();
+  const [updateCustomer] = useUpdateCustomerMutation();
+  const [deleteCustomer] = useDeleteCustomerMutation();
+  const [newCustomer, setNewCustomer] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    country: "VN",
+    occupation: "",
+    role: "user",
+  });
 
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
-
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id) => () => {
-    console.log(`saved ${id}`);
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
-  const handleDeleteClick = (id) => () => {
-    console.log(`delete ${id}`);
-    setRows(rows.filter((row) => row._id !== id));
-  };
-
-  const handleCancelClick = (id) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+  const handleAddCustomer = async () => {
+    await addCustomer(newCustomer);
+    setNewCustomer({
+      name: "",
+      email: "",
+      phoneNumber: "",
+      country: "VN",
+      occupation: "",
+      role: "user",
     });
-
-    const editedRow = rows.find((row) => row._id === id);
-    if (editedRow.isNew) {
-      setRows(rows.filter((row) => row._id !== id));
-    }
+    refetch();
   };
 
-  const processRowUpdate = (newRow, originalRow) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row._id === newRow._id ? updatedRow : row)));
-    return updatedRow;
+  const handleUpdateCustomer = async (updatedData) => {
+    await updateCustomer(updatedData);
+    refetch();
   };
 
-  const handleProcessRowUpdateError = () =>{
-    console.log('handle error here');
-  }
-
-  const handleRowModesModelChange = (newRowModesModel) => {
-    setRowModesModel(newRowModesModel);
+  const handleDeleteCustomer = async (id) => {
+    await deleteCustomer(id);
+    refetch();
   };
 
-  const handleStateChange = () => {
-    if (data) {
-      if (!rows || rows.length == 0) {
-        setRows(data.customers);
-        setTotal(data.total);
-      }
-    }
-  };
   const columns = [
     {
       field: "_id",
@@ -163,50 +117,17 @@ const Customers = () => {
       ],
     },
     {
-      field: "actions",
-      type: "actions",
-      headerName: "Actions",
-      width: 100,
-      cellClassName: "actions",
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              sx={{
-                color: theme.palette.secondary[200],
-              }}
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-
-        return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
-        ];
-      },
+      field: "action",
+      headerName: "Action",
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          color="secondary"
+          onClick={() => handleDeleteCustomer(params.row._id)}
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 
@@ -254,51 +175,25 @@ const Customers = () => {
         }}
       >
         <DataGrid
-          loading={isLoading || !data}
-          onStateChange={handleStateChange}
           getRowId={(row) => row._id}
-          rows={rows}
+          rows={(data && data.customers) || []}
           columns={columns}
-          editMode="row"
-          rowModesModel={rowModesModel}
-          rowCount={total}
-          sortingMode="server"
-          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          pagination
-          paginationMode="server"
-          pageSizeOptions={[10, 20, 50]}
-          paginationModel={paginationModel}
-          onPaginationModelChange={(newPaginationModel) => {
-            setPaginationModel(newPaginationModel);
-            setRows(data.customers);
-            setTotal(data.total);
-          }}
-          onRowModesModelChange={handleRowModesModelChange}
-          onRowEditStop={handleRowEditStop}
-          processRowUpdate={processRowUpdate}
-          onProcessRowUpdateError={handleProcessRowUpdateError}
-          slots={{
-            toolbar: EditDataGridToolbar,
-          }}
-          slotProps={{
-            toolbar: { searchInput, setSearchInput, setSearch, handleAddNew },
-            loadingOverlay: {
-              variant: "skeleton",
-              noRowsVariant: "skeleton",
-            },
-          }}
-          sx={{
-            "& .MuiDataGrid-cell:hover": {
-              color: theme.palette.secondary[200],
-            },
-            "& .MuiDataGrid-cell--editable": {
-              bgcolor: "#f0f0f0",
-              ...theme.applyStyles("dark", {
-                bgcolor: "#191F45",
-              }),
-            },
-          }}
+          pageSize={5}
         />
+        <TextField
+          label="Name"
+          value={newCustomer.name}
+          onChange={(e) => setNewCustomer({ ...newCustomer, name: e.target.value })}
+        />
+        <TextField
+          label="Age"
+          type="number"
+          value={newCustomer.email}
+          onChange={(e) =>
+            setNewCustomer({ ...newCustomer, email: e.target.value })
+          }
+        />
+        <Button onClick={handleAddCustomer}>Add Customer</Button>
       </Box>
     </Box>
   );

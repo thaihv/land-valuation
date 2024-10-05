@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import Product from "../models/Product.js";
 import ProductStat from "../models/ProductStat.js";
 import User from "../models/User.js";
@@ -30,7 +31,6 @@ export const getCustomers = async (req, res) => {
   try {
     // sort should look like this: { "field": "userId", "sort": "desc"}
     const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
-
     // formatted sort should look like { userId: -1 }
     const generateSort = () => {
       const sortParsed = JSON.parse(sort);
@@ -81,6 +81,88 @@ export const getCustomers = async (req, res) => {
     res.status(200).json({
       customers,
       total,
+    });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+export const getCustomer = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const Customer = await User.findById(id);
+    res.status(200).json({
+      Customer
+    });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+export const addCustomer = async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      country,
+      phoneNumber,
+      occupation,
+      role,
+    } = req.body;
+
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash('123456', salt);
+
+    const newUser = new User({
+      name,
+      email,
+      password: passwordHash,
+      country,
+      phoneNumber,
+      occupation,
+      role,
+    });
+    const savedCustomer = await newUser.save();
+    res.status(201).json(savedCustomer);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+export const editCustomer = async (req, res) => {
+  const {
+    _id,
+    name,
+    email,
+    country,
+    phoneNumber,
+    occupation,
+    role,
+  } = req.body;
+
+  const customer = await User.findOne({ _id: _id });
+
+  if (customer) {
+    customer.name = name;
+    customer.email = email;
+    customer.phoneNumber = phoneNumber;
+    customer.occupation  = occupation;
+    customer.country = country;
+    customer.role     = role;
+    try {
+      await customer.save();
+      res.status(201).json(customer);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }    
+  }
+  else {
+    res.status(500).json({ error: "Could not load customer" });
+  }
+};
+export const deleteCustomer = async (req, res) => {
+  try {  
+    const { id } = req.params;    
+    const deletedCount = await User.findByIdAndDelete(id);
+    res.status(200).json({
+      deletedCount
     });
   } catch (error) {
     res.status(404).json({ message: error.message });

@@ -23,6 +23,10 @@ export const api = createApi({
       query: () => "client/products",
       providesTags: ["Products"],
     }),
+    getCustomer: build.query({
+      query: (id) => `client/customers/${id}`,
+      providesTags: ["Customers"],
+    }),    
     getCustomers: build.query({
       query: ({ page, pageSize, sort, search }) => ({
         url: "client/customers",
@@ -31,6 +35,55 @@ export const api = createApi({
       }),
       providesTags: ["Customers"],
     }),
+    // addCustomer: build.query({
+    //   query: (body) => ({
+    //     url: "client/customers",
+    //     method: 'POST',
+    //     body,
+    //   }),
+    //   invalidatesTags: ['Customers'],
+    // }),    
+    // updateCustomer: build.query({
+    //   query: (body) => ({
+    //     url: `client/customers`,
+    //     method: 'PATCH',
+    //     body,
+    //   }),
+    //   invalidatesTags: ['Customers'],
+    // }),      
+    // deleteCustomer: build.query({
+    //   query(id) {
+    //     return {
+    //       url: `client/customers/${id}`,
+    //       method: 'DELETE',
+    //     }
+    //   },
+    //   invalidatesTags: ['Customers'],
+    // }),    
+    addCustomer: build.mutation({
+      query: (body) => ({
+        url: 'client/customers',
+        method: 'POST',
+        body: body,
+      }),
+      invalidatesTags: ['Customers'],
+    }),
+    updateCustomer: build.mutation({
+      query: (body) => ({
+        url: `client/customers`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['Customers'],
+    }),
+    deleteCustomer: build.mutation({
+      query: (id) => ({
+        url: `client/customers/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Customers'],
+    }),
+
     getTransactions: build.query({
       query: ({ page, pageSize, sort, search }) => ({
         url: "client/transactions",
@@ -65,7 +118,14 @@ export const api = createApi({
 export const {
   useGetUserQuery,
   useGetProductsQuery,
+  useGetCustomerQuery,
   useGetCustomersQuery,
+  // useAddCustomerQuery,
+  // useUpdateCustomerQuery,
+  // useDeleteCustomerQuery,
+  useAddCustomerMutation,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,  
   useGetTransactionsQuery,
   useGetGeographyQuery,
   useGetSalesQuery,
