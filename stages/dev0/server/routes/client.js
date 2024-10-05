@@ -4,7 +4,7 @@ import {
   getCustomer,
   getCustomers,
   addCustomer,
-  editCustomer,
+  updateCustomer,
   deleteCustomer,
   getTransactions,
   getGeography,
@@ -18,7 +18,7 @@ router.get("/customers", getCustomers);
 router.get("/customers/:id", getCustomer);
 router.delete("/customers/:id", deleteCustomer);
 router.post('/customers', addCustomer);
-router.patch('/customers', editCustomer);
+router.put('/customers/:id', updateCustomer);
 
 router.get("/transactions", getTransactions);
 router.get("/geography", getGeography);

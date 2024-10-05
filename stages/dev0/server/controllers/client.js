@@ -126,7 +126,7 @@ export const addCustomer = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-export const editCustomer = async (req, res) => {
+export const updateCustomer = async (req, res) => {
   const {
     _id,
     name,
@@ -136,9 +136,7 @@ export const editCustomer = async (req, res) => {
     occupation,
     role,
   } = req.body;
-
   const customer = await User.findOne({ _id: _id });
-
   if (customer) {
     customer.name = name;
     customer.email = email;

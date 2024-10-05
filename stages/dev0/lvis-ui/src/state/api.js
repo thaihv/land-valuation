@@ -70,7 +70,7 @@ export const api = createApi({
     }),
     updateCustomer: build.mutation({
       query: (body) => ({
-        url: `client/customers`,
+        url: `client/customers/${body._id}`,
         method: 'PUT',
         body: body,
       }),

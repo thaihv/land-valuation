@@ -1,20 +1,30 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  Select,
+  TextField,
+  MenuItem,
+  useTheme,
+} from "@mui/material";
 import Header from "../../components/Header";
+import StyledButton from "../../components/custom/StyledButton";
 import {
   useGetCustomersQuery,
   useAddCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
 } from "../../state/api";
-import { DataGrid } from "@mui/x-data-grid";
+import { 
+  DataGrid, 
+  GridRowEditStopReasons 
+} from "@mui/x-data-grid";
 import { countryData } from "../../data/mockData";
 
 const Customers = () => {
   const theme = useTheme();
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 20,
@@ -25,9 +35,6 @@ const Customers = () => {
     sort: JSON.stringify(sort),
     search,
   });
-  const [rows, setRows] = useState([]);
-  const [total, setTotal] = useState(-1);
-  const [rowModesModel, setRowModesModel] = useState({});
 
   const [addCustomer] = useAddCustomerMutation();
   const [updateCustomer] = useUpdateCustomerMutation();
@@ -53,7 +60,9 @@ const Customers = () => {
     });
     refetch();
   };
-
+  const handleUpdateCustomerError = (error) => {
+    console.log('error');
+  };
   const handleUpdateCustomer = async (updatedData) => {
     await updateCustomer(updatedData);
     refetch();
@@ -62,6 +71,12 @@ const Customers = () => {
   const handleDeleteCustomer = async (id) => {
     await deleteCustomer(id);
     refetch();
+  };
+
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
   };
 
   const columns = [
@@ -178,22 +193,77 @@ const Customers = () => {
           getRowId={(row) => row._id}
           rows={(data && data.customers) || []}
           columns={columns}
-          pageSize={5}
+          rowCount={(data && data.total) || 0}
+          sortingMode="server"
+          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+          pagination
+          paginationMode="server"
+          pageSizeOptions={[10, 20, 50]}
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newPaginationModel) => {
+            setPaginationModel(newPaginationModel);
+          }}
+          processRowUpdate={handleUpdateCustomer}
+          onRowEditStop={handleRowEditStop}
+          onProcessRowUpdateError={handleUpdateCustomerError}
         />
-        <TextField
-          label="Name"
-          value={newCustomer.name}
-          onChange={(e) => setNewCustomer({ ...newCustomer, name: e.target.value })}
-        />
-        <TextField
-          label="Age"
-          type="number"
-          value={newCustomer.email}
-          onChange={(e) =>
-            setNewCustomer({ ...newCustomer, email: e.target.value })
-          }
-        />
-        <Button onClick={handleAddCustomer}>Add Customer</Button>
+        <Box display="flex" gap="2px" justifyContent="flex-start">
+          <TextField
+            label="Name"
+            value={newCustomer.name}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, name: e.target.value })
+            }
+          />
+          <TextField
+            label="Email"
+            value={newCustomer.email}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, email: e.target.value })
+            }
+          />
+          <TextField
+            label="Phone Number"
+            type="number"
+            value={newCustomer.phoneNumber}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, phoneNumber: e.target.value })
+            }
+          />
+          <Select
+            labelId="country-select-label"
+            id="country-select"
+            value={newCustomer.country}
+            label="Country"
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, country: e.target.value })
+            }
+          >
+            <MenuItem value="VN">Viet Nam</MenuItem>
+            <MenuItem value="CN">China</MenuItem>
+            <MenuItem value="US">America</MenuItem>
+          </Select>
+          <TextField
+            label="Occupation"
+            value={newCustomer.occupation}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, occupation: e.target.value })
+            }
+          />
+          <Select
+            labelId="role-select-label"
+            id="role-select"
+            value={newCustomer.role}
+            label="Role"
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, role: e.target.value })
+            }
+          >
+            <MenuItem value="user">User</MenuItem>
+            <MenuItem value="admin">Admin</MenuItem>
+          </Select>
+          <StyledButton onClick={handleAddCustomer}>Add</StyledButton>
+        </Box>
       </Box>
     </Box>
   );
