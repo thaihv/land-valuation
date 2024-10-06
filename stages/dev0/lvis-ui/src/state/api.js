@@ -22,11 +22,7 @@ export const api = createApi({
     getProducts: build.query({
       query: () => "client/products",
       providesTags: ["Products"],
-    }),
-    getCustomer: build.query({
-      query: (id) => `client/customers/${id}`,
-      providesTags: ["Customers"],
-    }),    
+    }),  
     getCustomers: build.query({
       query: ({ page, pageSize, sort, search }) => ({
         url: "client/customers",
@@ -34,32 +30,11 @@ export const api = createApi({
         params: { page, pageSize, sort, search },        
       }),
       providesTags: ["Customers"],
-    }),
-    // addCustomer: build.query({
-    //   query: (body) => ({
-    //     url: "client/customers",
-    //     method: 'POST',
-    //     body,
-    //   }),
-    //   invalidatesTags: ['Customers'],
-    // }),    
-    // updateCustomer: build.query({
-    //   query: (body) => ({
-    //     url: `client/customers`,
-    //     method: 'PATCH',
-    //     body,
-    //   }),
-    //   invalidatesTags: ['Customers'],
-    // }),      
-    // deleteCustomer: build.query({
-    //   query(id) {
-    //     return {
-    //       url: `client/customers/${id}`,
-    //       method: 'DELETE',
-    //     }
-    //   },
-    //   invalidatesTags: ['Customers'],
-    // }),    
+    }),    
+    getCustomer: build.query({
+      query: (id) => `client/customers/${id}`,
+      providesTags: ["Customers"],
+    }),      
     addCustomer: build.mutation({
       query: (body) => ({
         url: 'client/customers',
