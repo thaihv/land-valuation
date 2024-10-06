@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   Select,
   TextField,
   MenuItem,
@@ -16,9 +15,15 @@ import {
   useDeleteCustomerMutation,
 } from "../../state/api";
 import { 
-  DataGrid, 
-  GridRowEditStopReasons 
+  GridRowModes,
+  DataGrid,
+  GridActionsCellItem,
+  GridRowEditStopReasons,
 } from "@mui/x-data-grid";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 import { countryData } from "../../data/mockData";
 
 const Customers = () => {
@@ -47,7 +52,7 @@ const Customers = () => {
     occupation: "",
     role: "user",
   });
-
+  const [rowModesModel, setRowModesModel] = useState({});
   const handleAddCustomer = async () => {
     await addCustomer(newCustomer);
     setNewCustomer({
@@ -61,7 +66,7 @@ const Customers = () => {
     refetch();
   };
   const handleUpdateCustomerError = (error) => {
-    console.log('error');
+    console.log(error);
   };
   const handleUpdateCustomer = async (updatedData) => {
     await updateCustomer(updatedData);
@@ -72,11 +77,31 @@ const Customers = () => {
     await deleteCustomer(id);
     refetch();
   };
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
+    
+  };
+  const handleEditClick = (id) => () => {
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+    }));
+  };
+
+  const handleSaveClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: {mode: GridRowModes.View } });
+  };  
+  const handleCancelClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
   };
 
   const columns = [
@@ -135,14 +160,49 @@ const Customers = () => {
       field: "action",
       headerName: "Action",
       width: 150,
-      renderCell: (params) => (
-        <Button
-          color="secondary"
-          onClick={() => handleDeleteCustomer(params.row._id)}
-        >
-          Delete
-        </Button>
-      ),
+      cellClassName: "actions",
+      renderCell: (params) => {
+        const isInEditMode = rowModesModel[params.row._id]?.mode === GridRowModes.Edit;
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              key="Save"
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: theme.palette.secondary[200],
+              }}
+              onClick={handleSaveClick(params.row._id)}
+            />,
+            <GridActionsCellItem
+              key="Cancel"
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(params.row._id)}
+              color="inherit"
+            />,
+          ];
+        }
+        return [
+          <GridActionsCellItem
+            key="Edit"
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(params.row._id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            key="Delete"
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={() => handleDeleteCustomer(params.row._id)}
+            color="inherit"
+          />,          
+
+        ];
+      },
     },
   ];
 
@@ -195,6 +255,7 @@ const Customers = () => {
           columns={columns}
           rowCount={(data && data.total) || 0}
           sortingMode="server"
+          editMode="row"
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
           pagination
           paginationMode="server"
@@ -203,6 +264,8 @@ const Customers = () => {
           onPaginationModelChange={(newPaginationModel) => {
             setPaginationModel(newPaginationModel);
           }}
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
           processRowUpdate={handleUpdateCustomer}
           onRowEditStop={handleRowEditStop}
           onProcessRowUpdateError={handleUpdateCustomerError}
