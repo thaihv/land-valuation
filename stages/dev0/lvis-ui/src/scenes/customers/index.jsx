@@ -20,21 +20,37 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
+import EditDataGridToolbar from "../../components/custom/EditDataGridToolbar";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { countryData } from "../../data/mockData";
 
+
+
+function generateRandomId(length = 24) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomId = '';
+  
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomId += characters[randomIndex];
+  }
+
+  return randomId;
+}
+
 const Customers = () => {
   const theme = useTheme();
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");  
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 20,
   });
-  const { data, refetch } = useGetCustomersQuery({
+  const { data: items = [], refetch } = useGetCustomersQuery({
     page: paginationModel.page,
     pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
@@ -52,7 +68,15 @@ const Customers = () => {
     occupation: "",
     role: "user",
   });
+
+  // const total = items.total;
+  // const rows = items.customers;
+  const [rows, setRows] = useState(items.customers);
+  const [total, setTotal] = useState(items.total);
+
+
   const [rowModesModel, setRowModesModel] = useState({});
+  // Handler TO add a new item without editing in grid
   const handleAddCustomer = async () => {
     await addCustomer(newCustomer);
     setNewCustomer({
@@ -69,31 +93,63 @@ const Customers = () => {
     console.log(error);
   };
   const handleUpdateCustomer = async (updatedData) => {
-    await updateCustomer(updatedData);
-    refetch();
+    if (updatedData.isNew === true) {
+      const updatedRow = { ...updatedData, isNew: false };
+      setRows(rows.map((row) => (row._id === updatedData._id ? updatedRow : row)));
+      const {isNew, ...newOne} = updatedData;
+      await addCustomer(newOne);
+      refetch();
+
+    }
+    else {
+      await updateCustomer(updatedData).unwrap();
+      refetch();
+    }
   };
 
-  const handleDeleteCustomer = async (id) => {
+  const handleDeleteCustomer = async (id) => {    
+    setRows(rows.filter((row) => row._id !== id));
+    setTotal(rows.length);
     await deleteCustomer(id);
     refetch();
   };
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
-
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-    
+  // Handler TO add a new item by editing in grid using toolbar
+  const handleAddNew = async () => {
+    const _id = generateRandomId();
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        _id,
+        name: "",
+        email: "",
+        phoneNumber: "",
+        country: "VN",
+        occupation: "",
+        role: "user",
+        isNew: true,
+      },
+    ]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [_id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+    }));
   };
+
   const handleEditClick = (id) => () => {
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
     }));
   };
-
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
+    
+  };
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: {mode: GridRowModes.View } });
   };  
@@ -102,8 +158,19 @@ const Customers = () => {
       ...rowModesModel,
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
+    const editedRow = rows.find((row) => row._id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row._id !== id));
+    }    
   };
-
+  const handleStateChange = () => {
+    if (items) {
+      if (!rows || rows.length == 0) {
+        setRows(items.customers);
+        setTotal(items.total);
+      }
+    }
+  };
   const columns = [
     {
       field: "_id",
@@ -251,11 +318,12 @@ const Customers = () => {
       >
         <DataGrid
           getRowId={(row) => row._id}
-          rows={(data && data.customers) || []}
+          rows={rows || []}
           columns={columns}
-          rowCount={(data && data.total) || 0}
+          rowCount={total || -1}
           sortingMode="server"
           editMode="row"
+          onStateChange={handleStateChange}
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
           pagination
           paginationMode="server"
@@ -263,12 +331,35 @@ const Customers = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={(newPaginationModel) => {
             setPaginationModel(newPaginationModel);
+            setRows(items.customers);
+            setTotal(items.total);
           }}
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
           processRowUpdate={handleUpdateCustomer}
           onRowEditStop={handleRowEditStop}
           onProcessRowUpdateError={handleUpdateCustomerError}
+          slots={{
+            toolbar: EditDataGridToolbar,
+          }}
+          slotProps={{
+            toolbar: { searchInput, setSearchInput, setSearch, handleAddNew },
+            loadingOverlay: {
+              variant: "skeleton",
+              noRowsVariant: "skeleton",
+            },
+          }}
+          sx={{
+            "& .MuiDataGrid-cell:hover": {
+              color: theme.palette.secondary[200],
+            },
+            "& .MuiDataGrid-cell--editable": {
+              bgcolor: "#f0f0f0",
+              ...theme.applyStyles("dark", {
+                bgcolor: "#191F45",
+              }),
+            },
+          }}                    
         />
         <Box display="flex" gap="2px" justifyContent="flex-start">
           <TextField
