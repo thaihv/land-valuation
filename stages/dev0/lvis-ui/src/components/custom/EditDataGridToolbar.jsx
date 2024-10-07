@@ -114,7 +114,7 @@ const EditDataGridToolbar = ({
   searchInput,
   setSearchInput,
   setSearch,
-  handleAddNew,
+  handleAddRowInGrid,
 }) => {
   const handleKeyPress = (e) => {
     if (e.keyCode == 13) {
@@ -132,7 +132,7 @@ const EditDataGridToolbar = ({
           <Button
             color="primary"
             startIcon={<AddIcon />}
-            onClick={handleAddNew}
+            onClick={handleAddRowInGrid}
           >
             Add
           </Button>

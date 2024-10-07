@@ -101,8 +101,8 @@ const Customers = () => {
     await deleteCustomer(id);
     refetch();
   };
-  // Handler to add a new item by editing in grid using toolbar
-  const handleAddNew = async () => {
+  // Handler to add a new row and allowing to edit in grid using toolbar
+  const handleAddRowInGrid = async () => {
     setIsEditing(true);
     const _id = generateRandomId();
     setRows((oldRows) => [
@@ -338,7 +338,7 @@ const Customers = () => {
             toolbar: EditDataGridToolbar,
           }}
           slotProps={{
-            toolbar: { searchInput, setSearchInput, setSearch, handleAddNew },
+            toolbar: { searchInput, setSearchInput, setSearch, handleAddRowInGrid },
             loadingOverlay: {
               variant: "skeleton",
               noRowsVariant: "skeleton",
