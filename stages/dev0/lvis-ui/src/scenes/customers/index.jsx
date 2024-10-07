@@ -106,10 +106,11 @@ const Customers = () => {
   };
 
   const handleDeleteCustomer = async (id) => {    
-    setRows(rows.filter((row) => row._id !== id));
-    setTotal(rows.length);
     await deleteCustomer(id);
     refetch();
+
+    setRows(rows.filter((row) => row._id !== id));
+    setTotal(rows.length);    
   };
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
@@ -149,7 +150,6 @@ const Customers = () => {
     
   };
   const handleSaveClick = (id) => () => {
-    console.log(id)
     setRowModesModel({ ...rowModesModel, [id]: {mode: GridRowModes.View } });
   };  
   const handleCancelClick = (id) => () => {
