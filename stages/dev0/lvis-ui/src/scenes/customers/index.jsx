@@ -69,7 +69,7 @@ const Customers = () => {
   const [total, setTotal] = useState(items.total);
   const [rowModesModel, setRowModesModel] = useState({});
 
-  // Handler TO add a new item without editing in grid
+  // Handler to add a new item without editing in grid
   const handleAddCustomer = async () => {
     await addCustomer(newCustomer);
     setNewCustomer({
@@ -82,9 +82,6 @@ const Customers = () => {
     });
     refetch();
   };
-  const handleUpdateCustomerError = (error) => {
-    console.log(error);
-  };
   const handleUpdateCustomer = async (updatedData) => {
     if (updatedData.isNew) {
       const { isNew, ...newOne } = updatedData;
@@ -95,18 +92,14 @@ const Customers = () => {
     refetch();
     return updatedData;
   };
-
+  const handleUpdateCustomerError = (error) => {
+    console.log(error);
+  };
   const handleDeleteCustomer = async (id) => {
     await deleteCustomer(id);
     refetch();
-
-    setRows(rows.filter((row) => row._id !== id));
-    setTotal(rows.length);
   };
-  const handleRowModesModelChange = (newRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
-  // Handler TO add a new item by editing in grid using toolbar
+  // Handler to add a new item by editing in grid using toolbar
   const handleAddNew = async () => {
     const _id = generateRandomId();
     setRows((oldRows) => [
@@ -127,7 +120,10 @@ const Customers = () => {
       [_id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
     }));
   };
-
+  // Handlers to control event process in mode Edit and View
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };  
   const handleEditClick = (id) => () => {
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -154,10 +150,8 @@ const Customers = () => {
   };
   const handleStateChange = () => {
     if (items) {
-      if (!rows || rows.length == 0) {
-        setRows(items.customers);
-        setTotal(items.total);
-      }
+      setRows(items.customers);
+      setTotal(items.total);
     }
   };
   const columns = [
@@ -321,8 +315,6 @@ const Customers = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={(newPaginationModel) => {
             setPaginationModel(newPaginationModel);
-            setRows(items.customers);
-            setTotal(items.total);
           }}
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
