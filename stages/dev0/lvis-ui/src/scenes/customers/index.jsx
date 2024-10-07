@@ -68,7 +68,7 @@ const Customers = () => {
   const [rows, setRows] = useState(items.customers);
   const [total, setTotal] = useState(items.total);
   const [rowModesModel, setRowModesModel] = useState({});
-
+  const [isEditing, setIsEditing] = useState(false);
   // Handler to add a new item without editing in grid
   const handleAddCustomer = async () => {
     await addCustomer(newCustomer);
@@ -86,6 +86,8 @@ const Customers = () => {
     if (updatedData.isNew) {
       const { isNew, ...newOne } = updatedData;
       await addCustomer(newOne);
+      if (isEditing)
+        setIsEditing(false);
     } else {
       await updateCustomer(updatedData).unwrap();
     }
@@ -101,6 +103,7 @@ const Customers = () => {
   };
   // Handler to add a new item by editing in grid using toolbar
   const handleAddNew = async () => {
+    setIsEditing(true);
     const _id = generateRandomId();
     setRows((oldRows) => [
       ...oldRows,
@@ -146,10 +149,12 @@ const Customers = () => {
     const editedRow = rows.find((row) => row._id === id);
     if (editedRow.isNew) {
       setRows(rows.filter((row) => row._id !== id));
+      if (isEditing)
+        setIsEditing(false);
     }
   };
   const handleStateChange = () => {
-    if (items) {
+    if (!isEditing && items) {
       setRows(items.customers);
       setTotal(items.total);
     }
@@ -305,6 +310,14 @@ const Customers = () => {
           rows={rows || []}
           columns={columns}
           rowCount={total || -1}
+          initialState={{
+            columns: {
+              columnVisibilityModel: {
+                // Hide columns ID the other columns will remain visible
+                _id: false,
+              },
+            },
+          }}
           sortingMode="server"
           editMode="row"
           onStateChange={handleStateChange}
