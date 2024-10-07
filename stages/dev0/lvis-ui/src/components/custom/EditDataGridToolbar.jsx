@@ -5,6 +5,7 @@ import {
   Button,
   TextField,
   MenuItem,
+  useTheme,
   InputAdornment,
 } from "@mui/material";
 import {
@@ -20,7 +21,6 @@ import {
   useGridApiContext,
 } from "@mui/x-data-grid";
 import FlexBetween from "../FlexBetween";
-import { createSvgIcon } from "@mui/material/utils";
 
 const getJson = (apiRef) => {
   const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
@@ -86,13 +86,12 @@ function CustomExportButton(props) {
     </GridToolbarExportContainer>
   );
 }
-const AddIcon = createSvgIcon(
+const AddIcon = ({ fill, width, height }) => (
   <svg
-    fill="#997d3d"
-    width="800px"
-    height="800px"
+    fill={fill}
+    width={width}
+    height={height} 
     viewBox="0 0 885.389 885.389"
-
   >
     <g>
       <path
@@ -116,6 +115,7 @@ const EditDataGridToolbar = ({
   setSearch,
   handleAddRowInGrid,
 }) => {
+  const theme = useTheme();
   const handleKeyPress = (e) => {
     if (e.keyCode == 13) {
       setSearch(searchInput);
@@ -130,8 +130,7 @@ const EditDataGridToolbar = ({
           <GridToolbarFilterButton />
           <CustomExportButton />
           <Button
-            color="primary"
-            startIcon={<AddIcon />}
+            startIcon={<AddIcon fill={theme.palette.secondary[200]} width="18px" height="18px" />}
             onClick={handleAddRowInGrid}
           >
             Add
