@@ -91,8 +91,6 @@ const Customers = () => {
   };
   const handleUpdateCustomer = async (updatedData) => {
     if (updatedData.isNew === true) {
-      const updatedRow = { ...updatedData, isNew: false };
-      setRows(rows.map((row) => (row._id === updatedData._id ? updatedRow : row)));
       const {isNew, ...newOne} = updatedData;
       await addCustomer(newOne);
       refetch();
@@ -101,6 +99,10 @@ const Customers = () => {
       await updateCustomer(updatedData).unwrap();
       refetch();
     }
+
+    const updatedRow = { ...updatedData, isNew: false };
+    setRows(rows.map((row) => (row._id === updatedData._id ? updatedRow : row)));
+    return updatedRow;
   };
 
   const handleDeleteCustomer = async (id) => {    
@@ -147,6 +149,7 @@ const Customers = () => {
     
   };
   const handleSaveClick = (id) => () => {
+    console.log(id)
     setRowModesModel({ ...rowModesModel, [id]: {mode: GridRowModes.View } });
   };  
   const handleCancelClick = (id) => () => {
