@@ -69,13 +69,10 @@ const Customers = () => {
     role: "user",
   });
 
-  // const total = items.total;
-  // const rows = items.customers;
   const [rows, setRows] = useState(items.customers);
   const [total, setTotal] = useState(items.total);
-
-
   const [rowModesModel, setRowModesModel] = useState({});
+
   // Handler TO add a new item without editing in grid
   const handleAddCustomer = async () => {
     await addCustomer(newCustomer);
@@ -99,7 +96,6 @@ const Customers = () => {
       const {isNew, ...newOne} = updatedData;
       await addCustomer(newOne);
       refetch();
-
     }
     else {
       await updateCustomer(updatedData).unwrap();
