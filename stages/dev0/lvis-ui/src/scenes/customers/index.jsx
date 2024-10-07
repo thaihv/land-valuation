@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Select,
-  TextField,
-  MenuItem,
-  useTheme,
-} from "@mui/material";
+import { Box, Select, TextField, MenuItem, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import StyledButton from "../../components/custom/StyledButton";
 import {
@@ -14,7 +8,7 @@ import {
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
 } from "../../state/api";
-import { 
+import {
   GridRowModes,
   DataGrid,
   GridActionsCellItem,
@@ -27,17 +21,15 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { countryData } from "../../data/mockData";
 
-
-
 function generateRandomId(length = 24) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let randomId = '';
-  
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let randomId = "";
+
   for (let i = 0; i < length; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     randomId += characters[randomIndex];
   }
-
   return randomId;
 }
 
@@ -45,12 +37,16 @@ const Customers = () => {
   const theme = useTheme();
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");  
+  const [searchInput, setSearchInput] = useState("");
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 20,
   });
-  const { data: items = [], refetch } = useGetCustomersQuery({
+  const {
+    data: items = [],
+    isLoading,
+    refetch,
+  } = useGetCustomersQuery({
     page: paginationModel.page,
     pageSize: paginationModel.pageSize,
     sort: JSON.stringify(sort),
@@ -90,27 +86,22 @@ const Customers = () => {
     console.log(error);
   };
   const handleUpdateCustomer = async (updatedData) => {
-    if (updatedData.isNew === true) {
-      const {isNew, ...newOne} = updatedData;
+    if (updatedData.isNew) {
+      const { isNew, ...newOne } = updatedData;
       await addCustomer(newOne);
-      refetch();
-    }
-    else {
+    } else {
       await updateCustomer(updatedData).unwrap();
-      refetch();
     }
-
-    const updatedRow = { ...updatedData, isNew: false };
-    setRows(rows.map((row) => (row._id === updatedData._id ? updatedRow : row)));
-    return updatedRow;
+    refetch();
+    return updatedData;
   };
 
-  const handleDeleteCustomer = async (id) => {    
+  const handleDeleteCustomer = async (id) => {
     await deleteCustomer(id);
     refetch();
 
     setRows(rows.filter((row) => row._id !== id));
-    setTotal(rows.length);    
+    setTotal(rows.length);
   };
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
@@ -147,11 +138,10 @@ const Customers = () => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
-    
   };
   const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: {mode: GridRowModes.View } });
-  };  
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
   const handleCancelClick = (id) => () => {
     setRowModesModel({
       ...rowModesModel,
@@ -160,7 +150,7 @@ const Customers = () => {
     const editedRow = rows.find((row) => row._id === id);
     if (editedRow.isNew) {
       setRows(rows.filter((row) => row._id !== id));
-    }    
+    }
   };
   const handleStateChange = () => {
     if (items) {
@@ -228,7 +218,8 @@ const Customers = () => {
       width: 150,
       cellClassName: "actions",
       renderCell: (params) => {
-        const isInEditMode = rowModesModel[params.row._id]?.mode === GridRowModes.Edit;
+        const isInEditMode =
+          rowModesModel[params.row._id]?.mode === GridRowModes.Edit;
         if (isInEditMode) {
           return [
             <GridActionsCellItem
@@ -265,8 +256,7 @@ const Customers = () => {
             label="Delete"
             onClick={() => handleDeleteCustomer(params.row._id)}
             color="inherit"
-          />,          
-
+          />,
         ];
       },
     },
@@ -316,6 +306,7 @@ const Customers = () => {
         }}
       >
         <DataGrid
+          loading={isLoading || !rows}
           getRowId={(row) => row._id}
           rows={rows || []}
           columns={columns}
@@ -358,7 +349,7 @@ const Customers = () => {
                 bgcolor: "#191F45",
               }),
             },
-          }}                    
+          }}
         />
         <Box display="flex" gap="2px" justifyContent="flex-start">
           <TextField
