@@ -357,7 +357,7 @@ const Customers = () => {
             },
           }}
         />
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 4, md: 2 }}>
             <TextField
               label="Name"
@@ -386,8 +386,8 @@ const Customers = () => {
               }
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
-            <FormControl sx={{ minWidth: "100%" }}>
+          <Grid size={{ xs: 12, sm: 4, md: 1 }}>
+            <FormControl>
               <InputLabel id='country-select-label'>Country</InputLabel>
               <Select
                 labelId="country-select-label"
@@ -430,7 +430,7 @@ const Customers = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12, sm: 4, md: 1 }}>
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
             <StyledButton onClick={handleAddCustomer}>
               Add
             </StyledButton>
