@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Select, TextField, MenuItem, useTheme } from "@mui/material";
+import { Box, Select, TextField, MenuItem, FormControl, InputLabel, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import StyledButton from "../../components/custom/StyledButton";
 import {
@@ -356,7 +356,15 @@ const Customers = () => {
             },
           }}
         />
-        <Box display="flex" gap="2px" justifyContent="flex-start">
+        <Box  
+          width="100%"
+          padding="1rem 6%"
+          display="flex"
+          flexWrap= 'wrap'
+          gap="0.5rem"
+          justifyContent='center'
+          alignItems='center'
+        >
           <TextField
             label="Name"
             value={newCustomer.name}
@@ -379,19 +387,22 @@ const Customers = () => {
               setNewCustomer({ ...newCustomer, phoneNumber: e.target.value })
             }
           />
-          <Select
-            labelId="country-select-label"
-            id="country-select"
-            value={newCustomer.country}
-            label="Country"
-            onChange={(e) =>
-              setNewCustomer({ ...newCustomer, country: e.target.value })
-            }
-          >
-            <MenuItem value="VN">Viet Nam</MenuItem>
-            <MenuItem value="CN">China</MenuItem>
-            <MenuItem value="US">America</MenuItem>
-          </Select>
+          <FormControl sx={{minWidth: 120}}> 
+            <InputLabel id='country-select-label'>Country</InputLabel>
+            <Select
+              labelId="country-select-label"
+              id="country-select"
+              value={newCustomer.country}
+              label="Country"
+              onChange={(e) =>
+                setNewCustomer({ ...newCustomer, country: e.target.value })
+              }
+            >
+              <MenuItem value="VN">Viet Nam</MenuItem>
+              <MenuItem value="CN">China</MenuItem>
+              <MenuItem value="US">America</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             label="Occupation"
             value={newCustomer.occupation}
@@ -399,18 +410,21 @@ const Customers = () => {
               setNewCustomer({ ...newCustomer, occupation: e.target.value })
             }
           />
-          <Select
-            labelId="role-select-label"
-            id="role-select"
-            value={newCustomer.role}
-            label="Role"
-            onChange={(e) =>
-              setNewCustomer({ ...newCustomer, role: e.target.value })
-            }
-          >
-            <MenuItem value="user">User</MenuItem>
-            <MenuItem value="admin">Admin</MenuItem>
-          </Select>
+          <FormControl sx={{minWidth: 120}}> 
+            <InputLabel id='role-select-label'>Role</InputLabel>
+            <Select
+              labelId="role-select-label"
+              id="role-select"
+              value={newCustomer.role}
+              label="Role"
+              onChange={(e) =>
+                setNewCustomer({ ...newCustomer, role: e.target.value })
+              }
+            >
+              <MenuItem value="user">User</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
+            </Select>
+          </FormControl>
           <StyledButton onClick={handleAddCustomer}>Add</StyledButton>
         </Box>
       </Box>
