@@ -53,7 +53,6 @@ const Customers = () => {
     sort: JSON.stringify(sort),
     search,
   });
-
   const [addCustomer] = useAddCustomerMutation();
   const [updateCustomer] = useUpdateCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
@@ -65,11 +64,16 @@ const Customers = () => {
     occupation: "",
     role: "user",
   });
-
   const [rows, setRows] = useState(items.customers);
   const [total, setTotal] = useState(items.total);
   const [rowModesModel, setRowModesModel] = useState({});
-  const [isEditing, setIsEditing] = useState(false);
+
+  // Function to check if any rows are in edit mode
+  const isGridInEditMode = () => {
+    return Object.values(rowModesModel).some(
+      (rowMode) => rowMode.mode === GridRowModes.Edit
+    );
+  };
   // Handler to add a new item without editing in grid
   const handleAddCustomer = async () => {
     await addCustomer(newCustomer);
@@ -87,8 +91,6 @@ const Customers = () => {
     if (updatedData.isNew) {
       const { isNew, ...newOne } = updatedData;
       await addCustomer(newOne);
-      if (isEditing)
-        setIsEditing(false);
     } else {
       await updateCustomer(updatedData).unwrap();
     }
@@ -104,7 +106,6 @@ const Customers = () => {
   };
   // Handler to add a new row and allowing to edit in grid using toolbar
   const handleAddRowInGrid = async () => {
-    setIsEditing(true);
     const _id = generateRandomId();
     setRows((oldRows) => [
       ...oldRows,
@@ -150,12 +151,10 @@ const Customers = () => {
     const editedRow = rows.find((row) => row._id === id);
     if (editedRow.isNew) {
       setRows(rows.filter((row) => row._id !== id));
-      if (isEditing)
-        setIsEditing(false);
     }
   };
   const handleStateChange = () => {
-    if (!isEditing && items) {
+    if (!isGridInEditMode() && items) {
       setRows(items.customers);
       setTotal(items.total);
     }
@@ -431,10 +430,10 @@ const Customers = () => {
             </FormControl>
           </Grid>
           <Grid size={{ xs: 12, sm: 4, md: 2 }}>
-            <StyledButton 
-              fullWidth                 
+            <StyledButton
+              fullWidth
               variant="contained"
-              size="small" 
+              size="small"
               onClick={handleAddCustomer}
             >
               Add
