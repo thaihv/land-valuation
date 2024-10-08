@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Select, TextField, MenuItem, FormControl, InputLabel, useTheme } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import Header from "../../components/Header";
 import StyledButton from "../../components/custom/StyledButton";
 import {
@@ -126,7 +127,7 @@ const Customers = () => {
   // Handlers to control event process in mode Edit and View
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
-  };  
+  };
   const handleEditClick = (id) => () => {
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -356,77 +357,85 @@ const Customers = () => {
             },
           }}
         />
-        <Box  
-          width="100%"
-          padding="1rem 6%"
-          display="flex"
-          flexWrap= 'wrap'
-          gap="0.5rem"
-          justifyContent='center'
-          alignItems='center'
-        >
-          <TextField
-            label="Name"
-            value={newCustomer.name}
-            onChange={(e) =>
-              setNewCustomer({ ...newCustomer, name: e.target.value })
-            }
-          />
-          <TextField
-            label="Email"
-            value={newCustomer.email}
-            onChange={(e) =>
-              setNewCustomer({ ...newCustomer, email: e.target.value })
-            }
-          />
-          <TextField
-            label="Phone Number"
-            type="number"
-            value={newCustomer.phoneNumber}
-            onChange={(e) =>
-              setNewCustomer({ ...newCustomer, phoneNumber: e.target.value })
-            }
-          />
-          <FormControl sx={{minWidth: 120}}> 
-            <InputLabel id='country-select-label'>Country</InputLabel>
-            <Select
-              labelId="country-select-label"
-              id="country-select"
-              value={newCustomer.country}
-              label="Country"
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+            <TextField
+              label="Name"
+              value={newCustomer.name}
               onChange={(e) =>
-                setNewCustomer({ ...newCustomer, country: e.target.value })
+                setNewCustomer({ ...newCustomer, name: e.target.value })
               }
-            >
-              <MenuItem value="VN">Viet Nam</MenuItem>
-              <MenuItem value="CN">China</MenuItem>
-              <MenuItem value="US">America</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
-            label="Occupation"
-            value={newCustomer.occupation}
-            onChange={(e) =>
-              setNewCustomer({ ...newCustomer, occupation: e.target.value })
-            }
-          />
-          <FormControl sx={{minWidth: 120}}> 
-            <InputLabel id='role-select-label'>Role</InputLabel>
-            <Select
-              labelId="role-select-label"
-              id="role-select"
-              value={newCustomer.role}
-              label="Role"
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+            <TextField
+              label="Email"
+              value={newCustomer.email}
               onChange={(e) =>
-                setNewCustomer({ ...newCustomer, role: e.target.value })
+                setNewCustomer({ ...newCustomer, email: e.target.value })
               }
-            >
-              <MenuItem value="user">User</MenuItem>
-              <MenuItem value="admin">Admin</MenuItem>
-            </Select>
-          </FormControl>
-          <StyledButton onClick={handleAddCustomer}>Add</StyledButton>
-        </Box>
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+            <TextField
+              label="Phone Number"
+              type="number"
+              value={newCustomer.phoneNumber}
+              onChange={(e) =>
+                setNewCustomer({ ...newCustomer, phoneNumber: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+            <FormControl sx={{ minWidth: "100%" }}>
+              <InputLabel id='country-select-label'>Country</InputLabel>
+              <Select
+                labelId="country-select-label"
+                id="country-select"
+                value={newCustomer.country}
+                label="Country"
+                onChange={(e) =>
+                  setNewCustomer({ ...newCustomer, country: e.target.value })
+                }
+              >
+                <MenuItem value="VN">Viet Nam</MenuItem>
+                <MenuItem value="CN">China</MenuItem>
+                <MenuItem value="US">America</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+            <TextField
+              label="Occupation"
+              value={newCustomer.occupation}
+              onChange={(e) =>
+                setNewCustomer({ ...newCustomer, occupation: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 1 }}>
+            <FormControl>
+              <InputLabel id='role-select-label'>Role</InputLabel>
+              <Select
+                labelId="role-select-label"
+                id="role-select"
+                value={newCustomer.role}
+                label="Role"
+                onChange={(e) =>
+                  setNewCustomer({ ...newCustomer, role: e.target.value })
+                }
+              >
+                <MenuItem value="user">User</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4, md: 1 }}>
+            <StyledButton onClick={handleAddCustomer}>
+              Add
+            </StyledButton>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );
