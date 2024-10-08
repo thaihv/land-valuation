@@ -106,7 +106,8 @@ const Daily = () => {
               },
             },
           }}
-          colors={{ datum: "color" }}
+          //colors={{ datum: "color" }}
+          colors={{ scheme: 'red_blue' }}
           margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
           xScale={{ type: "point" }}
           yScale={{

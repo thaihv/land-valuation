@@ -125,6 +125,7 @@ const OverviewChart = ({ isDashboard = false, view }) => {
       enableGridX={false}
       enableGridY={false}
       pointSize={10}
+      colors={{ scheme: 'red_blue' }}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
       pointBorderColor={{ from: "serieColor" }}

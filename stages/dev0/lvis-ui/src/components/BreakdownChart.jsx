@@ -67,7 +67,8 @@ const BreakdownChart = ({ isDashboard = false }) => {
             },
           },
         }}
-        colors={{ datum: "data.color" }}
+        //colors={{ datum: "data.color" }}
+        colors={{ scheme: 'purpleRed_green' }}
         margin={
           isDashboard
             ? { top: 40, right: 80, bottom: 100, left: 50 }
