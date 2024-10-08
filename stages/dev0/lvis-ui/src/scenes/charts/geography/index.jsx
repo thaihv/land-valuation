@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from 'react'
 import { Box, useTheme } from "@mui/material";
 import { useGetGeographyQuery } from "../../../state/api";
 import { ResponsiveChoropleth } from "@nivo/geo";
@@ -7,15 +7,27 @@ import { geoData } from "../../../data/geoData";
 const Geography = () => {
   const theme = useTheme();
   const { data } = useGetGeographyQuery();
+
+  useEffect(() => {
+    const originalConsoleWarn = console.error
+    console.error = (message, ...args) => {
+      if (
+        message.includes('Warning: Failed %s type: %s%s')
+      ) {
+        return
+      }
+      originalConsoleWarn(message, ...args)
+    }
+    return () => {
+      // Restore original console.error on cleanup
+      console.error = originalConsoleWarn
+    }
+  }, [])
+
   const onFeatureClick = (feature) => {
     console.log(feature.data);
   };
-  const handleMouseEnter = (feature, event) => {
-  }
-  const handleMouseMove = (feature, event) => {
-  }
-  const handleMouseLeave = () => {
-  }
+
   return (
     <Box
       height="70vh"
@@ -70,9 +82,6 @@ const Geography = () => {
           graticuleLineColor={theme.palette.secondary[200]}
           graticuleLineWidth={0.5}
           onClick={onFeatureClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
           projectionType="mercator"
           isInteractive={true}
           projectionScale={150}
@@ -80,7 +89,6 @@ const Geography = () => {
           projectionRotation={[0, 0, 0]}
           borderWidth={1.3}
           borderColor="#ffffff"
-          //layers={['graticule', 'features']}
           defs={[
             {
               id: 'dots',
