@@ -3,7 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "../../state/api";
 import Header from "../../components/Header";
-import CustomDataGridToolbar from "../../components/custom/CustomDataGridToolbar";
+import BasicDataGridToolbar from "../../components/custom/BasicDataGridToolbar";
 
 const Transactions = () => {
   const theme = useTheme();
@@ -69,6 +69,12 @@ const Transactions = () => {
         columnGap="1.33%"
         sx={{
           "& > div": { gridColumn: "span 12" },
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none",
+          },          
           "& .MuiDataGrid-container--top [role=row]": {
             backgroundColor: `${theme.palette.neutral.main} !important`,
             color: theme.palette.secondary[100],
@@ -85,18 +91,17 @@ const Transactions = () => {
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
           },
-          "& .MuiCheckbox-root": {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
+          // "& .MuiCheckbox-root": {
+          //   color: `${theme.palette.secondary[200]} !important`,
+          // },
         }}
       >
-        <DataGrid
-          editMode="row"
+        <DataGrid    
           loading={isLoading || !data}
           getRowId={(row) => row._id}
           rows={(data && data.transactions) || []}
           columns={columns}
-          rowCount={-1} //Unknown row count case
+          rowCount={(data && data.total) || 0} //in case of Unknown row count set it -1
           sortingMode="server"
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
           pagination
@@ -108,7 +113,7 @@ const Transactions = () => {
           }
           checkboxSelection
           disableRowSelectionOnClick
-          slots={{ toolbar: CustomDataGridToolbar }}
+          slots={{ toolbar: BasicDataGridToolbar }}
           slotProps={{
             toolbar: { searchInput, setSearchInput, setSearch },
             loadingOverlay: {
@@ -116,26 +121,18 @@ const Transactions = () => {
               noRowsVariant: "skeleton",
             },
           }}
-          initialState={{
-            pinnedColumns: {
-              left: ["_id"],
-            },
-          }}
           sx={{
-            // boxShadow: 2,
-            // border: 2,
-            // borderColor: theme.palette.secondary[100],
-            "& .MuiDataGrid-cell:hover": {
+            '& .MuiDataGrid-cell:hover': {
               color: theme.palette.secondary[200],
             },
-            "@media print": {
-              ".MuiDataGrid-main": {
+            '@media print': {
+              '.MuiDataGrid-main': {
                 width: "fit-content",
-                fontSize: "10px",
+                fontSize: "14px",
                 height: "fit-content",
                 overflow: "visible",
               },
-              marginBottom: 100,
+              marginBottom: "20px",
             },
           }}
         />

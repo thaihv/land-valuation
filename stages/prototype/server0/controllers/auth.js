@@ -73,12 +73,12 @@ export const update_register = async (req, res) => {
       }
       console.log('changed password is ok!');
     }
-    user.save(function(err) {
-      if (err)
-        { res.status(500).json({ error: err.message }); }
-      else
-        { res.status(201).json(user); }
-    });
+    try {
+      await user.save();
+      res.status(201).json(user);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }    
   }
   else {
     res.status(500).json({ error: "Could not load user" });

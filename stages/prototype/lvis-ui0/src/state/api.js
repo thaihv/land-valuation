@@ -22,11 +22,43 @@ export const api = createApi({
     getProducts: build.query({
       query: () => "client/products",
       providesTags: ["Products"],
-    }),
+    }),  
     getCustomers: build.query({
-      query: () => "client/customers",
+      query: ({ page, pageSize, sort, search }) => ({
+        url: "client/customers",
+        method: "GET",
+        params: { page, pageSize, sort, search },        
+      }),
       providesTags: ["Customers"],
+    }),    
+    getCustomer: build.query({
+      query: (id) => `client/customers/${id}`,
+      providesTags: ["Customers"],
+    }),      
+    addCustomer: build.mutation({
+      query: (body) => ({
+        url: 'client/customers',
+        method: 'POST',
+        body: body,
+      }),
+      invalidatesTags: ['Customers'],
     }),
+    updateCustomer: build.mutation({
+      query: (body) => ({
+        url: `client/customers/${body._id}`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: ['Customers'],
+    }),
+    deleteCustomer: build.mutation({
+      query: (id) => ({
+        url: `client/customers/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Customers'],
+    }),
+
     getTransactions: build.query({
       query: ({ page, pageSize, sort, search }) => ({
         url: "client/transactions",
@@ -61,7 +93,14 @@ export const api = createApi({
 export const {
   useGetUserQuery,
   useGetProductsQuery,
+  useGetCustomerQuery,
   useGetCustomersQuery,
+  // useAddCustomerQuery,
+  // useUpdateCustomerQuery,
+  // useDeleteCustomerQuery,
+  useAddCustomerMutation,
+  useUpdateCustomerMutation,
+  useDeleteCustomerMutation,  
   useGetTransactionsQuery,
   useGetGeographyQuery,
   useGetSalesQuery,

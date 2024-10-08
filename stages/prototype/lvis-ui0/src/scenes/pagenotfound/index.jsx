@@ -17,22 +17,22 @@ const PageNotFound = () => {
       }}
     >
       <Container maxWidth="md">
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           <Grid xs={4}>
             <img
-              src="./404.jpg"
+              src="./404.png"
               alt=""
-              width={256} height={256}
+              width={368} height={155}
             />
           </Grid>
           <Grid xs={8}>
-            <Typography variant="h5" fontWeight="bold" color="#1E88E5">
-              [LVIS] Land Valuation Information System
+            <Typography variant="h4" fontWeight="bold">
+              Land Valuation Information System
             </Typography>
-            <Typography variant="h4">
+            <Typography sx={{mt: "5px"}} variant="h5" color={theme.palette.redAccent[400]}> 
               The page you’re looking for doesn’t exist.
             </Typography>
-            <StyledButton variant="outlined" onClick={() => navigate("/home")}>
+            <StyledButton sx={{mt: "50px", border: `2px solid ${theme.palette.neutral.dark}`}} variant="outlined" onClick={() => navigate("/home")}>
               Go to Home Page
             </StyledButton>
           </Grid>          
