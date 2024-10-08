@@ -431,7 +431,12 @@ const Customers = () => {
             </FormControl>
           </Grid>
           <Grid size={{ xs: 12, sm: 4, md: 2 }}>
-            <StyledButton onClick={handleAddCustomer}>
+            <StyledButton 
+              fullWidth                 
+              variant="contained"
+              size="small" 
+              onClick={handleAddCustomer}
+            >
               Add
             </StyledButton>
           </Grid>
