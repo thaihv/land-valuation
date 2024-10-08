@@ -182,6 +182,7 @@ const Utilities = () => {
         <CustomTabPanel value={value} index={6}>
           <Box
             height="70vh"
+            borderRadius= "4px"
             border={`1px solid ${theme.palette.secondary[200]}`}
           >
             <LanguageSwitcher />
