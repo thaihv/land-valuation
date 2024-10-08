@@ -7,7 +7,15 @@ import { geoData } from "../../../data/geoData";
 const Geography = () => {
   const theme = useTheme();
   const { data } = useGetGeographyQuery();
-
+  const onFeatureClick = (feature) => {
+    console.log(feature.data);
+  };
+  const handleMouseEnter = (feature, event) => {
+  }
+  const handleMouseMove = (feature, event) => {
+  }
+  const handleMouseLeave = () => {
+  }
   return (
     <Box
       height="70vh"
@@ -53,14 +61,80 @@ const Geography = () => {
           features={geoData.features}
           margin={{ top: 0, right: 0, bottom: 0, left: -50 }}
           domain={[0, 60]}
-          unknownColor="#666666"
+          colors="PuOr"
+          fillColor={theme.palette.secondary[500]}
+          unknownColor="nivo"
           label="properties.name"
           valueFormat=".2s"
+          enableGraticule={true}
+          graticuleLineColor={theme.palette.secondary[200]}
+          graticuleLineWidth={0.5}
+          onClick={onFeatureClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          projectionType="mercator"
+          isInteractive={true}
           projectionScale={150}
           projectionTranslation={[0.45, 0.6]}
           projectionRotation={[0, 0, 0]}
           borderWidth={1.3}
           borderColor="#ffffff"
+          //layers={['graticule', 'features']}
+          defs={[
+            {
+              id: 'dots',
+              type: 'patternDots',
+              background: 'inherit',
+              color: '#38bcb2',
+              size: 4,
+              padding: 1,
+              stagger: true
+            },
+            {
+              id: 'lines',
+              type: 'patternLines',
+              background: 'inherit',
+              color: '#eed312',
+              rotation: -45,
+              lineWidth: 6,
+              spacing: 10
+            },
+            {
+              id: 'gradient',
+              type: 'linearGradient',
+              colors: [
+                {
+                  offset: 0,
+                  color: '#000'
+                },
+                {
+                  offset: 100,
+                  color: 'inherit'
+                }
+              ]
+            }
+          ]}
+          fill={[
+            {
+              match: {
+                id: 'CHN'
+              },
+              id: 'dots'
+            },
+            {
+              match: {
+                id: 'VNM'
+              },
+              id: 'lines'
+            },
+            {
+              match: {
+                id: 'ATA'
+              },
+              id: 'gradient'
+            }
+          ]}
           legends={[
             {
               anchor: "bottom-right",
@@ -79,7 +153,7 @@ const Geography = () => {
                 {
                   on: "hover",
                   style: {
-                    itemTextColor: theme.palette.background.alt,
+                    itemTextColor: theme.palette.secondary[500],
                     itemOpacity: 1,
                   },
                 },
