@@ -65,7 +65,7 @@ const storage_uploads = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    cb(null,  Date.now() + '-' +  file.originalname);
+    cb(null,  file.originalname);
   },
 });
 const profiles_upload = multer({ storage: storage_profiles });
@@ -78,7 +78,7 @@ app.put("/auth/register", profiles_upload.single("picture"), update_register);
 
 // For upload any data into uploads folder
 app.post('/uploads', data_upload.single('file'), (req, res) => {
-  console.log('body', req.file)
+  console.log('body', req.file);
   // here you can do anything that you want for the file such as you want to save it to database here
   res.json({ success: true })
 })
