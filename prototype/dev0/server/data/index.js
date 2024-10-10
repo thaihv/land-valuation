@@ -22987,8 +22987,8 @@ export const posts = [
     name: "Hoang Vinh Thai",
     city: "Ha Noi",
     description: "Some really long random description",
-    picturePath: "post1.jpeg",
-    userPicturePath: "p3.jpeg",
+    picturePath: "1728531510332-Screenshot 2023-10-25 143128.png",
+    userPicturePath: "profile.jpeg",
     likes: new Map([
       ["63701cc1f03239d40b000045", true],
       ["63701cc1f03239d40b000044", true],
