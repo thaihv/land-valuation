@@ -2,6 +2,7 @@ import React from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "../../../components/Header";
 import Map from "../../../components/map/Map";
+import MapStyledToolbar from "../../../components/map/MapStyledToolbar";
 import { singlePostData } from "../../../data/mockMapData";
 
 const BaseMap = () => {
@@ -16,7 +17,8 @@ const BaseMap = () => {
         border={`1px solid ${theme.palette.secondary[200]}`}
         borderRadius="4px"
       >
-        <Map items={[singlePostData]} />
+        {/* <Map items={[singlePostData]} /> */}
+        <MapStyledToolbar/>
       </Box>
     </Box>
   );
