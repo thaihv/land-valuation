@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20.16.0
-        cache-dependency-path: './stages/dev0/server/package-lock.json'
+        cache-dependency-path: './prototype/dev0/server/package-lock.json'
         cache: 'npm'
     - name: Docker Login
       env:
@@ -25,27 +25,27 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD        
     - name: Install modules for server
-      working-directory: ./stages/dev0/server
+      working-directory: ./prototype/dev0/server
       run: npm i
     - name: Build server
-      working-directory: ./stages/dev0/server
+      working-directory: ./prototype/dev0/server
       run: npm run build --if-present
       
     - name: Build lvis-server Image
-      working-directory: ./stages/dev0/server
+      working-directory: ./prototype/dev0/server
       run: docker build . --file Dockerfile --tag thaihv/lvis-server0:$VERSION      
     - name: Docker Push lvis-server    
       run: docker push thaihv/lvis-server0:$VERSION
       
     - name: Install modules for lvis-ui
-      working-directory: ./stages/dev0/lvis-ui
+      working-directory: ./prototype/dev0/lvis-ui
       run: npm i
     - name: Build lvis-ui
-      working-directory: ./stages/dev0/lvis-ui
+      working-directory: ./prototype/dev0/lvis-ui
       run: npm run build --if-present
 
     - name: Build lvis-ui Image
-      working-directory: ./stages/dev0/lvis-ui
+      working-directory: ./prototype/dev0/lvis-ui
       run: docker build . --file Dockerfile --tag thaihv/lvis-ui0:$VERSION      
     - name: Docker Push lvis-ui    
       run: docker push thaihv/lvis-ui0:$VERSION
