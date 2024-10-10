@@ -22980,7 +22980,7 @@ export const dataUser = [
   },
 ];
 
-export const posts = [
+export const dataPost = [
   {
     _id: new mongoose.Types.ObjectId(),
     userId: "63701cc1f03239d40b000044",

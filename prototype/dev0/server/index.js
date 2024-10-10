@@ -33,7 +33,7 @@ import {
   dataTransaction,
   dataOverallStat,
   dataAffiliateStat,
-  posts,
+  dataPost,
 } from "./data/index.js";
 
 /* CONFIGURATIONS */
@@ -57,7 +57,7 @@ const storage_profiles = multer.diskStorage({
     cb(null, "./public/profiles");
   },
   filename: function (req, file, cb) {
-    cb(null, req.body.email + '_' + file.originalname);
+    cb(null, req.body._id + '_' + file.originalname);
   },
 });
 const storage_uploads = multer.diskStorage({
@@ -106,6 +106,6 @@ mongoose
     // ProductStat.insertMany(dataProductStat);
     // Transaction.insertMany(dataTransaction);
     // User.insertMany(dataUser);
-    // Post.insertMany(posts);
+    // Post.insertMany(dataPost);
   })
   .catch((error) => console.log(`${error} did not connect`));
