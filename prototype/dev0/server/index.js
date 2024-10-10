@@ -12,11 +12,15 @@ import clientRoutes from "./routes/client.js";
 import generalRoutes from "./routes/general.js";
 import authRoutes from "./routes/auth.js";
 import { register, update_register } from "./controllers/auth.js";
+import { createPost } from "./controllers/posts.js";
 import managementRoutes from "./routes/management.js";
 import salesRoutes from "./routes/sales.js";
+import postRoutes from "./routes/posts.js";
+import { verifyToken } from "./middleware/auth.js";
 
 // data imports
 import User from "./models/User.js";
+import Post from "./models/Post.js";
 import Product from "./models/Product.js";
 import ProductStat from "./models/ProductStat.js";
 import Transaction from "./models/Transaction.js";
@@ -29,6 +33,7 @@ import {
   dataTransaction,
   dataOverallStat,
   dataAffiliateStat,
+  posts,
 } from "./data/index.js";
 
 /* CONFIGURATIONS */
@@ -70,12 +75,14 @@ const data_upload = multer({ storage: storage_uploads });
 // For upload profiles
 app.post("/auth/register", profiles_upload.single("picture"), register);
 app.put("/auth/register", profiles_upload.single("picture"), update_register);
+
 // For upload any data into uploads folder
 app.post('/uploads', data_upload.single('file'), (req, res) => {
   console.log('body', req.file)
   // here you can do anything that you want for the file such as you want to save it to database here
   res.json({ success: true })
 })
+app.post("/posts", verifyToken, data_upload.single("picture"), createPost);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
@@ -83,7 +90,7 @@ app.use("/client", clientRoutes);
 app.use("/general", generalRoutes);
 app.use("/management", managementRoutes);
 app.use("/sales", salesRoutes);
-
+app.use("/posts", postRoutes);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 9000;
 mongoose.set("strictQuery", false);
@@ -93,11 +100,12 @@ mongoose
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
     /* ONLY ADD DATA ONE TIME */
-    // AffiliateStat.insertMany(dataAffiliateStat);
-    // OverallStat.insertMany(dataOverallStat);
-    // Product.insertMany(dataProduct);
-    // ProductStat.insertMany(dataProductStat);
-    // Transaction.insertMany(dataTransaction);
-    // User.insertMany(dataUser);
+    AffiliateStat.insertMany(dataAffiliateStat);
+    OverallStat.insertMany(dataOverallStat);
+    Product.insertMany(dataProduct);
+    ProductStat.insertMany(dataProductStat);
+    Transaction.insertMany(dataTransaction);
+    User.insertMany(dataUser);
+    Post.insertMany(posts);
   })
   .catch((error) => console.log(`${error} did not connect`));

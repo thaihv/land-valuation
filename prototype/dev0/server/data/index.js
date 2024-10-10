@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export const dataAffiliateStat = [
   {
     _id: "6371251df03239e680000033",
@@ -22928,6 +22930,7 @@ export const dataUser = [
     country: "ID",
     occupation: "Land Valuation Officer",
     phoneNumber: "0975798640",
+    friends: [],
     transactions: [
       "63701d74f03239b913000040",
       "63701d74f03239db6900015a",
@@ -22974,5 +22977,26 @@ export const dataUser = [
     phoneNumber: "1371356593",
     transactions: ["63701d74f032399c0000014f", "63701d74f03239b7f700003f"],
     role: "admin",
+  },
+];
+
+export const posts = [
+  {
+    _id: new mongoose.Types.ObjectId(),
+    userId: "63701cc1f03239d40b000044",
+    name: "Hoang Vinh Thai",
+    city: "Ha Noi",
+    description: "Some really long random description",
+    picturePath: "post1.jpeg",
+    userPicturePath: "p3.jpeg",
+    likes: new Map([
+      ["63701cc1f03239d40b000045", true],
+      ["63701cc1f03239d40b000044", true],
+    ]),
+    comments: [
+      "random comment",
+      "another random comment",
+      "yet another random comment",
+    ],
   },
 ];
