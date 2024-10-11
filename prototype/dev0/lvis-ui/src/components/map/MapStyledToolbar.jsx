@@ -13,20 +13,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined';
-import './MyMap.css';
+import './MapStyledToolbar.css';
 
-const RightToolBar = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '30px',
-  right: '10px',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: 'transparent',
-  //padding: '5px',
-  gap: '5px',
-  //borderRadius: '8px',
-  zIndex: '1001',
-}));
 
 const ToolButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: 'lightblue', //theme.palette.background.default,
@@ -88,18 +76,36 @@ const LocationButton = () => {
   };
   return (
     <Tooltip title="My Location">
-      <ToolButton
-        sx={{
-          mt: '150px'
-        }}
-        onClick={handleMoveToLocation}
-      >
+      <ToolButton onClick={handleMoveToLocation}>
         <MyLocationIcon />
       </ToolButton>
     </Tooltip>
   );
 };
 
+
+const ZoomInButton = () => {
+  const map = useMap();
+  const handleZoomIn = () => {
+    map.zoomIn();
+  }
+  return (
+    <ToolButton onClick={handleZoomIn}>
+      <AddOutlinedIcon />
+    </ToolButton>
+  );
+};
+const ZoomOutButton = () => {
+  const map = useMap();
+  const handleZoomOut = () => {
+    map.zoomOut();
+  }
+  return (
+    <ToolButton onClick={handleZoomOut}>
+      <RemoveOutlinedIcon />
+    </ToolButton>
+  );
+};
 const Toolbar = () => {
   const [openToolIndex, setOpenToolIndex] = useState(null);
 
@@ -123,20 +129,21 @@ const Toolbar = () => {
     { name: 'Divider', content: null, icon: null },
     { name: 'Extend', content: 'Extend', icon: <ExtendIcon /> },
     { name: 'Scale', content: 'XY', icon: null },
-    { name: 'ZoomIn', content: 'Zoom In', icon: <AddOutlinedIcon /> },
-    { name: 'Level', content: 'Zoom Level', icon: '' },
-    { name: 'ZoomOut', content: 'Zoom Out', icon: <RemoveOutlinedIcon /> },
+    { name: 'ZoomIn', content: <ZoomInButton />, icon: null },
+    { name: 'Level', content: <ZoomDisplayButton />, icon: null },
+    { name: 'ZoomOut', content: <ZoomOutButton />, icon: null },
     { name: 'Divider', content: null, icon: null },
-    { name: 'Location', content: 'Location', icon: <MyLocationIcon /> },
+    { name: 'Location', content: <LocationButton />, icon: null },
   ];
 
   return (
     <div className="toolbar">
       {tools.map((tool, index) => {
-        const div = tool.icon;
-        if (!div) {
+        const icon = tool.icon;
+        const content = tool.content;
+        if (!icon && !content) { // is Divider
           return (
-            <Box mt="15px">
+            <Box mt="10px" key={index}>
             </Box>
           );
         }
@@ -147,13 +154,20 @@ const Toolbar = () => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
-            <IconButton>
-              {tool.icon}
-            </IconButton>
+            {icon && (
+              <IconButton>
+                {tool.icon}
+              </IconButton>)
+            }
+            {!icon && (
+              <ExtraButton>
+                {tool.content}
+              </ExtraButton>
+            )}
 
             {openToolIndex === index && (
               <Paper className="tool-popover">
-                <Typography>{tool.content}</Typography>
+                <Typography>I am here</Typography>
               </Paper>
             )}
           </div>
@@ -168,12 +182,6 @@ const MapStyledToolbar = () => {
   const [center, setCenter] = useState({ lat: 19.8563, lng: 102.4955 });
   const [map, setMap] = useState(null);
   const theme = useTheme();
-  const handleZoomIn = () => {
-    map.zoomIn();
-  }
-  const handleZoomOut = () => {
-    map.zoomOut();
-  }
 
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
@@ -188,63 +196,6 @@ const MapStyledToolbar = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
-        {/* <RightToolBar>
-          <ToolButton>
-            <NotificationsOutlinedIcon />
-          </ToolButton>
-          <ToolButton>
-            <InfoOutlinedIcon />
-          </ToolButton>
-
-          <ToolButton
-            sx={{
-              mt: '25px'
-            }}
-          >
-            <MakerIcon />
-          </ToolButton>
-          <ToolButton>
-            <LayersOutlinedIcon />
-          </ToolButton>
-          <ToolButton>
-            <ViewComfyOutlinedIcon />
-          </ToolButton>
-
-          <ToolButton
-            sx={{
-              mt: '25px'
-            }}
-          >
-            <MeasureIcon />
-          </ToolButton>
-
-          <ToolButton
-            sx={{
-              mt: '25px'
-            }}
-          >
-            <ExtendIcon />
-          </ToolButton>
-          <ExtraButton>
-            <Typography
-              sx={{
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-            >
-              XY
-            </Typography>
-          </ExtraButton>
-          <ToolButton onClick={handleZoomIn}>
-            <AddOutlinedIcon />
-          </ToolButton>
-          <ZoomDisplayButton />
-          <ToolButton onClick={handleZoomOut}>
-            <RemoveOutlinedIcon />
-          </ToolButton>
-
-          <LocationButton />
-        </RightToolBar> */}
         <Toolbar />
       </MapContainer>
     </div>

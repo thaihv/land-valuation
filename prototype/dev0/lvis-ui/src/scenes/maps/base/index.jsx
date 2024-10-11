@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import LeftBar from "../../../components/toolbars/LeftBar";
-import LeafletMap from "../../../components/map/LeafletMap";
-import MyMap from "../../../components/map/MyMap";
 import MapStyledToolbar from "../../../components/map/MapStyledToolbar";
 import Sidebar from "../../../components/Sidebar";
 
@@ -38,7 +36,6 @@ const BaseMap = () => {
           </Box>
           <Box sx={{ gridArea: "1/1/3/5" }}>
             <MapStyledToolbar />
-            {/* <MyMap/> */}
           </Box>
         </Box>
       </Box>
