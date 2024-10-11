@@ -110,7 +110,14 @@ const ZoomOutButton = () => {
 
 const ExtendGroupButton = () => {
   return (
-    <Typography>I am Extend</Typography>
+    <Box 
+      sm={{
+        display: 'flex',
+      }}
+    >
+      <ZoomInButton />
+      <ZoomOutButton />
+    </Box>
   );
 };
 const LayerGroupButton = () => {
