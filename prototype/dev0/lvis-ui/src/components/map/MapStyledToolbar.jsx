@@ -13,6 +13,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined';
+import AspectRatioOutlinedIcon from '@mui/icons-material/AspectRatioOutlined';
 import './MapStyledToolbar.css';
 
 
@@ -106,6 +107,32 @@ const ZoomOutButton = () => {
     </ToolButton>
   );
 };
+
+const ExtendGroupButton = () => {
+  return (
+    <Typography>I am Extend</Typography>
+  );
+};
+const LayerGroupButton = () => {
+  return (
+    <Typography>I am Layer</Typography>
+  );
+};
+const ScaleGroupButton = () => {
+  return (
+    <Typography>I am Scale</Typography>
+  );
+};
+const SplitMapGroupButton = () => {
+  return (
+    <Typography>I am Split Map</Typography>
+  );
+};
+const MeasurementGroupButton = () => {
+  return (
+    <Typography>I am Measure</Typography>
+  );
+};
 const Toolbar = () => {
   const [openToolIndex, setOpenToolIndex] = useState(null);
 
@@ -122,13 +149,13 @@ const Toolbar = () => {
     { name: 'Information', content: 'Information', icon: <InfoOutlinedIcon /> },
     { name: 'Divider', content: null, icon: null },
     { name: 'Marker', content: 'Search', icon: <MakerIcon /> },
-    { name: 'Layer', content: 'Layers', icon: <LayersOutlinedIcon /> },
-    { name: 'Spliter', content: 'Divide up screen', icon: <ViewComfyOutlinedIcon /> },
+    { name: 'Layer', content: <LayerGroupButton/>, icon: <LayersOutlinedIcon /> },
+    { name: 'Spliter', content: <SplitMapGroupButton/>, icon: <ViewComfyOutlinedIcon /> },
     { name: 'Divider', content: null, icon: null },
-    { name: 'Measure', content: 'Measurement', icon: <MeasureIcon /> },
+    { name: 'Measure', content: <MeasurementGroupButton/>, icon: <MeasureIcon /> },
     { name: 'Divider', content: null, icon: null },
-    { name: 'Extend', content: 'Extend', icon: <ExtendIcon /> },
-    { name: 'Scale', content: 'XY', icon: null },
+    { name: 'Extend', content: <ExtendGroupButton/>, icon: <ExtendIcon /> },
+    { name: 'Scale', content: <ScaleGroupButton/>, icon: <AspectRatioOutlinedIcon/> },
     { name: 'ZoomIn', content: <ZoomInButton />, icon: null },
     { name: 'Level', content: <ZoomDisplayButton />, icon: null },
     { name: 'ZoomOut', content: <ZoomOutButton />, icon: null },
@@ -154,20 +181,19 @@ const Toolbar = () => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
-            {icon && (
-              <IconButton>
-                {tool.icon}
-              </IconButton>)
-            }
             {!icon && (
               <ExtraButton>
                 {tool.content}
               </ExtraButton>
             )}
-
-            {openToolIndex === index && (
+            {icon && (
+              <IconButton>
+                {tool.icon}
+              </IconButton>)
+            }
+            {openToolIndex === index && icon && content && (
               <Paper className="tool-popover">
-                <Typography>I am here</Typography>
+                {tool.content}
               </Paper>
             )}
           </div>
