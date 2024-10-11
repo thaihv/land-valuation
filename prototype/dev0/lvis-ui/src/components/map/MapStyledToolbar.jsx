@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, ScaleControl , useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Box, Paper, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -14,6 +14,7 @@ import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined';
 import AspectRatioOutlinedIcon from '@mui/icons-material/AspectRatioOutlined';
+import FlexBetween from "../FlexBetween";
 import './MapStyledToolbar.css';
 
 
@@ -113,10 +114,18 @@ const ExtendGroupButton = () => {
     <Box 
       sm={{
         display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center'
       }}
     >
-      <ZoomInButton />
-      <ZoomOutButton />
+      <FlexBetween>
+        <ZoomInButton />
+        <ZoomOutButton />
+        <ZoomInButton />
+        <ZoomOutButton />
+      </FlexBetween>
+
     </Box>
   );
 };
@@ -227,9 +236,9 @@ const MapStyledToolbar = () => {
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
         />
         <Toolbar />
+        <ScaleControl position="bottomright" imperial={false} />
       </MapContainer>
     </div>
   );
