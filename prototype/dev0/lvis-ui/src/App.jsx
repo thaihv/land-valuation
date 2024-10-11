@@ -65,14 +65,14 @@ function App() {
           <Routes>
             <Route path="/" element={isAuth ? <Navigate to="/home" /> : <LoginPage />}/>
             <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/" />} />
-            <Route path="/profile/:id" element={isAuth ? <Profile /> : <Navigate to="/" />} />
-            <Route path="/survey" element={isAuth ? <SurveyMap /> : <Navigate to="/" />} />  
-            
+            <Route path="/profile/:id" element={isAuth ? <Profile /> : <Navigate to="/" />} />              
+            <Route path="/search" element={isAuth ? <BaseMap /> : <Navigate to="/" /> } />
+
             <Route element={<Layout />}>
               <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
               <Route path="/products" element={isAuth ? <Products /> : <Navigate to="/" />} />
               <Route path="/customers" element={isAuth ? <Customers /> : <Navigate to="/" />} />
-              <Route path="/search" element={isAuth ? <BaseMap /> : <Navigate to="/" /> } />
+              <Route path="/survey" element={isAuth ? <SurveyMap /> : <Navigate to="/" />} />
               <Route path="/myteam" element={isAuth ? <Team /> : <Navigate to="/" />} />
               <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/" />} />
               <Route path="/tasks" element={isAuth ? <Utilities /> : <Navigate to="/" />} />

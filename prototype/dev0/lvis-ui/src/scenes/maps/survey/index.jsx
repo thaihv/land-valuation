@@ -1,43 +1,22 @@
-import React, { useState } from "react";
-import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import LeftBar from "../../../components/toolbars/LeftBar";
-import LeafletMap from "../../../components/map/LeafletMap";
-import Sidebar from "../../../components/Sidebar";
+import React from "react";
+import { Box, useTheme } from "@mui/material";
+import Header from "../../../components/Header";
+import Map from "../../../components/map/Map";
+import { singlePostData } from "../../../data/mockMapData";
 
 const SurveyMap = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const data = useSelector((state) => state.global.user);
+  const theme = useTheme();
 
   return (
-    <Box display="flex" width="100%" height="100%">
-      <Sidebar
-        user={data || {}}
-        isNonMobile="true"
-        drawerWidth="88px"
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
-      <Box flexGrow={1}>
-        <Box
-          height="100vh"
-          position= "relative"
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 0,
-            gridTemplateRows: "repeat(2, 1fr)",
-            gridTemplateAreas: `"left map map map"
-            "left map map map"`,
-          }}
-        >
-          <Box sx={{ gridArea: "left" }}>
-            <LeftBar />
-          </Box>
-          <Box sx={{ gridArea: "1/1/3/5" }}>
-            <LeafletMap />
-          </Box>
-        </Box>
+    <Box m="1.5rem 2.5rem">
+      <Header title="SURVEY OPERATIONS" subtitle="Your land valuation activities." />
+      <Box
+        mt="40px"
+        height="75vh"
+        border={`1px solid ${theme.palette.secondary[200]}`}
+        borderRadius="4px"
+      >
+        <Map items={[singlePostData]} />        
       </Box>
     </Box>
   );
