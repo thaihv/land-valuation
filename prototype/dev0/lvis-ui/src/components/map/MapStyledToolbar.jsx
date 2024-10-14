@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, ScaleControl , useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, ScaleControl, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Box, Paper, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -19,7 +19,7 @@ import './MapStyledToolbar.css';
 
 
 const ToolButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: 'lightblue', //theme.palette.background.default,
+  backgroundColor: 'lightblue', 
   borderRadius: '3px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
@@ -30,9 +30,7 @@ const ExtraButton = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: 'lightblue',
   height: '36.5625px',
-  borderRadius: '5px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
   }
@@ -111,7 +109,7 @@ const ZoomOutButton = () => {
 
 const ExtendGroupButton = () => {
   return (
-    <Box 
+    <Box
       sm={{
         display: 'flex',
         flexDirection: 'column',
@@ -165,13 +163,13 @@ const Toolbar = () => {
     { name: 'Information', content: 'Information', icon: <InfoOutlinedIcon /> },
     { name: 'Divider', content: null, icon: null },
     { name: 'Marker', content: 'Search', icon: <MakerIcon /> },
-    { name: 'Layer', content: <LayerGroupButton/>, icon: <LayersOutlinedIcon /> },
-    { name: 'Spliter', content: <SplitMapGroupButton/>, icon: <ViewComfyOutlinedIcon /> },
+    { name: 'Layer', content: <LayerGroupButton />, icon: <LayersOutlinedIcon /> },
+    { name: 'Spliter', content: <SplitMapGroupButton />, icon: <ViewComfyOutlinedIcon /> },
     { name: 'Divider', content: null, icon: null },
-    { name: 'Measure', content: <MeasurementGroupButton/>, icon: <MeasureIcon /> },
+    { name: 'Measure', content: <MeasurementGroupButton />, icon: <MeasureIcon /> },
     { name: 'Divider', content: null, icon: null },
-    { name: 'Extend', content: <ExtendGroupButton/>, icon: <ExtendIcon /> },
-    { name: 'Scale', content: <ScaleGroupButton/>, icon: <AspectRatioOutlinedIcon/> },
+    { name: 'Extend', content: <ExtendGroupButton />, icon: <ExtendIcon /> },
+    { name: 'Scale', content: <ScaleGroupButton />, icon: <AspectRatioOutlinedIcon /> },
     { name: 'ZoomIn', content: <ZoomInButton />, icon: null },
     { name: 'Level', content: <ZoomDisplayButton />, icon: null },
     { name: 'ZoomOut', content: <ZoomOutButton />, icon: null },
