@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, ScaleControl, useMap } from 'react-leaflet';
+import React, { useState, useEffect, useRef  } from 'react';
+import { MapContainer, TileLayer, ScaleControl, WMSTileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Paper, IconButton, Tooltip, FormControlLabel, Checkbox, Typography, useTheme } from '@mui/material';
+import { Box, Paper, IconButton, Tooltip, FormControlLabel , Switch , FormControl, Select, InputLabel, Checkbox, MenuItem, ListItemText, Typography, useTheme } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
@@ -143,53 +143,138 @@ const ExtendGroupButton = () => {
     </FlexBetween>
   );
 };
-const LayerGroupButton = () => {
+const LayerControl = () => {
   const map = useMap();
-  const [layer1, setLayer1] = useState(true);
-  const [layer2, setLayer2] = useState(true);
+  const [layers, setLayers] = useState([]);
+  const [selectedLayers, setSelectedLayers] = useState([]);
 
-  // Create layers
-  const layer1Ref = React.useRef(
-    new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+  // Initialize base map state to manage layer visibility
+  const [osmLayer, setOsmLayer] = useState(true);
+  const [topoLayer, setTopoLayer] = useState(false);
+
+  // Base Layer references
+  const osmLayerRef = useRef(
+    new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "OpenStreetMap",
+    })
   );
-  const layer2Ref = React.useRef(
-    new L.TileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png")
+  const topoLayerRef = useRef(
+    new L.TileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+      attribution: "OpenTopoMap",
+    })
   );
+  // Add and remove layers based on state changes
+  useEffect(() => {
+    if (osmLayer) {
+      map.addLayer(osmLayerRef.current);
+    } else {
+      map.removeLayer(osmLayerRef.current);
+    }
+  }, [osmLayer, map]);
 
   useEffect(() => {
-    // Add layers to the map by default
-    map.addLayer(layer1Ref.current);
-    map.addLayer(layer2Ref.current);
+    if (topoLayer) {
+      map.addLayer(topoLayerRef.current);
+    } else {
+      map.removeLayer(topoLayerRef.current);
+    }
+  }, [topoLayer, map]);
+
+  // Handle toggling of base layers
+  const handleOsmLayerChange = (event) => {
+    setOsmLayer(event.target.checked);
+  };
+
+  const handleTopoLayerChange = (event) => {
+    setTopoLayer(event.target.checked);
+  };
+
+  // Initialize layers from the map
+  useEffect(() => {
+    const mapLayers = [];    
+    // Iterate over layers in the map and add them to the state
+    map.eachLayer((layer) => {
+      if (layer instanceof L.TileLayer || layer instanceof L.WMSTileLayer) {
+        mapLayers.push({ name: layer.options.layerName || "Unnamed Layer", layer });
+      }
+    });
+    setLayers(mapLayers);
+    setSelectedLayers(mapLayers.map((l) => l.name)); 
   }, [map]);
 
-  const handleLayer1Toggle = (event) => {
-    setLayer1(event.target.checked);
-    if (event.target.checked) {
-      map.addLayer(layer1Ref.current);
-    } else {
-      map.removeLayer(layer1Ref.current);
-    }
+  // Handle changes in layer selection
+  const handleLayerChange = (event) => {
+    const { value } = event.target;
+    setSelectedLayers(value);
+
+    // Add or remove layers from the map based on selection
+    layers.forEach((l) => {
+      if (value.includes(l.name)) {
+        map.addLayer(l.layer);
+      } else {
+        map.removeLayer(l.layer);
+      }
+    });
   };
 
-  const handleLayer2Toggle = (event) => {
-    setLayer2(event.target.checked);
-    if (event.target.checked) {
-      map.addLayer(layer2Ref.current);
-    } else {
-      map.removeLayer(layer2Ref.current);
-    }
-  };
+  // Keep the control synced with changes in the map's layer state
+  useEffect(() => {
+    const onLayerAdd = (e) => {
+      const layerName = layers.find((l) => l.layer === e.layer)?.name;
+      if (layerName && !selectedLayers.includes(layerName)) {
+        setSelectedLayers((prevSelected) => [...prevSelected, layerName]);
+      }
+    };
 
+    const onLayerRemove = (e) => {
+      const layerName = layers.find((l) => l.layer === e.layer)?.name;
+      if (layerName && selectedLayers.includes(layerName)) {
+        setSelectedLayers((prevSelected) => prevSelected.filter((name) => name !== layerName));
+      }
+    };
+
+    map.on("layeradd", onLayerAdd);
+    map.on("layerremove", onLayerRemove);
+
+    return () => {
+      map.off("layeradd", onLayerAdd);
+      map.off("layerremove", onLayerRemove);
+    };
+  }, [map, layers, selectedLayers]);
+
+ 
   return (
-    <Box>
-      <FormControlLabel
-        control={<Checkbox checked={layer1} onChange={handleLayer1Toggle} />}
-        label="OSM Layer"
-      />
-      <FormControlLabel
-        control={<Checkbox checked={layer2} onChange={handleLayer2Toggle} />}
-        label="Topo Layer"
-      />
+    <Box 
+      sx={{
+        width:"190px",
+        backgroundColor: 'lightblue'
+      }}
+    >
+      <FormControl fullWidth>
+        <FormControlLabel
+          control={<Switch checked={osmLayer} onChange={handleOsmLayerChange} />}
+          label="OSM Layer"
+        />
+        <FormControlLabel
+          control={<Switch checked={topoLayer} onChange={handleTopoLayerChange} />}
+          label="Topo Layer"
+        />        
+        <InputLabel id="layer-select-label">Layers</InputLabel>
+        <Select
+          labelId="layer-select-label"
+          multiple
+          value={selectedLayers}
+          onChange={handleLayerChange}
+          renderValue={(selected) => selected.join(", ")}
+        >
+          {layers.map((l) => (
+            <MenuItem key={l.name} value={l.name}>
+              <Checkbox checked={selectedLayers.includes(l.name)} />
+              <ListItemText primary={l.name} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Box>
   );
 };
@@ -231,7 +316,7 @@ const Toolbar = () => {
     { name: 'Information', content: 'Information', icon: <InfoOutlinedIcon /> },
     { name: 'Divider', content: null, icon: null },
     { name: 'Marker', content: 'Search', icon: <MakerIcon /> },
-    { name: 'Layer', content: <LayerGroupButton />, icon: <LayersOutlinedIcon /> },
+    { name: 'Layer', content: <LayerControl />, icon: <LayersOutlinedIcon /> },
     { name: 'Spliter', content: <SplitMapGroupButton />, icon: <ViewComfyOutlinedIcon /> },
     { name: 'Divider', content: null, icon: null },
     { name: 'Measure', content: <MeasurementGroupButton />, icon: <MeasureIcon /> },
@@ -302,6 +387,73 @@ const MapStyledToolbar = () => {
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="OpenStreetMap"
+          layerName="OpenStreetMap"
+        />
+        <TileLayer
+          url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+          attribution="OpenTopoMap"
+          layerName="OpenTopoMap"
+        />
+        <WMSTileLayer
+          layers={"lvis:province"}
+          url={import.meta.env.VITE_GEOMAP_WMS_URL}
+          maxZoom={20}
+          transparent={true}
+          styles="province"
+          format="image/png"
+          opacity={0.6}
+          layerName="Province"
+        />     
+        <WMSTileLayer
+          layers={"lvis:district"}
+          url={import.meta.env.VITE_GEOMAP_WMS_URL}
+          maxZoom={20}
+          transparent={true}
+          styles="district"
+          format="image/png"
+          opacity={0.8}
+          layerName="District"
+        />    
+        <WMSTileLayer
+          layers={"lvis:village"}
+          url={import.meta.env.VITE_GEOMAP_WMS_URL}
+          maxZoom={20}
+          transparent={true}
+          styles="village"
+          format="image/png"
+          opacity={0.85}
+          layerName="Village"
+        />
+        <WMSTileLayer
+          layers={"lvis:road"}
+          url={import.meta.env.VITE_GEOMAP_WMS_URL}
+          maxZoom={20}
+          transparent={true}
+          styles="road"
+          format="image/png"
+          opacity={1}
+          layerName="Road"
+        />
+        <WMSTileLayer
+          layers={"lvis:parcel_re"}
+          url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
+          maxZoom={20}
+          transparent={true}
+          format="image/png"
+          opacity={0.6}
+          layerName="Parcel"          
+        />                               
+        <WMSTileLayer
+          layers={"lvis:parcel_tech"}
+          url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
+          maxZoom={20}
+          transparent={true}
+          styles="parcel_tech"
+          tiled={true}
+          format="image/png"
+          opacity={0.6}
+          layerName="Valuation Object"
         />
         <Toolbar />
         <ScaleControl position="bottomright" imperial={false} />
