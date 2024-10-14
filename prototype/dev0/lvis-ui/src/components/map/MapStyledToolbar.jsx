@@ -9,6 +9,8 @@ import { styled } from "@mui/system";
 import MakerIcon from './svg/normal_u47.svg?react';
 import ExtendIcon from './svg/normal_u52.svg?react';
 import MeasureIcon from './svg/normal_u59.svg?react';
+import BboxIcon from './svg/bbox_u66.svg?react';
+
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -26,7 +28,8 @@ import './MapStyledToolbar.css';
 
 
 const ToolButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: 'lightblue', 
+  backgroundColor: 'lightblue',
+  height: '40px',
   borderRadius: '3px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
@@ -37,7 +40,7 @@ const ExtraButton = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: '36.5625px',
+  height: '40px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
   }
@@ -116,32 +119,23 @@ const ZoomOutButton = () => {
 
 const ExtendGroupButton = () => {
   return (
-    <Box
-      sm={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'center'
-      }}
-    >
-      <FlexBetween>
-        <ToolButton onClick={() => console.log('Back')}>
-          <ArrowBackIosNewOutlinedIcon />
-        </ToolButton>
-        <ToolButton onClick={() => console.log('Forward')}>
-          <ArrowForwardIosOutlinedIcon />
-        </ToolButton>
-        <ToolButton onClick={() => console.log('ZoomIn')}>
-          <ZoomInOutlinedIcon />
-        </ToolButton>
-        <ToolButton onClick={() => console.log('ZoomOut')}>
-          <ZoomOutOutlinedIcon />
-        </ToolButton>
-        <ToolButton onClick={() => console.log('Extent')}>
-          <CropFreeOutlinedIcon />
-        </ToolButton>                
-      </FlexBetween>
-    </Box>
+    <FlexBetween gap="1px">
+      <ToolButton onClick={() => console.log('Back')}>
+        <ArrowBackIosNewOutlinedIcon />
+      </ToolButton>
+      <ToolButton onClick={() => console.log('Forward')}>
+        <ArrowForwardIosOutlinedIcon />
+      </ToolButton>
+      <ToolButton onClick={() => console.log('ZoomIn')}>
+        <ZoomInOutlinedIcon />
+      </ToolButton>
+      <ToolButton onClick={() => console.log('ZoomOut')}>
+        <ZoomOutOutlinedIcon />
+      </ToolButton>
+      <ToolButton onClick={() => console.log('Extent')}>
+        <CropFreeOutlinedIcon />
+      </ToolButton>
+    </FlexBetween>
   );
 };
 const LayerGroupButton = () => {
@@ -161,7 +155,14 @@ const SplitMapGroupButton = () => {
 };
 const MeasurementGroupButton = () => {
   return (
-    <Typography>I am Measure</Typography>
+    <FlexBetween gap="1px">
+      <ToolButton onClick={() => console.log('Forward')}>
+        <ArrowForwardIosOutlinedIcon />
+      </ToolButton>
+      <ToolButton onClick={() => console.log('Bbox')}>
+        <BboxIcon />
+      </ToolButton>
+    </FlexBetween>
   );
 };
 const Toolbar = () => {
@@ -218,9 +219,9 @@ const Toolbar = () => {
               </ExtraButton>
             )}
             {icon && (
-              <IconButton>
+              <ToolButton>
                 {tool.icon}
-              </IconButton>)
+              </ToolButton>)
             }
             {openToolIndex === index && icon && content && (
               <Paper className="tool-popover">
