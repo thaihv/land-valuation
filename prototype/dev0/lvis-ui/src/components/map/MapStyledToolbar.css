@@ -17,7 +17,7 @@
 
 .tool-popover {
   position: absolute;
-  right: 37px; 
+  right: 41px; 
   top: 50%;
   transform: translateY(-50%);
   background-color: lightblue;

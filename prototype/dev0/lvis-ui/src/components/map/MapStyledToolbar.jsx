@@ -28,8 +28,12 @@ import './MapStyledToolbar.css';
 
 
 const ToolButton = styled(IconButton)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   backgroundColor: 'lightblue',
   height: '40px',
+  width: '40px',
   borderRadius: '3px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
@@ -41,6 +45,7 @@ const ExtraButton = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   height: '40px',
+  width: '40px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
   }
