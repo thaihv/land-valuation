@@ -14,6 +14,13 @@ import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined';
 import AspectRatioOutlinedIcon from '@mui/icons-material/AspectRatioOutlined';
+
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+import ZoomOutOutlinedIcon from '@mui/icons-material/ZoomOutOutlined';
+import CropFreeOutlinedIcon from '@mui/icons-material/CropFreeOutlined';
+
 import FlexBetween from "../FlexBetween";
 import './MapStyledToolbar.css';
 
@@ -118,12 +125,22 @@ const ExtendGroupButton = () => {
       }}
     >
       <FlexBetween>
-        <ZoomInButton />
-        <ZoomOutButton />
-        <ZoomInButton />
-        <ZoomOutButton />
+        <ToolButton onClick={() => console.log('Back')}>
+          <ArrowBackIosNewOutlinedIcon />
+        </ToolButton>
+        <ToolButton onClick={() => console.log('Forward')}>
+          <ArrowForwardIosOutlinedIcon />
+        </ToolButton>
+        <ToolButton onClick={() => console.log('ZoomIn')}>
+          <ZoomInOutlinedIcon />
+        </ToolButton>
+        <ToolButton onClick={() => console.log('ZoomOut')}>
+          <ZoomOutOutlinedIcon />
+        </ToolButton>
+        <ToolButton onClick={() => console.log('Extent')}>
+          <CropFreeOutlinedIcon />
+        </ToolButton>                
       </FlexBetween>
-
     </Box>
   );
 };
