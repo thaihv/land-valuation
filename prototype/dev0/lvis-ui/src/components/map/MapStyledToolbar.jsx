@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, ScaleControl, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Paper, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, Paper, IconButton, Tooltip, FormControlLabel, Checkbox, Typography, useTheme } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
@@ -144,8 +144,53 @@ const ExtendGroupButton = () => {
   );
 };
 const LayerGroupButton = () => {
+  const map = useMap();
+  const [layer1, setLayer1] = useState(true);
+  const [layer2, setLayer2] = useState(true);
+
+  // Create layers
+  const layer1Ref = React.useRef(
+    new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+  );
+  const layer2Ref = React.useRef(
+    new L.TileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png")
+  );
+
+  useEffect(() => {
+    // Add layers to the map by default
+    map.addLayer(layer1Ref.current);
+    map.addLayer(layer2Ref.current);
+  }, [map]);
+
+  const handleLayer1Toggle = (event) => {
+    setLayer1(event.target.checked);
+    if (event.target.checked) {
+      map.addLayer(layer1Ref.current);
+    } else {
+      map.removeLayer(layer1Ref.current);
+    }
+  };
+
+  const handleLayer2Toggle = (event) => {
+    setLayer2(event.target.checked);
+    if (event.target.checked) {
+      map.addLayer(layer2Ref.current);
+    } else {
+      map.removeLayer(layer2Ref.current);
+    }
+  };
+
   return (
-    <Typography>I am Layer</Typography>
+    <Box>
+      <FormControlLabel
+        control={<Checkbox checked={layer1} onChange={handleLayer1Toggle} />}
+        label="OSM Layer"
+      />
+      <FormControlLabel
+        control={<Checkbox checked={layer2} onChange={handleLayer2Toggle} />}
+        label="Topo Layer"
+      />
+    </Box>
   );
 };
 const ScaleGroupButton = () => {
@@ -229,7 +274,7 @@ const Toolbar = () => {
               </ToolButton>)
             }
             {openToolIndex === index && icon && content && (
-              <Paper className="tool-popover">
+              <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
                 {tool.content}
               </Paper>
             )}
