@@ -32,8 +32,8 @@ const ToolButton = styled(IconButton)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: 'lightblue',
-  height: '40px',
-  width: '40px',
+  height: '5vh',  //40px instead
+  width: '2.5vw', //40px instead
   borderRadius: '3px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
@@ -44,8 +44,8 @@ const ExtraButton = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: '40px',
-  width: '40px',
+  height: '5vh', //40px instead
+  width: '2.5vw', //40px instead
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
   }
@@ -338,7 +338,7 @@ const Toolbar = () => {
         const lastItem = tool.name === 'Location' ? true : false;
         if (!content && !implement) { // is Divider
           return (
-            <Box mt="10px" key={index}>
+            <Box m="1.25vh 0 1.25vh 0" key={index}>
             </Box>
           );
         }

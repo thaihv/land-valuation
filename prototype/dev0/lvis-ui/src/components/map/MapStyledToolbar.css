@@ -20,7 +20,7 @@
 
 .tool-popover {
   position: absolute;
-  right: 41px; 
+  right: 2.55vw; /*41px as instead */
   top: 50%;
   transform: translateY(-50%);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
