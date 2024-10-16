@@ -122,7 +122,7 @@ const ZoomOutButton = () => {
   );
 };
 
-const ExtendGroupButton = () => {
+const ExtendControl = () => {
   return (
     <FlexBetween gap="1px">
       <ToolButton onClick={() => console.log('Back')}>
@@ -278,17 +278,17 @@ const LayerControl = () => {
     </Box>
   );
 };
-const ScaleGroupButton = () => {
+const ScaleTableControl = () => {
   return (
     <Typography>I am Scale</Typography>
   );
 };
-const SplitMapGroupButton = () => {
+const SplitMapControl = () => {
   return (
     <Typography>I am Split Map</Typography>
   );
 };
-const MeasurementGroupButton = () => {
+const MeasurementControl = () => {
   return (
     <FlexBetween gap="1px">
       <ToolButton onClick={() => console.log('Forward')}>
@@ -312,30 +312,30 @@ const Toolbar = () => {
   };
 
   const tools = [
-    { name: 'Notification', content: 'Notification', icon: <NotificationsOutlinedIcon /> },
-    { name: 'Information', content: 'Information', icon: <InfoOutlinedIcon /> },
-    { name: 'Divider', content: null, icon: null },
-    { name: 'Marker', content: 'Search', icon: <MakerIcon /> },
-    { name: 'Layer', content: <LayerControl />, icon: <LayersOutlinedIcon /> },
-    { name: 'Spliter', content: <SplitMapGroupButton />, icon: <ViewComfyOutlinedIcon /> },
-    { name: 'Divider', content: null, icon: null },
-    { name: 'Measure', content: <MeasurementGroupButton />, icon: <MeasureIcon /> },
-    { name: 'Divider', content: null, icon: null },
-    { name: 'Extend', content: <ExtendGroupButton />, icon: <ExtendIcon /> },
-    { name: 'Scale', content: <ScaleGroupButton />, icon: <AspectRatioOutlinedIcon /> },
-    { name: 'ZoomIn', content: <ZoomInButton />, icon: null },
-    { name: 'Level', content: <ZoomDisplayButton />, icon: null },
-    { name: 'ZoomOut', content: <ZoomOutButton />, icon: null },
-    { name: 'Divider', content: null, icon: null },
-    { name: 'Location', content: <LocationButton />, icon: null },
+    { name: 'Notification', content: <NotificationsOutlinedIcon />, implement: null },
+    { name: 'Information', content: <InfoOutlinedIcon />, implement: null },
+    { name: 'Divider', content: null, implement: null },
+    { name: 'Marker', content: <MakerIcon />, implement: null },
+    { name: 'Layer', content: <LayersOutlinedIcon />, implement: <LayerControl /> },
+    { name: 'Spliter', content: <ViewComfyOutlinedIcon />, implement: <SplitMapControl /> },
+    { name: 'Divider', content: null, implement: null },
+    { name: 'Measure', content: <MeasureIcon />, implement: <MeasurementControl /> },
+    { name: 'Divider', content: null, implement: null },
+    { name: 'Extend', content: <ExtendIcon />, implement: <ExtendControl />  },
+    { name: 'Scale', content: <AspectRatioOutlinedIcon />, implement: <ScaleTableControl /> },
+    { name: 'ZoomIn', content: <ZoomInButton />, implement: null },
+    { name: 'Level', content: <ZoomDisplayButton />, implement: null },
+    { name: 'ZoomOut', content: <ZoomOutButton />, implement: null },
+    { name: 'Divider', content: null, implement: null },
+    { name: 'Location', content: <LocationButton />, implement: null },
   ];
 
   return (
     <div className="toolbar">
       {tools.map((tool, index) => {
-        const icon = tool.icon;
+        const implement = tool.implement;
         const content = tool.content;
-        if (!icon && !content) { // is Divider
+        if (!content && !implement) { // is Divider
           return (
             <Box mt="10px" key={index}>
             </Box>
@@ -348,19 +348,12 @@ const Toolbar = () => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
-            {!icon && (
-              <ExtraButton>
-                {tool.content}
-              </ExtraButton>
-            )}
-            {icon && (
-              <ToolButton>
-                {tool.icon}
-              </ToolButton>)
-            }
-            {openToolIndex === index && icon && content && (
+            <ExtraButton>
+              {tool.content}
+            </ExtraButton>
+            {openToolIndex === index && implement && content && (
               <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
-                {tool.content}
+                {tool.implement}
               </Paper>
             )}
           </div>
