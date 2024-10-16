@@ -6,9 +6,12 @@
   flex-direction: column;
   background-color: transparent;
   gap: 5px;
+  height: 90vh;
   z-index: 1000;
 }
-
+.last-item {
+  margin-top: auto; /* Pushes this item to the bottom */
+}
 .toolbar-button {
   background-color: lightblue;
   border-Radius: 3px;
