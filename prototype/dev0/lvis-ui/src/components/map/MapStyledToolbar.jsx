@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef  } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, ScaleControl, WMSTileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Paper, IconButton, Tooltip, FormControlLabel , Switch , FormControl, Select, InputLabel, Checkbox, MenuItem, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, Paper, IconButton, Tooltip, FormControlLabel, Switch, FormControl, Select, InputLabel, Checkbox, MenuItem, ListItemText, Typography, useTheme } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
@@ -191,7 +191,7 @@ const LayerControl = () => {
 
   // Initialize layers from the map
   useEffect(() => {
-    const mapLayers = [];    
+    const mapLayers = [];
     // Iterate over layers in the map and add them to the state
     map.eachLayer((layer) => {
       if (layer instanceof L.TileLayer || layer instanceof L.WMSTileLayer) {
@@ -199,7 +199,7 @@ const LayerControl = () => {
       }
     });
     setLayers(mapLayers);
-    setSelectedLayers(mapLayers.map((l) => l.name)); 
+    setSelectedLayers(mapLayers.map((l) => l.name));
   }, [map]);
 
   // Handle changes in layer selection
@@ -242,11 +242,11 @@ const LayerControl = () => {
     };
   }, [map, layers, selectedLayers]);
 
- 
+
   return (
-    <Box 
+    <Box
       sx={{
-        width:"190px",
+        width: "190px",
         backgroundColor: 'lightblue'
       }}
     >
@@ -258,7 +258,7 @@ const LayerControl = () => {
         <FormControlLabel
           control={<Switch checked={topoLayer} onChange={handleTopoLayerChange} />}
           label="Topo Layer"
-        />        
+        />
         <InputLabel id="layer-select-label">Layers</InputLabel>
         <Select
           labelId="layer-select-label"
@@ -321,7 +321,7 @@ const Toolbar = () => {
     { name: 'Divider', content: null, implement: null },
     { name: 'Measure', content: <MeasureIcon />, implement: <MeasurementControl /> },
     { name: 'Divider', content: null, implement: null },
-    { name: 'Extend', content: <ExtendIcon />, implement: <ExtendControl />  },
+    { name: 'Extend', content: <ExtendIcon />, implement: <ExtendControl /> },
     { name: 'Scale', content: <AspectRatioOutlinedIcon />, implement: <ScaleTableControl /> },
     { name: 'ZoomIn', content: <ZoomInButton />, implement: null },
     { name: 'Level', content: <ZoomDisplayButton />, implement: null },
@@ -397,7 +397,7 @@ const MapStyledToolbar = () => {
           format="image/png"
           opacity={0.6}
           layerName="Province"
-        />     
+        />
         <WMSTileLayer
           layers={"lvis:district"}
           url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -407,7 +407,7 @@ const MapStyledToolbar = () => {
           format="image/png"
           opacity={0.8}
           layerName="District"
-        />    
+        />
         <WMSTileLayer
           layers={"lvis:village"}
           url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -435,8 +435,8 @@ const MapStyledToolbar = () => {
           transparent={true}
           format="image/png"
           opacity={0.6}
-          layerName="Parcel"          
-        />                               
+          layerName="Parcel"
+        />
         <WMSTileLayer
           layers={"lvis:parcel_tech"}
           url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
