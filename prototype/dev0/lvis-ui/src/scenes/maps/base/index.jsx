@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import LeftBar from "../../../components/toolbars/LeftBar";
-import MapStyledToolbar from "../../../components/map/MapStyledToolbar";
+import ValuationMap from "../../../components/map/ValuationMap";
 import Sidebar from "../../../components/Sidebar";
 
 const BaseMap = () => {
@@ -35,7 +35,7 @@ const BaseMap = () => {
             <LeftBar />
           </Box>
           <Box sx={{ gridArea: "1/1/3/5" }}>
-            <MapStyledToolbar />
+            <ValuationMap />
           </Box>
         </Box>
       </Box>
