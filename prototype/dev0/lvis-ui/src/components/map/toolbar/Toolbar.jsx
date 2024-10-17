@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Paper, IconButton, Tooltip, FormControlLabel, FormControl, Select, MenuItem, ListItemText, Switch, Divider, Checkbox,Typography} from '@mui/material';
+import { Box, Paper, IconButton, Tooltip, FormControlLabel, FormControl, Select, MenuItem, ListItemText, Switch, Divider, Checkbox, Typography } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
@@ -32,8 +32,8 @@ const ToolButton = styled(IconButton)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: 'lightblue',
-  height: '5vh',  //40px instead
-  width: '2.5vw', //40px instead
+  height: '40px',
+  width: '40px',
   borderRadius: '3px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
@@ -44,8 +44,8 @@ const ExtraButton = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: '5vh', //40px instead
-  width: '2.5vw', //40px instead
+  height: '40px',
+  width: '40px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.main,
   }
@@ -123,7 +123,7 @@ const ZoomOutButton = () => {
 };
 
 const ExtendControl = () => {
-  const map = useMap(); 
+  const map = useMap();
   const zoomToBounds = () => {
     const bounds = L.latLngBounds(
       [18.312810, 102.3046875], // Southwest corner (latitude, longitude)
@@ -155,15 +155,15 @@ const ExtendControl = () => {
 const LayerControl = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle }) => {
   return (
     <Paper sx={{ backgroundColor: 'lightblue' }} className="tool-popover">
-        <Box
-          sx={{
-            display: 'flex',   
-            flexDirection: 'column',    
-            whiteSpace: 'nowrap',   // Ensure the text does not wrap
-            width: 'auto',          // Make width automatically adjust to content
-            m: '1rem 1rem 1rem 1rem'
-          }}
-        >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          whiteSpace: 'nowrap',   // Ensure the text does not wrap
+          width: 'auto',          // Make width automatically adjust to content
+          m: '1rem 1rem 1rem 1rem'
+        }}
+      >
         {baseLayers.map((layer) => (
           <FormControlLabel
             key={layer.name}
@@ -177,11 +177,11 @@ const LayerControl = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle
           />
         ))}
       </Box>
-      <Divider sx={{ m: "0 0.5rem 1rem 0.5rem"}}/>
+      <Divider sx={{ m: "0 0.5rem 1rem 0.5rem" }} />
       <Box
-          display= "flex"
-          flexDirection="column"
-          m="1rem 1rem 1rem 1rem"
+        display="flex"
+        flexDirection="column"
+        m="1rem 1rem 1rem 1rem"
       >
         {overlays.map((layer) => (
           <FormControlLabel
