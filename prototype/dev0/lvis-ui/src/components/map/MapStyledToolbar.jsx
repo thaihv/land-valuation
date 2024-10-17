@@ -263,6 +263,8 @@ const MapStyledToolbar = () => {
     { name: 'District', visible: true, type: 'Overlay' },
     { name: 'Village', visible: false, type: 'Overlay' },
     { name: 'Road', visible: true, type: 'Overlay' },
+    { name: 'Parcel', visible: false, type: 'Overlay' },
+    { name: 'Valuation Object', visible: false, type: 'Overlay' },
   ]);
   const handleToggle = (layerName) => {
     setLayers((prev) =>
@@ -343,6 +345,28 @@ const MapStyledToolbar = () => {
               layerName="Road"
             />
           )}
+          {layers[6].visible && (          
+            <WMSTileLayer
+              layers={"lvis:parcel_re"}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
+              maxZoom={20}
+              transparent={true}
+              format="image/png"
+              opacity={0.6}
+            />
+          )}
+          {layers[7].visible && (          
+            <WMSTileLayer
+              layers={"lvis:parcel_tech"}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
+              maxZoom={20}
+              transparent={true}
+              styles="parcel_tech"
+              tiled={true}
+              format="image/png"
+              opacity={0.6}
+            />
+          )}                    
         </LayerGroup>
         <Toolbar layers={layers} onToggle={handleToggle} />
         <ScaleControl position="bottomright" imperial={false} />
