@@ -123,6 +123,15 @@ const ZoomOutButton = () => {
 };
 
 const ExtendControl = () => {
+  const map = useMap(); 
+  const zoomToBounds = () => {
+    const bounds = L.latLngBounds(
+      [20.63278, 99.84375], // Southwest corner (latitude, longitude)
+      [16.63619, 105.46875]  // Northeast corner (latitude, longitude)
+    );
+    map.fitBounds(bounds); // Zoom the map to the defined bounds
+  };
+
   return (
     <FlexBetween gap="1px">
       <ToolButton onClick={() => console.log('Back')}>
@@ -137,7 +146,7 @@ const ExtendControl = () => {
       <ToolButton onClick={() => console.log('ZoomOut')}>
         <ZoomOutOutlinedIcon />
       </ToolButton>
-      <ToolButton onClick={() => console.log('Extent')}>
+      <ToolButton onClick={zoomToBounds}>
         <CropFreeOutlinedIcon />
       </ToolButton>
     </FlexBetween>
