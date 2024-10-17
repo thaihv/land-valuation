@@ -145,7 +145,7 @@ const ExtendControl = () => {
 };
 const LayerControl = ({ layers, onToggle }) => {
   return (
-    <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
+    <Paper sx={{ backgroundColor: 'lightblue' }} className="tool-popover">
       {layers.map((layer) => (
         <FormControlLabel
           key={layer.name}
