@@ -131,13 +131,34 @@ const ExtendControl = () => {
     );
     map.fitBounds(bounds); // Zoom the map to the defined bounds
   };
+  // Function to move the map left
+  const moveLeft = () => {
+    const currentCenter = map.getCenter();
+    const bounds = map.getBounds(); // Get the current map bounds
+    const southWest = bounds.getSouthWest(); // Bottom-left corner (lat, lon)
+    const northEast = bounds.getNorthEast(); // Top-right corner (lat, lon)
+    // 1. Longitude difference (Width in degrees)
+    const widthInDegrees = northEast.lng - southWest.lng;    
+    map.setView([currentCenter.lat, currentCenter.lng - widthInDegrees], map.getZoom());
+  };
+
+  // Function to move the map right
+  const moveRight = () => {
+    const currentCenter = map.getCenter();
+    const bounds = map.getBounds(); // Get the current map bounds
+    const southWest = bounds.getSouthWest(); // Bottom-left corner (lat, lon)
+    const northEast = bounds.getNorthEast(); // Top-right corner (lat, lon)
+    // 1. Longitude difference (Width in degrees)
+    const widthInDegrees = northEast.lng - southWest.lng;    
+    map.setView([currentCenter.lat, currentCenter.lng + widthInDegrees], map.getZoom());
+  };
 
   return (
     <FlexBetween gap="1px">
-      <ToolButton onClick={() => console.log('Back')}>
+      <ToolButton onClick={moveLeft}>
         <ArrowBackIosNewOutlinedIcon />
       </ToolButton>
-      <ToolButton onClick={() => console.log('Forward')}>
+      <ToolButton onClick={moveRight}>
         <ArrowForwardIosOutlinedIcon />
       </ToolButton>
       <ToolButton onClick={() => console.log('ZoomIn')}>
