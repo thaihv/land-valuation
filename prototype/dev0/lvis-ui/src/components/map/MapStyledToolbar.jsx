@@ -312,28 +312,28 @@ const Toolbar = () => {
   };
 
   const tools = [
-    { name: 'Notification', content: <NotificationsOutlinedIcon />, implement: null },
-    { name: 'Information', content: <InfoOutlinedIcon />, implement: null },
-    { name: 'Divider', content: null, implement: null },
-    { name: 'Marker', content: <MakerIcon />, implement: null },
-    { name: 'Layer', content: <LayersOutlinedIcon />, implement: <LayerControl /> },
-    { name: 'Spliter', content: <ViewComfyOutlinedIcon />, implement: <SplitMapControl /> },
-    { name: 'Divider', content: null, implement: null },
-    { name: 'Measure', content: <MeasureIcon />, implement: <MeasurementControl /> },
-    { name: 'Divider', content: null, implement: null },
-    { name: 'Extend', content: <ExtendIcon />, implement: <ExtendControl /> },
-    { name: 'Scale', content: <AspectRatioOutlinedIcon />, implement: <ScaleTableControl /> },
-    { name: 'ZoomIn', content: <ZoomInButton />, implement: null },
-    { name: 'Level', content: <ZoomDisplayButton />, implement: null },
-    { name: 'ZoomOut', content: <ZoomOutButton />, implement: null },
-    { name: 'Divider', content: null, implement: null },
-    { name: 'Location', content: <LocationButton />, implement: null },
+    { name: 'Notification', content: <NotificationsOutlinedIcon />, impl: null },
+    { name: 'Information', content: <InfoOutlinedIcon />, impl: null },
+    { name: 'Divider', content: null, impl: null },
+    { name: 'Marker', content: <MakerIcon />, impl: null },
+    { name: 'Layer', content: <LayersOutlinedIcon />, impl: <LayerControl /> },
+    { name: 'Spliter', content: <ViewComfyOutlinedIcon />, impl: <SplitMapControl /> },
+    { name: 'Divider', content: null, impl: null },
+    { name: 'Measure', content: <MeasureIcon />, impl: <MeasurementControl /> },
+    { name: 'Divider', content: null, impl: null },
+    { name: 'Extend', content: <ExtendIcon />, impl: <ExtendControl /> },
+    { name: 'Scale', content: <AspectRatioOutlinedIcon />, impl: <ScaleTableControl /> },
+    { name: 'ZoomIn', content: <ZoomInButton />, impl: null },
+    { name: 'Level', content: <ZoomDisplayButton />, impl: null },
+    { name: 'ZoomOut', content: <ZoomOutButton />, impl: null },
+    { name: 'Divider', content: null, impl: null },
+    { name: 'Location', content: <LocationButton />, impl: null },
   ];
 
   return (
     <div className="toolbar">
       {tools.map((tool, index) => {
-        const implement = tool.implement;
+        const implement = tool.impl;
         const content = tool.content;
         const lastOne = tool.name === 'Location' ? true : false;
         if (!content && !implement) { // is Divider
@@ -350,11 +350,11 @@ const Toolbar = () => {
             onMouseLeave={handleMouseLeave}
           >
             <ExtraButton >
-              {tool.content}
+              {content}
             </ExtraButton>
             {openToolIndex === index && implement && content && (
               <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
-                {tool.implement}
+                {implement}
               </Paper>
             )}
           </div>
