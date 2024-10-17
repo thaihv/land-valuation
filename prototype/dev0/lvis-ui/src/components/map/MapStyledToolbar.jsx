@@ -230,14 +230,13 @@ const Toolbar = ({ layers, onToggle }) => {
         return (
           <div
             key={index}
-            className={`toolbar-button ${lastOne ? 'last-button':''}`}
+            className={`toolbar-button ${lastOne ? 'last-button' : ''}`}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
             <ExtraButton >
               {content}
             </ExtraButton>
-
             {openToolIndex === index && !isLayerControl && implement && content && (
               <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
                 {implement}
@@ -245,7 +244,7 @@ const Toolbar = ({ layers, onToggle }) => {
             )}
             {openToolIndex === index && isLayerControl && (
               <LayerControl layers={layers} onToggle={onToggle} />
-            )}            
+            )}
           </div>
         )
       })}
@@ -321,7 +320,7 @@ const MapStyledToolbar = () => {
               opacity={0.8}
             />
           )}
-          {layers[4].visible && (          
+          {layers[4].visible && (
             <WMSTileLayer
               layers={"lvis:village"}
               url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -332,7 +331,7 @@ const MapStyledToolbar = () => {
               opacity={0.85}
             />
           )}
-          {layers[5].visible && (             
+          {layers[5].visible && (
             <WMSTileLayer
               layers={"lvis:road"}
               url={import.meta.env.VITE_GEOMAP_WMS_URL}
