@@ -96,8 +96,8 @@ const ValuationMap = () => {
   const [map, setMap] = useState(null);
   const theme = useTheme();
   const [baseLayers, setBaseLayers] = useState([
-    { name: 'OpenStreetMap', active: true },
-    { name: 'OpenTopoMap', active: false },
+    { name: 'Open Street Map', active: true },
+    { name: 'Open Topo Map', active: false },
   ]);
   const handleBaseLayerChange = (layerName) => {
     setBaseLayers((prev) =>
@@ -111,7 +111,7 @@ const ValuationMap = () => {
   const [overlays, setOverlays] = useState([
     { name: 'Province', visible: true },
     { name: 'District', visible: true },
-    { name: 'Village', visible: false },
+    { name: 'Village', visible: true },
     { name: 'Road', visible: false },
     { name: 'Parcel', visible: false },
     { name: 'Valuation Object', visible: false },
