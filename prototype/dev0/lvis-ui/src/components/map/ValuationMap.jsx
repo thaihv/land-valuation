@@ -70,10 +70,10 @@ const WatermarkControl = ({ theme, imgUrl, text }) => {
           const watermarkText = document.createElement('div');
           watermarkText.innerHTML = text;
           watermarkText.style.fontSize = '12px';
-          watermarkText.style.color = theme.palette.background.default;
+          watermarkText.style.color = theme.palette.background.alt;
           watermarkText.style.fontWeight = 'bold';
           watermarkText.style.backgroundColor = 'transparent';
-          watermarkText.style.padding = '1px 0px 0px 0px';
+          //watermarkText.style.padding = '1px 0px 0px 0px';
           div.appendChild(watermarkText);
         }
         return div;
