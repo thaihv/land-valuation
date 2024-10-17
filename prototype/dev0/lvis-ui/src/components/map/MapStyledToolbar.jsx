@@ -258,12 +258,12 @@ const MapStyledToolbar = () => {
   const [map, setMap] = useState(null);
   const theme = useTheme();
   const [layers, setLayers] = useState([
-    { name: 'OpenStreetMap', visible: true },
-    { name: 'OpenTopoMap', visible: false },
-    { name: 'Province', visible: true },
-    { name: 'District', visible: true },
-    { name: 'Village', visible: false },
-    { name: 'Road', visible: true },
+    { name: 'OpenStreetMap', visible: true, type: 'BaseMap' },
+    { name: 'OpenTopoMap', visible: false, type: 'BaseMap' },
+    { name: 'Province', visible: true, type: 'Overlay' },
+    { name: 'District', visible: true, type: 'Overlay' },
+    { name: 'Village', visible: false, type: 'Overlay' },
+    { name: 'Road', visible: true, type: 'Overlay' },
   ]);
   const handleToggle = (layerName) => {
     setLayers((prev) =>
@@ -284,6 +284,7 @@ const MapStyledToolbar = () => {
         style={{ height: '100%', width: '100%' }}
         ref={setMap}
       >
+        {/* Base Layers */}
         {layers[0].visible && (
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
