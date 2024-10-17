@@ -335,7 +335,7 @@ const Toolbar = () => {
       {tools.map((tool, index) => {
         const implement = tool.implement;
         const content = tool.content;
-        const lastItem = tool.name === 'Location' ? true : false;
+        const lastOne = tool.name === 'Location' ? true : false;
         if (!content && !implement) { // is Divider
           return (
             <Box m="1.25vh 0 1.25vh 0" key={index}>
@@ -345,7 +345,7 @@ const Toolbar = () => {
         return (
           <div
             key={index}
-            className={`toolbar-button ${lastItem ? 'last-item':''}`}
+            className={`toolbar-button ${lastOne ? 'last-button':''}`}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
