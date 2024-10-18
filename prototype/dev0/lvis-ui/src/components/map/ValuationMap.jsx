@@ -126,7 +126,7 @@ const ValuationMap = () => {
     );
   };
   // Extent of Lao project site for land valuation
-  const bounds = L.latLngBounds(
+  const extent = L.latLngBounds(
     [18.312810, 102.3046875],
     [17.978733, 103.0078125]
   );
@@ -135,7 +135,7 @@ const ValuationMap = () => {
       <MapContainer
         center={center}
         zoomControl={false}
-        bounds={bounds}
+        bounds={extent}
         style={{ height: '100%', width: '100%' }}
         ref={setMap}
       >
@@ -239,7 +239,7 @@ const ValuationMap = () => {
           overlays={overlays}
           onBaseLayerChange={handleBaseLayerChange}
           onOverlayToggle={handleOverlayToggle}
-          extent={bounds}
+          extent={extent}
         />
         <WatermarkControl
           theme={theme}
