@@ -126,12 +126,17 @@ const ValuationMap = () => {
       )
     );
   };
+  // Extent of Lao project site for land valuation
+  const bounds = L.latLngBounds(
+    [18.312810, 102.3046875], 
+    [17.978733, 103.0078125] 
+  );
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
       <MapContainer
         center={center}
         zoomControl={false}
-        zoom={9}
+        bounds={bounds}
         style={{ height: '100%', width: '100%' }}
         ref={setMap}
       >
