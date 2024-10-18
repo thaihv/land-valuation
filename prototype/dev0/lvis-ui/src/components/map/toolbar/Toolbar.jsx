@@ -122,35 +122,31 @@ const ZoomOutButton = () => {
   );
 };
 
-const ExtendControl = () => {
+const ExtendControl = ({ extent }) => {
   const map = useMap();
   const zoomToBounds = () => {
-    const bounds = L.latLngBounds(
-      [18.312810, 102.3046875], // Southwest corner (latitude, longitude)
-      [17.978733, 103.0078125]  // Northeast corner (latitude, longitude)
-    );
-    map.fitBounds(bounds); // Zoom the map to the defined bounds
+    map.fitBounds(extent); // Zoom the map to the defined bounds
   };
-  // Function to move the map left
-  const moveLeft = () => {
-    const currentCenter = map.getCenter();
+  const widthDiffInDegree = () => {
     const bounds = map.getBounds(); // Get the current map bounds
     const southWest = bounds.getSouthWest(); // Bottom-left corner (lat, lon)
     const northEast = bounds.getNorthEast(); // Top-right corner (lat, lon)
     // 1. Longitude difference (Width in degrees)
-    const widthInDegrees = northEast.lng - southWest.lng;    
-    map.setView([currentCenter.lat, currentCenter.lng - widthInDegrees], map.getZoom());
+    const widthInDegrees = northEast.lng - southWest.lng;
+    return widthInDegrees;
+  }
+  // Function to move the map left
+  const moveLeft = () => {
+    const currentCenter = map.getCenter();
+    const diff = widthDiffInDegree();
+    map.setView([currentCenter.lat, currentCenter.lng - diff], map.getZoom());
   };
 
   // Function to move the map right
   const moveRight = () => {
     const currentCenter = map.getCenter();
-    const bounds = map.getBounds(); // Get the current map bounds
-    const southWest = bounds.getSouthWest(); // Bottom-left corner (lat, lon)
-    const northEast = bounds.getNorthEast(); // Top-right corner (lat, lon)
-    // 1. Longitude difference (Width in degrees)
-    const widthInDegrees = northEast.lng - southWest.lng;    
-    map.setView([currentCenter.lat, currentCenter.lng + widthInDegrees], map.getZoom());
+    const diff = widthDiffInDegree();
+    map.setView([currentCenter.lat, currentCenter.lng + diff], map.getZoom());
   };
 
   return (
@@ -242,7 +238,7 @@ const MeasurementControl = () => {
     </FlexBetween>
   );
 };
-const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle }) => {
+const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, extent }) => {
   const [openToolIndex, setOpenToolIndex] = useState(null);
 
   const handleMouseEnter = (index) => {
@@ -279,7 +275,7 @@ const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle }) =
         const content = tool.content;
         const lastOne = tool.name === 'Location' ? true : false;
         const isLayerControl = tool.name === 'Layer' ? true : false;
-
+        const isExtendControl = tool.name === 'Extend' ? true : false;
         if (!content && !implement) { // is Divider
           return (
             <Box m="1.25vh 0 1.25vh 0" key={index}>
@@ -296,7 +292,7 @@ const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle }) =
             <ExtraButton >
               {content}
             </ExtraButton>
-            {openToolIndex === index && !isLayerControl && implement && content && (
+            {openToolIndex === index && !isLayerControl && !isExtendControl && implement && content && (
               <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
                 {implement}
               </Paper>
@@ -308,6 +304,11 @@ const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle }) =
                 onBaseLayerChange={onBaseLayerChange}
                 onOverlayToggle={onOverlayToggle}
               />
+            )}
+            {openToolIndex === index && isExtendControl && (
+              <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
+                <ExtendControl extent={extent} />
+              </Paper>
             )}
           </div>
         )

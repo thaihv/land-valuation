@@ -239,6 +239,7 @@ const ValuationMap = () => {
           overlays={overlays}
           onBaseLayerChange={handleBaseLayerChange}
           onOverlayToggle={handleOverlayToggle}
+          extent={bounds}
         />
         <WatermarkControl
           theme={theme}
