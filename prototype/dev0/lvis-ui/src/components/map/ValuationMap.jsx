@@ -63,7 +63,7 @@ const WatermarkControl = ({ theme, imgUrl, text }) => {
         if (imgUrl) {
           const img = document.createElement('img');
           img.src = imgUrl;
-          img.style.width  = '40px'; // Adjust as needed
+          img.style.width = '40px'; // Adjust as needed
           div.appendChild(img);
         }
         if (text) {
@@ -73,7 +73,6 @@ const WatermarkControl = ({ theme, imgUrl, text }) => {
           watermarkText.style.color = theme.palette.background.alt;
           watermarkText.style.fontWeight = 'bold';
           watermarkText.style.backgroundColor = 'transparent';
-          //watermarkText.style.padding = '1px 0px 0px 0px';
           div.appendChild(watermarkText);
         }
         return div;
@@ -128,8 +127,8 @@ const ValuationMap = () => {
   };
   // Extent of Lao project site for land valuation
   const bounds = L.latLngBounds(
-    [18.312810, 102.3046875], 
-    [17.978733, 103.0078125] 
+    [18.312810, 102.3046875],
+    [17.978733, 103.0078125]
   );
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
@@ -155,7 +154,7 @@ const ValuationMap = () => {
             zIndex={1}
           />
         )}
-        {/* Ovarlay Layers */}
+        {/* Overlay Layers */}
         <LayerGroup>
           {overlays[0].visible && (
             <WMSTileLayer
