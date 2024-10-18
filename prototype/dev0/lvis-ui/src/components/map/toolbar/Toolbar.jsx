@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Box, Paper, IconButton, Tooltip, FormControlLabel, FormControl, Select, MenuItem, ListItemText, Switch, Divider, Checkbox, Typography } from '@mui/material';
+import { Box, Paper, IconButton, Tooltip, FormControlLabel, Switch, Divider, Checkbox, Typography } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
@@ -122,8 +122,9 @@ const ZoomOutButton = () => {
   );
 };
 
-const ExtendControl = ({ extent }) => {
+const ExtendControl = ({ extent, onToggleDrawing, isDrawing }) => {
   const map = useMap();
+
   const zoomToBounds = () => {
     map.fitBounds(extent); // Zoom the map to the defined bounds
   };
@@ -148,7 +149,13 @@ const ExtendControl = ({ extent }) => {
     const diff = widthDiffInDegree();
     map.setView([currentCenter.lat, currentCenter.lng + diff], map.getZoom());
   };
-
+  const handleZoomInExtent = () => {
+    map.dragging.disable()
+    onToggleDrawing(); 
+  }
+  const handleZoomOutExtent = () => {
+    map.dragging.enable()
+  }
   return (
     <FlexBetween gap="1px">
       <ToolButton onClick={moveLeft}>
@@ -157,10 +164,10 @@ const ExtendControl = ({ extent }) => {
       <ToolButton onClick={moveRight}>
         <ArrowForwardIosOutlinedIcon />
       </ToolButton>
-      <ToolButton onClick={() => console.log('ZoomIn')}>
+      <ToolButton onClick={handleZoomInExtent}>
         <ZoomInOutlinedIcon />
       </ToolButton>
-      <ToolButton onClick={() => console.log('ZoomOut')}>
+      <ToolButton onClick={handleZoomOutExtent}>
         <ZoomOutOutlinedIcon />
       </ToolButton>
       <ToolButton onClick={zoomToBounds}>
@@ -238,7 +245,7 @@ const MeasurementControl = () => {
     </FlexBetween>
   );
 };
-const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, extent }) => {
+const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, extent, onToggleDrawing, isDrawing }) => {
   const [openToolIndex, setOpenToolIndex] = useState(null);
 
   const handleMouseEnter = (index) => {
@@ -307,7 +314,7 @@ const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, ext
             )}
             {openToolIndex === index && isExtendControl && (
               <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
-                <ExtendControl extent={extent} />
+                <ExtendControl extent={extent} onToggleDrawing={onToggleDrawing} isDrawing={isDrawing}/>
               </Paper>
             )}
           </div>

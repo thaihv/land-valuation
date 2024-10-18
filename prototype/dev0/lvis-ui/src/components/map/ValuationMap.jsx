@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, ScaleControl, WMSTileLayer, LayerGroup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, ScaleControl, WMSTileLayer, LayerGroup, Rectangle, useMapEvent, useMap } from 'react-leaflet';
 import { useTheme } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
 import Toolbar from "./toolbar/Toolbar"
@@ -90,23 +90,55 @@ const WatermarkControl = ({ theme, imgUrl, text }) => {
 
   return null;
 };
+
+// Function to handle drawing the extent
+export const MouseHandler = ({ isDrawing, setBounds }) => {
+  const map = useMap();
+  const [startPoint, setStartPoint] = useState(null);
+  const [endPoint, setEndPoint] = useState(null);
+
+  useMapEvent('mousedown', (e) => {
+    if (isDrawing) {
+      setStartPoint(e.latlng); // Record starting point on mousedown
+    }
+  });
+
+  useMapEvent('mousemove', (e) => {
+    if (isDrawing && startPoint) {
+      setEndPoint(e.latlng); // Update end point as the mouse moves
+    }
+  });
+
+  useMapEvent('mouseup', () => {
+    if (isDrawing && startPoint && endPoint) {
+      // Create bounds from start and end points
+      const newBounds = L.latLngBounds(startPoint, endPoint);
+      setBounds(newBounds); // Store the bounds for drawing the rectangle
+
+      // Fit the map to the drawn bounds (zoom to extent)
+      map.fitBounds(newBounds);
+    }
+    // Reset start and end points after selection
+    setStartPoint(null);
+    setEndPoint(null);
+  });
+
+  return null;
+};
+
 const ValuationMap = () => {
-  const [center, setCenter] = useState({ lat: 19.8563, lng: 102.4955 });
-  const [map, setMap] = useState(null);
+  const [bounds, setBounds] = useState(null);  // To store the bounding box
+  const [isDrawing, setIsDrawing] = useState(false); // Toggle for drawing mode
   const theme = useTheme();
+  // Extent of Lao project site for land valuation
+  const extent = L.latLngBounds(
+    [18.312810, 102.3046875],
+    [17.978733, 103.0078125]
+  );  
   const [baseLayers, setBaseLayers] = useState([
     { name: 'Open Street Map', active: true },
     { name: 'Open Topo Map', active: false },
   ]);
-  const handleBaseLayerChange = (layerName) => {
-    setBaseLayers((prev) =>
-      prev.map((layer) =>
-        layer.name === layerName
-          ? { ...layer, active: true }
-          : { ...layer, active: false }
-      )
-    );
-  };
   const [overlays, setOverlays] = useState([
     { name: 'Province', visible: true },
     { name: 'District', visible: true },
@@ -116,6 +148,15 @@ const ValuationMap = () => {
     { name: 'Valuation Object', visible: false },
     { name: 'Grid Cell', visible: false },
   ]);
+  const handleBaseLayerChange = (layerName) => {
+    setBaseLayers((prev) =>
+      prev.map((layer) =>
+        layer.name === layerName
+          ? { ...layer, active: true }
+          : { ...layer, active: false }
+      )
+    );
+  };  
   const handleOverlayToggle = (layerName) => {
     setOverlays((prev) =>
       prev.map((layer) =>
@@ -125,19 +166,16 @@ const ValuationMap = () => {
       )
     );
   };
-  // Extent of Lao project site for land valuation
-  const extent = L.latLngBounds(
-    [18.312810, 102.3046875],
-    [17.978733, 103.0078125]
-  );
+  // Toggle the drawing state when the custom control is clicked
+  const handleToggleDrawing = () => {
+    setIsDrawing((prev) => !prev);
+  };  
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
       <MapContainer
-        center={center}
         zoomControl={false}
         bounds={extent}
         style={{ height: '100%', width: '100%' }}
-        ref={setMap}
       >
         {/* Base Layers */}
         {baseLayers[0].active && (
@@ -240,12 +278,16 @@ const ValuationMap = () => {
           onBaseLayerChange={handleBaseLayerChange}
           onOverlayToggle={handleOverlayToggle}
           extent={extent}
+          onToggleDrawing={handleToggleDrawing} 
+          isDrawing={isDrawing}
         />
         <WatermarkControl
           theme={theme}
           imgUrl="./org.png" // Replace with your image URL
           text="MONRE"
         />
+        {isDrawing && <MouseHandler isDrawing={isDrawing} setBounds={setBounds} />}
+        {bounds && <Rectangle bounds={bounds} pathOptions={{ color: 'blue' }} />}
         <ScaleControl position="bottomright" imperial={false} />
       </MapContainer>
     </div>
