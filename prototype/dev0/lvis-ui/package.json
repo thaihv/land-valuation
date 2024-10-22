@@ -34,6 +34,7 @@
     "axios": "^1.7.4",
     "formik": "^2.4.6",
     "i18next": "^23.14.0",
+    "keycloak-js": "^22.0.1",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
     "react": "^18.3.1",

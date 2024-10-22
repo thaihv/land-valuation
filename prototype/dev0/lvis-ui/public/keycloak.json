@@ -1,0 +1,8 @@
+{
+    "realm": "mydev",
+    "auth-server-url": "http://www.tamky.xyz:8080/",
+    "ssl-required": "external",
+    "resource": "lvis-ui0",
+    "public-client": true,
+    "confidential-port": 0
+}

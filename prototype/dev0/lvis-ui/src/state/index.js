@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getKeycloak } from './UserService';
 
 const initialState = {
   mode: "light",
+  isAuthenticated: false,
   user: null,
   token: null,
 };
@@ -13,17 +15,25 @@ export const globalSlice = createSlice({
     setMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
     },
-    setLogin: (state, action) => {
-      state.user = action.payload.user;
+    setAuthState: (state, action) => {
+      state.isAuthenticated = action.payload.isAuthenticated;
       state.token = action.payload.token;
-    },
-    setLogout: (state) => {
-      state.user = null;
-      state.token = null;
+      state.user = action.payload.user;
     },
   },
 });
 
-export const { setMode, setLogin, setLogout } = globalSlice.actions;
-
+export const { setMode, setAuthState } = globalSlice.actions;
+export const initializeAuth = () => (dispatch) => {
+  const keycloak = getKeycloak();
+  if (keycloak.authenticated) {
+    dispatch(
+      setAuthState({
+        isAuthenticated: true,
+        token: keycloak.token,
+        user: keycloak.tokenParsed,
+      })
+    );
+  }
+};
 export default globalSlice.reducer;
