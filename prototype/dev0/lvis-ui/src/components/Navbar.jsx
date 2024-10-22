@@ -43,7 +43,6 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const handleResponsiveMenu = () => {     
       isNonMobileScreens ? setIsSidebarOpen(!isSidebarOpen) : setIsMobileMenuToggled(!isMobileMenuToggled);
   }
-  console.log(user);
   return (
     <AppBar
       sx={{
