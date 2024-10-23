@@ -15,6 +15,7 @@ const initKeycloak = (onAuthenticatedCallback) => {
   _kc.init({
     onLoad: 'login-required',
     checkLoginIframe: false,
+    pkceMethod: 'S256'
   })
     .then((authenticated) => {
       if (!authenticated) {
