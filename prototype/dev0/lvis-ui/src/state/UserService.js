@@ -13,8 +13,9 @@ const _kc = new Keycloak({
  */
 const initKeycloak = (onAuthenticatedCallback) => {
   _kc.init({
-    onLoad: 'login-required',
-    checkLoginIframe: false,
+    onLoad: 'check-sso',
+    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+    pkceMethod: 'S256',
   })
     .then((authenticated) => {
       if (!authenticated) {
