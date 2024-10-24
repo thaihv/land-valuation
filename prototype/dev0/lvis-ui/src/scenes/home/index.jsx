@@ -130,7 +130,7 @@ const HomePage = () => {
             image="u28.png" 
             title={t("System Administration")}
             description={t("Manages requirements for operation, such as user and permission")} 
-            link="Survey"
+            link="Customers"
           />
         </Box>                  
       </Box>

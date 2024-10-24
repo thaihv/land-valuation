@@ -7,32 +7,32 @@ import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
 
 export const navItems = [
   {
-    text: "Search",
+    text: "Inquiry",
     link: "Search",
     icon: <SearchOutlinedIcon />,
   },
   {
-    text: "Preparation",
-    link: "Myteam",
+    text: "Business",
+    link: "Transactions",
     icon: <AirplayOutlinedIcon/>,
   },
   {
-    text: "Data Collection",
+    text: "Valuation",
     link: "Products",
     icon: <RoomOutlinedIcon />,
   },  
   {
-    text: "Assessment Activity",
-    link: "Survey",
+    text: "Statistics",
+    link: "Dashboard",
     icon: <CommentOutlinedIcon />,
   },
   {
-    text: "Approval",
-    link: "Transactions",
+    text: "Administration",
+    link: "Customers",
     icon: <AssignmentOutlinedIcon />,
   },  
   {
-    text: "Publish",
+    text: "Charts",
     link: "Tasks",
     icon: <BackupTableOutlinedIcon />,
   },
