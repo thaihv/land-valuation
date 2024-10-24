@@ -197,7 +197,7 @@ const ValuationMap = () => {
           {overlays[0].visible && (
             <WMSTileLayer
               layers={"lvis:province"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
               maxZoom={20}
               transparent={true}
               styles="province"
@@ -209,7 +209,7 @@ const ValuationMap = () => {
           {overlays[1].visible && (
             <WMSTileLayer
               layers={"lvis:district"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
               maxZoom={20}
               transparent={true}
               styles="district"
@@ -221,7 +221,7 @@ const ValuationMap = () => {
           {overlays[2].visible && (
             <WMSTileLayer
               layers={"lvis:village"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
               maxZoom={20}
               transparent={true}
               styles="village"
@@ -233,7 +233,7 @@ const ValuationMap = () => {
           {overlays[3].visible && (
             <WMSTileLayer
               layers={"lvis:road"}
-              url={import.meta.env.VITE_GEOMAP_WMS_URL}
+              url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
               maxZoom={20}
               transparent={true}
               styles="road"
