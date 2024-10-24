@@ -7,9 +7,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./state";
 import { Provider } from "react-redux";
 import { api } from "./state/api";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
-
+import UserService from "./state/UserService";
 import {
   persistStore,
   persistReducer,
@@ -40,14 +40,14 @@ const store = configureStore({
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistStore(store)}>
-        <I18nextProvider i18n={i18next}>
-          <App/>
-        </I18nextProvider>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>
+const renderApp = () => root.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistStore(store)}>
+      <I18nextProvider i18n={i18next}>
+        <App />
+      </I18nextProvider>
+    </PersistGate>
+  </Provider>
 );
+
+UserService.initKeycloak(renderApp);

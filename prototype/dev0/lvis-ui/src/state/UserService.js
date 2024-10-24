@@ -19,7 +19,7 @@ const initKeycloak = (onAuthenticatedCallback) => {
   })
     .then((authenticated) => {
       if (!authenticated) {
-        console.log("user is not authenticated..!");
+        console.log("User is not authenticated..!");
         _kc.login();
       }
       onAuthenticatedCallback();

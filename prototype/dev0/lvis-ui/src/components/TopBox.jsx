@@ -13,7 +13,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setLogout } from "../state";
+import UserService from "../state/UserService";
 import { useTranslation } from "react-i18next";
 
 
@@ -71,7 +71,7 @@ const TopBox = () => {
           >
             <MenuItem>
               <FlexBetween
-                onClick={() => dispatch(setLogout())}
+                onClick={() => UserService.doLogout()}
                 sx={{
                   color: "#000000",
                   fontSize: "16px",

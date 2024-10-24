@@ -6,15 +6,14 @@ import {
   SettingsOutlined,
   Notifications,
   ArrowDropDownOutlined,
-  Message,
-  Help,
   Close,
 } from "@mui/icons-material";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import FlexBetween from "./FlexBetween";
 import { useDispatch } from "react-redux";
 import {useNavigate } from "react-router-dom";
-import { setMode, setLogout } from "../state";
+import { setMode } from "../state";
+import UserService from "../state/UserService";
 import { useTranslation } from "react-i18next";
 import { navItems } from "./menu/navItems";
 import {
@@ -44,7 +43,6 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const handleResponsiveMenu = () => {     
       isNonMobileScreens ? setIsSidebarOpen(!isSidebarOpen) : setIsMobileMenuToggled(!isMobileMenuToggled);
   }
-
   return (
     <AppBar
       sx={{
@@ -147,13 +145,12 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 component="img"
                 alt="profile"
                 src={ 
-                  user.picturePath === ""
-                  ? "profile.svg"
-                  : `${import.meta.env.VITE_REACT_APP_BASE_URL}/profiles/${user._id}_${user.picturePath}`}
+                  user.hasOwnProperty('picturePath')
+                  ? user.picturePath
+                  : "profile.svg"}
                 height="32px"
                 width="32px"
                 borderRadius="50%"
-                onClick={() => navigate(`/profile/${user._id}`)}
                 sx={{ 
                   objectFit: "cover",
                   "&:hover": {
@@ -188,7 +185,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             >
               <MenuItem>
                 <FlexBetween
-                  onClick={() => dispatch(setLogout())}
+                  onClick={() => UserService.doLogout()}
                   sx={{
                     color: "#000000",
                     fontSize: "16px",

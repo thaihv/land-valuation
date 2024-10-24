@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "./theme";
 import Layout from "./scenes/layout";
 import Dashboard from "./scenes/dashboard";
@@ -20,17 +20,18 @@ import BaseMap from "./scenes/maps/base";
 import SurveyMap from "./scenes/maps/survey";
 import Calendar from "./scenes/calendar";
 import Team from "./scenes/team";
-import Profile from "./scenes/profile";
 import Utilities from "./scenes/utilities";
-import LoginPage from "./scenes/login";
 import HomePage from "./scenes/home";
 import PageNotFound from "./scenes/pagenotfound"
-
+import Welcome from "./Welcome";
+import RenderOnAnonymous from "./RenderOnAnonymous";
+import RenderOnAuthenticated from "./RenderOnAuthenticated";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import translationEN from "./locales/en/translation.json";
 import translationKO from "./locales/ko/translation.json";
 import translationLO from "./locales/lo/translation.json";
+
 
 const resources = {
   en: {
@@ -53,45 +54,47 @@ i18n.use(initReactI18next).init({
   },
 });
 
+
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  const isAuth = Boolean(useSelector((state) => state.global.token));
+
   return (
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Routes>
-            <Route path="/" element={isAuth ? <Navigate to="/home" /> : <LoginPage />}/>
-            <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/" />} />
-            <Route path="/profile/:id" element={isAuth ? <Profile /> : <Navigate to="/" />} />              
-            <Route path="/search" element={isAuth ? <BaseMap /> : <Navigate to="/" /> } />
-
-            <Route element={<Layout />}>
-              <Route path="/dashboard" element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
-              <Route path="/products" element={isAuth ? <Products /> : <Navigate to="/" />} />
-              <Route path="/customers" element={isAuth ? <Customers /> : <Navigate to="/" />} />
-              <Route path="/survey" element={isAuth ? <SurveyMap /> : <Navigate to="/" />} />
-              <Route path="/myteam" element={isAuth ? <Team /> : <Navigate to="/" />} />
-              <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/" />} />
-              <Route path="/tasks" element={isAuth ? <Utilities /> : <Navigate to="/" />} />
-              <Route path="/transactions" element={isAuth ? <Transactions /> : <Navigate to="/" />} />
-              <Route path="/geography" element={isAuth ? <Geography /> : <Navigate to="/" />} />
-              <Route path="/overview" element={isAuth ? <Overview /> : <Navigate to="/" />} />
-              <Route path="/daily" element={isAuth ? <Daily /> : <Navigate to="/" />} />
-              <Route path="/monthly" element={isAuth ? <Monthly /> : <Navigate to="/" />} />
-              <Route path="/breakdown" element={isAuth ? <Breakdown /> : <Navigate to="/" />} />
-              <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/" />} />
-              <Route path="/performance" element={isAuth ? <Performance /> : <Navigate to="/" />} />              
-            </Route>
-            <Route path='*' element={<PageNotFound />}/>
-
-          </Routes>
+          <RenderOnAnonymous>
+            <Welcome />
+          </RenderOnAnonymous>
+          <RenderOnAuthenticated>
+            <Routes>
+              <Route path="/" element={<Navigate to="/home" />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/search" element={<BaseMap />} />
+              <Route element={<Layout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/customers" element={<Customers />} />
+                <Route path="/survey" element={<SurveyMap />} />
+                <Route path="/myteam" element={<Team />} />
+                <Route path="/tasks" element={<Utilities />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/transactions" element={<Transactions />} />
+                <Route path="/geography" element={<Geography />} />
+                <Route path="/overview" element={<Overview />} />
+                <Route path="/daily" element={<Daily />} />
+                <Route path="/monthly" element={<Monthly />} />
+                <Route path="/breakdown" element={<Breakdown />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/performance" element={<Performance />} />
+              </Route>
+              <Route path='*' element={<PageNotFound />} />
+            </Routes>
+          </RenderOnAuthenticated>
         </ThemeProvider>
       </BrowserRouter>
     </div>
   );
 }
-
 export default App;
