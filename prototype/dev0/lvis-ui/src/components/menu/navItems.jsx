@@ -4,7 +4,7 @@ import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
-
+import MonitorHeartOutlinedIcon from '@mui/icons-material/MonitorHeartOutlined';
 export const navItems = [
   {
     text: "Inquiry",
@@ -31,6 +31,11 @@ export const navItems = [
     link: "Customers",
     icon: <AssignmentOutlinedIcon />,
   },  
+  {
+    text: "Montoring",
+    link: "Montoring",
+    icon: <MonitorHeartOutlinedIcon />,
+  },
   {
     text: "Charts",
     link: "Tasks",

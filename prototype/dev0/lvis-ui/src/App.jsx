@@ -26,11 +26,16 @@ import PageNotFound from "./scenes/pagenotfound"
 import Welcome from "./Welcome";
 import RenderOnAnonymous from "./RenderOnAnonymous";
 import RenderOnAuthenticated from "./RenderOnAuthenticated";
+
+import CrudDemo from "./scenes/egis0/CrudDemo";
+
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import translationEN from "./locales/en/translation.json";
 import translationKO from "./locales/ko/translation.json";
 import translationLO from "./locales/lo/translation.json";
+
 
 
 const resources = {
@@ -88,6 +93,9 @@ function App() {
                 <Route path="/breakdown" element={<Breakdown />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/performance" element={<Performance />} />
+
+                <Route path="/montoring" element={<CrudDemo />} />
+
               </Route>
               <Route path='*' element={<PageNotFound />} />
             </Routes>
