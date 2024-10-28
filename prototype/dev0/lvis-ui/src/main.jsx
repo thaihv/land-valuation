@@ -7,6 +7,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./state";
 import { Provider } from "react-redux";
 import { prototypeApi } from "./state/prototypeApi";
+import { egisApi } from "./state/egisApi";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import UserService from "./state/UserService";
@@ -30,13 +31,16 @@ const store = configureStore({
   reducer: {
     global: persistedReducer,
     [prototypeApi.reducerPath]: prototypeApi.reducer,
+    [egisApi.reducerPath]: egisApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(prototypeApi.middleware),
+    })
+    .concat(prototypeApi.middleware)
+    .concat(egisApi.middleware),
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

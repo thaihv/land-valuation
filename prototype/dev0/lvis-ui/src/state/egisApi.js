@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const egis0Api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_REACT_EGIS0_API_BASE_URL }),
-  reducerPath: "egis0Api",
+export const egisApi = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_EGIS_API_BASE_URL }),
+  reducerPath: "egisApi",
   tagTypes: [
     "Books",
   ],
@@ -47,4 +47,4 @@ export const {
   useAddBookMutation,
   useUpdateBookMutation,
   useDeleteBookMutation,
-} = egis0Api;
+} = egisApi;
