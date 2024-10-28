@@ -8,7 +8,7 @@ import {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
-} from "../../state/api";
+} from "../../state/prototypeApi";
 import {
   GridRowModes,
   DataGrid,

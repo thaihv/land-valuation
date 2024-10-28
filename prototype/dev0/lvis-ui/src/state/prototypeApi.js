@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const api = createApi({
+export const prototypeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL }),
-  reducerPath: "adminApi",
+  reducerPath: "prototypeApi",
   tagTypes: [
     "User",
     "Products",
@@ -95,9 +95,6 @@ export const {
   useGetProductsQuery,
   useGetCustomerQuery,
   useGetCustomersQuery,
-  // useAddCustomerQuery,
-  // useUpdateCustomerQuery,
-  // useDeleteCustomerQuery,
   useAddCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,  
@@ -107,4 +104,4 @@ export const {
   useGetAdminsQuery,
   useGetUserPerformanceQuery,
   useGetDashboardQuery,
-} = api;
+} = prototypeApi;

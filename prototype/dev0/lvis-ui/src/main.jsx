@@ -6,7 +6,7 @@ import App from "./App";
 import { configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./state";
 import { Provider } from "react-redux";
-import { api } from "./state/api";
+import { prototypeApi } from "./state/prototypeApi";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import UserService from "./state/UserService";
@@ -29,14 +29,14 @@ const persistedReducer = persistReducer(persistConfig, globalReducer);
 const store = configureStore({
   reducer: {
     global: persistedReducer,
-    [api.reducerPath]: api.reducer,
+    [prototypeApi.reducerPath]: prototypeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware),
+    }).concat(prototypeApi.middleware),
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

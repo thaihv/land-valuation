@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import { ResponsiveLine } from "@nivo/line";
-import { useGetSalesQuery } from "../../../state/api";
+import { useGetSalesQuery } from "../../../state/prototypeApi";
 
 const Monthly = () => {
   const { data } = useGetSalesQuery();

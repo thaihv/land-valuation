@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetTransactionsQuery } from "../../state/api";
+import { useGetTransactionsQuery } from "../../state/prototypeApi";
 import Header from "../../components/Header";
 import BasicDataGridToolbar from "../../components/custom/BasicDataGridToolbar";
 

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { ResponsiveLine } from "@nivo/line";
-import { useGetSalesQuery } from "../../../state/api";
+import { useGetSalesQuery } from "../../../state/prototypeApi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
