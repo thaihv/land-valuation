@@ -39,7 +39,7 @@ export const egisApi = createApi({
     }),
     updateBook: build.mutation({
       query: (body) => ({
-        url: `update/${body._id}`,
+        url: `update/${body.id}`,
         method: 'PUT',
         body: body,
       }),
