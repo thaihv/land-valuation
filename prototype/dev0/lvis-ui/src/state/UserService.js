@@ -1,12 +1,12 @@
 import Keycloak from "keycloak-js";
 
-// const _kc = new Keycloak({
-//   url: import.meta.env.VITE_REACT_APP_KEYCLOAK_URL,
-//   realm: import.meta.env.VITE_REACT_APP_REALM_NAME,
-//   clientId: import.meta.env.VITE_REACT_APP_CLIENT_ID
-// });
+const _kc = new Keycloak({
+  url: import.meta.env.VITE_REACT_APP_KEYCLOAK_URL,
+  realm: import.meta.env.VITE_REACT_APP_REALM_NAME,
+  clientId: import.meta.env.VITE_REACT_APP_CLIENT_ID
+});
 
-const _kc = new Keycloak('/keycloak.json');
+//const _kc = new Keycloak('/keycloak.json');
 /**
  * Initializes Keycloak instance and calls the provided callback function if successfully authenticated.
  *
