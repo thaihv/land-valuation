@@ -84,7 +84,7 @@ function Map({ items }) {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <LayersControl position="topright">
-              <LayersControl.Overlay checked name="Province">
+              <LayersControl.Overlay name="Province">
                 <WMSTileLayer
                   layers={"lvis:province"}
                   url={import.meta.env.VITE_GEOMAP_WMS_URL}
@@ -150,7 +150,7 @@ function Map({ items }) {
                   opacity={0.6}
                 />
               </LayersControl.Overlay>
-              <LayersControl.Overlay name="Research Place">
+              <LayersControl.Overlay checked name="Research Place">
                 {items.map((item) => (
                   <Pin item={item} key={item.id} />
                 ))}

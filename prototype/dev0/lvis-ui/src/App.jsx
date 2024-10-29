@@ -27,7 +27,7 @@ import Welcome from "./Welcome";
 import RenderOnAnonymous from "./RenderOnAnonymous";
 import RenderOnAuthenticated from "./RenderOnAuthenticated";
 
-import CrudDemo from "./scenes/egis0/CrudDemo";
+import Egis0 from "./scenes/egis0";
 
 
 import i18n from "i18next";
@@ -94,7 +94,7 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/performance" element={<Performance />} />
 
-                <Route path="/montoring" element={<CrudDemo />} />
+                <Route path="/montoring" element={<Egis0 />} />
 
               </Route>
               <Route path='*' element={<PageNotFound />} />

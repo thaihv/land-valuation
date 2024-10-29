@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Box, Select, TextField, MenuItem, FormControl, InputLabel, useTheme } from "@mui/material";
+import { Box, TextField, useTheme } from "@mui/material";
 import Grid from '@mui/material/Grid2';
-import Header from "../../components/Header";
 import StyledButton from "../../components/custom/StyledButton";
 import {
   useGetBookQuery,
@@ -16,7 +15,6 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import EditDataGridToolbar from "../../components/custom/EditDataGridToolbar";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
@@ -96,22 +94,7 @@ const CrudDemo = () => {
     await deleteBook(id);
     refetch();
   };
-  // Handler to add a new row and allowing to edit in grid using toolbar
-  const handleAddRowInGrid = async () => {
-    const id = generateRandomId();
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        title: "",
-        author: "",
-      },
-    ]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-    }));
-  };
+
   // Handlers to control event process in mode Edit and View
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
@@ -150,24 +133,24 @@ const CrudDemo = () => {
     {
       field: "id",
       headerName: "ID",
-      flex: 1,
-    },
-    {
-      field: "title",
-      headerName: "Title",
-      editable: true,
       flex: 0.5,
     },
     {
       field: "author",
       headerName: "Author",
       editable: true,
+      flex: 0.5,
+    },    
+    {
+      field: "title",
+      headerName: "Title",
+      editable: true,
       flex: 1,
     },
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: 90,
       cellClassName: "actions",
       renderCell: (params) => {
         const isInEditMode =
@@ -216,10 +199,7 @@ const CrudDemo = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="EGIS MONITORING SYSTEM" subtitle="See real time info detected from EGIS System" />
       <Box
-        mt="20px"
-        height="75vh"
         display="grid"
         gridTemplateColumns="repeat(12, minmax(0, 1fr))"
         justifyContent="space-between"
@@ -236,19 +216,21 @@ const CrudDemo = () => {
           },
           "& .MuiDataGrid-root": {
             border: "none",
+            borderRadius: "0.55rem",
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
           "& .MuiDataGrid-container--top [role=row]": {
-            backgroundColor: `${theme.palette.neutral.main} !important`,
+            backgroundColor: `${theme.palette.background.alt} !important`,
+            color: theme.palette.secondary[100],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: theme.palette.background.alt,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.neutral.main,
+            backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
@@ -279,11 +261,7 @@ const CrudDemo = () => {
           processRowUpdate={handleUpdateBook}
           onRowEditStop={handleRowEditStop}
           onProcessRowUpdateError={handleUpdateBookError}
-          slots={{
-            toolbar: EditDataGridToolbar,
-          }}
           slotProps={{
-            toolbar: { searchInput, setSearchInput, setSearch, handleAddRowInGrid },
             loadingOverlay: {
               variant: "skeleton",
               noRowsVariant: "skeleton",
@@ -302,7 +280,16 @@ const CrudDemo = () => {
           }}
         />
         <Grid container spacing={2}>
-          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+          <Grid size={{ xs: 12, sm: 4, md: 4 }}>
+              <TextField
+                label="Author"
+                value={newBook.author}
+                onChange={(e) =>
+                  setNewBook({ ...newBook, author: e.target.value })
+                }
+              />
+          </Grid>          
+          <Grid size={{ xs: 12, sm: 4, md: 4 }}>
             <TextField
               label="Title"
               value={newBook.title}
@@ -311,16 +298,7 @@ const CrudDemo = () => {
               }
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
-            <TextField
-              label="Author"
-              value={newBook.author}
-              onChange={(e) =>
-                setNewBook({ ...newBook, author: e.target.value })
-              }
-            />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+          <Grid size={{ xs: 12, sm: 4, md: 4 }}>
             <StyledButton
               fullWidth
               variant="contained"
