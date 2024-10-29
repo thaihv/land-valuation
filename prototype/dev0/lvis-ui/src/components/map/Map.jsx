@@ -87,7 +87,7 @@ function Map({ items }) {
               <LayersControl.Overlay name="Province">
                 <WMSTileLayer
                   layers={"lvis:province"}
-                  url={import.meta.env.VITE_GEOMAP_WMS_URL}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
                   maxZoom={20}
                   transparent={true}
                   styles="province"
@@ -95,10 +95,10 @@ function Map({ items }) {
                   opacity={0.6}
                 />
               </LayersControl.Overlay>
-              <LayersControl.Overlay name="District">
+              <LayersControl.Overlay checked name="District">
                 <WMSTileLayer
                   layers={"lvis:district"}
-                  url={import.meta.env.VITE_GEOMAP_WMS_URL}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
                   maxZoom={20}
                   transparent={true}
                   styles="district"
@@ -109,7 +109,7 @@ function Map({ items }) {
               <LayersControl.Overlay name="Village">
                 <WMSTileLayer
                   layers={"lvis:village"}
-                  url={import.meta.env.VITE_GEOMAP_WMS_URL}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
                   maxZoom={20}
                   transparent={true}
                   styles="village"
@@ -120,7 +120,7 @@ function Map({ items }) {
               <LayersControl.Overlay name="Road">
                 <WMSTileLayer
                   layers={"lvis:road"}
-                  url={import.meta.env.VITE_GEOMAP_WMS_URL}
+                  url={import.meta.env.VITE_GEOMAP_WMS_URL_BK}
                   maxZoom={20}
                   transparent={true}
                   styles="road"
