@@ -1,0 +1,27 @@
+.toolbar {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  gap: 0.5vh;
+  height: 90vh;
+  z-index: 1000;
+}
+.toolbar-button {
+  background-color: lightblue;
+  border-Radius: 3px;
+  position: relative;
+}
+.last-button {
+  margin-top: auto; /* Pushes this button to the bottom of toolbar */
+}
+.tool-popover {
+  position: absolute;
+  right: 41px; 
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
