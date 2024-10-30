@@ -36,8 +36,7 @@ const Egis0 = () => {
           gridColumn="span 6"
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
-          p="1.5rem"
-          borderRadius="0.55rem"
+          borderRadius="5px"
         >
           <CrudDemo/>       
         </Box>

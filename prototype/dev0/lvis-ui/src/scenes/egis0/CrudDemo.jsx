@@ -36,7 +36,6 @@ const CrudDemo = () => {
   const theme = useTheme();
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 20,
@@ -216,7 +215,6 @@ const CrudDemo = () => {
           },
           "& .MuiDataGrid-root": {
             border: "none",
-            borderRadius: "0.55rem",
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
