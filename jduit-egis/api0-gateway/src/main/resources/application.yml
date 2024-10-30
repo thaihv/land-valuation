@@ -74,12 +74,6 @@ spring:
           filters:
             - TokenRelay=
             - RemoveRequestHeader=Cookie            
-        - id: lvis-ui0
-          uri: lb://lvis-ui0
-          predicates:
-            - Path=/ui/**
-          filters:
-            - TokenRelay=
-            - RemoveRequestHeader=Cookie             
+  
   
             
