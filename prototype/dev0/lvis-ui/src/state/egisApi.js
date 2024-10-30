@@ -5,16 +5,20 @@ export const egisApi = createApi({
   baseQuery: fetchBaseQuery({ 
     baseUrl: import.meta.env.VITE_EGIS_API_BASE_URL,
     prepareHeaders: (headers) => {
-      // Retrieve token from Redux state or local storage
-      if (UserService.isLoggedIn()){
-        const token = UserService.getToken() || localStorage.getItem('token');
-        // If we have a token, set the `Authorization` header
-        if (token) {
-          headers.set('Authorization', `Bearer ${token}`);
+      const cb = () => {
+        // Retrieve token from Redux state or local storage
+        if (UserService.isLoggedIn()){
+          const token = UserService.getToken() || localStorage.getItem('token');
+          // If we have a token, set the `Authorization` header
+          if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+          }
         }
+        return headers;
       }
-      return headers;
+      return UserService.updateToken(cb);
     },
+ 
   }),
   reducerPath: "egisApi",
   tagTypes: [
