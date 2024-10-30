@@ -2,12 +2,12 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import UserService from "./UserService";
 
 export const egisApi = createApi({
-  baseQuery: fetchBaseQuery({ 
+  baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_EGIS_API_BASE_URL,
     prepareHeaders: (headers) => {
       const cb = () => {
         // Retrieve token from Redux state or local storage
-        if (UserService.isLoggedIn()){
+        if (UserService.isLoggedIn()) {
           const token = UserService.getToken() || localStorage.getItem('token');
           // If we have a token, set the `Authorization` header
           if (token) {
@@ -18,7 +18,7 @@ export const egisApi = createApi({
       }
       return UserService.updateToken(cb);
     },
- 
+
   }),
   reducerPath: "egisApi",
   tagTypes: [
@@ -32,7 +32,7 @@ export const egisApi = createApi({
     getBooks: build.query({
       query: () => "list",
       providesTags: ["Books"],
-    }),  
+    }),
     addBook: build.mutation({
       query: (body) => ({
         url: 'create',
