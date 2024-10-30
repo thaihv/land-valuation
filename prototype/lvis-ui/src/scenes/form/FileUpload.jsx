@@ -29,7 +29,7 @@ const FileUpload = () => {
       ),
     };
     axios
-      .post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/uploads`, data, options)
+      .post(`${import.meta.env.VITE_PROTOTYPE_API_BASE_URL}/uploads`, data, options)
       .then((res) => {
         console.log(res);
         setUploadPercentage(100);
