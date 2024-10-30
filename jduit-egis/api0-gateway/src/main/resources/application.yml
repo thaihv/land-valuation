@@ -66,10 +66,10 @@ spring:
           filters:
             - TokenRelay=
             - RemoveRequestHeader=Cookie
-        - id: book-service
-          uri: lb://book-service
+        - id: jd0-service
+          uri: lb://jd0-service
           predicates:
-            - Path=/book-api/**
+            - Path=/jd0-api/**
             - Method=GET,POST,DELETE,PUT,PATCH,OPTIONS
           filters:
             - TokenRelay=
