@@ -38,7 +38,7 @@ const CrudDemo = () => {
   const [search, setSearch] = useState("");
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
-    pageSize: 20,
+    pageSize: 5,
   });
   const {
     data: items = [],
@@ -249,7 +249,7 @@ const CrudDemo = () => {
           onSortModelChange={(newSortModel) => setSort(...newSortModel)}
           pagination
           paginationMode="server"
-          pageSizeOptions={[10, 20, 50]}
+          pageSizeOptions={[5, 10, 20]}
           paginationModel={paginationModel}
           onPaginationModelChange={(newPaginationModel) => {
             setPaginationModel(newPaginationModel);

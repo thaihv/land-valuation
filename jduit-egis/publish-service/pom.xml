@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jdvn.valuation</groupId>
-	<artifactId>land-public</artifactId>
+	<artifactId>publish-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>land-public</name>
+	<name>publish-service</name>
 	<description>The backend APIs project for valuation information publish system  </description>
 	<properties>
 		<java.version>21</java.version>

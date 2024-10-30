@@ -2,3 +2,6 @@
 prototype/land-public/.project
 prototype/land-public/.settings/org.eclipse.core.resources.prefs
 prototype/land-public/.settings/org.eclipse.m2e.core.prefs
+jduit-egis/publish-service/.settings/org.eclipse.m2e.core.prefs
+jduit-egis/publish-service/.settings/org.eclipse.core.resources.prefs
+jduit-egis/publish-service/.project
