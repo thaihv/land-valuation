@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import LinearProgressBar from "../../components/progessbars/LinearProgressBar"
-
+import UserService from "../../state/UserService";
 
 const FileUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -15,7 +15,7 @@ const FileUpload = () => {
   const uploadFile = (e) => {
     let data = new FormData();
     data.append("file", e.target.files[0]);
-
+    const token = UserService.getToken() || localStorage.getItem('token');
     const options = {
       onUploadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
@@ -27,6 +27,9 @@ const FileUpload = () => {
       cancelToken: new CancelToken(
         (cancel) => (cancelFileUpload.current = cancel)
       ),
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      }
     };
     axios
       .post(`${import.meta.env.VITE_PROTOTYPE_API_BASE_URL}/uploads`, data, options)
