@@ -22979,24 +22979,3 @@ export const dataUser = [
     role: "admin",
   },
 ];
-
-export const dataPost = [
-  {
-    _id: new mongoose.Types.ObjectId(),
-    userId: "63701cc1f03239d40b000044",
-    name: "Hoang Vinh Thai",
-    city: "Ha Noi",
-    description: "Some really long random description",
-    picturePath: "1728531510332-Screenshot 2023-10-25 143128.png",
-    userPicturePath: "profile.jpeg",
-    likes: new Map([
-      ["63701cc1f03239d40b000045", true],
-      ["63701cc1f03239d40b000044", true],
-    ]),
-    comments: [
-      "random comment",
-      "another random comment",
-      "yet another random comment",
-    ],
-  },
-];
