@@ -26,7 +26,7 @@ import PageNotFound from "./scenes/pagenotfound"
 import Welcome from "./Welcome";
 import RenderOnAnonymous from "./RenderOnAnonymous";
 import RenderOnAuthenticated from "./RenderOnAuthenticated";
-import RenderOnRole from "./RenderOnRole";
+import NotRenderOnRole from "./NotRenderOnRole";
 import Egis0 from "./scenes/egis0";
 
 
@@ -79,15 +79,15 @@ function App() {
               <Route path="/search" element={<BaseMap />} />
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={
-                  <RenderOnRole roles={['jungdo-dev', 'egis-dev']} showNotAllowed>
+                  <NotRenderOnRole roles={['egis-dev']} showNotAllowed>
                     <Dashboard />
-                  </RenderOnRole>
+                  </NotRenderOnRole>
                 }/>
                 <Route path="/products" element={<Products />} />
                 <Route path="/customers" element={
-                  <RenderOnRole roles={['jungdo-dev']} showNotAllowed>
+                  <NotRenderOnRole roles={['egis-dev']} showNotAllowed>
                     <Customers />
-                  </RenderOnRole>
+                  </NotRenderOnRole>
                 }/>
                 <Route path="/survey" element={<SurveyMap />} />
                 <Route path="/myteam" element={<Team />} />
@@ -102,8 +102,11 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/performance" element={<Performance />} />
 
-                <Route path="/montoring" element={<Egis0 />} />
-
+                <Route path="/montoring" element={
+                  <NotRenderOnRole roles={[]} showNotAllowed>
+                    <Egis0 />
+                  </NotRenderOnRole>                  
+                }/>
               </Route>
               <Route path='*' element={<PageNotFound />} />
             </Routes>
