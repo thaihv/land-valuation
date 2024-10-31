@@ -18,6 +18,9 @@ import salesRoutes from "./routes/sales.js";
 import postRoutes from "./routes/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 
+import session from 'express-session';
+import { keycloak, memoryStore } from './keycloak-config.js';
+
 // data imports
 import User from "./models/User.js";
 import Post from "./models/Post.js";
@@ -41,13 +44,34 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: memoryStore,
+  })
+);
+app.use(keycloak.middleware());
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add other methods as needed
+  allowedHeaders: ["Authorization", "Content-Type"]
+}));
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.sendStatus(200);
+});
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 app.use("/profiles", express.static(path.join(__dirname, "public/profiles")));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -77,12 +101,12 @@ app.post("/auth/register", profiles_upload.single("picture"), register);
 app.put("/auth/register", profiles_upload.single("picture"), update_register);
 
 // For upload any data into uploads folder
-app.post('/uploads', data_upload.single('file'), (req, res) => {
+app.post('/uploads', keycloak.protect(), data_upload.single('file'), (req, res) => {
   console.log('body', req.file);
   // here you can do anything that you want for the file such as you want to save it to database here
   res.json({ success: true })
 })
-app.post("/posts", verifyToken, data_upload.single("picture"), createPost);
+app.post("/posts", keycloak.protect(), data_upload.single("picture"), createPost);
 
 /* ROUTES */
 app.use("/auth", authRoutes);

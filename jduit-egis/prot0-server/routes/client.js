@@ -9,11 +9,12 @@ import {
   getTransactions,
   getGeography,
 } from "../controllers/client.js";
+import { keycloak } from '../keycloak-config.js';
 
 const router = express.Router();
 
 router.get("/products", getProducts);
-router.get("/customers", getCustomers);
+router.get("/customers", keycloak.protect(), getCustomers);
 
 router.get("/customers/:id", getCustomer);
 router.delete("/customers/:id", deleteCustomer);
