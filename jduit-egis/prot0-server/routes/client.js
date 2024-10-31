@@ -21,7 +21,7 @@ router.delete("/customers/:id", keycloak.protect('Admin'), deleteCustomer);
 router.post('/customers', keycloak.protect('Admin'), addCustomer);
 router.put('/customers/:id', keycloak.protect('Admin'), updateCustomer);
 
-router.get("/transactions", getTransactions);
-router.get("/geography", getGeography);
+router.get("/transactions", keycloak.protect(), getTransactions);
+router.get("/geography", keycloak.protect(), getGeography);
 
 export default router;
