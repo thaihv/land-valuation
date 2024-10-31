@@ -97,8 +97,8 @@ const PORT = process.env.PORT || 9000;
 // Configure Eureka client
 const client = new Eureka({
   instance: {
-    app: 'prot0-service',               // Unique service name
-    instanceId: `prot0-service:${PORT}`, // Unique instance ID (service name + port)
+    app: process.env.EUREKA_APP_NAME,               // Unique service name
+    instanceId: `${process.env.EUREKA_APP_NAME}:${PORT}`,
     hostName: 'localhost',
     ipAddr: '127.0.0.1',
     statusPageUrl: `http://localhost:${PORT}/info`,
@@ -106,15 +106,15 @@ const client = new Eureka({
       '$': PORT,
       '@enabled': true,
     },
-    vipAddress: 'prot0-service',
+    vipAddress: process.env.EUREKA_VIP_ADDRESS,
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
     }
   },
   eureka: {
-    host: 'localhost',         // Eureka server host
-    port: 8761,                // Eureka server port
+    host: process.env.EUREKA_HOST,
+    port: process.env.EUREKA_PORT,
     servicePath: '/eureka/apps/',
   },
 });
