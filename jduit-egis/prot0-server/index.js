@@ -53,19 +53,19 @@ app.use(
   })
 );
 app.use(keycloak.middleware());
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
 app.use(cors({
-  origin: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add other methods as needed
   allowedHeaders: ["Authorization", "Content-Type"]
 }));
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.sendStatus(200);
-});
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));

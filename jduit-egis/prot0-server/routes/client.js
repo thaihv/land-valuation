@@ -17,9 +17,9 @@ router.get("/products", getProducts);
 router.get("/customers", keycloak.protect(), getCustomers);
 
 router.get("/customers/:id", getCustomer);
-router.delete("/customers/:id", deleteCustomer);
-router.post('/customers', addCustomer);
-router.put('/customers/:id', updateCustomer);
+router.delete("/customers/:id", keycloak.protect('Admin'), deleteCustomer);
+router.post('/customers', keycloak.protect('Admin'), addCustomer);
+router.put('/customers/:id', keycloak.protect('Admin'), updateCustomer);
 
 router.get("/transactions", getTransactions);
 router.get("/geography", getGeography);

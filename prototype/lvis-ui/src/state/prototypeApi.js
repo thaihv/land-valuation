@@ -1,7 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import UserService from "./UserService";
 
 export const prototypeApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_PROTOTYPE_API_BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_PROTOTYPE_API_BASE_URL, 
+    prepareHeaders: (headers) => {
+      const cb = () => {
+        // Retrieve token from Redux state or local storage
+        if (UserService.isLoggedIn()) {
+          const token = UserService.getToken() || localStorage.getItem('token');
+          // If we have a token, set the `Authorization` header
+          if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+          }
+        }
+        return headers;
+      }
+      return UserService.updateToken(cb);
+    },
+  }),
   reducerPath: "prototypeApi",
   tagTypes: [
     "User",
