@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "prot0-server",
   "version": "1.0.0",
-  "description": "Sample server for using with MERN stack",
+  "description": "A prototype of secured Rest API service",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -18,6 +18,7 @@
     "cors": "^2.8.5",
     "country-iso-2-to-3": "^1.1.0",
     "dotenv": "^16.0.3",
+    "eureka-js-client": "^4.5.0",
     "express": "^4.21.1",
     "express-jwt": "^8.4.1",
     "express-session": "^1.18.1",

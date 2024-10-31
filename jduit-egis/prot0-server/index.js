@@ -12,7 +12,7 @@ import clientRoutes from "./routes/client.js";
 import generalRoutes from "./routes/general.js";
 import managementRoutes from "./routes/management.js";
 import salesRoutes from "./routes/sales.js";
-
+import { Eureka } from 'eureka-js-client';
 import session from 'express-session';
 import { keycloak, memoryStore } from './keycloak-config.js';
 
@@ -59,6 +59,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add other methods as needed
   allowedHeaders: ["Authorization", "Content-Type"]
 }));
+const contextPath = process.env.CONTEXT_PATH || '/prot0-api';
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -79,19 +80,59 @@ const storage_uploads = multer.diskStorage({
 
 const data_upload = multer({ storage: storage_uploads });
 // For upload any data into uploads folder
-app.post('/uploads', keycloak.protect(), data_upload.single('file'), (req, res) => {
+app.post(`${contextPath}/uploads`, keycloak.protect(), data_upload.single('file'), (req, res) => {
   console.log('body', req.file);
   // here you can do anything that you want for the file such as you want to save it to database here
   res.json({ success: true })
 })
 
 /* ROUTES */
-app.use("/client", clientRoutes);
-app.use("/general", generalRoutes);
-app.use("/management", managementRoutes);
-app.use("/sales", salesRoutes);
+app.use(`${contextPath}/client`, clientRoutes);
+app.use(`${contextPath}/general`, generalRoutes);
+app.use(`${contextPath}/management`, managementRoutes);
+app.use(`${contextPath}/sales`, salesRoutes);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 9000;
+
+// Configure Eureka client
+const client = new Eureka({
+  instance: {
+    app: 'prot0-service',               // Unique service name
+    instanceId: `prot0-service:${PORT}`, // Unique instance ID (service name + port)
+    hostName: 'localhost',
+    ipAddr: '127.0.0.1',
+    statusPageUrl: `http://localhost:${PORT}/info`,
+    port: {
+      '$': PORT,
+      '@enabled': true,
+    },
+    vipAddress: 'prot0-service',
+    dataCenterInfo: {
+      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
+      name: 'MyOwn',
+    }
+  },
+  eureka: {
+    host: 'localhost',         // Eureka server host
+    port: 8761,                // Eureka server port
+    servicePath: '/eureka/apps/',
+  },
+});
+
+// Start Eureka client to register with the server
+client.start(error => {
+  if (error) {
+    console.error('Error starting Eureka client:', error);
+  } else {
+    console.log('Eureka client started and registered with the discovery server');
+  }
+});
+// Health check endpoint
+app.get(`${contextPath}/info`, (req, res) => {
+  res.send({ status: 'UP', message: `Service is running with context path ${contextPath}` });
+});
+
+
 mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL)

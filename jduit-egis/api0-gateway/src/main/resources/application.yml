@@ -74,6 +74,13 @@ spring:
           filters:
             - TokenRelay=
             - RemoveRequestHeader=Cookie            
-  
+        - id: prot0-service
+          uri: lb://prot0-service
+          predicates:
+            - Path=/prot0-api/**
+            - Method=GET,POST,DELETE,PUT,PATCH,OPTIONS
+          filters:
+            - TokenRelay=
+            - RemoveRequestHeader=Cookie  
   
             
