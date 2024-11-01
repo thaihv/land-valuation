@@ -5,3 +5,10 @@ prototype/land-public/.settings/org.eclipse.m2e.core.prefs
 jduit-egis/publish-service/.settings/org.eclipse.m2e.core.prefs
 jduit-egis/publish-service/.settings/org.eclipse.core.resources.prefs
 jduit-egis/publish-service/.project
+jduit-egis/pub0-service/log.config.path_IS_UNDEFINED/log.config.filename_IS_UNDEFINED.log
+jduit-egis/pub0-service/log.config.path_IS_UNDEFINED/err_log.log
+jduit-egis/pub0-service/.settings/org.eclipse.jdt.core.prefs
+jduit-egis/pub0-service/.classpath
+*.prefs
+jduit-egis/pub0-service/.settings/org.eclipse.jdt.core.prefs
+jduit-egis/pub0-service/.classpath
