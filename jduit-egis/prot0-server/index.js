@@ -94,45 +94,46 @@ app.use(`${contextPath}/sales`, salesRoutes);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 9000;
 
-// Configure Eureka client
-const client = new Eureka({
-  instance: {
-    app: process.env.EUREKA_APP_NAME,               // Unique service name
-    instanceId: `${process.env.EUREKA_APP_NAME}:${PORT}`,
-    hostName: 'localhost',
-    ipAddr: '127.0.0.1',
-    statusPageUrl: `http://localhost:${PORT}/info`,
-    port: {
-      '$': PORT,
-      '@enabled': true,
+const isMicroservice = process.env.RUN_MODE === 'microservice';
+if (isMicroservice) {
+  // Configure Eureka client
+  const client = new Eureka({
+    instance: {
+      app: process.env.EUREKA_APP_NAME,               // Unique service name
+      instanceId: `${process.env.EUREKA_APP_NAME}:${PORT}`,
+      hostName: 'localhost',
+      ipAddr: '127.0.0.1',
+      statusPageUrl: `http://localhost:${PORT}/info`,
+      port: {
+        '$': PORT,
+        '@enabled': true,
+      },
+      vipAddress: process.env.EUREKA_VIP_ADDRESS,
+      dataCenterInfo: {
+        '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
+        name: 'MyOwn',
+      }
     },
-    vipAddress: process.env.EUREKA_VIP_ADDRESS,
-    dataCenterInfo: {
-      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
-      name: 'MyOwn',
+    eureka: {
+      host: process.env.EUREKA_HOST,
+      port: process.env.EUREKA_PORT,
+      servicePath: '/eureka/apps/',
+    },
+  });
+  // Start Eureka client to register with the server
+  client.start(error => {
+    if (error) {
+      console.error('Error starting Eureka client:', error);
+    } else {
+      console.log('Eureka client started and registered with the discovery server');
     }
-  },
-  eureka: {
-    host: process.env.EUREKA_HOST,
-    port: process.env.EUREKA_PORT,
-    servicePath: '/eureka/apps/',
-  },
-});
-
-// Start Eureka client to register with the server
-client.start(error => {
-  if (error) {
-    console.error('Error starting Eureka client:', error);
-  } else {
-    console.log('Eureka client started and registered with the discovery server');
-  }
-});
-// Health check endpoint
-app.get(`${contextPath}/info`, (req, res) => {
-  res.send({ status: 'UP', message: `Service is running with context path ${contextPath}` });
-});
-
-
+  });
+  // Health check endpoint
+  app.get(`${contextPath}/info`, (req, res) => {
+    res.send({ status: 'UP', message: `Service is running with context path ${contextPath}` });
+  });
+  
+}
 mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL)
