@@ -9,10 +9,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-          .ignoringAntMatchers("/encrypt/**")
-          .ignoringAntMatchers("/decrypt/**");
-
-        super.configure(http);
+//        http.csrf()
+//          .ignoringAntMatchers("/encrypt/**")
+//          .ignoringAntMatchers("/decrypt/**");
+//        super.configure(http);
+        http
+        .authorizeRequests()
+        .antMatchers("/encrypt", "/decrypt").permitAll()  // Allow public access
+        .anyRequest().authenticated()
+        .and()
+        .csrf().disable(); // Disable CSRF for simplicity    	
     }
 }
