@@ -1,4 +1,4 @@
-package com.jdvn.smartcity.tamky.configserver;
+package com.jdvn.devtech.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

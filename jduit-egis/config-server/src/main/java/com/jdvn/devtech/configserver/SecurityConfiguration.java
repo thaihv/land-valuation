@@ -1,4 +1,4 @@
-package com.jdvn.smartcity.tamky.configserver;
+package com.jdvn.devtech.configserver;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
