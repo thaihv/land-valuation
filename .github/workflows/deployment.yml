@@ -1,4 +1,4 @@
-name: Build & Deployment LVIS UI Prototype using MERN Stack
+name: Build & Deployment LVIS UI Prototype
 
 on:
   push:
@@ -16,27 +16,14 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20.16.0
-        cache-dependency-path: './jduit-egis/prot0-server/package-lock.json'
+        cache-dependency-path: './prototype/lvis-ui/package-lock.json'
         cache: 'npm'
     - name: Docker Login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD        
-    - name: Install modules for server
-      working-directory: ./jduit-egis/prot0-server
-      run: npm i
-    - name: Build server
-      working-directory: ./jduit-egis/prot0-server
-      run: npm run build --if-present
-      
-    - name: Build lvis-server Image
-      working-directory: ./jduit-egis/prot0-server
-      run: docker build . --file Dockerfile --tag thaihv/lvis-server0:$VERSION      
-    - name: Docker Push lvis-server    
-      run: docker push thaihv/lvis-server0:$VERSION
-      
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Install modules for lvis-ui
       working-directory: ./prototype/lvis-ui
       run: npm i
