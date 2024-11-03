@@ -14,5 +14,4 @@ const Welcome = () => (
     </p>
   </div>
 )
-
 export default Welcome
