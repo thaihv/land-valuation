@@ -16,7 +16,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20.16.0
-        cache-dependency-path: './prototype/lvis-ui/package-lock.json'
         cache: 'npm'
     - name: Docker Login
       env:
