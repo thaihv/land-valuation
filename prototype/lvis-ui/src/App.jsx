@@ -1,7 +1,7 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useMemo, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "./theme";
 import Layout from "./scenes/layout";
@@ -29,6 +29,7 @@ import RenderOnAuthenticated from "./RenderOnAuthenticated";
 import NotRenderOnRole from "./NotRenderOnRole";
 import Egis0 from "./scenes/egis0";
 
+import { initializeAuth } from "./state"
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -63,6 +64,11 @@ i18n.use(initReactI18next).init({
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // Dispatch the action once when the component mounts
+    dispatch(initializeAuth());
+  }, [dispatch]);
 
   return (
     <div className="app">
@@ -82,13 +88,13 @@ function App() {
                   <NotRenderOnRole roles={['egis-dev']} showNotAllowed>
                     <Dashboard />
                   </NotRenderOnRole>
-                }/>
+                } />
                 <Route path="/products" element={<Products />} />
                 <Route path="/customers" element={
                   <NotRenderOnRole roles={['egis-dev']} showNotAllowed>
                     <Customers />
                   </NotRenderOnRole>
-                }/>
+                } />
                 <Route path="/survey" element={<SurveyMap />} />
                 <Route path="/myteam" element={<Team />} />
                 <Route path="/tasks" element={<Utilities />} />
@@ -105,8 +111,8 @@ function App() {
                 <Route path="/montoring" element={
                   <NotRenderOnRole roles={[]} showNotAllowed>
                     <Egis0 />
-                  </NotRenderOnRole>                  
-                }/>
+                  </NotRenderOnRole>
+                } />
               </Route>
               <Route path='*' element={<PageNotFound />} />
             </Routes>

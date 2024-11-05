@@ -164,7 +164,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                   fontSize="0.85rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  {UserService.getUsername()}
+                  {user.name}
                 </Typography>
                 <Typography
                   fontSize="0.75rem"
