@@ -8,10 +8,12 @@ import {
 import CrudDemo from "./CrudDemo"
 import Map from "../../components/map/Map"
 import { singlePostData } from "../../data/mockMapData";
+import UserService from "../../state/UserService";
 
 const Egis0 = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  console.log(UserService.getTokenParsed());
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="EGIS MONITORING SYSTEM" subtitle="See real time info detected from EGIS System" />

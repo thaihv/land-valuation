@@ -145,8 +145,8 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 component="img"
                 alt="profile"
                 src={ 
-                  user.hasOwnProperty('picturePath')
-                  ? user.picturePath
+                  user.hasOwnProperty('picture_path')
+                  ? user.picture_path
                   : "profile.svg"}
                 height="32px"
                 width="32px"
