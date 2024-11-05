@@ -8,7 +8,6 @@ import {
 import CrudDemo from "./CrudDemo"
 import Map from "../../components/map/Map"
 import { singlePostData } from "../../data/mockMapData";
-import UserService from "../../state/UserService";
 
 const Egis0 = () => {
   const theme = useTheme();
