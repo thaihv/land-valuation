@@ -9,17 +9,7 @@ import Dashboard from "./scenes/dashboard";
 import Products from "./scenes/products";
 import Customers from "./scenes/customers";
 import Transactions from "./scenes/transactions";
-import Geography from "./scenes/charts/geography";
-import Overview from "./scenes/charts/overview";
-import Daily from "./scenes/charts/daily";
-import Monthly from "./scenes/charts/monthly";
-import Breakdown from "./scenes/charts/breakdown";
-import Admin from "./scenes/admin";
-import Performance from "./scenes/performance";
 import BaseMap from "./scenes/maps/base";
-import SurveyMap from "./scenes/maps/survey";
-import Calendar from "./scenes/calendar";
-import Team from "./scenes/team";
 import Utilities from "./scenes/utilities";
 import HomePage from "./scenes/home";
 import PageNotFound from "./scenes/pagenotfound"
@@ -95,18 +85,8 @@ function App() {
                     <Customers />
                   </NotRenderOnRole>
                 } />
-                <Route path="/survey" element={<SurveyMap />} />
-                <Route path="/myteam" element={<Team />} />
                 <Route path="/tasks" element={<Utilities />} />
-                <Route path="/calendar" element={<Calendar />} />
                 <Route path="/transactions" element={<Transactions />} />
-                <Route path="/geography" element={<Geography />} />
-                <Route path="/overview" element={<Overview />} />
-                <Route path="/daily" element={<Daily />} />
-                <Route path="/monthly" element={<Monthly />} />
-                <Route path="/breakdown" element={<Breakdown />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/performance" element={<Performance />} />
 
                 <Route path="/montoring" element={
                   <NotRenderOnRole roles={[]} showNotAllowed>
