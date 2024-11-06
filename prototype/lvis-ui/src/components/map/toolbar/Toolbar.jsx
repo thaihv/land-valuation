@@ -122,7 +122,7 @@ const ZoomOutButton = () => {
   );
 };
 
-const ExtendControl = ({ extent, onToggleDrawing, isDrawing }) => {
+const ExtendControl = ({ extent }) => {
   const map = useMap();
 
   const zoomToBounds = () => {
@@ -149,13 +149,6 @@ const ExtendControl = ({ extent, onToggleDrawing, isDrawing }) => {
     const diff = widthDiffInDegree();
     map.setView([currentCenter.lat, currentCenter.lng + diff], map.getZoom());
   };
-  const handleZoomInExtent = () => {
-    map.dragging.disable()
-    onToggleDrawing(); 
-  }
-  const handleZoomOutExtent = () => {
-    map.dragging.enable()
-  }
   return (
     <FlexBetween gap="1px">
       <ToolButton onClick={moveLeft}>
@@ -164,10 +157,10 @@ const ExtendControl = ({ extent, onToggleDrawing, isDrawing }) => {
       <ToolButton onClick={moveRight}>
         <ArrowForwardIosOutlinedIcon />
       </ToolButton>
-      <ToolButton onClick={handleZoomInExtent}>
+      <ToolButton>
         <ZoomInOutlinedIcon />
       </ToolButton>
-      <ToolButton onClick={handleZoomOutExtent}>
+      <ToolButton>
         <ZoomOutOutlinedIcon />
       </ToolButton>
       <ToolButton onClick={zoomToBounds}>
@@ -245,7 +238,7 @@ const MeasurementControl = () => {
     </FlexBetween>
   );
 };
-const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, extent, onToggleDrawing, isDrawing }) => {
+const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, extent }) => {
   const [openToolIndex, setOpenToolIndex] = useState(null);
 
   const handleMouseEnter = (index) => {
@@ -314,7 +307,7 @@ const Toolbar = ({ baseLayers, overlays, onBaseLayerChange, onOverlayToggle, ext
             )}
             {openToolIndex === index && isExtendControl && (
               <Paper sx={{ backgroundColor: 'transparent' }} className="tool-popover">
-                <ExtendControl extent={extent} onToggleDrawing={onToggleDrawing} isDrawing={isDrawing}/>
+                <ExtendControl extent={extent} />
               </Paper>
             )}
           </div>
