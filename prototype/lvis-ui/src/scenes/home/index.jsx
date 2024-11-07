@@ -128,9 +128,9 @@ const HomePage = () => {
         <Box>
           <ChooserWidget 
             image="u28.png" 
-            title={t("System Administration")}
-            description={t("Manages requirements for operation, such as user and permission")} 
-            link="Customers"
+            title={t("EGIS System")}
+            description={t("Implementation of monitoring changes of price in real time mode")} 
+            link="Montoring"
           />
         </Box>                  
       </Box>

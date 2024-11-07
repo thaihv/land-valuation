@@ -27,15 +27,15 @@ export const navItems = [
     icon: <CommentOutlinedIcon />,
   },
   {
+    text: "Montoring",
+    link: "Montoring",
+    icon: <MonitorHeartOutlinedIcon />,
+  },  
+  {
     text: "Administration",
     link: "Customers",
     icon: <AssignmentOutlinedIcon />,
   },  
-  {
-    text: "Montoring",
-    link: "Montoring",
-    icon: <MonitorHeartOutlinedIcon />,
-  },
   {
     text: "Charts",
     link: "Tasks",
