@@ -90,6 +90,11 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-csv</artifactId>
+		    <version>1.9.0</version>
+		</dependency>		
 		<!-- OpenAPI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -102,6 +107,12 @@
 			<artifactId>colt</artifactId>
 			<version>1.2.0</version>
 		</dependency>
+		<!-- commons-math3 also provide OLS regression as colt, just another option  -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-math3</artifactId>
+		    <version>3.6.1</version> 
+		</dependency>		
 		<!-- unit-ri 1.0.3 included javax.measure.unit-api 1.0 -->
 		<dependency>
 			<groupId>tec.units</groupId>
