@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,11 +58,10 @@ public class OLSRegressionTest {
         Iterable<CSVRecord> records = csvFormat.parse(fileReader);
 
         // Get the header map (first record is the header)
-        Map<String, Integer> headerMap = null;
+        LinkedHashMap<String, Integer> headerMap = new LinkedHashMap<>();
         for (CSVRecord record : records) {
             // The first row should be the header, so we create the header map
-            if (headerMap == null) {
-                headerMap = new HashMap<>();
+            if (headerMap.isEmpty()) {
                 int index = 0;
                 for (String column : record.toMap().keySet()) {
                     headerMap.put(column, index++);
@@ -203,7 +202,7 @@ public class OLSRegressionTest {
             System.out.println("CSV File Path: " + csvFilePath);
             
             String yColumnName = "LN_3";  // Replace with your Y column name
-            List<String> excludeColumns = List.of("gid");  // List of column names to exclude
+            List<String> excludeColumns = List.of("gid","rdDst_1","rdDst_2");  // List of column names to exclude
 
             DataResult dataResult = loadData(csvFilePath, yColumnName, excludeColumns);
             
