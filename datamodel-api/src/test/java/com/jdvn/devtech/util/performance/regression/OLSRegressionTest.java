@@ -123,7 +123,7 @@ public class OLSRegressionTest {
         // Return both X and Y matrices wrapped in a DataResult object
         return new DataResult(XMatrix, YMatrix);
     }
-    
+        
     public void runOLSbyCommonsMath(DenseDoubleMatrix2D X, DenseDoubleMatrix2D Y) {
         // Convert the DenseDoubleMatrix2D to 2D arrays for Commons Math
         double[][] XData = new double[X.rows()][X.columns()];
@@ -195,7 +195,7 @@ public class OLSRegressionTest {
     }
     
 	@Test
-	public void dummyRegressionTest() throws Exception {
+	public void olsRegressionTest() throws Exception {
         try {
             // Specify the path to your CSV file, Y column name, and columns to exclude
             String csvFilePath = resource.getFile().getAbsolutePath();
@@ -204,10 +204,8 @@ public class OLSRegressionTest {
             String yColumnName = "LN_3";  // Replace with your Y column name
             List<String> excludeColumns = List.of("gid","rdDst_1","rdDst_2");  // List of column names to exclude
 
-            DataResult dataResult = loadData(csvFilePath, yColumnName, excludeColumns);
-            
+            DataResult dataResult = loadData(csvFilePath, yColumnName, excludeColumns);            
             DecimalFormat df = new DecimalFormat("#.########");
-
             
             DenseDoubleMatrix2D X = dataResult.getX();
             DenseDoubleMatrix2D Y = dataResult.getY();
@@ -222,15 +220,13 @@ public class OLSRegressionTest {
             }
             
             runOLSbyCommonsMath(X,Y);
-            
-            
+                        
             X = (DenseDoubleMatrix2D) addInterceptColumn(X);
             // Perform OLS regression
             DoubleMatrix2D beta = runOLSbyColt(X, Y);
             
             System.out.println("Regression coefficients (Beta):");
-            System.out.println(beta);
-            
+            System.out.println(beta);            
             
         } catch (IOException e) {
             e.printStackTrace();

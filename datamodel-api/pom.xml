@@ -124,7 +124,27 @@
 		    <groupId>org.jxls</groupId>
 		    <artifactId>jxls-poi</artifactId>
 		    <version>3.0.0</version>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.apache.poi</groupId>
+		            <artifactId>poi-ooxml</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>org.apache.poi</groupId>
+		            <artifactId>poi</artifactId>
+		        </exclusion>
+		    </exclusions>		    
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>5.2.3</version> <!-- Ensure consistency -->
 		</dependency>		
+	    <dependency>
+	        <groupId>org.apache.poi</groupId>
+	        <artifactId>poi-ooxml</artifactId>
+	        <version>5.2.3</version> <!-- Use the latest version -->
+	    </dependency>				
 		<dependency>
 		    <groupId>com.github.librepdf</groupId>
 		    <artifactId>openpdf</artifactId>
