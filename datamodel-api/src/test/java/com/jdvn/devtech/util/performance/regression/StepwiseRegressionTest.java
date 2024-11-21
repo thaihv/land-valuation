@@ -126,8 +126,11 @@ public class StepwiseRegressionTest {
 
 			// Adjust totalWork dynamically based on remaining variables
 			totalWork = workDone + excludedVariables.size() + includedVariables.size();
+			
+            // Optional: Log progress of iterations
+            System.out.println("Iteration " + iterations + ": Best Adjusted R² = " + bestAdjustedR2);
 		}
-
+		
 		return includedVariables;
 	}
 
@@ -166,7 +169,7 @@ public class StepwiseRegressionTest {
 	}
 
 	// Stepwise regression function with cern.colt.matrix and maxIterations,
-    public static Set<Integer> stepwiseRegression(DoubleMatrix2D X, DoubleMatrix2D Y) {
+    public static Set<Integer> stepwiseRegression(DoubleMatrix2D X, DoubleMatrix2D Y, List<String> columnNames) {
         int numVariables = X.columns();
         Set<Integer> includedVariables = new HashSet<>();
         Set<Integer> excludedVariables = new HashSet<>();
@@ -255,6 +258,59 @@ public class StepwiseRegressionTest {
             System.out.println("Maximum iterations reached.");
         }
 
+        
+		// Extra to print more info
+        // Create a list to hold the selected column names
+        List<String> selectedColumnNames = new ArrayList<>();
+        
+        // Run OLS regression on the final selected variables
+        System.out.println("\nFinal Selected Variables:");
+        for (Integer varIndex : includedVariables) {
+        	selectedColumnNames.add(columnNames.get(varIndex));
+            System.out.println(columnNames.get(varIndex));  // Display column names of selected variables
+        }
+
+
+        
+        // Run OLS regression with selected variables
+        int nDataPoints = X.rows();
+        int nSelectedVariables = includedVariables.size();
+        double[][] X_selected = new double[nDataPoints][nSelectedVariables];
+
+        // Populate X_selected by selecting the relevant columns from X
+        int i = 0;
+        for (Integer var : includedVariables) {
+            for (int j = 0; j < nDataPoints; j++) {
+                X_selected[j][i] = X.get(j, var); // Assign data from X to X_selected
+            }
+            i++;
+        }
+
+        // Ensure Y_1d is a 1D array (matching number of data points)
+        double[] Y_1d = new double[nDataPoints];
+        for (int j = 0; j < nDataPoints; j++) {
+            Y_1d[j] = Y.get(j, 0); // Assuming Y is a column vector, get the single column values
+        }
+        
+        OLSMultipleLinearRegression regression = new OLSMultipleLinearRegression();
+        regression.newSampleData(Y_1d, X_selected);
+        double[] coefficients = regression.estimateRegressionParameters();
+        double rSquared = regression.calculateRSquared();
+        double adjustedRSquared = regression.calculateAdjustedRSquared();
+
+        // Display OLS results
+        System.out.println("\nOLS Regression Results:");
+        System.out.println("Coefficients:");
+        System.out.println("const: " + coefficients[0]);
+        for (int j = 0; j < selectedColumnNames.size(); j++) {
+            System.out.println(selectedColumnNames.get(j) + ": " + coefficients[j+1]);
+        }
+        
+        
+        System.out.println("R²: " + rSquared);
+        System.out.println("Adjusted R²: " + adjustedRSquared);		
+		// End of Extra
+        
         return includedVariables;
     }
 
@@ -319,9 +375,10 @@ public class StepwiseRegressionTest {
 		OLSUtils.DataResult data = OLSUtils.loadData(csvFilePath, yColumnName, excludeColumns);
         DoubleMatrix2D X = data.getX();  // Matrix for features
         DoubleMatrix2D Y = data.getY();  // Matrix for target variable
+        List<String> Xcolumns = data.getXcolumnNames();
         
         // Perform stepwise regression
-        Set<Integer> selectedVariables = stepwiseRegression(X, Y);
+        Set<Integer> selectedVariables = stepwiseRegression(X, Y, Xcolumns);
         System.out.println("Selected Variables (Column Indices): " + selectedVariables);
 
 	}

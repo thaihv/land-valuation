@@ -63,10 +63,11 @@ public class OLSUtils {
     public static class DataResult {
         private DenseDoubleMatrix2D X;
         private DenseDoubleMatrix2D Y;
-
-        public DataResult(DenseDoubleMatrix2D X, DenseDoubleMatrix2D Y) {
+        private List<String> XcolumnNames;
+        public DataResult(DenseDoubleMatrix2D X, DenseDoubleMatrix2D Y, List<String> XcolumnNames) {
             this.X = X;
             this.Y = Y;
+            this.XcolumnNames = XcolumnNames;
         }
 
         public DenseDoubleMatrix2D getX() {
@@ -76,12 +77,19 @@ public class OLSUtils {
         public DenseDoubleMatrix2D getY() {
             return Y;
         }
+
+		public List<String> getXcolumnNames() {
+			return XcolumnNames;
+		}
+
+
     }    
 	
     public static DataResult loadData(String csvFilePath, String yColumnName, List<String> excludeColumns) throws IOException {
         List<double[]> XList = new ArrayList<>();  // To store the X matrix (features)
         List<Double> YList = new ArrayList<>();    // To store the Y vector (target values)
-
+        List<String> XcolumnNames = new ArrayList<>();
+        
         // Read the CSV file with first record as header using CSVFormat
         FileReader fileReader = new FileReader(csvFilePath);
         CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
@@ -122,6 +130,11 @@ public class OLSUtils {
 
                 // Extract X values from the data record
                 XRow[xIndex++] = Double.parseDouble(record.get(columnIndex));
+                
+                // Add the column name to the XcolumnNames list (only for X variables)
+                if (!XcolumnNames.contains(columnName) && !columnName.equals(yColumnName) && !excludeColumns.contains(columnName)) {
+                    XcolumnNames.add(columnName);
+                }
             }
 
             // Add the processed row to the X and Y lists
@@ -153,7 +166,7 @@ public class OLSUtils {
         }
 
         // Return both X and Y matrices wrapped in a DataResult object
-        return new DataResult(XMatrix, YMatrix);
+        return new DataResult(XMatrix, YMatrix, XcolumnNames);
     }	
     public static String dummyfromContinuous(double income) {
         if (income < 30000) return "Low";
