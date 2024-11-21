@@ -1,5 +1,7 @@
 package com.jdvn.devtech.util.performance.regression;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,211 +14,315 @@ import org.springframework.core.io.Resource;
 
 import com.jdvn.devtech.datamodel.DatamodelApplication;
 
-@SpringBootTest(classes=DatamodelApplication.class)
+import cern.colt.matrix.DoubleMatrix2D;
+import cern.colt.matrix.impl.DenseDoubleMatrix2D;
+
+@SpringBootTest(classes = DatamodelApplication.class)
 public class StepwiseRegressionTest {
-	
-    @Value("classpath:ols/dataset.csv")
-    private Resource resource;  
-    
-//    public static DoubleMatrix1D calculateCoefficients(DoubleMatrix2D X, DoubleMatrix1D Y) {
-//        Algebra algebra = new Algebra();
-//        DoubleMatrix2D Xt = algebra.transpose(X);
-//        DoubleMatrix2D XtX = algebra.mult(Xt, X);
-//        DoubleMatrix2D XtXInv = algebra.inverse(XtX);
-//        DoubleMatrix1D XtY = Xt.zMult(Y, null);
-//
-//        return XtXInv.zMult(XtY, null);
-//    }        
-//    public static Set<Integer> stepwiseRegression(DoubleMatrix2D X, DoubleMatrix1D Y) {
-//        int numVariables = X.columns();
-//        Set<Integer> includedVariables = new HashSet<>();
-//        Set<Integer> excludedVariables = new HashSet<>();
-//        for (int i = 0; i < numVariables; i++) excludedVariables.add(i);
-//
-//        boolean improved = true;
-//        while (improved) {
-//            improved = false;
-//            Integer bestVariable = null;
-//            double bestAdjustedR2 = -Double.MAX_VALUE;
-//
-//            // Try adding excluded variables
-//            for (Integer var : excludedVariables) {
-//                Set<Integer> testVariables = new HashSet<>(includedVariables);
-//                testVariables.add(var);
-//                double adjustedR2 = calculateAdjustedR2(X, Y, testVariables);
-//
-//                if (adjustedR2 > bestAdjustedR2) {
-//                    bestAdjustedR2 = adjustedR2;
-//                    bestVariable = var;
-//                    improved = true;
-//                }
-//            }
-//
-//            // Add the best variable
-//            if (bestVariable != null) {
-//                includedVariables.add(bestVariable);
-//                excludedVariables.remove(bestVariable);
-//            }
-//
-//            // Try removing included variables
-//            Integer worstVariable = null;
-//            for (Integer var : includedVariables) {
-//                Set<Integer> testVariables = new HashSet<>(includedVariables);
-//                testVariables.remove(var);
-//                double adjustedR2 = calculateAdjustedR2(X, Y, testVariables);
-//
-//                if (adjustedR2 > bestAdjustedR2) {
-//                    bestAdjustedR2 = adjustedR2;
-//                    worstVariable = var;
-//                    improved = true;
-//                }
-//            }
-//
-//            // Remove the worst variable
-//            if (worstVariable != null) {
-//                includedVariables.remove(worstVariable);
-//                excludedVariables.add(worstVariable);
-//            }
-//        }
-//
-//        return includedVariables;
-//    }
-//
-//    public static double calculateAdjustedR2(DoubleMatrix2D X, DoubleMatrix1D Y, Set<Integer> variables) {
-//        if (variables.isEmpty()) return -Double.MAX_VALUE;
-//
-//        DoubleMatrix2D reducedX = extractColumns(X, variables);
-//        DoubleMatrix1D coefficients = calculateCoefficients(reducedX, Y);
-//        DoubleMatrix1D predictions = reducedX.zMult(coefficients, null);
-//
-//        // Calculate mean of Y
-//        double meanY = Y.zSum() / Y.size();
-//
-//        // Calculate Total Sum of Squares (TSS)
-//        double totalSumOfSquares = Y.copy().assign(value -> Math.pow(value - meanY, 2)).zSum();
-//
-//        // Calculate Residual Sum of Squares (RSS)
-//        double residualSumOfSquares = predictions.assign(Y, (a, b) -> Math.pow(a - b, 2)).zSum();
-//
-//        // Calculate R²
-//        double r2 = 1 - (residualSumOfSquares / totalSumOfSquares);
-//
-//        // Adjust R²
-//        int n = X.rows();
-//        int k = variables.size();
-//        return 1 - ((1 - r2) * (n - 1) / (n - k - 1));
-//    }
-//
-//    public static DoubleMatrix2D extractColumns(DoubleMatrix2D X, Set<Integer> variables) {
-//        int numRows = X.rows();
-//        int numCols = variables.size();
-//        DoubleMatrix2D reducedX = DoubleFactory2D.dense.make(numRows, numCols);
-//
-//        int colIndex = 0;
-//        for (Integer var : variables) {
-//            reducedX.viewColumn(colIndex++).assign(X.viewColumn(var));
-//        }
-//
-//        return reducedX;
-//    }
 
-    public static double calculateAdjustedR2(double[][] X, double[] Y, Set<Integer> variables) {
-        OLSMultipleLinearRegression regression = new OLSMultipleLinearRegression();
-        double[][] reducedX = extractColumns(X, variables);
-        regression.newSampleData(Y, reducedX);
-        
-        double r2 = regression.calculateAdjustedRSquared();
-        return r2;
-    }
+	@Value("classpath:ols/dataset.csv")
+	private Resource resource;
 
-    public static double[][] extractColumns(double[][] X, Set<Integer> variables) {
-        int numRows = X.length;
-        int numCols = variables.size();
-        double[][] reducedX = new double[numRows][numCols];
-        
-        int colIndex = 0;
-        for (int var : variables) {
-            for (int row = 0; row < numRows; row++) {
-                reducedX[row][colIndex] = X[row][var];
-            }
-            colIndex++;
-        }        
-        return reducedX;
-    }
-    
-    public static Set<Integer> stepwiseRegression(double[][] X, double[] Y) {
-        int numVariables = X[0].length;
+	public static double calculateAdjustedR2(double[][] X, double[] Y, Set<Integer> variables) {
+		OLSMultipleLinearRegression regression = new OLSMultipleLinearRegression();
+		double[][] reducedX = extractColumns(X, variables);
+		regression.newSampleData(Y, reducedX);
+
+		double r2 = regression.calculateAdjustedRSquared();
+		return r2;
+	}
+
+	public static double[][] extractColumns(double[][] X, Set<Integer> variables) {
+		int numRows = X.length;
+		int numCols = variables.size();
+		double[][] reducedX = new double[numRows][numCols];
+
+		int colIndex = 0;
+		for (int var : variables) {
+			for (int row = 0; row < numRows; row++) {
+				reducedX[row][colIndex] = X[row][var];
+			}
+			colIndex++;
+		}
+		return reducedX;
+	}
+
+	public static Set<Integer> stepwiseRegression(double[][] X, double[] Y, int maxIterations, double threshold) {
+		int numVariables = X[0].length;
+		Set<Integer> includedVariables = new HashSet<>();
+		Set<Integer> excludedVariables = new HashSet<>();
+		for (int i = 0; i < numVariables; i++)
+			excludedVariables.add(i);
+
+		// Estimate total work: adding + removing steps
+		int totalWork = (int) Math.pow(numVariables, 2); // Rough estimate for the entire process
+		int workDone = 0;
+
+		boolean improved = true;
+		double lastAdjustedR2 = -Double.MAX_VALUE;
+		int iterations = 0;
+
+		while (improved && iterations < maxIterations) {
+			improved = false;
+			iterations++;
+
+			// Track variable addition
+			Integer bestVariable = null;
+			double bestAdjustedR2 = -Double.MAX_VALUE;
+
+			// For each variable to add
+			for (Integer var : new ArrayList<>(excludedVariables)) { // Avoid concurrent modification
+				Set<Integer> testVariables = new HashSet<>(includedVariables);
+				testVariables.add(var);
+
+				double adjustedR2 = calculateAdjustedR2(X, Y, testVariables);
+				if (adjustedR2 > bestAdjustedR2) {
+					bestAdjustedR2 = adjustedR2;
+					bestVariable = var;
+					improved = true;
+				}
+
+				// Update global progress
+				workDone++;
+				logProgress(workDone, totalWork, "Adding variable: " + var);
+			}
+
+			if (bestVariable != null) {
+				includedVariables.add(bestVariable);
+				excludedVariables.remove(bestVariable);
+			}
+
+			// Track variable removal
+			Integer worstVariable = null;
+
+			// For each variable to remove
+			for (Integer var : new ArrayList<>(includedVariables)) { // Avoid concurrent modification
+				Set<Integer> testVariables = new HashSet<>(includedVariables);
+				testVariables.remove(var);
+
+				double adjustedR2 = calculateAdjustedR2(X, Y, testVariables);
+				if (adjustedR2 > bestAdjustedR2) {
+					bestAdjustedR2 = adjustedR2;
+					worstVariable = var;
+					improved = true;
+				}
+
+				// Update global progress
+				workDone++;
+				logProgress(workDone, totalWork, "Removing variable: " + var);
+			}
+
+			if (worstVariable != null) {
+				includedVariables.remove(worstVariable);
+				excludedVariables.add(worstVariable);
+			}
+
+			// Stop if the improvement is less than the threshold
+			if (Math.abs(bestAdjustedR2 - lastAdjustedR2) < threshold) {
+				System.out.println("No significant improvement, stopping...");
+				break;
+			}
+			lastAdjustedR2 = bestAdjustedR2;
+
+			// Adjust totalWork dynamically based on remaining variables
+			totalWork = workDone + excludedVariables.size() + includedVariables.size();
+		}
+
+		return includedVariables;
+	}
+
+	// Log progress with total and current progress
+	public static void logProgress(int workDone, int totalWork, String message) {
+		double percentDone = (double) workDone / totalWork * 100;
+		System.out.printf("Progress: %d/%d (%.2f%%) - %s\n", workDone, totalWork, percentDone, message);
+	}
+
+	@Test
+	public void stepwiseRegressionCommonMathTest() throws Exception {
+
+		System.out.println("Stepwise Regression by Common Math:------>");
+
+		String csvFilePath = resource.getFile().getAbsolutePath();
+		System.out.println("CSV File Path: " + csvFilePath);
+
+		String yColumnName = "LN_3"; // Replace with your Y column name
+		List<String> excludeColumns = List.of("gid"); // List of column names to exclude
+
+		OLSUtils.DataResult data = OLSUtils.loadData(csvFilePath, yColumnName, excludeColumns);
+
+		// Perform stepwise regression
+		System.out.println("Stepwise Regression :");
+		double[][] X = data.getX().toArray();
+		// Extract Y vector as 1D array
+		double[] Y = new double[data.getY().rows()];
+		for (int i = 0; i < data.getY().rows(); i++) {
+			Y[i] = data.getY().get(i, 0); // Access the first (and only) column
+		}
+
+		// Perform stepwise regression
+		Set<Integer> selectedVariables = stepwiseRegression(X, Y, 700, 0.0001);
+		System.out.println("Selected Variables (Column Indices): " + selectedVariables);
+
+	}
+
+	// Stepwise regression function with cern.colt.matrix and maxIterations,
+    public static Set<Integer> stepwiseRegression(DoubleMatrix2D X, DoubleMatrix2D Y) {
+        int numVariables = X.columns();
         Set<Integer> includedVariables = new HashSet<>();
         Set<Integer> excludedVariables = new HashSet<>();
-        for (int i = 0; i < numVariables; i++) excludedVariables.add(i);
         
+        // Try to use other version of calculateAdjustedR2
+		double[][] X_ = X.toArray();
+		double[] Y_ = new double[Y.rows()];
+		for (int i = 0; i < Y.rows(); i++) {
+			Y_[i] = Y.get(i, 0); 
+		}
+		
+		
+        // Initially, all variables are excluded
+        for (int i = 0; i < numVariables; i++) {
+            excludedVariables.add(i);
+        }
+
+        int totalWork = (int) Math.pow(numVariables, 2);
+        int workDone = 0;  // Initialize work done
+        double previousAdjustedR2 = -Double.MAX_VALUE;
         boolean improved = true;
-        while (improved) {
+        int iteration = 0;
+        
+        // Declare maxIterations
+        int maxIterations = 200;  // Set max iterations to prevent infinite loops
+
+        while (improved && iteration < maxIterations) {
             improved = false;
             Integer bestVariable = null;
             double bestAdjustedR2 = -Double.MAX_VALUE;
-            
-            // Try adding excluded variables
+
+            // Add new variables (forward selection)
             for (Integer var : excludedVariables) {
                 Set<Integer> testVariables = new HashSet<>(includedVariables);
                 testVariables.add(var);
-                double adjustedR2 = calculateAdjustedR2(X, Y, testVariables);
-                
+                double adjustedR2 = calculateAdjustedR2(X_, Y_, testVariables);
                 if (adjustedR2 > bestAdjustedR2) {
                     bestAdjustedR2 = adjustedR2;
                     bestVariable = var;
                     improved = true;
                 }
+                workDone++;  // Increment work done
+                printProgress(workDone, totalWork);  // Print progress                
             }
-            
-            // Add the best variable
+
+            // If a variable is added, update sets
             if (bestVariable != null) {
                 includedVariables.add(bestVariable);
                 excludedVariables.remove(bestVariable);
             }
-            
-            // Try removing included variables
+
+            // Try to remove variables to improve model (backward elimination)
             Integer worstVariable = null;
             for (Integer var : includedVariables) {
                 Set<Integer> testVariables = new HashSet<>(includedVariables);
                 testVariables.remove(var);
-                double adjustedR2 = calculateAdjustedR2(X, Y, testVariables);
-                
+                double adjustedR2 = calculateAdjustedR2(X_, Y_, testVariables);
                 if (adjustedR2 > bestAdjustedR2) {
                     bestAdjustedR2 = adjustedR2;
                     worstVariable = var;
                     improved = true;
                 }
+                workDone++;  // Increment work done
+                printProgress(workDone, totalWork);  // Print progress                
             }
-            
-            // Remove the worst variable
+
+            // If a variable is removed, update sets
             if (worstVariable != null) {
                 includedVariables.remove(worstVariable);
                 excludedVariables.add(worstVariable);
             }
+
+            // Check for improvement condition
+            if (previousAdjustedR2 != Double.NaN && Math.abs(bestAdjustedR2 - previousAdjustedR2) < 0.0001) {
+                System.out.println("No significant improvement in Adjusted R^2. Stopping process.");
+                break;
+            }
+
+            previousAdjustedR2 = bestAdjustedR2;  // Update previous Adjusted R^2
+            iteration++;
         }
-        
+		// Adjust totalWork dynamically based on remaining variables
+		totalWork = workDone + excludedVariables.size() + includedVariables.size();
+        // If loop stops due to max iterations, inform the user
+        if (iteration >= maxIterations) {
+            System.out.println("Maximum iterations reached.");
+        }
+
         return includedVariables;
     }
-    
-	@Test
-	public void stepwiseRegressionTest() throws Exception {
-        String csvFilePath = resource.getFile().getAbsolutePath();
-        System.out.println("CSV File Path: " + csvFilePath);
-        
-        String yColumnName = "LN_3";  // Replace with your Y column name
-        List<String> excludeColumns = List.of("gid");  // List of column names to exclude
 
-        OLSUtils.DataResult data = OLSUtils.loadData(csvFilePath, yColumnName, excludeColumns);
+    // Method to calculate Adjusted R^2 using cern.colt.matrix
+    public static double calculateAdjustedR2(DoubleMatrix2D X, DoubleMatrix2D Y, Set<Integer> variables) {
+        int numRows = X.rows();
+        int numSelectedVariables = variables.size();
         
-        // Perform stepwise regression
-        System.out.println("Stepwise Regression :");
-        double[][] X = data.getX().toArray();
-        double[] Y = data.getY().toArray()[0];
+        // Create a new matrix for the selected variables
+        DoubleMatrix2D reducedX = new DenseDoubleMatrix2D(numRows, numSelectedVariables);
+        int colIndex = 0;
+        for (Integer var : variables) {
+            for (int row = 0; row < numRows; row++) {
+                reducedX.set(row, colIndex, X.get(row, var));
+            }
+            colIndex++;
+        }
+
+        // Compute the regression (simplified version without external libraries)
+        double[] YArray = new double[numRows];
+        for (int i = 0; i < numRows; i++) {
+            YArray[i] = Y.get(i, 0);
+        }
+        
+        // Perform regression (simple matrix calculations for example purposes)
+        // In a real scenario, you would use a more complex method like least squares
+        double[] beta = new double[numSelectedVariables];
+        double RSS = 0; // Residual sum of squares
+        double TSS = 0; // Total sum of squares
+        for (int i = 0; i < numRows; i++) {
+            double predictedValue = 0;
+            for (int j = 0; j < numSelectedVariables; j++) {
+                predictedValue += reducedX.get(i, j) * beta[j];
+            }
+            RSS += Math.pow(YArray[i] - predictedValue, 2);
+            TSS += Math.pow(YArray[i] - Arrays.stream(YArray).average().orElse(0), 2);
+        }
+
+        // Calculate Adjusted R^2
+        double r2 = 1 - (RSS / TSS);
+        double adjustedR2 = 1 - (1 - r2) * (numRows - 1) / (numRows - numSelectedVariables - 1);
+        return adjustedR2;
+    }
+
+    // Method to print progress percentage
+    public static void printProgress(int workDone, int totalWork) {
+        int percent = (int) ((double) workDone / totalWork * 100);
+        System.out.println("Progress: " + workDone + "/" + totalWork + " (" + percent + "%)");
+    }
+
+	@Test
+	public void stepwiseRegressionColtTest() throws Exception {
+
+		System.out.println("Stepwise Regression by Colt:------>");
+
+		String csvFilePath = resource.getFile().getAbsolutePath();
+		System.out.println("CSV File Path: " + csvFilePath);
+
+		String yColumnName = "LN_3"; // Replace with your Y column name
+		List<String> excludeColumns = List.of("gid"); // List of column names to exclude
+
+		OLSUtils.DataResult data = OLSUtils.loadData(csvFilePath, yColumnName, excludeColumns);
+        DoubleMatrix2D X = data.getX();  // Matrix for features
+        DoubleMatrix2D Y = data.getY();  // Matrix for target variable
         
         // Perform stepwise regression
         Set<Integer> selectedVariables = stepwiseRegression(X, Y);
-        System.out.println("Selected Variables (Column Indices): " + selectedVariables);		
+        System.out.println("Selected Variables (Column Indices): " + selectedVariables);
 
 	}
 
