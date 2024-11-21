@@ -59,8 +59,6 @@ public class OLSRegressionTest {
 
         // Get the header map (first record is the header)
         Map<String, Integer> headerMap = null;
-        boolean isFirstDataRow = true;
-
         for (CSVRecord record : records) {
             // The first row should be the header, so we create the header map
             if (headerMap == null) {
@@ -70,12 +68,6 @@ public class OLSRegressionTest {
                     headerMap.put(column, index++);
                 }
             }
-
-            // Skip header and correctly process data rows (starting from the first data row)
-            if (isFirstDataRow) {
-                isFirstDataRow = false;  // Process this row as the first data row
-            }
-
             // Process the data rows (starting from the second row)
             double[] XRow = new double[headerMap.size() - 1 - excludeColumns.size()]; // Exclude Y column and excluded columns
             int xIndex = 0;  // To fill XRow
@@ -184,7 +176,7 @@ public class OLSRegressionTest {
         return XWithIntercept;
     }
 
-    public static DoubleMatrix2D computeOLS(DoubleMatrix2D X, DoubleMatrix2D Y) {
+    public static DoubleMatrix2D runOLSbyColt(DoubleMatrix2D X, DoubleMatrix2D Y) {
         Algebra algebra = new Algebra();
 
         // Compute X'X (transpose of X multiplied by X)
@@ -234,9 +226,8 @@ public class OLSRegressionTest {
             
             
             X = (DenseDoubleMatrix2D) addInterceptColumn(X);
-
             // Perform OLS regression
-            DoubleMatrix2D beta = computeOLS(X, Y);
+            DoubleMatrix2D beta = runOLSbyColt(X, Y);
             
             System.out.println("Regression coefficients (Beta):");
             System.out.println(beta);
