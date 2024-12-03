@@ -70,6 +70,14 @@ public class StepwiseRegressionMethods {
                      .mapToDouble(row -> row[featureIndex])
                      .toArray();
     }    
+    
+    private static void printSelectedFeatures(List<Integer> selectedFeatures, String[] featureNames) {
+        System.out.println("Final selected features:");
+        for (int idx : selectedFeatures) {
+            System.out.println(featureNames[idx]);
+        }
+    }
+    
     public static void stepwiseForwardSelection(double[][] data, double[] target, String[] featureNames) {
         List<Integer> selectedFeatures = new ArrayList<>();
         int numFeatures = data[0].length;
@@ -108,10 +116,7 @@ public class StepwiseRegressionMethods {
                 break;
             }
         }
-        System.out.println("Forward Method: Final selected features:");
-        for (int idx : selectedFeatures) {
-            System.out.println(featureNames[idx]);
-        }
+        printSelectedFeatures(selectedFeatures, featureNames);
     }
 
     public static void stepwiseBackwardElimination(double[][] data, double[] target, String[] featureNames) {
@@ -121,42 +126,49 @@ public class StepwiseRegressionMethods {
         }
 
         while (selectedFeatures.size() > 0) {
+            double[] pValues = new double[selectedFeatures.size()];
             double[] vif = calculateVIF(selectFeatures(data, selectedFeatures));
-            for (int i = 0; i < vif.length; i++) {
-                if (vif[i] > 10) {
-                    System.out.println("Excluding feature due to high VIF: " + featureNames[i]);
-                    selectedFeatures.remove((Integer) i);
-                }
-            }
 
-            double worstPValue = 0;
             int worstFeature = -1;
+            double worstPValue = Double.MAX_VALUE;
 
-            for (int i : selectedFeatures) {
-                List<Integer> candidateFeatures = new ArrayList<>(selectedFeatures);
-                candidateFeatures.remove((Integer) i);
-
-                double[][] subsetData = selectFeatures(data, candidateFeatures);
-                double pValue = getPValue(subsetData, target);
-
-                if (pValue > worstPValue) {
-                    worstPValue = pValue;
-                    worstFeature = i;
+            // First, consider removing high VIF features
+            for (int i = 0; i < selectedFeatures.size(); i++) {
+                if (vif[i] > 10) {  // Exclude features with high VIF (multicollinearity)
+                    worstFeature = selectedFeatures.get(i);
+                    System.out.println("Excluding feature due to high VIF: " + featureNames[worstFeature]);
+                    break; // Remove the first feature with high VIF
                 }
             }
 
-            if (worstFeature != -1 && worstPValue > 0.10) {
+            // If no high VIF found, check p-values to find the worst feature
+            if (worstFeature == -1) {
+                for (int i = 0; i < selectedFeatures.size(); i++) {
+                    int featureIdx = selectedFeatures.get(i);
+
+                    List<Integer> candidateFeatures = new ArrayList<>(selectedFeatures);
+                    candidateFeatures.remove((Integer) featureIdx);
+
+                    double[][] subsetData = selectFeatures(data, candidateFeatures);
+                    pValues[i] = getPValue(subsetData, target);
+
+                    if (pValues[i] > 0.10 && pValues[i] < worstPValue) {
+                        worstPValue = pValues[i];
+                        worstFeature = featureIdx;
+                    }
+                }
+            }
+
+            // If we found a feature to remove (high VIF or high p-value), remove it
+            if (worstFeature != -1) {
                 selectedFeatures.remove((Integer) worstFeature);
                 System.out.println("Backward: Removed feature: " + featureNames[worstFeature]);
             } else {
-                break;
+                break;  // No more features to remove based on p-value or VIF
             }
         }
-        
-        System.out.println("Backward Method: Final selected features:");
-        for (int idx : selectedFeatures) {
-            System.out.println(featureNames[idx]);
-        }
+
+        printSelectedFeatures(selectedFeatures, featureNames);
     }
 
 
@@ -226,10 +238,7 @@ public class StepwiseRegressionMethods {
             }
         }
 
-        System.out.println("Bidirectional Methods: Final selected features:");
-        for (int idx : selectedFeatures) {
-            System.out.println(featureNames[idx]);
-        }
+        printSelectedFeatures(selectedFeatures, featureNames);
     }
 
 
