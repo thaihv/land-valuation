@@ -17,6 +17,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -173,7 +174,7 @@ public class OLSUtils {
         else if (income < 70000) return "Medium";
         else return "High";
     }
-    public static Map<String, DenseDoubleMatrix2D> createDummyVariablesFromExcel(String excelFilePath, String sheetName, String columnName) throws IOException {
+    public static Map<String, DenseDoubleMatrix2D> createDummyVariablesFromCategorialColumn(String excelFilePath, String sheetName, String columnName) throws IOException {
         // Open the Excel file
         FileInputStream file = new FileInputStream(new File(excelFilePath));
         Workbook workbook = WorkbookFactory.create(file);
@@ -248,4 +249,125 @@ public class OLSUtils {
         ));
         return result;
     }    
+    public static Map<String, DenseDoubleMatrix2D> createDummyVariablesFromContinuousColumn(
+            String excelFilePath, String sheetName, String columnName, int numBreaks) throws IOException, InvalidFormatException {
+
+        // Open the Excel file
+        FileInputStream file = new FileInputStream(new File(excelFilePath));
+        Workbook workbook = WorkbookFactory.create(file);
+        Sheet sheet = workbook.getSheet(sheetName);
+
+        if (sheet == null) {
+            throw new IllegalArgumentException("Sheet " + sheetName + " not found in the file.");
+        }
+
+        // Identify the header row
+        Row headerRow = sheet.getRow(0);
+        Map<String, Integer> columnIndexMap = new LinkedHashMap<>();
+        for (Cell cell : headerRow) {
+            columnIndexMap.put(cell.getStringCellValue(), cell.getColumnIndex());
+        }
+
+        if (!columnIndexMap.containsKey(columnName)) {
+            throw new IllegalArgumentException("Column " + columnName + " not found in the sheet.");
+        }
+
+        int targetColumnIndex = columnIndexMap.get(columnName);
+
+        // Read the continuous data values
+        List<Double> dataValues = new ArrayList<>();
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue; // Skip header row
+            Cell cell = row.getCell(targetColumnIndex);
+            if (cell != null && cell.getCellType() == CellType.NUMERIC) {
+                dataValues.add(cell.getNumericCellValue());
+            }
+        }
+
+        double[] values = dataValues.stream().mapToDouble(Double::doubleValue).toArray();
+
+        // Calculate Jenks Natural Breaks
+        double[] breaks = jenksNaturalBreaks(values, numBreaks);
+
+        // Generate dummy variables based on breaks
+        List<int[]> dummyData = new ArrayList<>();
+        for (double value : values) {
+            int[] dummyRow = new int[numBreaks - 1];
+            for (int i = 0; i < numBreaks - 1; i++) {
+                if (value >= breaks[i] && value < breaks[i + 1]) {
+                    dummyRow[i] = 1;
+                    break;
+                }
+            }
+            dummyData.add(dummyRow);
+        }
+
+        // Convert to DenseDoubleMatrix2D
+        int[][] dummyArray = dummyData.toArray(new int[0][]);
+        double[][] dummyDoubleArray = Arrays.stream(dummyArray)
+                .map(row -> Arrays.stream(row).asDoubleStream().toArray())
+                .toArray(double[][]::new);
+
+        DenseDoubleMatrix2D dummyMatrix = new DenseDoubleMatrix2D(dummyDoubleArray);
+
+        // Close workbook and file
+        workbook.close();
+        file.close();
+
+        // Return dummy matrix and breaks mapping
+        Map<String, DenseDoubleMatrix2D> result = new HashMap<>();
+        result.put("DummyMatrix", dummyMatrix);
+        result.put("BreaksMapping", new DenseDoubleMatrix2D(
+                new double[][]{breaks}
+        ));
+        return result;
+    }
+
+    public static double[] jenksNaturalBreaks(double[] values, int numBreaks) {
+        Arrays.sort(values);
+        int n = values.length;
+        double[][] mat1 = new double[n + 1][numBreaks + 1];
+        double[][] mat2 = new double[n + 1][numBreaks + 1];
+
+        for (int i = 1; i <= numBreaks; i++) {
+            mat1[0][i] = 1.0;
+            mat2[0][i] = 0.0;
+            for (int j = 1; j <= n; j++) {
+                mat2[j][i] = Double.MAX_VALUE;
+            }
+        }
+
+        for (int l = 2; l <= n; l++) {
+            double sum = 0, sumSq = 0, w = 0;
+            for (int m = 1; m <= l; m++) {
+                int i3 = l - m + 1;
+                double val = values[i3 - 1];
+                w++;
+                sum += val;
+                sumSq += val * val;
+                double variance = sumSq - (sum * sum) / w;
+                if (i3 != 1) {
+                    for (int j = 2; j <= numBreaks; j++) {
+                        if (mat2[l][j] >= (variance + mat2[i3 - 1][j - 1])) {
+                            mat1[l][j] = i3;
+                            mat2[l][j] = variance + mat2[i3 - 1][j - 1];
+                        }
+                    }
+                }
+            }
+            mat1[l][1] = 1.0;
+            mat2[l][1] = sumSq - (sum * sum) / w;
+        }
+
+        double[] breaks = new double[numBreaks + 1];
+        breaks[numBreaks] = values[n - 1];
+        int k = n;
+        for (int j = numBreaks; j >= 2; j--) {
+            int id = (int) mat1[k][j] - 1;
+            breaks[j - 1] = values[id];
+            k = id;
+        }
+        breaks[0] = values[0];
+        return breaks;
+    }  
 }
