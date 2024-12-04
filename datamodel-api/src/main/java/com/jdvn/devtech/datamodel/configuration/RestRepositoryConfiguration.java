@@ -12,6 +12,6 @@ public class RestRepositoryConfiguration implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 
     	//Disable display default entity repository Rest APIs
-        config.setExposeRepositoryMethodsByDefault(false); 
+        config.setExposeRepositoryMethodsByDefault(true); 
     }
 }

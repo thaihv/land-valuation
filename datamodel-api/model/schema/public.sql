@@ -41,6 +41,14 @@ CREATE SCHEMA IF NOT EXISTS transaction
 AUTHORIZATION postgres;
 COMMENT ON SCHEMA transaction IS 'Used to track all changes made to data as a result of an application service.';
 
+CREATE SCHEMA IF NOT EXISTS regression
+AUTHORIZATION postgres;
+COMMENT ON SCHEMA regression IS 'Used to store informations for stepwise regression as features, models, metrics inputs and outputs.';
+
+CREATE SCHEMA IF NOT EXISTS apikey
+AUTHORIZATION postgres;
+COMMENT ON SCHEMA apikey IS 'Used to manage providing and revoking keys from users for using with http endpoints from third-party applicaiton .';
+
 CREATE OR REPLACE FUNCTION public.uuid_generate_v1(
 	)
     RETURNS uuid
