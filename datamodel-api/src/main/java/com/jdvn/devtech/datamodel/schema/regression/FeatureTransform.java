@@ -39,7 +39,7 @@ public class FeatureTransform {
 	private Feature feature;
 
 	@Column(length = 128, nullable = false)
-	@Comment("Usage type of feature transformation .")
+	@Comment("Usage type of feature transformation e.g one-hot encoding, binning,  .")
 	private String transformation_method;
 
 	@Column(length = 128, nullable = false)

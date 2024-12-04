@@ -23,7 +23,7 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "features", schema = "regression", indexes = {
 		@Index(name = "features_index_on_id", columnList = "id") })
-@Comment("Used to store independent variables (including dummy variables) used in models")
+@Comment("Used to store independent variables (including dummy variables) used in models.")
 public class Feature {
 
 	@Id

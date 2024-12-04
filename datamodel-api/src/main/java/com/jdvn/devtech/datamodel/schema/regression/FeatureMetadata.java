@@ -35,7 +35,7 @@ public class FeatureMetadata {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "feature_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "feature_metadata_feature_id_fkey"))
-	@Comment("Transform identifier of the feature.")
+	@Comment("Identifier of the feature of matadata.")
 	private Feature feature;
 
 	@Column(length = 64, nullable = false)

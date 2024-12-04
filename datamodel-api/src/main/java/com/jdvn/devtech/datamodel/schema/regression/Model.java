@@ -21,7 +21,7 @@ import lombok.Setter;
 @DynamicUpdate
 @Table(name = "models", schema = "regression", indexes = {
 		@Index(name = "models_index_on_id", columnList = "id") })
-@Comment("Used to store information about regresion model. It includes attributes such as name, year, purpose, created date to trace a source of implementation")
+@Comment("Used to store information about regresion model. It includes attributes such as name, year, purpose, created date to trace a source of implementation.")
 public class Model {
 
 	@Id
