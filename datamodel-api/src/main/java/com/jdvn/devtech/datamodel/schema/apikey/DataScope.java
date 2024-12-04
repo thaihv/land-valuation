@@ -16,20 +16,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "key_performances", schema = "apikey")
-@Comment("Presents performance indicators for each issued key implementation.")
-public class KeyPerformance {
+@Table(name = "data_scopes", schema = "apikey")
+@Comment("Presents data items provided follows api categories.")
+public class DataScope {
 
 	@Id
-	@Comment("Key performance identifier.")
+	@Comment("Data scope identifier.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
-	@Comment("Number of request that consumed by user with key in total.")
-	private int requests_count;
+	@Column(length = 256)
+	@Comment("A detail explain of data scope.")
+	private String description;
 	
-	@Comment("Size of data volume that consumed by user with key in total.")
-	private int data_volumes;
+	@Column(length = 64, nullable = false)
+	@Comment("Name to distinguish the data scope item.")
+	private String name;
 	
 	
 }

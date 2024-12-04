@@ -16,20 +16,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "key_performances", schema = "apikey")
-@Comment("Presents performance indicators for each issued key implementation.")
-public class KeyPerformance {
+@Table(name = "ip_restrictions", schema = "apikey")
+@Comment("A table records list Ips in restrictions for each key.")
+public class Restriction {
 
 	@Id
 	@Comment("Key performance identifier.")
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
-	@Comment("Number of request that consumed by user with key in total.")
-	private int requests_count;
+	@Column(length = 256)
+	@Comment("A list of ip address with seperated commas.")
+	private String ip_address;
 	
-	@Comment("Size of data volume that consumed by user with key in total.")
-	private int data_volumes;
-	
-	
+
 }
