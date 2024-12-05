@@ -27,7 +27,7 @@ public class DataPoint {
 	@Column(nullable = false, columnDefinition = "character varying(40) DEFAULT public.uuid_generate_v1()")
 	private String id;
 	
-	@Comment("Indicates if the feature is pave (TRUE or FALSE).")
+	@Comment("Indicates if the feature is paved (TRUE or FALSE).")
 	private boolean pave;
 	
 	@Column(length = 16)

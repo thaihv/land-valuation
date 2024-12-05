@@ -43,5 +43,5 @@ public class Coefficient {
 	
 	@Column(columnDefinition = "numeric(20,2) NOT NULL DEFAULT 0")
 	@Comment("Value of the coefficient.")
-	private Double coefficient;
+	private Double coefficient_value;
 }
