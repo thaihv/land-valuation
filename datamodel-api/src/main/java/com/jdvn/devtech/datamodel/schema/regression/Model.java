@@ -1,6 +1,6 @@
 package com.jdvn.devtech.datamodel.schema.regression;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -48,6 +48,8 @@ public class Model {
 	@Comment("Purpose of the regression (e.g. tax, forecast, historical).")
 	private String purpose;
 
+	
 	@Comment("The date that model is made for regression.")
-	private Date created_at;
+	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
+	private LocalDateTime created_at = LocalDateTime.now();
 }

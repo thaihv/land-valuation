@@ -1,6 +1,6 @@
 package com.jdvn.devtech.datamodel.schema.apikey;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.hibernate.annotations.Comment;
@@ -65,7 +65,8 @@ public class ApiKey {
 	private String status;
 	
 	@Comment("The date that key is made.")
-	private Date created_at;
+	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
+	private LocalDateTime created_at = LocalDateTime.now();
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "api_keys_data_scopes", schema = "apikey", joinColumns = @JoinColumn(name = "api_key_id"), inverseJoinColumns = @JoinColumn(name = "scope_id"), foreignKey = @ForeignKey(name = "api_keys_data_scopes_api_key_id_fkey"), inverseForeignKey = @ForeignKey(name = "api_keys_data_scopes_scope_id_fkey"))

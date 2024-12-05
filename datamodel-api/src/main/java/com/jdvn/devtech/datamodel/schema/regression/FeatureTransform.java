@@ -1,6 +1,6 @@
 package com.jdvn.devtech.datamodel.schema.regression;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
@@ -47,5 +47,6 @@ public class FeatureTransform {
 	private String value_mapping;
 
 	@Comment("The date that transformation is made for regression.")
-	private Date created_at;
+	@Column(nullable = false, columnDefinition = "timestamp without time zone DEFAULT now()")
+	private LocalDateTime created_at = LocalDateTime.now();
 }
