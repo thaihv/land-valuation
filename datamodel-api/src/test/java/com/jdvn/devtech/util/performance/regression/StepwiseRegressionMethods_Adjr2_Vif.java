@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 
-public class StepwiseRegressionMethods_adjr2_fstats {
+public class StepwiseRegressionMethods_Adjr2_Vif {
 
-    // Function to compute Adjusted R² and F-statistic for a given feature subset
+    // Function to compute Adjusted R² and VIF for a given feature subset
     public static Map<String, Double> calculateMetrics(double[][] X, double[] y, List<Integer> selectedFeatures) {
         Map<String, Double> metrics = new HashMap<>();
         if (selectedFeatures.isEmpty()) {
             metrics.put("adjR2", 0.0);
-            metrics.put("fStatistic", 0.0);
+            metrics.put("vif", Double.MAX_VALUE);
             return metrics;
         }
 
@@ -41,19 +41,23 @@ public class StepwiseRegressionMethods_adjr2_fstats {
         double r2 = 1 - (rss / totalSumOfSquares);
         double adjR2 = 1 - (1 - r2) * (n - 1) / (n - p - 1);
 
-        // Calculate F-statistic
-        double msr = (totalSumOfSquares - rss) / p;
-        double mse = rss / (n - p - 1);
-        double fStatistic = msr / mse;
+        // Calculate VIF
+        double[][] parameterVariance = regression.estimateRegressionParametersVariance();
+        double maxVIF = 0;
+        if (parameterVariance.length > 1) {
+            for (int i = 1; i < parameterVariance.length; i++) { // Skip intercept
+                maxVIF = Math.max(maxVIF, 1.0 / parameterVariance[i][i]);
+            }
+        }
 
         metrics.put("adjR2", adjR2);
-        metrics.put("fStatistic", fStatistic);
+        metrics.put("vif", maxVIF);
 
         return metrics;
     }
 
     // Forward Selection Function
-    public static List<List<Integer>> forwardSelection(double[][] X, double[] y, double adjR2Threshold, double fStatisticThreshold) {
+    public static List<List<Integer>> forwardSelection(double[][] X, double[] y, double adjR2Threshold, double vifThreshold) {
         int numFeatures = X[0].length;
         List<Integer> remainingFeatures = new ArrayList<>();
         for (int i = 0; i < numFeatures; i++) {
@@ -73,9 +77,9 @@ public class StepwiseRegressionMethods_adjr2_fstats {
 
                 Map<String, Double> metrics = calculateMetrics(X, y, currentSubset);
                 double adjR2 = metrics.get("adjR2");
-                double fStatistic = metrics.get("fStatistic");
+                double vif = metrics.get("vif");
 
-                if (adjR2 >= adjR2Threshold && fStatistic >= fStatisticThreshold) {
+                if (adjR2 >= adjR2Threshold && vif <= vifThreshold) {
                     validSubsets.add(currentSubset);
                     if (adjR2 > bestAdjR2) {
                         bestAdjR2 = adjR2;
@@ -95,7 +99,7 @@ public class StepwiseRegressionMethods_adjr2_fstats {
     }
 
     // Backward Elimination Function
-    public static List<List<Integer>> backwardElimination(double[][] X, double[] y, double adjR2Threshold, double fStatisticThreshold) {
+    public static List<List<Integer>> backwardElimination(double[][] X, double[] y, double adjR2Threshold, double vifThreshold) {
         int numFeatures = X[0].length;
         List<Integer> selectedFeatures = new ArrayList<>();
         for (int i = 0; i < numFeatures; i++) {
@@ -115,9 +119,9 @@ public class StepwiseRegressionMethods_adjr2_fstats {
 
                 Map<String, Double> metrics = calculateMetrics(X, y, currentSubset);
                 double adjR2 = metrics.get("adjR2");
-                double fStatistic = metrics.get("fStatistic");
+                double vif = metrics.get("vif");
 
-                if (adjR2 >= adjR2Threshold && fStatistic >= fStatisticThreshold) {
+                if (adjR2 >= adjR2Threshold && vif <= vifThreshold) {
                     validSubsets.add(currentSubset);
                     if (adjR2 > bestAdjR2) {
                         bestAdjR2 = adjR2;
@@ -147,17 +151,17 @@ public class StepwiseRegressionMethods_adjr2_fstats {
 
         double[] y = {5, 6, 7, 8, 9};
 
-        // Ask user for Adjusted R² and F-statistic thresholds
+        // Ask user for Adjusted R² and VIF thresholds
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the minimum Adjusted R² threshold value: ");
         double adjR2Threshold = scanner.nextDouble();
-        System.out.print("Enter the minimum F-statistic threshold value: ");
-        double fStatisticThreshold = scanner.nextDouble();
+        System.out.print("Enter the maximum VIF threshold value: ");
+        double vifThreshold = scanner.nextDouble();
         scanner.close();
 
         // Apply Forward Selection and Backward Elimination
-        List<List<Integer>> forwardSelectedSubsets = forwardSelection(X, y, adjR2Threshold, fStatisticThreshold);
-        List<List<Integer>> backwardSelectedSubsets = backwardElimination(X, y, adjR2Threshold, fStatisticThreshold);
+        List<List<Integer>> forwardSelectedSubsets = forwardSelection(X, y, adjR2Threshold, vifThreshold);
+        List<List<Integer>> backwardSelectedSubsets = backwardElimination(X, y, adjR2Threshold, vifThreshold);
 
         // Combine both lists
         List<List<Integer>> allSelectedSubsets = new ArrayList<>();
@@ -165,10 +169,10 @@ public class StepwiseRegressionMethods_adjr2_fstats {
         allSelectedSubsets.addAll(backwardSelectedSubsets);
 
         // Display results
-        System.out.println("Feature subsets with Adjusted R² >= " + adjR2Threshold + " and F-statistic >= " + fStatisticThreshold + ":");
+        System.out.println("Feature subsets with Adjusted R² >= " + adjR2Threshold + " and VIF <= " + vifThreshold + ":");
         for (List<Integer> subset : allSelectedSubsets) {
             Map<String, Double> metrics = calculateMetrics(X, y, subset);
-            System.out.println("Selected Features: " + subset + " | Adjusted R²: " + metrics.get("adjR2") + " | F-statistic: " + metrics.get("fStatistic"));
+            System.out.println("Selected Features: " + subset + " | Adjusted R²: " + metrics.get("adjR2") + " | VIF: " + metrics.get("vif"));
         }
     }
 
